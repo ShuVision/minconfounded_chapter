@@ -1,0 +1,12 @@
+
+*.aux
+
+extended_competition2012.blg
+
+*.log
+
+*.out
+
+extended_competition2012.pdf
+
+extended_competition2012.synctex.gz
