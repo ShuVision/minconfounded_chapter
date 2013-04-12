@@ -1,0 +1,66 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\astroncite{Buja et~al.}{2009}]{buja:2009}
+Buja, A., Cook, D., Hofmann, H., Lawrence, M., Lee, E.-K., Swayne, D.~F., and
+  Wickham, H. (2009).
+\newblock Statistical inference for exploratory data analysis and model
+  diagnostics.
+\newblock {\em Royal Society Philosophical Transactions A},
+  367(1906):4361--4383.
+
+\bibitem[\protect\astroncite{Butler and Louis}{1992}]{Butler:1992tx}
+Butler, S. and Louis, T. (1992).
+\newblock Random effects models with non-parametric priors.
+\newblock {\em Statistics in Medicine}, 11(14-15):1981--2000.
+
+\bibitem[\protect\astroncite{de~Leeuw}{1982}]{deLeeuw:1982to}
+de~Leeuw, J. (1982).
+\newblock Generalized eigenvalue problems with positive semi-definite matrices.
+\newblock {\em Psychometrika}, 47(1):87--93.
+
+\bibitem[\protect\astroncite{Dempster and Ryan}{1985}]{Dempster:1985tr}
+Dempster, A.~P. and Ryan, L.~M. (1985).
+\newblock Weighted normal plots.
+\newblock {\em Journal of the American Statistical Association},
+  80(392):845--850.
+
+\bibitem[\protect\astroncite{Gelman and Pardoe}{2006}]{Gelman:2006ue}
+Gelman, A. and Pardoe, I. (2006).
+\newblock Bayesian measures of explained variance and pooling in multilevel
+  (hierarchical) models.
+\newblock {\em Technometrics}, 48(2):241--251.
+
+\bibitem[\protect\astroncite{Hilden-Minton}{1995}]{HildenMinton:1995wh}
+Hilden-Minton, J.~A. (1995).
+\newblock {\em Multilevel diagnostics for mixed and hierarchical linear
+  models}.
+\newblock PhD thesis, University of California Los Angeles.
+
+\bibitem[\protect\astroncite{Jiang}{2001}]{Jiang:2001up}
+Jiang, J. (2001).
+\newblock Goodness-of-fit tests for mixed model diagnostics.
+\newblock {\em The Annals of Statistics}, 29(4):1137--1164.
+
+\bibitem[\protect\astroncite{Lange and Ryan}{1989}]{Lange:1989uu}
+Lange, N. and Ryan, L. (1989).
+\newblock Assessing normality in random effects models.
+\newblock {\em The Annals of Statistics}, 17(2):624--642.
+
+\bibitem[\protect\astroncite{McDonald et~al.}{1979}]{McDonald:1979ca}
+McDonald, R.~P., Torii, Y., and Nishisato, S. (1979).
+\newblock Some results on proper eigenvalues and eigenvectors with applications
+  to scaling.
+\newblock {\em Psychometrika}, 44(2):211--227.
+
+\bibitem[\protect\astroncite{Verbeke and Lesaffre}{1997}]{Verbeke:1997tf}
+Verbeke, G. and Lesaffre, E. (1997).
+\newblock {The effect of misspecifying the random-effects distribution in
+  linear mixed models for longitudinal data}.
+\newblock {\em Computational Statistics {\&} Data Analysis}, 23(4):541--556.
+
+\bibitem[\protect\astroncite{Wilk and Gnanadesikan}{1968}]{Wilk:1968}
+Wilk, M.~B. and Gnanadesikan, R. (1968).
+\newblock Probability plotting methods for the analysis of data.
+\newblock {\em Biometrika}, 55(1):1--17.
+
+\end{thebibliography}
