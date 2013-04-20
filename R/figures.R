@@ -638,12 +638,22 @@ counties.stat <- ddply(mn, .(county), summarize,
                     uranium=unique(uranium))
 
 ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=uranium), map = counties) + 
-  expand_limits(x = counties$long, y = counties$lat) + xlab("longitude") + ylab("latitude") + theme_bw()
+  expand_limits(x = counties$long, y = counties$lat) + xlab("longitude") + ylab("latitude") + coord_map() + theme_bw()
 
 # county level sample size
 ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=radon), map = counties) + 
   expand_limits(x = counties$long, y = counties$lat) + 
-  xlab("longitude") + ylab("latitude") + theme_bw()
+  xlab("longitude") + ylab("latitude") + coord_map() + 
+  theme(
+  	axis.text.x = element_blank(), 
+  	axis.text.y = element_blank(),
+  	axis.title.x = element_blank(), 
+  	axis.title.y = element_blank(),
+  	axis.ticks = element_line(colour=rgb(0,0,0,alpha=0)),
+  	panel.background =  element_blank(),
+  	panel.grid.major =  element_blank(),
+  	panel.grid.minor =  element_blank(),
+  	legend.title = element_blank())
 ggsave(file="map.png", width=2, height=3)
 
 twocounties <- subset(mn, county %in% c("hennepin", "winona"))
