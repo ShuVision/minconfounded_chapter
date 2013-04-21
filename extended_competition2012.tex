@@ -374,7 +374,19 @@ For simplicity we required the distributions of the random effects to the be sam
 To evaluate the behavior of a Q-Q plots constructed from the rotated residuals, we calculated the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and Kolmogorov-Smirnov (KS) test statistics for each simulation. These test statistics measure the discrepancy between the empirical and assumed distributions. For all simulation settings the proportion of tests rejecting the null hypothesis of normality was tabulated. 
 }
 
-\todo[inline]{Now summarize the results.}
+\todo[inline]{Now summarize the results. Below is my informal summary.}
+
+\begin{itemize}
+\item Overall, the rotated residuals reduce the type I error rates to rates much closer to the nominal level. When $\sigma^2_\varepsilon > \sigma^2_b$ there is minor inflation of the type I errors when the error terms are non-normal, but less severe than without the rotation. When $\sigma^2_\varepsilon \leq \sigma^2_b$ the type I errors are essentially at the nominal levels.
+
+\item As expected, the power to detect non-normal random effects distributions is quite low for the rotated residuals. The varimax rotation does help amplify the power of detection, though an increase in the type I error rate also results.
+
+\item The power to detect non-normal random effects distributions increases as $\sigma^2_b$ increases relative to $\sigma^2_\varepsilon$.
+
+
+\todo[inline]{I think the exploration of the weight matrices can be moved here. This would allow for the comparison of the varimax and original matrices.}
+
+\end{itemize}
 
 %----------------------------------------------------------------------------------
 \section{Radon data: Revisited}\label{sec:radon2}
