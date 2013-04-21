@@ -240,7 +240,10 @@ Additionally, it is easily seen that both \eqref{eq:resid1} and \eqref{eq:resid2
 
 To combat the issues presented above, we derive a reduced set of minimally confounded residuals that are standardized, uncorrelated, and homoscedastic. \al{Our discussion focuses on the random effects, but it is straightforward to generalize the method to residuals at other levels.} \cite{HildenMinton:1995wh} presents the derivation of a similar set of minimally confounded residuals for the error terms, but did not address the random effects. The derivation is relegated to the appendix, and presents a more general method that applies to residuals at all levels of the model.
 
-First, we define the \emph{fraction of confounding} \citep{HildenMinton:1995wh} which is minimized in the result below. \\
+\al{
+To assess the distributional assumptions made on the random effects we must evaluate the each random effect separately. To this end, when there is more than one random effect in a model we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th random effect. For example, in the radon study described above, if $\bm{Z}$ is organized as a block diagonal matrix, that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum \citep[page 47]{Gentle:2007}, then $\bm{L}_0 = \bm{I}_{85} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_0 = \bm{I}_{85} \bigotimes ( 0,\ 1)$ produces the random slopes. In the following discussion we will present formulas using $\widehat{\bm{b}}$ as if there is only a single random effect in the model, but substitution of $\bm{L}_k\trans \widehat{\bm{b}}$ generalizes the expressions to more complicated models.
+
+Next, we define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}.} \\
 
 %\begin{definition}[Fraction of confounding]\label{def:fc1}
 %For the $i$th element of the target residual vector, $\widehat{\bm{e}}$, the fraction of confounding is given by
@@ -269,15 +272,15 @@ First, we define the \emph{fraction of confounding} \citep{HildenMinton:1995wh} 
 %\end{definition}
 
 \begin{definition}[Fraction of confounding]
-For the target residual vector, $\widehat{\bm{e}}$, the fraction of confounding is given by
+For the target residual vector, $\widehat{\bm{b}}$, the fraction of confounding is given by
 %
 \begin{equation}\label{eq:fc2}
 \text{FC}(\widehat{\bm{e}}) = 
-\frac{1}{\ell} \tr\left( \var(\widehat{\bm{e}})\ginv \  \var(\widehat{\bm{e}} | \bm{e} ) \right) = \frac{1}{\ell} \tr\left( \bm{B}\ginv\bm{A} \right)
+\frac{1}{\ell} \tr\left( \var(\widehat{\bm{b}})\ginv \  \var(\widehat{\bm{b}} | \bm{b} ) \right) = \frac{1}{\ell} \tr\left( \bm{B}\ginv\bm{A} \right)
 %\dfrac{1}{\ell} \displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
 %		{\bm{v_i}\trans \bm{B} \bm{v_i}}.
 \end{equation}
-where $\ell$ is the length of vector $e$.
+where $\ell$ is the length of vector $\bm{b}$.
 \end{definition}
 The fraction of confounding measures the contribution of the non-target residual to the variance of the target residual. $\text{FC} \in [0,1]$, where 1 indicates there is no additional information on the target residual due to confounding, while 0 indicates no confounding. %An overall measure of the amount of confounding is given below.\\
 
@@ -290,12 +293,12 @@ In order to correct residuals for the impact of confounding, we find weights $\b
 %\]
 
 \begin{equation}\label{eq:minimize}
-\text{FC}_{\bm{W}}(\widehat{\bm{e}}) = \min_{W \in \mathbb{R}^{\ell-r \times \ell} } 
+\text{FC}_{\bm{W}}(\widehat{\bm{b}}) = \min_{W \in \mathbb{R}^{\ell-r \times \ell} } 
 \tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right)
 %\displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{W} \bm{A} \bm{W}\trans \bm{v_i}}
 %		{\bm{v_i}\trans \bm{W} \bm{B} \bm{W}\trans \bm{v_i}}
 \end{equation}
-where $\ell$ is the length of vector $\bm{e}$ and $r = \text{rank}(\bm{B})$, \al{which can be solved using the generalized eigenvalue decomposition.} \\
+where $\ell$ is the length of vector $\bm{b}$ and $r = \text{rank}(\bm{B})$, \al{which can be solved using the generalized eigenvalue decomposition.} \\
 
 
 \begin{theorem}\label{thm1}
@@ -336,7 +339,11 @@ the eigenvectors of $ \bm{A^*} = (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{A} (
 A proof of theorem~\ref{thm1} is given in the appendix.
 
 \al{
-The above rotation described in theorem~\ref{thm1} results in a rotated residual vector of length $\ell - r$, where each component is a linear combination of elements of $\widehat{\bm{e}}$. As linear combinations of residuals the rotated residuals will appear more normal than the underlying distribution if it is not normal, which is often referred to as supernormality \citep{Atkinson:1985}. One approach to address this issue is to reduce the number of elements in the linear combinations, which should reduce the extent to which supernormality is a problem. To do this, we suggest using an orthogonal rotation of $\bm{W}$, which we denote $\bm{Q}$, just as we can rotate the factors in factor analysis. One rotation that produces rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu} who use the raw varimax rotation to produce recovered errors for distributional assessment for the ordinary regression model.}
+The above rotation described in theorem~\ref{thm1} results in a rotated residual vector of length $\ell - r$, where each component is a linear combination of elements of $\widehat{\bm{b}}$. As linear combinations of residuals the rotated residuals will appear more normal than the underlying distribution if it is not normal, which is often referred to as supernormality \citep{Atkinson:1985}. One approach to address this issue is to reduce the number of elements in the linear combinations, which should reduce the extent to which supernormality is a problem. To do this, we suggest using an orthogonal rotation of $\bm{W}$, which we denote $\bm{Q}$, just as we can rotate the factors in factor analysis. One rotation that produces rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu} who use the raw varimax rotation to produce recovered errors for distributional assessment for the ordinary regression model.
+}
+
+\todo[inline]{I am not sure how to work in the rotations where we add more constraints to the optimization problem into this discussion...}
+
 
 %----------------------------------------------------------------------------------
 \section{Simulation study}\label{sec:simulation}

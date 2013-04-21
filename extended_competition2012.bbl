@@ -36,6 +36,12 @@ Gelman, A. and Pardoe, I. (2006).
   (hierarchical) models.
 \newblock {\em Technometrics}, 48(2):241--251.
 
+\bibitem[\protect\astroncite{Gentle}{2007}]{Gentle:2007}
+Gentle, J.~E. (2007).
+\newblock {\em Matrix Algebra: Theory, Computations, and Applications in
+  Statistics}.
+\newblock Springer, New York.
+
 \bibitem[\protect\astroncite{Hilden-Minton}{1995}]{HildenMinton:1995wh}
 Hilden-Minton, J.~A. (1995).
 \newblock {\em Multilevel diagnostics for mixed and hierarchical linear
