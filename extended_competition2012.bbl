@@ -1,5 +1,11 @@
 \begin{thebibliography}{}
 
+\bibitem[\protect\astroncite{Atkinson}{1985}]{Atkinson:1985}
+Atkinson, A.~C. (1985).
+\newblock {\em Plots, transformations, and regression: an introduction to
+  graphical methods of diagnostic regression analysis}.
+\newblock Clarendon Press, Oxford.
+
 \bibitem[\protect\astroncite{Buja et~al.}{2009}]{buja:2009}
 Buja, A., Cook, D., Hofmann, H., Lawrence, M., Lee, E.-K., Swayne, D.~F., and
   Wickham, H. (2009).
@@ -36,10 +42,20 @@ Hilden-Minton, J.~A. (1995).
   models}.
 \newblock PhD thesis, University of California Los Angeles.
 
+\bibitem[\protect\astroncite{Jensen and Ramirez}{1999}]{Jensen:1999iu}
+Jensen, D.~R. and Ramirez, D.~E. (1999).
+\newblock Recovered errors and normal diagnostics in regression.
+\newblock {\em Metrika}, 49(2):107--119.
+
 \bibitem[\protect\astroncite{Jiang}{2001}]{Jiang:2001up}
 Jiang, J. (2001).
 \newblock Goodness-of-fit tests for mixed model diagnostics.
 \newblock {\em The Annals of Statistics}, 29(4):1137--1164.
+
+\bibitem[\protect\astroncite{Johnson and Wichern}{2007}]{Johnson:2007}
+Johnson, R.~A. and Wichern, D.~W. (2007).
+\newblock {\em Applied Multivariate Statistical Analysis}.
+\newblock Pearson, 6th edition.
 
 \bibitem[\protect\astroncite{Lange and Ryan}{1989}]{Lange:1989uu}
 Lange, N. and Ryan, L. (1989).

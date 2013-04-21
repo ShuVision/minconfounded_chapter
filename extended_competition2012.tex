@@ -187,7 +187,7 @@ In the example we are able to use  the empirical distribution for assessing norm
 %Further evidence of the impact of this dependence is evident from a small scale simulation study. We used the design of the radon study to simulate 1000 data sets under model~\eqref{eq:radon} satisfying the assumptions discussed above. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}: $\widehat{\beta_0} = 1.46$, $\widehat{\beta_1} = -0.64$, $\widehat{\beta_2} = 0.77$, $\widehat{\sigma}_{\varepsilon} = 0.75$, $\widehat{\sigma}_{b_0} = 0.12$, $\widehat{\sigma}_{b_1} = 0.35$, and $\widehat{\rho} = 0.26$. For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Shapiro-Wilk (SW), Aderson-Darling (AD), Cram{\'e}r von Mises (CVM), and Kolmogorov-Smirnov (KS) tests for normality.  Table~\ref{tab:edf} shows the proportions of the tests of the empirical distribution function rejecting the null hypothesis of normality at the .05 significance level. The inflated type I error rates for the random effects indicate that the empirical distribution of the random effects cannot be used to assess the assumption of normality. In this situation, the empirical distribution of the level-1 residuals can be used to assess normality as minimal pooling is present at this level. In situations with higher levels of pooling, this will not be the case.
 %
 
-\begin{table}[htb]
+\begin{table}[!h]
 \caption{\label{tab:edf} Proportions of tests rejecting the null hypothesis of normality of the predicted error terms and random effects at the nominal .05 significance level. Type I error rates are hugely inflated. \vspace{.5em}
 }
 \begin{center}
@@ -206,7 +206,7 @@ In the remainder of this paper we investigate the root of concern that leads to 
 
 
 %----------------------------------------------------------------------------------
-\section{Rotated Residuals}\label{sec:resid}
+\section{Hierarchical linear models and residuals}\label{sec:resid}
 %----------------------------------------------------------------------------------
 The general stacked representation of the hierarchical linear model is given by
 %
@@ -231,9 +231,14 @@ where $\bm{P} = \bm{V}\inv( \bm{I} - \bm{X} (\bm{X}\trans \bm{V}\inv \bm{X})\inv
 reveals the inherent dependence between the the residuals.
 Additionally, it is easily seen that both \eqref{eq:resid1} and \eqref{eq:resid2} lead to the analysis of correlated and potentially heteroscedastic disturbances as $\var(\widehat{\bm{\varepsilon}}) = \bm{RPR}$ and $\var(\widehat{\bm{b}}) = \bm{DZ}\trans \bm{PZD}$.
 
-\todo[inline]{Should we incorporate some discussion of the other simulations that I have run? If so where?}
+\todo[inline]{Should we incorporate some discussion of the other simulations that I have run? If so I was thinking this section would be the place.}
 
-To combat the issues presented above, we derive a reduced set of minimally confounded residuals that are standardized, uncorrelated, and homoscedastic. \al{Our development focuses on the random effects, but it is straightforward to generalize the results to residuals at other levels.} \cite{HildenMinton:1995wh} presents the derivation of a similar set of minimally confounded residuals for the error terms, but did not address the random effects. The derivation is relegated to the appendix, and presents a more general method that applies to residuals at all levels of the model.
+
+%----------------------------------------------------------------------------------
+\section{Rotating the random effects}\label{sec:rotate}
+%----------------------------------------------------------------------------------
+
+To combat the issues presented above, we derive a reduced set of minimally confounded residuals that are standardized, uncorrelated, and homoscedastic. \al{Our discussion focuses on the random effects, but it is straightforward to generalize the method to residuals at other levels.} \cite{HildenMinton:1995wh} presents the derivation of a similar set of minimally confounded residuals for the error terms, but did not address the random effects. The derivation is relegated to the appendix, and presents a more general method that applies to residuals at all levels of the model.
 
 First, we define the \emph{fraction of confounding} \citep{HildenMinton:1995wh} which is minimized in the result below. \\
 
@@ -278,7 +283,7 @@ The fraction of confounding measures the contribution of the non-target residual
 
 
 
-In order to correct residuals for the impact of confounding, we to find weights $\bm{w_i}$ to apply to each of the residual contributions. This leads to the following minimization problem:
+In order to correct residuals for the impact of confounding, we find weights $\bm{w_i}$ to apply to each of the residual contributions. This leads to the following minimization problem:
 %\[
 %\bm{w}_{\ell-r} = \arg \min_{w \neq 0} \frac{\bm{w}\trans \bm{A} \bm{w}}
 %		{\bm{w}\trans \bm{B} \bm{w}}.
@@ -286,7 +291,7 @@ In order to correct residuals for the impact of confounding, we to find weights 
 
 \begin{equation}\label{eq:minimize}
 \text{FC}_{\bm{W}}(\widehat{\bm{e}}) = \min_{W \in \mathbb{R}^{\ell-r \times \ell} } 
-\tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right)
+\tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right)
 %\displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{W} \bm{A} \bm{W}\trans \bm{v_i}}
 %		{\bm{v_i}\trans \bm{W} \bm{B} \bm{W}\trans \bm{v_i}}
 \end{equation}
@@ -330,7 +335,8 @@ the eigenvectors of $ \bm{A^*} = (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{A} (
 \end{theorem}
 A proof of theorem~\ref{thm1} is given in the appendix.
 
-\todo[inline]{Think about how to include discussions of the other rotations...}
+\al{
+The above rotation described in theorem~\ref{thm1} results in a rotated residual vector of length $\ell - r$, where each component is a linear combination of elements of $\widehat{\bm{e}}$. As linear combinations of residuals the rotated residuals will appear more normal than the underlying distribution if it is not normal, which is often referred to as supernormality \citep{Atkinson:1985}. One approach to address this issue is to reduce the number of elements in the linear combinations, which should reduce the extent to which supernormality is a problem. To do this, we suggest using an orthogonal rotation of $\bm{W}$, which we denote $\bm{Q}$, just as we can rotate the factors in factor analysis. One rotation that produces rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu} who use the raw varimax rotation to produce recovered errors for distributional assessment for the ordinary regression model.}
 
 %----------------------------------------------------------------------------------
 \section{Simulation study}\label{sec:simulation}
