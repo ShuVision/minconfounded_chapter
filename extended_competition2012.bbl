@@ -30,6 +30,11 @@ Dempster, A.~P. and Ryan, L.~M. (1985).
 \newblock {\em Journal of the American Statistical Association},
   80(392):845--850.
 
+\bibitem[\protect\astroncite{Fukunaga}{1990}]{Fukunaga:1990}
+Fukunaga, K. (1990).
+\newblock {\em Introduction to Statistical Pattern Recognition}.
+\newblock Academic Press, San Diego, 2nd edition.
+
 \bibitem[\protect\astroncite{Gelman and Pardoe}{2006}]{Gelman:2006ue}
 Gelman, A. and Pardoe, I. (2006).
 \newblock Bayesian measures of explained variance and pooling in multilevel
@@ -61,7 +66,7 @@ Jiang, J. (2001).
 \bibitem[\protect\astroncite{Johnson and Wichern}{2007}]{Johnson:2007}
 Johnson, R.~A. and Wichern, D.~W. (2007).
 \newblock {\em Applied Multivariate Statistical Analysis}.
-\newblock Pearson, 6th edition.
+\newblock Pearson, Upper Saddle River, 6th edition.
 
 \bibitem[\protect\astroncite{Lange and Ryan}{1989}]{Lange:1989uu}
 Lange, N. and Ryan, L. (1989).

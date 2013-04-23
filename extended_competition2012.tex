@@ -43,6 +43,7 @@
 \usepackage{multirow}
 \usepackage{lipsum}
 
+\newtheorem{proposition}{Proposition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
 
@@ -54,6 +55,7 @@
 \newcommand{\var}{\ensuremath{\mathrm{Var}}}
 \newcommand{\cov}{\ensuremath{\mathrm{Cov}}}
 \DeclareMathOperator{\tr}{Trace}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 \title{Are you Normal? \\ {\Large The problem of confounded residual structures in hierarchical models}}
 \author{
@@ -286,57 +288,40 @@ The fraction of confounding measures the contribution of the non-target residual
 
 
 
-In order to correct residuals for the impact of confounding, we find weights $\bm{w_i}$ to apply to each of the residual contributions. This leads to the following minimization problem:
+In order to correct residuals for the impact of confounding, we find weights $\bm{w_i}$ to apply to each of the residual contributions that minimize $\tr\left( \bm{B}\ginv\bm{A} \right)$. This can be re-expressed as the following minimization problem:
 %\[
 %\bm{w}_{\ell-r} = \arg \min_{w \neq 0} \frac{\bm{w}\trans \bm{A} \bm{w}}
 %		{\bm{w}\trans \bm{B} \bm{w}}.
 %\]
-
 \begin{equation}\label{eq:minimize}
-\text{FC}_{\bm{W}}(\widehat{\bm{b}}) = \min_{W \in \mathbb{R}^{\ell-r \times \ell} } 
+\bm{W}^* = \argmin_{W \in \mathbb{R}^{\ell \times s} } 
 \tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right)
 %\displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{W} \bm{A} \bm{W}\trans \bm{v_i}}
 %		{\bm{v_i}\trans \bm{W} \bm{B} \bm{W}\trans \bm{v_i}}
 \end{equation}
-where $\ell$ is the length of vector $\bm{b}$ and $r = \text{rank}(\bm{B})$, \al{which can be solved using the generalized eigenvalue decomposition.} \\
+where $\ell$ is the length of vector $\bm{b}$. %and $r = \text{rank}(\bm{B})$. 
+\al{This problem is solved using the generalized eigenvalue decomposition
+\begin{equation}\label{eq:geigen}
+	\bm{Aw}_k = \gamma_k \bm{Bw}_k
+\end{equation}
+where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}; thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ \todo{revisit notation later} smallest eigenvalues. The computational formula for finding these eigenvalues is given below. The technical details can be found in the appendix.} \\
 
 
 \begin{theorem}\label{thm1}
-%For the target residual vector, $\widehat{\bm{e}}$, let $r = \text{rank}\ (\bm{B})$ and $\ell = $ the number of elements in $\widehat{\bm{e}}$. The minimum of \eqref{eq:fc} is attained at
-%\[
-%\bm{w}_{\ell-r} = \bm{T_r \Lambda_r}^{-1/2} \bm{u_r}
-%\]
-%where $\bm{T_r \Lambda_r}^{-1/2}$ is the full rank inverse square root of $\bm{B}$ found through the spectral decomposition of $\bm{B}$, and $\bm{u_r}$ is the eigenvector of $ \bm{A^*} = (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{A} (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans)\trans$ corresponding to the smallest eigenvalue of $\bm{A^*}$.
 The minimization problem (\ref{eq:minimize}) is solved by 
 \[
-\bm{W} = \bm{T_r \Lambda_r}^{-1/2} \bm{U} 
+\bm{W}^* = \argmin_{W \in \mathbb{R}^{\ell \times s} } 
+\tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right) = \bm{T_r \Lambda_r}^{-1/2} \bm{U}_s 
 \]
-where $\bm{T_r \Lambda_r}^{-1/2}$ is the full rank inverse square root of matrix $\bm{B}$ found through the spectral decomposition of $\bm{B}$, and $\bm{U}$ is the matrix of %all nonzero 
-the eigenvectors of $ \bm{A^*} = (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{A} (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans)\trans$. The resulting residuals are standardized, uncorrelated, and homoscedastic.
-%$\ell - r$ set of least confounded residuals are given by $\bm{W}\trans \widehat{\bm{e}}$, for 
-%%
-%\begin{equation}
-%  \bm{W} = \bm{T_r \Lambda_r}^{-1/2} \bm{U}
-%\end{equation}
-%%
-%corresponding to the critical points found by setting \eqref{eq:fc} to zero,
-%where $\bm{T_r \Lambda_r}^{-1/2}$ is the full rank inverse square root of $\bm{B}$ found through the spectral decomposition of $\bm{B}$ and $\bm{U}$ are the eigenvectors of $(\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{A} (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans)\trans$. 
-%
-%given by a rotation of the target residuals, $\bm{M}\trans \widehat{\bm{e}}$, that minimizes the contribution of the non-target residual's contribution to the variance of the target residual
-%%
-%\begin{equation}\label{eq:fc}
-%	\text{FC}(\widehat{\bm{e}}) 
-%	= \frac{\bm{w}\trans \var(\widehat{\bm{e}} | \bm{e}) \bm{w}}
-%		{\bm{w}\trans \var(\widehat{\bm{e}}) \bm{w}}
-%	= \frac{\bm{w}\trans \bm{A} \bm{w}}
-%		{\bm{w}\trans \bm{B} \bm{w}}
-%\end{equation}
-%%
-
-%This rotation is given by $\bm{M} = \bm{T_r \Lambda_r}^{-1/2} \bm{U}$ where $\bm{T_r \Lambda_r}^{-1/2}$ is the inverse square root of $\bm{B}$ found through the spectral decomposition of $\bm{B}$ and $\bm{U}$ are the eigenvectors of $(\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{A} (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans)\trans$.
-
+where $\bm{T_r \Lambda_r}^{-1/2}$ is the full rank inverse square root of matrix $\bm{B}$ found through the spectral decomposition of $\bm{B}$, and $\bm{U}_s$ is the matrix comprised of 
+the $s$ smallest eigenvectors of $ \bm{A^*} = (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{A} (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans)\trans$. 
 \end{theorem}
-A proof of theorem~\ref{thm1} is given in the appendix.
+
+\al{
+From theorem~\ref{thm1} we can easily calculate the rotated random effects, $\bm{W}^{*\prime} \widehat{\bm{b}}$, which are standardized, uncorrelated, and homoscedastic (see the appendix for a proof).
+}
+
+\todo[inline]{A paragraph is needed here discussing the choice of $s$.}
 
 \al{
 The above rotation described in theorem~\ref{thm1} results in a rotated residual vector of length $\ell - r$, where each component is a linear combination of elements of $\widehat{\bm{b}}$. As linear combinations of residuals the rotated residuals will appear more normal than the underlying distribution if it is not normal, which is often referred to as supernormality \citep{Atkinson:1985}. One approach to address this issue is to reduce the number of elements in the linear combinations, which should reduce the extent to which supernormality is a problem. To do this, we suggest using an orthogonal rotation of $\bm{W}$, which we denote $\bm{Q}$, just as we can rotate the factors in factor analysis. One rotation that produces rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu} who use the raw varimax rotation to produce recovered errors for distributional assessment for the ordinary regression model.
@@ -397,6 +382,104 @@ To evaluate the behavior of a Q-Q plots constructed from the rotated residuals, 
 %----------------------------------------------------------------------------------
 \section{Discussion}\label{sec:discussion}
 %----------------------------------------------------------------------------------
+
+
+%----------------------------------------------------------------------------------
+\section*{Appendix: Proof of Theorem I}
+%----------------------------------------------------------------------------------
+
+\todo[inline]{The first part of this appendix is a mess right now. I am trying to rewrite the proof and I am not quite seeing the starting place... but I do know that it is true!}
+
+\al{
+We present the proof of theorem~\ref{thm1}. Following the developments presented in section~\ref{sec:rotate} we present this discussion for the random effects assuming that there is only a random intercept. Generalization to the situation with multiple random effects follows as previously discussed.
+}
+%To remain general we present our derivation in terms of the residual under investigation (the target residual), $\widehat{\bm{e}}$, which can refer to either $\widehat{\bm{\varepsilon}}$ or $\widehat{\bm{b}}$. 
+
+In this section we will prove two claims:
+\begin{enumerate}
+\item $\bm{W}^* = \bm{T_r \Lambda_r}^{-1/2} \bm{U}_s$ minimizes
+$\tr\left[ \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right]$
+and consequently minimizes $\tr\left( \bm{B}\ginv\bm{A} \right)$.
+
+\item The rotated residuals, $\bm{W}^{*\prime} \widehat{\bm{b}}$, are standardized, uncorrelated, and homoscedastic.
+
+\end{enumerate}
+
+\begin{proof}
+%To prove this claim we appeal to two results, A.16 and A.17, from \cite{Fukunaga:1990} which give that 
+%\[
+% \frac{\partial}{\partial \bm{W}} 
+% 	\tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right)
+% 	= 
+% 	-2 \bm{BW} (\bm{W\trans B W})\inv (\bm{W\trans A W}) (\bm{W\trans B W})\inv + 2 \bm{W} (\bm{W\trans B W})\inv
+%\]
+%and that setting the above expression equal to zero we obtain
+%\[
+%(\bm{B}\inv \bm{A}) \bm{W} = \bm{W} (\bm{W\trans B W})\inv (\bm{W\trans A W})
+%\]
+%for symmetric $\bm{A}$ and $\bm{B}$.
+
+ Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b})$, $\bm{B} = \var(\widehat{\bm{b}})$, $r = \text{rank}(\bm{B})$, and $\ell = $ the number of elements in $\widehat{\bm{b}}$. Note that by definition $\bm{A}$ and $\bm{B}$ are symmetric and nonnegative definite.  
+ 
+Recall that the trace of a matrix is equal to the sum of its eigenvalues; therefore, minimizing $\tr\left( \bm{B}\ginv\bm{A} \right)$ is equivalent to minimizing the sum of the eigenvalues of $\bm{B}\ginv\bm{A}$. The eigenvalues of $\bm{B}\ginv\bm{A}$ can be found through simultaneous diagonalization
+ 
+ 
+Write the spectral decomposition of $\bm{B}$ as
+$\bm{B} = \bm{T_r \Lambda_r T_r}\trans$, where $\bm{ \Lambda_r}$ is a diagonal matrix of the nonzero eigenvalues and $\bm{T_r}$ is the matrix of associated eigenvectors.
+Define $\bm{F} = \bm{T_r \Lambda_r}^{1/2}$, which is a full-rank decomposition of $\bm{B}$. The Moore-Penrose inverse of $\bm{F}$ is given by
+\[
+\bm{F}\ginv = (\bm{F}\trans\bm{F})\inv \bm{F}\trans = \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans
+\]
+Now, notice that
+\[
+\bm{F}\ginv \bm{B} (\bm{F}\ginv)\trans = \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans ( \bm{T_r \Lambda_r T_r}\trans ) \bm{T_r \Lambda_r}^{-1/2} =  \bm{I}
+\]
+and define
+\[
+	\bm{A}^* = \bm{F}\ginv \bm{A} (\bm{F}\ginv)\trans
+\]
+Next, we rewrite $\bm{W} = (\bm{F}\ginv)\trans \bm{U}$, where $\bm{U}$ is a nonsingular symmetric matrix. Then \eqref{eq:app1} becomes
+%
+\begin{equation}\label{eq:app2}
+\tr \left[ \left( \bm{U}\trans \bm{F}\ginv \bm{B} (\bm{F}\ginv)\trans \bm{U} \right)\inv 
+\left(\bm{U}\trans \bm{F}\ginv \bm{A} (\bm{F}\ginv)\trans \bm{U} \right) \right]
+=
+\tr \left[ \left( \bm{U}\trans \bm{I} \bm{U} \right)\inv \left( \bm{U}\trans \bm{A}^* \bm{U} \right) \right]
+\end{equation}
+%
+whose derivative with respect to $\bm{U}$ is given by
+%
+\begin{equation}\label{eq:app3}
+-2 \bm{IU} \left( \bm{U}\trans \bm{I} \bm{U} \right)\inv \left( \bm{U}\trans \bm{A}^* \bm{U} \right) \left( \bm{U}\trans \bm{I} \bm{U} \right)\inv + 2 \bm{A}^* \bm{U} \left( \bm{U}\trans \bm{I} \bm{U} \right)\inv
+\end{equation}
+%
+\citep[A.16]{Fukunaga:1990}. Setting \eqref{eq:app3} to zero we find that the solution must satisfy
+%
+\begin{equation}
+\bm{A}^* \bm{U} = \bm{U} \left( \bm{U}\trans \bm{A}^* \bm{U} \right)
+\end{equation}
+%
+
+
+which is of the form of an eigenvalue problem, which is minimized at the eigenvector corresponding to the smallest eigenvalue of  $\bm{A}^*$. Additionally, the value of \eqref{eq:app2} lies between the minimum and maximum eigenvalue of $\bm{A}^*$.
+
+The requirement that $\bm{W}$ be of full rank results in $\bm{W} = \bm{T_r \Lambda_r}^{-1/2} \bm{U}$, where $\bm{U}$ are the eigenvectors of $\bm{A}^*$.
+\end{proof}
+
+More general proofs can be found in \cite{McDonald:1979ca} and \cite{deLeeuw:1982to}.
+
+Next we show that the resulting residuals are standardized, uncorrelated, and homoscedastic.
+
+\begin{proof} Carrying through the notation from above we see that
+\begin{align*}
+\var(\bm{W}^{*\prime} \widehat{\bm{e}}) &= \var(\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \widehat{\bm{e}})\\
+&= (\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \var(\widehat{\bm{e}}) (\bm{T_r \Lambda_r}^{-1/2} \bm{U})\\
+&= (\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{B} (\bm{T_r \Lambda_r}^{-1/2} \bm{U})\\
+&= \bm{I}
+\end{align*}
+
+\end{proof}
+
 
 
 \clearpage
@@ -491,55 +574,6 @@ We have shown that minimally confounded residuals are standardized, uncorrelated
 %
 It is important to note that goodness-of-fit tests are available for residuals at each level of the model \citep{Jiang:2001up}, but they do not lend themselves to graphical inspection, which is the focus of this paper, and the largely preferred method of distributional assessment. 
 
-\section*{Appendix: Proof of Theorem I}
-
-We present the proof of theorem~\ref{thm1}. To remain general we present our derivation in terms of the residual under investigation (the target residual), $\widehat{\bm{e}}$, which can refer to either $\widehat{\bm{\varepsilon}}$ or $\widehat{\bm{b}}$. 
-
-We want to find a full rank matrix $\bm{W}$ that minimizes 
-\begin{equation}\label{eq:app1}
-\min_{W \in \mathbb{R}^{\ell-r \times \ell} } 
-\displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{W} \var(\widehat{\bm{e}} | \bm{e}) \bm{W}\trans \bm{v_i}}
-		{\bm{v_i}\trans \bm{W} \var(\widehat{\bm{e}}) \bm{W}\trans \bm{v_i}}
-\end{equation}
-
-\begin{proof}
- Let $\bm{A} = \var(\widehat{\bm{e}} | \bm{e})$, $\bm{B} = \var(\widehat{\bm{e}})$, $r = \text{rank}(\bm{B})$, and $\ell = $ the number of elements in $\widehat{\bm{e}}$. By definition $\bm{A}$ and $\bm{B}$ are symmetric and nonnegative definite. Write the spectral decomposition of $\bm{B}$ as
-$\bm{B} = \bm{T_r \Lambda_r T_r}\trans$, where $\bm{ \Lambda_r}$ is a diagonal matrix of the nonzero eigenvalues and $\bm{T_r}$ is the matrix of associated eigenvectors.
-
-Define $\bm{F} = \bm{T_r \Lambda_r}^{1/2}$, which is a full-rank decomposition of $\bm{B}$. The Moore-Penrose inverse of $\bm{F}$ is given by
-\[
-\bm{F}\ginv = (\bm{F}\trans\bm{F})\inv \bm{F}\trans = \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans
-\]
-Now, notice that
-\[
-\bm{F}\ginv \bm{B} (\bm{F}\ginv)\trans = \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans ( \bm{T_r \Lambda_r T_r}\trans ) \bm{T_r \Lambda_r}^{-1/2} =  \bm{I}
-\]
-
-If we consider $\bm{w}_i = (\bm{F}\ginv)\trans \bm{u}_i$, then we find that 
-\begin{equation}\label{eq:app2}
-\frac{\bm{w_i}\trans A \bm{w_i}}{\bm{w_i}\trans B \bm{w_i}} = 
-\frac{\bm{u_i}\trans (\bm{F}\ginv) \bm{A} (\bm{F}\ginv)\trans \bm{u_i}}{\bm{u_i}\trans(\bm{F}\ginv) \bm{B} (\bm{F}\ginv)\trans \bm{w_i}} = 
-\frac{\bm{u_i} \bm{A}^* \bm{u_i}}{\bm{u_i}\trans \bm{u_i}}
-\end{equation}
-
-which is of the form of an eigenvalue problem, which is minimized at the eigenvector corresponding to the smallest eigenvalue of  $\bm{A}^*$. Additionally, the value of \eqref{eq:app2} lies between the minimum and maximum eigenvalue of $\bm{A}^*$.
-
-The requirement that $\bm{W}$ be of full rank results in $\bm{W} = \bm{T_r \Lambda_r}^{-1/2} \bm{U}$, where $\bm{U}$ are the eigenvectors of $\bm{A}^*$.
-\end{proof}
-
-More general proofs can be found in \cite{McDonald:1979ca} and \cite{deLeeuw:1982to}.
-
-Next we show that the resulting residuals are standardized, uncorrelated, and homoscedastic.
-
-\begin{proof} Carrying through the notation from above we see that
-\begin{align*}
-\var(\bm{W}\trans \widehat{\bm{e}}) &= \var(\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \widehat{\bm{e}})\\
-&= (\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \var(\widehat{\bm{e}}) (\bm{T_r \Lambda_r}^{-1/2} \bm{U})\\
-&= (\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{B} (\bm{T_r \Lambda_r}^{-1/2} \bm{U})\\
-&= \bm{I}
-\end{align*}
-
-\end{proof}
 
 
 %----------------------------------------------------------------------------------
