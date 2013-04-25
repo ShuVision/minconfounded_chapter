@@ -46,6 +46,7 @@
 \newtheorem{proposition}{Proposition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
+\newtheorem{algorithm}[theorem]{Algorithm}
 
 % A few commands to make typing less tedious
 \newcommand{\inv}{\ensuremath{^{-1}}}
@@ -243,6 +244,7 @@ Additionally, it is easily seen that both \eqref{eq:resid1} and \eqref{eq:resid2
 
 To combat the issues presented above, we derive a reduced set of minimally confounded residuals that are standardized, uncorrelated, and homoscedastic. \al{Our discussion focuses on the random effects, but it is straightforward to generalize the method to residuals at other levels.} \cite{HildenMinton:1995wh} presents the derivation of a similar set of minimally confounded residuals for the error terms, but did not address the random effects. The derivation is relegated to the appendix, and presents a more general method that applies to residuals at all levels of the model.
 
+\todo[inline]{The below paragraph might fit better at the end of this section (as per discussion 4/24)}
 \al{
 To assess the distributional assumptions made on the random effects we must evaluate the each random effect separately. To this end, when there is more than one random effect in a model we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th random effect. For example, in the radon study described above, if $\bm{Z}$ is organized as a block diagonal matrix, that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum \citep[page 47]{Gentle:2007}, then $\bm{L}_0 = \bm{I}_{85} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_0 = \bm{I}_{85} \bigotimes ( 0,\ 1)$ produces the random slopes. In the following discussion we will present formulas using $\widehat{\bm{b}}$ as if there is only a single random effect in the model, but substitution of $\bm{L}_k\trans \widehat{\bm{b}}$ generalizes the expressions to more complicated models.
 
@@ -305,9 +307,10 @@ where $\ell$ is the length of vector $\bm{b}$. %and $r = \text{rank}(\bm{B})$.
 \begin{equation}\label{eq:geigen}
 	\bm{Aw}_k = \gamma_k \bm{Bw}_k
 \end{equation}
-where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}; thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ \todo{revisit notation later} smallest eigenvalues. Computationally, this problem can be solved by simultaneous diagonalization of $\bm{A}$ and $\bm{B}$. We outline this procedure below for reference. We refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for details on simultaneous diagonalization with two positive semidefinite matrices.}
+where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}; thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ \todo{revisit notation later} smallest eigenvalues. Computationally, this problem can be solved by simultaneous diagonalization of $\bm{A}$ and $\bm{B}$. We outline this procedure below for reference. We refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for details on simultaneous diagonalization of two positive semidefinite matrices.\\}
 
-\paragraph{Simultaneous diagonalization.}
+\begin{algorithm}[Simultaneous diagonalization]
+Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices. The transformation that simultaneously diagonalizes both matrices can be found through the following procedure:
 \begin{enumerate}
 \item Find a transformation that whitens $\bm{B}$. Such a transformation is given by $\bm{T_r \Lambda_r}^{-1/2}$, where $\bm{T}_r$ and $\bm{\Lambda}_r$ are the first $r$ eigenvectors and eigenvalues of $\bm{B}$, and $r = \rank(\bm{B})$. 
 
@@ -320,9 +323,11 @@ where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvec
 \item Find an orthonormal transformation that diagonalizes $\bm{A}^*$. Such a transformation is given by the eigenvectors of $\bm{A}^*$, which we denote $\bm{U}$.
 \end{enumerate}
 
-Based on the above three steps, the transformation that simultaneously diagonalizes $\bm{A}$ and $\bm{B}$ is $\bm{T_r \Lambda_r}^{-1/2} \bm{U}$. 
+Based on the above three steps, the transformation that simultaneously diagonalizes $\bm{A}$ and $\bm{B}$ is $\bm{T_r \Lambda_r}^{-1/2} \bm{U}$.\\ 
 
-The above procedure can be used to find the general solution to \eqref{eq:geigen}. To find the more specific transformation $\bm{W}^*$ that projects the random effects into an $s$-dimensional space satisfying \eqref{eq:minimize}, we focus on the $s$ eigenvectors associated with the smallest eigenvalues of $\bm{A}^*$, $\bm{U}_s$, making
+\end{algorithm}
+
+The above procedure can be used to find the general solution to \eqref{eq:geigen}. To find the more specific transformation $\bm{W}^*$ that projects the random effects into an $s$-dimensional space satisfying \eqref{eq:minimize}, we focus on the $s$ eigenvectors associated with $s$ the smallest eigenvalues of $\bm{A}^*$, $\bm{U}_s$, making
 %
 \begin{equation}\label{eq:w}
 \bm{W}^* = \bm{T_r \Lambda_r}^{-1/2} \bm{U}_s
@@ -334,9 +339,9 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 %Since $\bm{B}$ is only positive semidefinite, it is important to note that the order of the groups in the data change the resulting residuals. In this case, the transformation in \eqref{eq:astar} eliminates a group
 
 \todo[inline]{A paragraph is needed here discussing the choice of $s$ (see below). Now I feel like I need to run simulations where I choose difference values for $s$.}
-The above discussion of the transformation $\bm{W}^*$ we focused on the computation aspects; however, we must also consider the more practical aspects. First, we must consider the selection of $s$,  the length of the resulting transformed residual vector. One choice is to set $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. This selection has the advantage that it will work in all situations, but the disadvantage that the fraction of confounding will not be reduced. An alternative approach would be to select $s$ based on the desired reduction in the fraction of confounding. In some situations it may not be possible to reduce the fraction of confounding much, as the number of groups will limit this reduction.
+The above discussion of the transformation $\bm{W}^*$ we focused on the computation aspects; however, we must also consider the more practical aspects. First, we must consider the selection of $s$,  the length of the resulting transformed residual vector. One choice is to set $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. This selection has the advantage that it works in all situations, but the disadvantage that the fraction of confounding will not be reduced. An alternative approach would be to select $s$ based on the desired reduction in the fraction of confounding. In some situations it may not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
 
-\todo[inline]{A paragraph motivating the varimax rotation is needed (see below).}
+\todo[inline]{A paragraph motivating the varimax rotation is needed (see below). A picture showing examples of this would help (4/24).}
 Additionally, the transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution if it is not normal, an issue often referred to as supernormality \citep{Atkinson:1985}. One approach to address this issue is to reduce the number of elements in the linear combinations, which should reduce the extent to which supernormality is a problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we can rotate the factor loadings in factor analysis. One rotation that produces rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu} who use the raw varimax rotation to produce recovered errors for distributional assessment for the ordinary regression model.
 
 
@@ -391,11 +396,23 @@ To evaluate the behavior of a Q-Q plots constructed from the rotated residuals, 
 %----------------------------------------------------------------------------------
 
 \todo[inline]{Return to the radon study after the simulation study.}
+\begin{itemize}
+\item Show Q-Q plots for the rotated random effects
+\item Discuss choice of $s$ in this example
+\item Recap root of the problems with the raw random effects (errors not normally distributed; large degree of pooling/shrinkage)
+\end{itemize}
 
 %----------------------------------------------------------------------------------
 \section{Discussion}\label{sec:discussion}
 %----------------------------------------------------------------------------------
 
+\todo[inline]{
+Summarize everything and talk about future directions (if there are any). I have started a list below}
+\begin{itemize}
+\item Consideration of other orthogonal rotations (other than varimax)
+\item Fact that we take for granted the estimation of the covariance matrices; thus some discussion of the future benefit of robust techniques would fit. A potential reference as a starting point is:\\ Li, E., \& Pourahmadi, M. (2013). An alternative REML estimation of covariance matrices in linear mixed models. Statistics \& Probability Letters, 83(4), 1071--1077. doi:10.1016/j.spl.2012.12.028
+\item Discuss the relative speed of this procedure to a bootstrap procedure
+\end{itemize}
 
 %----------------------------------------------------------------------------------
 \section*{Appendix: Proof of Theorem I}
