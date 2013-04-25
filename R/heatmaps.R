@@ -48,7 +48,7 @@ BlockZ <- function(object) {
   return(Z %*% perm.mat)
 }
 
-mcrotate <- function(A, B) {
+mcrotate <- function(A, B, s) {
   r <- rankMatrix(B)
   
   B.svd <- svd(B)
@@ -61,7 +61,9 @@ mcrotate <- function(A, B) {
   
   A.star.svd <- svd( A.star )
   
-  W <- Tr %*% Diagonal( x = 1 / sqrt( Cr.diag ) ) %*% A.star.svd$u
+  index <- seq(r, length.out = s, by = -1)
+  index <- sort(index)
+  W <- Tr %*% Diagonal( x = 1 / sqrt( Cr.diag ) ) %*% A.star.svd$u[,index]
   
   return(W)
 }
@@ -113,7 +115,7 @@ vc <- VarCorr(fm)
 Di <- Diagonal(x = c(vc[[1]], vc[[2]])) / (unname(attr(vc, "sc")))^2
 D  <- kronecker( Diagonal(ngrps), Di )
 
-Aslot <- .mod@A # ZDZ'
+Aslot <- fm@A # ZDZ'
 zdzt <- crossprod( fm@A )
 V  <- Diagonal( n ) + zdzt
 V.chol <- chol( V )
@@ -125,30 +127,81 @@ M      <- VinvX %*% XVXinv %*% t(VinvX)
 P      <- cxxmatsub(as.matrix(Vinv), as.matrix(M))
 
 ### Rotating the random slope
+L.int <- kronecker(Diagonal(ngrps), c(1, 0))
 L.slope <- kronecker(Diagonal(ngrps), c(0, 1))
 
 pzdl <- P %*% Z %*% D %*% L.slope
 A.slope <-  crossprod( pzdl )
 B.slope <- t(L.slope) %*% D %*% t(Z) %*% P %*% Z %*% D %*% L.slope
 
-fc <- diag(ginv(as.matrix(B.slope)) %*% A.slope)
+pzdl <- P %*% Z %*% D %*% L.int
+A.int <-  crossprod( pzdl )
+B.int <- t(L.int) %*% D %*% t(Z) %*% P %*% Z %*% D %*% L.int
 
-# W.slope <- as.matrix( mcrotate(A = A.slope, B = B.slope) )
-W.slope <- as.matrix( mcrotate(A = A.slope[order(fc),], B = B.slope[order(fc),]) )
+
+fc.int   <- diag(ginv(as.matrix(B.int)) %*% A.int)
+fc.slope <- diag(ginv(as.matrix(B.slope)) %*% A.slope)
+
+s <- 70 # length of rotated residual vector
+### For the random intercept
+W.int <- as.matrix( mcrotate(A = A.int, B = B.int, s = s) )
+W.vmx.int <- varimax( W.int, normalize = FALSE )$loadings
+
+Wt.int <- as.matrix( zapsmall( t(W.int) ) )
+Wt.vmx.int <- as.matrix( zapsmall( t(W.vmx.int) ) )
+
+# colnames(Wt.int) <- colnames(Wt.vmx.int) <- unique( radon$county.name )
+colnames(Wt.int) <- colnames(Wt.vmx.int) <- unique( radon$county.name )
+rownames(Wt.int) <- rownames(Wt.vmx.int) <- seq_len(nrow(Wt.int))
+
+# Pulling off variances of random ints
+rint.var <- diag(B.int) # we could order by this, but fc makes more sense
+
+reordered.Wt.int <- Wt.int[, order(fc.int, decreasing = TRUE)]
+reordered.Wt.vmx.int <- Wt.vmx.int[, order(fc.int, decreasing = TRUE)]
+
+reordered.Wt.int.tform <- sign(reordered.Wt.int) * sqrt(abs(reordered.Wt.int))
+reordered.Wt.vmx.int.tform <- sign(reordered.Wt.vmx.int) * sqrt(abs(reordered.Wt.vmx.int))
+
+ggfluctuation(as.table(reordered.Wt.int.tform), type = "colour") + 
+  theme(axis.text.x = element_text(angle = 90, hjust=1, vjust=.5, size=6, colour="black"),
+    axis.text.y = element_text(size=6, colour="black")) + 
+  xlab("County") + ylab("Index of Rotated Residuals") + 
+  coord_equal() + 
+  theme(panel.margin = unit(0, "lines")) + 
+  ggtitle(paste("s = ", s))
+
+ggsave(filename = paste("RandomIntercept_s", s, ".pdf", sep=""), width = 8,  height = 8, units = "in")
+
+ggfluctuation(as.table(reordered.Wt.vmx.int.tform), type = "colour") + 
+  theme(axis.text.x = element_text(angle = 90, hjust=1, vjust=.5, size=6, colour="black"),
+    axis.text.y = element_text(size=6, colour="black")) + 
+  xlab("County") + ylab("Index of Rotated Residuals") + 
+  coord_equal() + 
+  theme(panel.margin = unit(0, "lines")) + 
+  ggtitle(paste("s = ", s, "(varimax rotation)"))
+
+ggsave(filename = paste("RandomIntercept_s", s, "_varimax.pdf", sep=""), width = 8,  height = 8, units = "in")
+
+
+
+s <- 50 # length of rotated residual vector
+### For the random slope
+W.slope <- as.matrix( mcrotate(A = A.slope, B = B.slope, s = s) )
 W.vmx.slope <- varimax( W.slope, normalize = FALSE )$loadings
 
 Wt.slope <- as.matrix( zapsmall( t(W.slope) ) )
 Wt.vmx.slope <- as.matrix( zapsmall( t(W.vmx.slope) ) )
 
 # colnames(Wt.slope) <- colnames(Wt.vmx.slope) <- unique( radon$county.name )
-colnames(Wt.slope) <- colnames(Wt.vmx.slope) <- unique( radon$county.name )[order(fc)]
-rownames(Wt.slope) <- rownames(Wt.vmx.slope) <- as.character(1:81)
+colnames(Wt.slope) <- colnames(Wt.vmx.slope) <- unique( radon$county.name )
+rownames(Wt.slope) <- rownames(Wt.vmx.slope) <- seq_len(nrow(Wt.int))
 
 # Pulling off variances of random slopes
-rslope.var <- diag(B.slope)
+rslope.var <- diag(B.slope) # we could order by this, but fc makes more sense
 
-reordered.Wt.slope <- Wt.slope[, order(rslope.var)]
-reordered.Wt.vmx.slope <- Wt.vmx.slope[, order(rslope.var)]
+reordered.Wt.slope <- Wt.slope[, order(fc.slope, decreasing = TRUE)]
+reordered.Wt.vmx.slope <- Wt.vmx.slope[, order(fc.slope, decreasing = TRUE)]
 
 reordered.Wt.slope.tform <- sign(reordered.Wt.slope) * sqrt(abs(reordered.Wt.slope))
 reordered.Wt.vmx.slope.tform <- sign(reordered.Wt.vmx.slope) * sqrt(abs(reordered.Wt.vmx.slope))
@@ -158,11 +211,19 @@ ggfluctuation(as.table(reordered.Wt.slope.tform), type = "colour") +
     axis.text.y = element_text(size=6, colour="black")) + 
   xlab("County") + ylab("Index of Rotated Residuals") + 
   coord_equal() + 
-  theme(panel.margin = unit(0, "lines"))
+  theme(panel.margin = unit(0, "lines")) + 
+  ggtitle(paste("s = ", s))
+  
+ ggsave(filename = paste("RandomSlope_s", s, ".pdf", sep=""), width = 8,  height = 8, units = "in")
+
   
 ggfluctuation(as.table(reordered.Wt.vmx.slope.tform), type = "colour") + 
   theme(axis.text.x = element_text(angle = 90, hjust=1, vjust=.5, size=6, colour="black"),
     axis.text.y = element_text(size=6, colour="black")) + 
   xlab("County") + ylab("Index of Rotated Residuals") + 
   coord_equal() + 
-  theme(panel.margin = unit(0, "lines"))
+  theme(panel.margin = unit(0, "lines")) + 
+  ggtitle(paste("s = ", s, "(varimax rotation)"))
+  
+ggsave(filename = paste("RandomSlope_s", s, "_varimax.pdf", sep=""), width = 8,  height = 8, units = "in")
+
