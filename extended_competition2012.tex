@@ -250,13 +250,9 @@ is unaffected by this interrelationship; however, this is not the case with the 
 \section{Rotating the random effects}\label{sec:rotate}
 %----------------------------------------------------------------------------------
 
-To combat the issues presented above, we derive a reduced set of minimally confounded residuals that are standardized, uncorrelated, and homoscedastic. \al{Our discussion focuses on the random effects, but it is straightforward to generalize the method to residuals at other levels.} \cite{HildenMinton:1995wh} presents the derivation of a similar set of minimally confounded residuals for the error terms, but did not address the random effects. The derivation is relegated to the appendix, and presents a more general method that applies to residuals at all levels of the model.
+To combat the issues presented above, we derive a reduced set of minimally confounded residuals that are standardized, uncorrelated, and homoscedastic. \al{We focus our discussion (and notation) on a two-level model with a single random effect in this section for ease of explanation, but for generality we describe how to extend this method at the end of this section.} \cite{HildenMinton:1995wh} presents the derivation of a similar set of minimally confounded residuals for the error terms, but did not address the random effects which are the focus of this paper. 
 
-\todo[inline]{The below paragraph might fit better at the end of this section (as per discussion 4/24)}
-\al{
-To assess the distributional assumptions made on the random effects we must evaluate the each random effect separately. To this end, when there is more than one random effect in a model we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th random effect. For example, in the radon study described above, if $\bm{Z}$ is organized as a block diagonal matrix, that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum \citep[page 47]{Gentle:2007}, then $\bm{L}_0 = \bm{I}_{85} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_0 = \bm{I}_{85} \bigotimes ( 0,\ 1)$ produces the random slopes. In the following discussion we will present formulas using $\widehat{\bm{b}}$ as if there is only a single random effect in the model, but substitution of $\bm{L}_k\trans \widehat{\bm{b}}$ generalizes the expressions to more complicated models.
-
-Next, we define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}.} \\
+First, we define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}. \\
 
 %\begin{definition}[Fraction of confounding]\label{def:fc1}
 %For the $i$th element of the target residual vector, $\widehat{\bm{e}}$, the fraction of confounding is given by
@@ -347,13 +343,14 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 %Since $\bm{B}$ is only positive semidefinite, it is important to note that the order of the groups in the data change the resulting residuals. In this case, the transformation in \eqref{eq:astar} eliminates a group
 
 \todo[inline]{A paragraph is needed here discussing the choice of $s$ (see below). Now I feel like I need to run simulations where I choose difference values for $s$.}
-The above discussion of the transformation $\bm{W}^*$ we focused on the computation aspects; however, we must also consider the more practical aspects. First, we must consider the selection of $s$,  the length of the resulting transformed residual vector. One choice is to set $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. This selection has the advantage that it works in all situations, but the disadvantage that the fraction of confounding will not be reduced. An alternative approach would be to select $s$ based on the desired reduction in the fraction of confounding. In some situations it may not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
+Having considered the computational aspects of the problem we must next consider the more practical aspects. First, we must consider the selection of $s$,  the length of the resulting transformed residual vector. One choice is $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. This selection has the advantage that it works in all situations, but the disadvantage that the fraction of confounding will not be reduced. An alternative approach would be to select $s$ based on the desired reduction in the fraction of confounding. We consider this approach in the simulation study presented in Section~\ref{sec:simulation} and present the results in table XX. Note that in some situations it will not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
 
 \todo[inline]{A paragraph motivating the varimax rotation is needed (see below). A picture showing examples of this would help (4/24).}
-Additionally, the transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution if it is not normal, an issue often referred to as supernormality \citep{Atkinson:1985}. One approach to address this issue is to reduce the number of elements in the linear combinations, which should reduce the extent to which supernormality is a problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we can rotate the factor loadings in factor analysis. One rotation that produces rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu} who use the raw varimax rotation to produce recovered errors for distributional assessment for the ordinary regression model.
+Additionally, the transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution if the underlying distribution is not normal. This issue is often referred to as supernormality \citep{Atkinson:1985}. One approach to address supernormality in this context is to reduce the number of elements in the linear combinations, which should reduce the extent of the problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we can rotate the factor loadings in factor analysis. In this case, the rotated residuals are obtained by $\bm{Q}\trans \bm{W}^{*\prime} \widehat{\bm{b}}$. One rotation that will produce rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu} who use the raw varimax rotation to produce recovered errors for distributional assessment for the ordinary regression model.
 
+\todo[inline]{The below paragraph was moved to the end of this section (as per discussion 4/24) -- need to work on the transition after the section has been written.}
 
-\todo[inline]{I am not sure how to work in the rotations where we add more constraints to the optimization problem into this discussion...}
+To assess the distributional assumptions made on the random effects we must evaluate the each random effect separately. To this end, when there is more than one random effect in a model we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th random effect. For example, in the radon study described above, if $\bm{Z}$ is organized as a block diagonal matrix, that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum \citep[page 47]{Gentle:2007}, then $\bm{L}_0 = \bm{I}_{85} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_0 = \bm{I}_{85} \bigotimes ( 0,\ 1)$ produces the random slopes. In the following discussion we will present formulas using $\widehat{\bm{b}}$ as if there is only a single random effect in the model, but substitution of $\bm{L}_k\trans \widehat{\bm{b}}$ generalizes the expressions to more complicated models.
 
 
 %----------------------------------------------------------------------------------
@@ -382,7 +379,9 @@ Additionally, we used the following distributions to generate simulated residual
 \item $b_{1i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{1}})$, or $b_{1i}^* \overset{iid}{\sim} (\sigma_{b_{1}} / \sqrt{3})\, t_3$ , or $b_{1i}^* \overset{iid}{\sim} \sigma_{b_{1}} \, \{ \text{Exp}(1) - 1 \}$
 \end{itemize}
 %
-For simplicity we required the distributions of the random effects to the be same and assumed independence between the random effects. Under each simulation setting 1000 data sets were generated for each model.
+For simplicity we required the distributions of the random effects to the be same and assumed independence between the random effects. 
+
+Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$. We additionally explored $s =$ 80, 70, 60, 50, and 40 for the random intercept and $s = $ 50 and 40 for the random slope.\todo{Change this once the simulations have been run}
 
 To evaluate the behavior of Q-Q plots constructed from the rotated residuals, we calculated the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and Kolmogorov-Smirnov (KS) test statistics for each simulation. These test statistics measure the discrepancy between the empirical and assumed distributions. For all simulation settings the proportion of tests rejecting the null hypothesis of normality was tabulated. 
 
@@ -404,6 +403,8 @@ To evaluate the behavior of Q-Q plots constructed from the rotated residuals, we
 %----------------------------------------------------------------------------------
 \section{Radon data: Revisited}\label{sec:radon2}
 %----------------------------------------------------------------------------------
+
+Now, we return to the motivating example and use rotated residuals to assess the distribution of the random effects.
 
 \todo[inline]{Return to the radon study after the simulation study.}
 \begin{itemize}
@@ -570,13 +571,13 @@ The average weights for each raw residual (column) show that residuals receiving
 To gain further insight, we must consider the entries of weight matrix.
 %the two elements that comprise the rotation matrix: the relative precision factor of $\bm{B}$, $ \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans$, and the orthogonal rotation matrix, $\bm{U}$.
 
-\begin{figure*}[htb]
-\centering
-	\includegraphics[width=0.9\textwidth]{tmslope-image.png}
-	\caption{\label{fig:matimage} Heat map of $\bm{W}\trans$ for the predicted random slopes ordered by the variance of the predicted random effects. The entries were transformed to improve interpretability.
-	}
-	
-\end{figure*}
+%\begin{figure*}[htb]
+%\centering
+%	\includegraphics[width=0.9\textwidth]{tmslope-image.png}
+%	\caption{\label{fig:matimage} Heat map of $\bm{W}\trans$ for the predicted random slopes ordered by the variance of the predicted random effects. The entries were transformed to improve interpretability.
+%	}
+%	
+%\end{figure*}
 
 Figure~\ref{fig:matimage} is a heat map of the  matrix of weights $\bm{W}$ for predicted random slopes  ordered by the variance of the predicted random slopes (with highest variance on the right).  Note that entries are scaled to their signed square root because of skewness in the weights. A block diagonal structure becomes apparent  in the heat map. This indicates  that terms with similar variances are treated similarly in the rotation to the least confounded direction. For example, Wilkin, Murray, and Mahnomen counties have the most variable predictions and are clustered together at the top right. Additionally, the horizontal lines that appear in the top portion of the heat map align with more confounded residuals, showing how information is combined to address this issue. Looking at the rows of the heat map will also aid in the interpretation of outlying points to determine whether a few observations are dominant or if many observations contribute equally.
 

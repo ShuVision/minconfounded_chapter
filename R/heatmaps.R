@@ -19,10 +19,13 @@ setwd("~/Documents/Thesis/Dissertation/eresids-chapter/minconfounded_chapter/")
 source("../simulations/functions/cpp_functions.R")
 
 # Data for the continuous random slope example
-radon <- read.csv("data/radon_for_sims.csv")
+# radon <- read.csv("data/radon_for_sims.csv")
+radon <- read.csv("data/original_radon.csv")
+
+fm <- lmer(log.radon ~ basement + uranium + (basement | county), data = radon)
 
 # Simulated models under normality situation
-normsims <- readRDS("../simulations/continuous slope radon sims/sim_models/sige2_sigb1/norm_norm_REMLmodels.RDS")
+normsims <- readRDS("../simulations/other radon sims/sim_models/sige2_sigb1/norm_norm_REMLmodels.RDS")
 
 # the fitted model
 fm <- normsims[[1]]
@@ -112,7 +115,8 @@ p <- ncol(X)
 ngrps <- unname( summary(fm)@ngrps )
 	           
 vc <- VarCorr(fm)
-Di <- Diagonal(x = c(vc[[1]], vc[[2]])) / (unname(attr(vc, "sc")))^2
+# Di <- Diagonal(x = c(vc[[1]], vc[[2]])) / (unname(attr(vc, "sc")))^2
+Di <- bdiag(vc) / sigma(fm)^2
 D  <- kronecker( Diagonal(ngrps), Di )
 
 Aslot <- fm@A # ZDZ'
@@ -142,7 +146,7 @@ B.int <- t(L.int) %*% D %*% t(Z) %*% P %*% Z %*% D %*% L.int
 fc.int   <- diag(ginv(as.matrix(B.int)) %*% A.int)
 fc.slope <- diag(ginv(as.matrix(B.slope)) %*% A.slope)
 
-s <- 70 # length of rotated residual vector
+s <- 80 # length of rotated residual vector
 ### For the random intercept
 W.int <- as.matrix( mcrotate(A = A.int, B = B.int, s = s) )
 W.vmx.int <- varimax( W.int, normalize = FALSE )$loadings
@@ -163,6 +167,15 @@ reordered.Wt.vmx.int <- Wt.vmx.int[, order(fc.int, decreasing = TRUE)]
 reordered.Wt.int.tform <- sign(reordered.Wt.int) * sqrt(abs(reordered.Wt.int))
 reordered.Wt.vmx.int.tform <- sign(reordered.Wt.vmx.int) * sqrt(abs(reordered.Wt.vmx.int))
 
+
+ggfluctuation(as.table(reordered.Wt.int), type = "colour") + 
+  theme(axis.text.x = element_text(angle = 90, hjust=1, vjust=.5, size=6, colour="black"),
+    axis.text.y = element_text(size=6, colour="black")) + 
+  xlab("County") + ylab("Index of Rotated Residuals") + 
+  coord_equal() + 
+  theme(panel.margin = unit(0, "lines")) + 
+  ggtitle(paste("s = ", s))
+
 ggfluctuation(as.table(reordered.Wt.int.tform), type = "colour") + 
   theme(axis.text.x = element_text(angle = 90, hjust=1, vjust=.5, size=6, colour="black"),
     axis.text.y = element_text(size=6, colour="black")) + 
@@ -172,6 +185,16 @@ ggfluctuation(as.table(reordered.Wt.int.tform), type = "colour") +
   ggtitle(paste("s = ", s))
 
 ggsave(filename = paste("RandomIntercept_s", s, ".pdf", sep=""), width = 8,  height = 8, units = "in")
+
+
+ggfluctuation(as.table(reordered.Wt.vmx.int), type = "colour") + 
+  theme(axis.text.x = element_text(angle = 90, hjust=1, vjust=.5, size=6, colour="black"),
+    axis.text.y = element_text(size=6, colour="black")) + 
+  xlab("County") + ylab("Index of Rotated Residuals") + 
+  coord_equal() + 
+  theme(panel.margin = unit(0, "lines")) + 
+  ggtitle(paste("s = ", s, "(varimax rotation)"))
+
 
 ggfluctuation(as.table(reordered.Wt.vmx.int.tform), type = "colour") + 
   theme(axis.text.x = element_text(angle = 90, hjust=1, vjust=.5, size=6, colour="black"),
@@ -185,7 +208,7 @@ ggsave(filename = paste("RandomIntercept_s", s, "_varimax.pdf", sep=""), width =
 
 
 
-s <- 50 # length of rotated residual vector
+s <- 80 # length of rotated residual vector
 ### For the random slope
 W.slope <- as.matrix( mcrotate(A = A.slope, B = B.slope, s = s) )
 W.vmx.slope <- varimax( W.slope, normalize = FALSE )$loadings
@@ -195,7 +218,7 @@ Wt.vmx.slope <- as.matrix( zapsmall( t(W.vmx.slope) ) )
 
 # colnames(Wt.slope) <- colnames(Wt.vmx.slope) <- unique( radon$county.name )
 colnames(Wt.slope) <- colnames(Wt.vmx.slope) <- unique( radon$county.name )
-rownames(Wt.slope) <- rownames(Wt.vmx.slope) <- seq_len(nrow(Wt.int))
+rownames(Wt.slope) <- rownames(Wt.vmx.slope) <- seq_len(nrow(Wt.slope))
 
 # Pulling off variances of random slopes
 rslope.var <- diag(B.slope) # we could order by this, but fc makes more sense
