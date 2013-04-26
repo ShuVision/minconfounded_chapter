@@ -65,7 +65,7 @@ mcrotate <- function(A, B, s) {
   A.star.svd <- svd( A.star )
   
   index <- seq(r, length.out = s, by = -1)
-  index <- sort(index)
+  index <- sort(index[index >= 0])
   W <- Tr %*% Diagonal( x = 1 / sqrt( Cr.diag ) ) %*% A.star.svd$u[,index]
   
   return(W)
@@ -146,7 +146,7 @@ B.int <- t(L.int) %*% D %*% t(Z) %*% P %*% Z %*% D %*% L.int
 fc.int   <- diag(ginv(as.matrix(B.int)) %*% A.int)
 fc.slope <- diag(ginv(as.matrix(B.slope)) %*% A.slope)
 
-s <- 80 # length of rotated residual vector
+s <- 60 # length of rotated residual vector
 ### For the random intercept
 W.int <- as.matrix( mcrotate(A = A.int, B = B.int, s = s) )
 W.vmx.int <- varimax( W.int, normalize = FALSE )$loadings
@@ -208,7 +208,7 @@ ggsave(filename = paste("RandomIntercept_s", s, "_varimax.pdf", sep=""), width =
 
 
 
-s <- 80 # length of rotated residual vector
+s <- 60 # length of rotated residual vector
 ### For the random slope
 W.slope <- as.matrix( mcrotate(A = A.slope, B = B.slope, s = s) )
 W.vmx.slope <- varimax( W.slope, normalize = FALSE )$loadings
