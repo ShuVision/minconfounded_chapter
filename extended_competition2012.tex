@@ -143,9 +143,7 @@ This leads to dependence between  predicted random effects and  error terms (cf.
 	\includegraphics[width=\linewidth]{raw-intercept-qq.pdf}
 		\caption{Random intercepts}
 	  \end{subfigure}	
-%	\includegraphics[width=0.32\textwidth]{raw-slope-qq.pdf}
 	\caption{\label{fig:qqplots1} Q-Q plots of predict\al{ed residuals} at different levels %, and random slopes (right) 
-<<<<<<< HEAD
 	for model~\eqref{eq:radon}.} %Note that random slopes (not shown) exhibited the largest deviation from normality -- see figure~\ref{fig:lineup}. }
 \end{figure}
 
@@ -155,17 +153,17 @@ This leads to dependence between  predicted random effects and  error terms (cf.
 %	\includegraphics[width=0.9\textwidth]{test.jpeg}%lineup-rslope.pdf}
 %	\caption{\label{fig:lineup} Lineup of normal Q-Q plots for the random slope term in model~\eqref{eq:radon}. The 19 null plots were obtained by simulation from the model. Can you identify the observed Q-Q plot?}
 %\end{figure}
-=======
-	for model~\eqref{eq:radon}. \hh{Both plots suggest a deviation of residuals from a normal distribution.} Note that random slopes (see figure~\ref{fig:lineup}) exhibited the largest deviation from normality. }
-\end{figure}
-
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=0.9\textwidth]{test.jpeg}%lineup-rslope.pdf}
-	\caption{\label{fig:lineup} Lineup of normal Q-Q plots for the random slope term in model~\eqref{eq:radon}. The 19 null plots were obtained by simulation from the model. Can you identify the observed Q-Q plot? }
-\end{figure}
->>>>>>> c74049f748b1e3a28d5b27e7ed3139bb5ee36d0e
+%=======
+%	for model~\eqref{eq:radon}. \hh{Both plots suggest a deviation of residuals from a normal distribution.} Note that random slopes (see figure~\ref{fig:lineup}) exhibited the largest deviation from normality. }
+%\end{figure}
+%
+%
+%\begin{figure}[htb]
+%	\centering
+%	\includegraphics[width=0.9\textwidth]{test.jpeg}%lineup-rslope.pdf}
+%	\caption{\label{fig:lineup} Lineup of normal Q-Q plots for the random slope term in model~\eqref{eq:radon}. The 19 null plots were obtained by simulation from the model. Can you identify the observed Q-Q plot? }
+%\end{figure}
+%>>>>>>> c74049f748b1e3a28d5b27e7ed3139bb5ee36d0e
 
 \todo[inline]{Add a comment about these Q-Q plots being representative for situations when the level-1 assumptions are violated}
 
@@ -183,26 +181,24 @@ seems to be violated for the error terms and both random effects. But is this ca
 %
 %To further explore the distributional assumptions made on the random effects we create lineups \citep{buja:2009} of quantile plots were created by randomly inserting the true quantile plot for each term into a field of 19 plots generated under the null hypothesis of normality. A lineup for the random slopes is presented in Figure~\ref{fig:lineup}. The observed quantile plot (panel 16) is indistinguishable from the field of null plots, indicating that these predicted random slopes do not deviate from what would be expected under model~\eqref{eq:radon}, contradicting the results of the AD test. 
 
-<<<<<<< HEAD
 %What becomes apparent from the lineup, is that, astonishingly, {\it none} of the null plots conforms to normality. Further investigation  revealed  that a  proportion far above the nominal 0.05 of distributions of random intercepts  fail the normality tests, too.
 
 
 %Further evidence of the impact of this dependence is evident from a small scale simulation study. We used the design of the radon study to simulate 5000 data sets under model~\eqref{eq:radon} satisfying the assumptions discussed above. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
 %%: $\widehat{\beta_0} = 1.46$, $\widehat{\beta_1} = -0.64$, $\widehat{\beta_2} = 0.77$, $\widehat{\sigma}_{\varepsilon} = 0.75$, $\widehat{\sigma}_{b_0} = 0.12$, $\widehat{\sigma}_{b_1} = 0.35$, and $\widehat{\rho} = 0.26$. 
 
-
-Table~\ref{tab:edf} shows results from 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal, heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
-For each simulated data set, we refit model~\eqref{eq:radon} and evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and  Kolmogorov-Smirnov (KS), tests for normality.  
-=======
-What becomes apparent from the lineup, is that, astonishingly, {\it none} of the null plots conforms to normality. Further investigation  reveals  that a  proportion far above the nominal 0.05 of distributions of random intercepts  fail the normality tests, too:
+%
+%Table~\ref{tab:edf} shows results from 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal, heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
+%For each simulated data set, we refit model~\eqref{eq:radon} and evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and  Kolmogorov-Smirnov (KS), tests for normality.  
+%=======
+%What becomes apparent from the lineup, is that, astonishingly, {\it none} of the null plots conforms to normality. Further investigation  reveals  that a  proportion far above the nominal 0.05 of distributions of random intercepts  fail the normality tests, too:
 %
 %
 %%Further evidence of the impact of this dependence is evident from a small scale simulation study. We used the design of the radon study to simulate 5000 data sets under model~\eqref{eq:radon} satisfying the assumptions discussed above. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
 %%%: $\widehat{\beta_0} = 1.46$, $\widehat{\beta_1} = -0.64$, $\widehat{\beta_2} = 0.77$, $\widehat{\sigma}_{\varepsilon} = 0.75$, $\widehat{\sigma}_{b_0} = 0.12$, $\widehat{\sigma}_{b_1} = 0.35$, and $\widehat{\rho} = 0.26$. 
 %
-Table~\ref{tab:edf} shows results from 1000 parametric bootstrap samples of model~\eqref{eq:radon} under normal errors.
+Table~\ref{tab:edf} shows results from 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal, heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
 For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
->>>>>>> c74049f748b1e3a28d5b27e7ed3139bb5ee36d0e
 %Table~\ref{tab:edf} shows the proportions of the tests of the empirical distribution function rejecting the null hypothesis of normality at the .05 significance level. 
 Type I error rates are hugely inflated the random intercept, making an assessment of normality based on the empirical distribution impossible. Use of standardized random intercepts and \citetapos{Lange:1989uu} weighted Q-Q plot stabilize the type I errors when the level-1 residuals are normal, but the type I errors remain inflated for non-normal level-1 residuals.
 %The inflated type I error rates for the random effects indicate that the empirical distribution of the random effects cannot be used to assess the assumption of normality. 
@@ -220,11 +216,7 @@ In the example we are able to use the empirical distribution for assessing norma
 %
 
 \begin{table}[!h]
-<<<<<<< HEAD
 \caption{\label{tab:edf} Proportions of tests rejecting the null hypothesis of normality of the predicted random intercepts at the nominal .05 significance level when the errors are normal, heavy tailed, and skewed. The type I error rates are hugely inflated under each setting. \vspace{.5em}
-=======
-\caption{\label{tab:edf} Proportions of tests rejecting the null hypothesis of normality of the predicted error terms and random effects at the nominal .05 significance level. \hh{didn't we want to keep the  background for power? - it should be consistent throughout the paper} Type I error rates are hugely inflated. \vspace{.5em}
->>>>>>> c74049f748b1e3a28d5b27e7ed3139bb5ee36d0e
 }
 %\begin{center}
 %\begin{tabular}{l rrr} \hline
