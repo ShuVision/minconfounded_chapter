@@ -51,4 +51,12 @@ ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=radon), map = co
   	panel.background =  element_blank(),
   	panel.grid.major =  element_blank(),
   	panel.grid.minor =  element_blank())
-ggsave(file="map.png", width=2, height=3)
+
+
+twocounties <- subset(mn, county %in% c("hennepin", "winona"))
+twocounties$basement <- twocounties$floor==0
+tc.stat <- ddply(twocounties, .(county, basement), summarise, sd=sd(activity)/length(activity), activity=mean(activity))
+
+qplot(factor(basement), activity, data=twocounties, facets=~county) + 
+  geom_errorbar(aes(ymin=activity-1.96*sd, ymax=activity+1.96*sd), data=tc.stat, width=0.5, size=0.75, colour="steelblue")+
+  geom_point(data=tc.stat, size=3.5, colour="steelblue") + theme_bw()+theme(aspect.ratio=1) + ylab("radon") + xlab("basement")
