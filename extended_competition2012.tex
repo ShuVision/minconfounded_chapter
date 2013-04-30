@@ -367,10 +367,10 @@ Additionally, the transformation of the random effects results in a vector where
 \begin{figure}[t]
 	\centering
 	\subfloat[$\bm{W}^{*\prime}$]{
-		\includegraphics[width=0.49\textwidth]{cartoon_heatmap_raw.pdf}
+		\includegraphics[width=0.49\textwidth]{cropped_cartoon_heatmap_raw.pdf}
 	}
 	\subfloat[$\bm{Q}\trans\bm{W}^{*\prime}$]{
-		\includegraphics[width=0.49\textwidth]{cartoon_heatmap_varimax.pdf}
+		\includegraphics[width=0.49\textwidth]{cropped_cartoon_heatmap_varimax.pdf}
 	}
 	\caption{\label{fig:cartoon} Heatmap of $\bm{W}^{*\prime}$ and $\bm{Q}\trans\bm{W}^{*\prime}$ calculated where $\bm{Q}$ for a simulated random intercept model with 20 groups. Applying the varimax rotation, $\bm{Q}$, reduces the number of groups loading on a given rotated residual.}
 \end{figure}
@@ -382,6 +382,8 @@ Up to this point our discussion has ignored that a model may (and often will) co
 %----------------------------------------------------------------------------------
 \section{Simulation study}\label{sec:simulation}
 %----------------------------------------------------------------------------------
+
+\todo[inline]{Should we use the full rank matrices or not? The only thing this does is ``clean up'' the simulations with $s$}
 
 We conducted a simulation study to assess the utility of the rotated residuals proposed in the previous section. The design matrices from model \eqref{eq:radon} were used as templates for realistic data generation.
 %; however, we used only a the subset of the 60 counties with full rank $\bm{Z}$ matrices for simplicity of the simulation design.
@@ -448,6 +450,7 @@ Summarize everything and talk about future directions (if there are any). I have
 \item Consideration of other orthogonal rotations (other than varimax)
 \item Fact that we take for granted the estimation of the covariance matrices; thus some discussion of the future benefit of robust techniques would fit. A potential reference as a starting point is:\\ Li, E., \& Pourahmadi, M. (2013). An alternative REML estimation of covariance matrices in linear mixed models. Statistics \& Probability Letters, 83(4), 1071--1077. doi:10.1016/j.spl.2012.12.028
 \item Discuss the relative speed of this procedure to a bootstrap procedure
+\item Discuss why we are not using the ``upward'' residuals analysis approach discussed in the lit review chapter.
 \end{itemize}
 
 %----------------------------------------------------------------------------------
@@ -536,6 +539,7 @@ proving that the rotated errors are standardized, uncorrelated, and homoscedasti
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
 
+\clearpage
 
 
 \paragraph{Radon Data Revisited:}

@@ -1,4 +1,7 @@
 
+library(lme4)
+library(ggplot2)
+
 # First let's generate a data set.
 
 # Imagine we have a two level model, students nested within classrooms.
