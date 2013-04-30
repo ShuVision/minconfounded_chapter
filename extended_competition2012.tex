@@ -191,9 +191,9 @@ In this example we are able to use the empirical distribution for assessing norm
 	\begin{tabular}{l rrr} \hline
 	& \multicolumn{3}{c}{Test} \\ \cline{2-4}
 	  	&     AD & CVM  & KS \\ \hline
-	Normal       	   &	 0.847 & 0.821 & 0.710  \\ 
-	Heavy tailed 	   & 0.655 & 0.612 & 0.471  \\ 
-	Skewed       	   & 0.910 & 0.903 & 0.802  \\  
+	Normal       	   &	 0.655 & 0.612 & 0.471  \\ 
+	Heavy tailed 	   & 0.910 & 0.903 & 0.802  \\ 
+	Skewed       	   & 0.847 & 0.821 & 0.710  \\  
 	\hline
 	\end{tabular}
 }
@@ -202,9 +202,9 @@ In this example we are able to use the empirical distribution for assessing norm
 	\begin{tabular}{l rrr} \hline
 	& \multicolumn{3}{c}{Test} \\ \cline{2-4}
 	  	&     AD & CVM  & KS \\ \hline
-	Normal       	  & 	0.888 & 0.866 & 0.792  \\ 
-	Heavy tailed 	  &	0.739 & 0.712 & 0.591  \\ 
-	Skewed       	  &	0.939 & 0.938 & 0.869  \\  
+	Normal       	  & 0.739 & 0.712 & 0.591  \\ 
+	Heavy tailed 	  &	0.939 & 0.938 & 0.8691  \\ 
+	Skewed       	  &	0.888 & 0.866 & 0.792  \\  
 	\hline
 	\end{tabular}
 }
@@ -360,13 +360,11 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 %\todo[inline]{Address that the order of the data will influence the resulting residuals.}
 %Since $\bm{B}$ is only positive semidefinite, it is important to note that the order of the groups in the data change the resulting residuals. In this case, the transformation in \eqref{eq:astar} eliminates a group
 
-\todo[inline]{A paragraph is needed here discussing the choice of $s$ (see below). Now I feel like I need to run simulations where I choose difference values for $s$.}
 Having considered the computational aspects of the problem we must next consider the more practical aspects. First, we must consider the selection of $s$,  the length of the resulting transformed residual vector. One choice is $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. This selection has the advantage that it works in all situations, but the disadvantage that the fraction of confounding will \al{often} not be \al{significantly} reduced. An alternative approach would be to select $s$ based on the desired reduction in the fraction of confounding. A starting point for this approach can be determined for a given reduction in the fraction of confounding by considering the relative contributions of the ordered diagonal elements of $\bm{B}\ginv\bm{A}$ to \eqref{eq:fc2}. We consider this approach in the simulation study presented in Section~\ref{sec:simulation} and present the results in table XX. Note that in some situations it will not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
 
-\todo[inline]{A paragraph motivating the varimax rotation is needed (see below). A picture showing examples of this would help (4/24) -- maybe a smaller example, what Meeker would call a cartoon.}
 Additionally, the transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution, if the underlying distribution is not normal. This issue is often referred to as supernormality \citep{Atkinson:1985}. One approach to address supernormality in this context is to reduce the number of elements in the linear combinations, which should reduce the extent of the problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we can rotate the factor loadings in factor analysis. In this case, the rotated residuals are obtained by $\bm{Q}\trans \bm{W}^{*\prime} \widehat{\bm{b}}$. One rotation that will produce rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Figure~\ref{fig:cartoon} displays heatmaps of $\bm{W}^{*\prime}$ (left) and $\bm{Q}\trans\bm{W}^{*\prime}$ (right) for a simulated random intercept model with 20 groups, and demonstrates that the varimax rotation reduces the number of groups loading highly on each rotated residual.  Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu} who use the raw varimax rotation to produce recovered errors for distributional assessment in the ordinary regression model.
 
-\begin{figure}[!h]
+\begin{figure}[t]
 	\centering
 	\subfloat[$\bm{W}^{*\prime}$]{
 		\includegraphics[width=0.49\textwidth]{cartoon_heatmap_raw.pdf}
@@ -531,17 +529,13 @@ proving that the rotated errors are standardized, uncorrelated, and homoscedasti
 %\end{proof}
 
 
+%----------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------
+\bibliographystyle{apa}
+\bibliography{lcresid_bib}
+%----------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------
 
-\clearpage
-\todo[inline]{I have made edits up to here}
-
-%\al{
-%The use of $\bm{w_{\ell-r}}\trans \widehat{\bm{e}}$ does not result in a set of residuals
-%To obtain a set of $\ell - r$ least confounded residuals, we expand our attention from $\bm{w_{\ell-r}}$ by considering all $\bm{w_{\ell-r}}, \ldots, \bm{w_1}$ where, $\bm{w_i} = \bm{T_r \Lambda_r}^{-1/2} \bm{u_i}$ and $\bm{u_i}$ is the eigenvector corresponding to the $i$th ordered eigenvalue of $\bm{A^*}$. Thus, the  resulting residuals are  $\bm{w_{\ell-r}}\trans  \widehat{\bm{e}}, \ldots, \bm{w_1}\trans \widehat{\bm{e}}$, or, more compactly, $\bm{W}\trans \widehat{\bm{e}}$.
-%These residuals are standardized, uncorrelated, and homoscedastic. 
-%}
-
-%When there are multiple random effects in the model, such as with the radon example, there are many possible sets of least confounded residuals. One solution is to follow the suggestion of \cite{Lange:1989uu}, taking linear combinations of the random effects for use Q-Q plots. For example, $\bm{L}\trans \widehat{\bm{b}}$ can be chosen to produce the marginal random effects. The above procedure then utilizes $\bm{A} = \var(\bm{L}\trans \widehat{\bm{b}} | \bm{b})$ and $\bm{B} = \var(\bm{L}\trans \widehat{\bm{b}})$, with the solution proceeding accordingly.
 
 
 \paragraph{Radon Data Revisited:}
@@ -624,14 +618,6 @@ We have shown that minimally confounded residuals are standardized, uncorrelated
 %
 It is important to note that goodness-of-fit tests are available for residuals at each level of the model \citep{Jiang:2001up}, but they do not lend themselves to graphical inspection, which is the focus of this paper, and the largely preferred method of distributional assessment. 
 
-
-
-%----------------------------------------------------------------------------------
-%----------------------------------------------------------------------------------
-\bibliographystyle{apa}
-\bibliography{lcresid_bib}
-%----------------------------------------------------------------------------------
-%----------------------------------------------------------------------------------
 
 \section*{Simulation results}
 
