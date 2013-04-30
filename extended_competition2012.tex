@@ -367,10 +367,11 @@ Additionally, the transformation of the random effects results in a vector where
 \begin{figure}[t]
 	\centering
 	\subfloat[$\bm{W}^{*\prime}$]{
-		\includegraphics[width=0.49\textwidth]{cropped_cartoon_heatmap_raw.pdf}
+		\includegraphics[width=0.4\textwidth]{cropped_cartoon_heatmap_raw.pdf}
 	}
+	\qquad
 	\subfloat[$\bm{Q}\trans\bm{W}^{*\prime}$]{
-		\includegraphics[width=0.49\textwidth]{cropped_cartoon_heatmap_varimax.pdf}
+		\includegraphics[width=0.4\textwidth]{cropped_cartoon_heatmap_varimax.pdf}
 	}
 	\caption{\label{fig:cartoon} Heatmap of $\bm{W}^{*\prime}$ and $\bm{Q}\trans\bm{W}^{*\prime}$ calculated where $\bm{Q}$ for a simulated random intercept model with 20 groups. Applying the varimax rotation, $\bm{Q}$, reduces the number of groups loading on a given rotated residual.}
 \end{figure}
@@ -422,8 +423,6 @@ To evaluate the behavior of Q-Q plots constructed from the rotated residuals, we
 
 \item The power to detect non-normal random effects distributions increases as $\sigma^2_b$ increases relative to $\sigma^2_\varepsilon$.
 
-
-\todo[inline]{I think the exploration of the weight matrices can be moved here. This would allow for the comparison of the varimax and original matrices.}
 
 \end{itemize}
 
