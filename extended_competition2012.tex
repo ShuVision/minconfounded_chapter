@@ -1,4 +1,4 @@
-\documentclass{article} % JASA requires 12 pt font for manuscripts
+\documentclass[12pt]{article} % JASA requires 12 pt font for manuscripts
 %\usepackage{JASA_manu}        % For JASA manuscript formatting
 
 % for citations
@@ -208,7 +208,32 @@ In this example we are able to use the empirical distribution for assessing norm
 	\hline
 	\end{tabular}
 }
+
+
+%\subfloat[Standardized Random intercept]{
+%	\begin{tabular}{l rrr} \hline
+%	& \multicolumn{3}{c}{Test} \\ \cline{2-4}
+%	  	&     AD & CVM  & KS \\ \hline
+%	Normal       	   &	 0.048 &	 0.045 &	 0.046  \\ 
+%	Heavy tailed 	   & 0.349 & 0.325 & 0.256  \\ 
+%	Skewed       	   & 0.520 & 0.487 & 0.399  \\  
+%	\hline
+%	\end{tabular}
+%}
+%\qquad
+%\subfloat[Standardized Random slope]{
+%	\begin{tabular}{l rrr} \hline
+%	& \multicolumn{3}{c}{Test} \\ \cline{2-4}
+%	  	&     AD & CVM  & KS \\ \hline
+%	Normal       	  & 0.039 &	0.041 &	0.048  \\ 
+%	Heavy tailed 	  &	0.434 & 0.403 & 0.320  \\ 
+%	Skewed       	  &	0.540 & 0.504 & 0.422  \\  
+%	\hline
+%	\end{tabular}
+%}
+
 \end{table}
+
 
 %\begin{table}[!h]
 %\caption{\label{tab:edf} Proportions of tests rejecting the null hypothesis of normality of the predicted error terms and random effects at the nominal .05 significance level. \hh{didn't we want to keep the  background for power? - it should be consistent throughout the paper} Type I error rates are hugely inflated. \vspace{.5em}
@@ -268,6 +293,7 @@ is unaffected by this interrelationship; however, this is not the case with the 
 %----------------------------------------------------------------------------------
 \section{Rotating the random effects}\label{sec:rotate}
 %----------------------------------------------------------------------------------
+\todo[inline]{Give the ``issues'' a more specific name.}
 \hh{XXX we need a better name than 'issues'}
 To combat the issues presented above, we derive a reduced set of minimally confounded residuals that are standardized, uncorrelated, and homoscedastic. \al{We focus our discussion (and notation) on a two-level model with a single random effect in this section for ease of explanation, and we describe how to extend this method at the end of this section.} \cite{HildenMinton:1995wh} presents the derivation of a similar set of minimally confounded residuals for the error terms, but does not address the random effects which are the focus of this paper. 
 
@@ -360,7 +386,12 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 %\todo[inline]{Address that the order of the data will influence the resulting residuals.}
 %Since $\bm{B}$ is only positive semidefinite, it is important to note that the order of the groups in the data change the resulting residuals. In this case, the transformation in \eqref{eq:astar} eliminates a group
 
-Having considered the computational aspects of the problem we must next consider the more practical aspects. First, we must consider the selection of $s$,  the length of the resulting transformed residual vector. One choice is $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. This selection has the advantage that it works in all situations, but the disadvantage that the fraction of confounding will \al{often} not be \al{significantly} reduced. An alternative approach would be to select $s$ based on the desired reduction in the fraction of confounding. A starting point for this approach can be determined for a given reduction in the fraction of confounding by considering the relative contributions of the ordered diagonal elements of $\bm{B}\ginv\bm{A}$ to \eqref{eq:fc2}. We consider this approach in the simulation study presented in Section~\ref{sec:simulation} and present the results in table XX. Note that in some situations it will not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
+\todo[inline]{Put in paragraph headings here after you think of informative (and brief) headings.}
+
+Having considered the computational aspects of the problem we must next consider the more practical aspects. First, we must consider the selection of $s$,  the length of the resulting transformed residual vector. One choice is $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. 
+%This selection has the advantage that it works in all situations, but the disadvantage that the fraction of confounding will \al{often} not be \al{significantly} reduced. 
+An alternative approach is to select $s$ based on the desired reduction in the fraction of confounding. A starting point for this approach can be determined for a given reduction in the fraction of confounding by considering the relative contributions of the ordered diagonal elements of $\bm{B}\ginv\bm{A}$ to \eqref{eq:fc2}. We consider this approach in the simulation study presented in Section~\ref{sec:simulation} and present the results in table XX. Note that in some situations it will not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
+
 
 Additionally, the transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution, if the underlying distribution is not normal. This issue is often referred to as supernormality \citep{Atkinson:1985}. One approach to address supernormality in this context is to reduce the number of elements in the linear combinations, which should reduce the extent of the problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we can rotate the factor loadings in factor analysis. In this case, the rotated residuals are obtained by $\bm{Q}\trans \bm{W}^{*\prime} \widehat{\bm{b}}$. One rotation that will produce rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Figure~\ref{fig:cartoon} displays heatmaps of $\bm{W}^{*\prime}$ (left) and $\bm{Q}\trans\bm{W}^{*\prime}$ (right) for a simulated random intercept model with 20 groups, and demonstrates that the varimax rotation reduces the number of groups loading highly on each rotated residual.  Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu} who use the raw varimax rotation to produce recovered errors for distributional assessment in the ordinary regression model.
 
@@ -377,7 +408,7 @@ Additionally, the transformation of the random effects results in a vector where
 \end{figure}
 
 
-Up to this point our discussion has ignored that a model may (and often will) contain numerous random effects. In this case, the assumptions made on each random effect should be checked; thus, we propose assessing the each random effect separately. To this end we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th random effect. For example, in a model with a random intercept and random slope, if $\bm{Z}$ is organized as a block diagonal matrix---that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum \citep[page 47]{Gentle:2007}---then $\bm{L}_0 = \bm{I}_{m} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_0 = \bm{I}_{m} \bigotimes ( 0,\ 1)$ produces the random slopes. The methodology presented in this section can be generalized to models with numerous random effects by substituting $\bm{L}_k\trans \widehat{\bm{b}}$ for $\widehat{\bm{b}}$.
+Up to this point our discussion has ignored that a model may (and often will) contain numerous random effects. In this case, the assumptions made on each random effect should be checked; thus, we propose assessing the each random effect separately. To this end we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th random effect. For example, in a model with a random intercept and random slope, if $\bm{Z}$ is organized as a block diagonal matrix---that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum \citep[page 47]{Gentle:2007}---then $\bm{L}_0 = \bm{I}_{m} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_1 = \bm{I}_{m} \bigotimes ( 0,\ 1)$ produces the random slopes. The methodology presented in this section can be generalized to models with numerous random effects by substituting $\bm{L}_k\trans \widehat{\bm{b}}$ for $\widehat{\bm{b}}$.
 
 
 %----------------------------------------------------------------------------------
@@ -393,8 +424,9 @@ Data were generated by setting the fixed effects coefficients to the maximum lik
 %
 \begin{itemize}
 \item $\sigma^2_\varepsilon = 4$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
-\item $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 4$
 \item $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
+\item $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 4$
+
 \end{itemize}
 %
 Additionally, we used the following distributions to generate simulated residuals $\varepsilon_{ij}^*$, $b_{0i}^*$, and $b_{1i}^*$ from which the data were generated:
@@ -407,7 +439,7 @@ Additionally, we used the following distributions to generate simulated residual
 \item $b_{1i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{1}})$, or $b_{1i}^* \overset{iid}{\sim} (\sigma_{b_{1}} / \sqrt{3})\, t_3$ , or $b_{1i}^* \overset{iid}{\sim} \sigma_{b_{1}} \, \{ \text{Exp}(1) - 1 \}$
 \end{itemize}
 %
-For simplicity we required the distributions of the random effects to the be same and assumed independence between the random effects. 
+For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. 
 
 Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$, which are 58 and 59 for the intercept and slope, respectively. We additionally explored $s =$ 50, 40, and 30.
 
