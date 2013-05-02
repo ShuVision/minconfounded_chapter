@@ -35,7 +35,7 @@
 
 % line spacing
 \usepackage{setspace}
-%\doublespace
+\doublespace
 
 % For math typsetting
 \usepackage{bm}
@@ -62,7 +62,7 @@
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator*{\argmin}{arg\,min}
 
-\title{Are you Normal? \\ {\Large The problem of confounded residual structures in hierarchical models}}
+\title{Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models}
 \author{
 	Adam Loy and Heike Hofmann\\
 	Department of Statistics,
@@ -78,6 +78,7 @@
 \begin{abstract}
 We encounter hierarchical data structures in a wide range of applications. Regular linear models are extended by random effects to address correlation between observations in the same group. Inference for random effects is sensitive to  distributional mis-specifications of the model, making checks for (distributional) assumptions particularly important.  The investigation of residual structures is complicated by the presence of  different levels and corresponding  dependencies. Ignoring these dependencies leads to  erroneous conclusions using our familiar tools, such as Q-Q plots or normal tests. We first show the extent of the problem, then we introduce the {\it fraction of confounding} as a measure of the level of confounding in a model and finally introduce minimally confounded residuals as a solution to assessing distributional model assumptions.
 \end{abstract}
+{\bf Keywords:} Diagnostic, Multilevel model, Q-Q plot, Random effects distribution
 
 %----------------------------------------------------------------------------------
 
@@ -126,7 +127,7 @@ A map of counties in Minnesota is given in figure \ref{fig:map}. The color shadi
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.7\linewidth]{figures/radon-twocounties.pdf}
-\caption{\label{fig:tc} Activity of radon levels for Hennepin and Winona counties at basement levels and higher. 95\% confidence intervals for the sample mean are given by the error bars. Radon levels at the basement level are usually higher. \hh{XXX Explain the blue lines} \al{XXX Here is a fix.}}
+\caption{\label{fig:tc} Activity of radon levels for Hennepin and Winona counties at basement levels and higher. 95\% confidence intervals for the sample mean are given by the error bars. Radon levels at the basement level are usually higher.}
 \end{figure}
 %
 The within-county sample sizes, $n_i$, are extremely unbalanced, ranging from one house to 116 houses, with 50\% of the counties having between three and ten houses. Such unbalanced designs are common in applications, and result in a high degree of pooling \al{(shrinkage)} for the predicted county-level random effects. \hh{XXX why the parenthesis? - This might need another sentence, because pooling is what leads to shrinkage, which in turn leads to residual dependencies on different levels.}
@@ -154,7 +155,6 @@ This leads to dependence between  predicted random effects and  error terms (cf.
 	\caption{\label{fig:lineup} Lineup of normal Q-Q plots for the random slope term in model~\eqref{eq:radon}. The 19 null plots were obtained by simulation from the model. Can you identify the observed Q-Q plot? }
 \end{figure}
 
-\todo[inline]{Add a comment about these Q-Q plots being representative for situations when the level-1 assumptions are violated -- Where does this best fit?}
 
 In this example, Q-Q plots (Figure~\ref{fig:qqplots1}) for the residuals show that normality 
 seems to be violated for the error terms and both random effects. But is this cause for concern?
@@ -180,11 +180,11 @@ What becomes apparent from the lineup, is that, astonishingly, {\it none} of the
 Table~\ref{tab:edf} shows results from 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal, heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
 For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
 %Table~\ref{tab:edf} shows the proportions of the tests of the empirical distribution function rejecting the null hypothesis of normality at the .05 significance level. 
-Type I error rates are hugely inflated both random effects, making an assessment of normality based on the empirical distribution impossible. Use of standardized random effects and \citetapos{Lange:1989uu} weighted Q-Q plot reduce the type I errors to the nominal level when the level-1 residuals are normal, but the type I errors remain inflated for non-normal level-1 residuals.
+The type I error rates are hugely inflated both random effects, making an assessment of normality based on the empirical distribution impossible. Use of standardized random effects and \citetapos{Lange:1989uu} weighted Q-Q plot reduce the type I errors to the nominal level when the level-1 residuals are normal, but the type I errors remain inflated for non-normal level-1 residuals. Similarly, when the random effects are not normal, simulations (not shown) revealed that the tests were unable to reject the null hypothesis of normality when the level-1 residuals were normal. \al{From the above we see that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.}
 %The inflated type I error rates for the random effects indicate that the empirical distribution of the random effects cannot be used to assess the assumption of normality. 
-In this example we are able to use the empirical distribution for assessing normality of  level-1 residuals  as  pooling is minimal at this level. In situations with higher levels of pooling, this may not be the case.
+In this example we are able to use the empirical distribution to assess normality of  level-1 residuals  as  pooling is minimal at this level. In situations with higher levels of pooling, this may not be the case.
 
-\begin{table}[!h]
+\begin{table}[t]
 \centering
 \caption{\label{tab:edf} Proportions of tests rejecting the null hypothesis of normality of the predicted random intercept and slope at the nominal .05 significance level when the error terms are normal, heavy tailed, and skewed. The type I error rates are hugely inflated under each setting. \vspace{.5em}}
 \subfloat[Random intercept]{
@@ -253,7 +253,6 @@ In this example we are able to use the empirical distribution for assessing norm
 
 In the remainder of this paper we investigate the root of concern that leads to the distributional deviations, and derive residuals that address the issues introduced by pooling, allowing again for a familiar graphical assessment of these distributions.
 
-
 %----------------------------------------------------------------------------------
 \section{Hierarchical linear models and residuals}\label{sec:resid}
 %----------------------------------------------------------------------------------
@@ -293,9 +292,8 @@ is unaffected by this interrelationship; however, this is not the case with the 
 %----------------------------------------------------------------------------------
 \section{Rotating the random effects}\label{sec:rotate}
 %----------------------------------------------------------------------------------
-\todo[inline]{Give the ``issues'' a more specific name.}
-\hh{XXX we need a better name than 'issues'}
-To combat the issues presented above, we derive a reduced set of minimally confounded residuals that are standardized, uncorrelated, and homoscedastic. \al{We focus our discussion (and notation) on a two-level model with a single random effect in this section for ease of explanation, and we describe how to extend this method at the end of this section.} \cite{HildenMinton:1995wh} presents the derivation of a similar set of minimally confounded residuals for the error terms, but does not address the random effects which are the focus of this paper. 
+
+To combat \al{the confounded nature of the predicted random effects}, we derive a reduced set of minimally confounded residuals that are standardized, uncorrelated, and homoscedastic. \al{We focus our discussion (and notation) on a two-level model with a single random effect in this section for ease of explanation, and we describe how to extend this method at the end of this section.} \cite{HildenMinton:1995wh} presents the derivation of a similar set of minimally confounded residuals for the error terms, but does not address the random effects which are the focus of this paper. 
 
 First, we define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}. \\
 
@@ -473,7 +471,6 @@ Under each simulation setting 1000 data sets were generated for each model and t
 
 Now, we return to the motivating example and use rotated residuals to assess the distribution of the random effects.
 
-\todo[inline]{Return to the radon study after the simulation study.}
 \begin{itemize}
 \item Show Q-Q plots for the rotated random effects
 \item Discuss choice of $s$ in this example
@@ -487,6 +484,7 @@ Now, we return to the motivating example and use rotated residuals to assess the
 \todo[inline]{
 Summarize everything and talk about future directions (if there are any). I have started a list below}
 \begin{itemize}
+\item Mention the robust model fitting procedures
 \item Consideration of other orthogonal rotations (other than varimax)
 \item Fact that we take for granted the estimation of the covariance matrices; thus some discussion of the future benefit of robust techniques would fit. A potential reference as a starting point is:\\ Li, E., \& Pourahmadi, M. (2013). An alternative REML estimation of covariance matrices in linear mixed models. Statistics \& Probability Letters, 83(4), 1071--1077. doi:10.1016/j.spl.2012.12.028
 \item Discuss the relative speed of this procedure to a bootstrap procedure
@@ -579,7 +577,14 @@ proving that the rotated errors are standardized, uncorrelated, and homoscedasti
 
 \clearpage
 
+%----------------------------------------------------------------------------------
+\appendix
+\section{Supplement to ``Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models''}
+%----------------------------------------------------------------------------------
 
+\subsection{Full simulation results}
+
+\clearpage
 \paragraph{Radon Data Revisited:}
 We now use the results from Theorem 1 to assess the amount of confounding in the radon example and examine distributional assumptions for the minimally confounded case.
 %Returning to the radon example from Section~\ref{sec:ex}, we use least confounded residuals to assess the distribution of the random effects using individual quantile plots rather than lineups. 
