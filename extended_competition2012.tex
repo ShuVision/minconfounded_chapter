@@ -119,7 +119,7 @@ A map of counties in Minnesota is given in figure \ref{fig:map}. The color shadi
 %
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.5\linewidth]{figures/map.pdf}
+\includegraphics[width=0.5\linewidth]{figures/map-cropped.pdf}
 \caption{\label{fig:map} Map of the counties in Minnesota. The color shading represents average Radon activity.}
 \end{figure}
 %
@@ -355,7 +355,7 @@ where $\ell$ is the length of vector $\bm{b}$. %and $r = \text{rank}(\bm{B})$.
 \begin{equation}\label{eq:geigen}
 	\bm{Aw}_k = \gamma_k \bm{Bw}_k
 \end{equation}
-where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}; thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ \todo{revisit notation later} smallest eigenvalues. Computationally, this problem can be solved by simultaneous diagonalization of $\bm{A}$ and $\bm{B}$. We outline this procedure below for reference and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\}
+where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}; thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. Computationally, this problem can be solved by simultaneous diagonalization of $\bm{A}$ and $\bm{B}$. We outline this procedure below for reference and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\}
 
 \begin{algorithm}[Simultaneous diagonalization]
 Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices. The transformation that simultaneously diagonalizes both matrices can be found through the following procedure:
@@ -386,13 +386,15 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 %\todo[inline]{Address that the order of the data will influence the resulting residuals.}
 %Since $\bm{B}$ is only positive semidefinite, it is important to note that the order of the groups in the data change the resulting residuals. In this case, the transformation in \eqref{eq:astar} eliminates a group
 
-\todo[inline]{Put in paragraph headings here after you think of informative (and brief) headings.}
 
-Having considered the computational aspects of the problem we must next consider the more practical aspects. First, we must consider the selection of $s$,  the length of the resulting transformed residual vector. One choice is $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. 
+Having considered the computational aspects of the problem we must next consider the more practical aspects. 
+
+\paragraph{Selecting $s$.}
+First, we must consider the selection of $s$,  the length of the resulting transformed residual vector. One choice is $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. 
 %This selection has the advantage that it works in all situations, but the disadvantage that the fraction of confounding will \al{often} not be \al{significantly} reduced. 
 An alternative approach is to select $s$ based on the desired reduction in the fraction of confounding. A starting point for this approach can be determined for a given reduction in the fraction of confounding by considering the relative contributions of the ordered diagonal elements of $\bm{B}\ginv\bm{A}$ to \eqref{eq:fc2}. We consider this approach in the simulation study presented in Section~\ref{sec:simulation} and present the results in table XX. Note that in some situations it will not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
 
-
+\paragraph{Avoiding supernormality.}
 Additionally, the transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution, if the underlying distribution is not normal. This issue is often referred to as supernormality \citep{Atkinson:1985}. One approach to address supernormality in this context is to reduce the number of elements in the linear combinations, which should reduce the extent of the problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we can rotate the factor loadings in factor analysis. In this case, the rotated residuals are obtained by $\bm{Q}\trans \bm{W}^{*\prime} \widehat{\bm{b}}$. One rotation that will produce rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Figure~\ref{fig:cartoon} displays heatmaps of $\bm{W}^{*\prime}$ (left) and $\bm{Q}\trans\bm{W}^{*\prime}$ (right) for a simulated random intercept model with 20 groups, and demonstrates that the varimax rotation reduces the number of groups loading highly on each rotated residual.  Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu} who use the raw varimax rotation to produce recovered errors for distributional assessment in the ordinary regression model.
 
 \begin{figure}[t]
@@ -407,7 +409,7 @@ Additionally, the transformation of the random effects results in a vector where
 	\caption{\label{fig:cartoon} Heatmap of $\bm{W}^{*\prime}$ and $\bm{Q}\trans\bm{W}^{*\prime}$ calculated where $\bm{Q}$ for a simulated random intercept model with 20 groups. Applying the varimax rotation, $\bm{Q}$, reduces the number of groups loading on a given rotated residual.}
 \end{figure}
 
-
+\paragraph{Extension to multiple random effects.}
 Up to this point our discussion has ignored that a model may (and often will) contain numerous random effects. In this case, the assumptions made on each random effect should be checked; thus, we propose assessing the each random effect separately. To this end we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th random effect. For example, in a model with a random intercept and random slope, if $\bm{Z}$ is organized as a block diagonal matrix---that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum \citep[page 47]{Gentle:2007}---then $\bm{L}_0 = \bm{I}_{m} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_1 = \bm{I}_{m} \bigotimes ( 0,\ 1)$ produces the random slopes. The methodology presented in this section can be generalized to models with numerous random effects by substituting $\bm{L}_k\trans \widehat{\bm{b}}$ for $\widehat{\bm{b}}$.
 
 
@@ -415,21 +417,15 @@ Up to this point our discussion has ignored that a model may (and often will) co
 \section{Simulation study}\label{sec:simulation}
 %----------------------------------------------------------------------------------
 
-\todo[inline]{Should we use the full rank matrices or not? The only thing this does is ``clean up'' the simulations with $s$}
+We conducted a simulation study to assess the specificity and sensitivity of tests of normality based on the two rotated residuals proposed in the previous section. 
 
-We conducted a simulation study to assess the utility of the rotated residuals proposed in the previous section. The design matrices from model \eqref{eq:radon} were used as templates for realistic data generation.
-%; however, we used only a the subset of the 60 counties with full rank $\bm{Z}$ matrices for simplicity of the simulation design.
-%Two hierarchical linear models were considered using the design matrices from the radon data as a template for realistic data generation. The first model corresponds to model \eqref{eq:radon}. The second model drops counties with only one observation to obtain a full rank $\bm{Z}$ matrix. Additionally, a house-level soil uranium measure was simulated from a normal distribution using the county-level average measure as the mean and a standard deviation of 1. This measure was included a fixed and random effect. The indicator variable for whether the measure was taken in the basement was retained in the model, but was not considered random.
-Data were generated by setting the fixed effects coefficients to the maximum likelihood estimates and varying the variance components according to the following design:
-%
-\begin{itemize}
-\item $\sigma^2_\varepsilon = 4$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
-\item $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
-\item $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 4$
+\subsection{Design}\label{sec:sim-design}
+%----------------------------------------------------------------------------------
 
-\end{itemize}
-%
-Additionally, we used the following distributions to generate simulated residuals $\varepsilon_{ij}^*$, $b_{0i}^*$, and $b_{1i}^*$ from which the data were generated:
+The simulation study examined the proportion of Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and Kolmogorov-Smirnov (KS) tests for normality that rejected the null hypothesis of normality. This allows us to examine situations in which we correctly and incorrectly reject the null hypothesis of normality (i.e., power and type I error, respectively).  These test statistics measure the discrepancy between the empirical distribution of the rotated random effects and assumed distribution of the random effects, which sheds light on the behavior of Q-Q plots constructed from the rotated residuals. 
+
+The design matrices from model \eqref{eq:radon} were used as templates for realistic data generation; however, only the 60 counties with full rank $\bm{Z}$ matrices were included for simplicity of the simulation design.
+The following distributions were used to generate simulated residuals $\varepsilon_{ij}^*$, $b_{0i}^*$, and $b_{1i}^*$ from which the data were generated:
 %
 \begin{itemize}
 \item $\varepsilon_{ij}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{\varepsilon})$, or $\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$ , or $\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$
@@ -439,11 +435,24 @@ Additionally, we used the following distributions to generate simulated residual
 \item $b_{1i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{1}})$, or $b_{1i}^* \overset{iid}{\sim} (\sigma_{b_{1}} / \sqrt{3})\, t_3$ , or $b_{1i}^* \overset{iid}{\sim} \sigma_{b_{1}} \, \{ \text{Exp}(1) - 1 \}$
 \end{itemize}
 %
-For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. 
+For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. Additionally, the the fixed effects coefficients were set to the maximum likelihood estimates.
 
-Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$, which are 58 and 59 for the intercept and slope, respectively. We additionally explored $s =$ 50, 40, and 30.
+To investigate the effect that pooling has on the rotated random effects we considered  three variance structures:
+%
+\begin{itemize}
+\item $\sigma^2_\varepsilon = 4$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
+\item $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
+\item $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 4$
 
-To evaluate the behavior of Q-Q plots constructed from the rotated residuals, we calculated the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and Kolmogorov-Smirnov (KS) test statistics for each simulation. These test statistics measure the discrepancy between the empirical and assumed distributions. For all simulation settings the proportion of tests rejecting the null hypothesis of normality was tabulated. 
+\end{itemize}
+%
+
+Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$ (which are 58 and 59 for the random intercept and slope, respectively) as well as $s =$ 55, 50, 45, 40, 35, and 30.
+
+
+\subsection{Results}\label{sec:sim-results}
+%----------------------------------------------------------------------------------
+
 
 
 \todo[inline]{Now summarize the results. Below is my informal summary (This is old now... ignore).}
@@ -488,9 +497,7 @@ Summarize everything and talk about future directions (if there are any). I have
 \section*{Appendix: Additional technical details}
 %----------------------------------------------------------------------------------
 
-\al{
 We present the proof of the claim that the rotated residuals, $\bm{W}^{*\prime} \widehat{\bm{b}}$, are standardized, uncorrelated, and homoscedastic. Following the developments presented in Section~\ref{sec:rotate} we present this discussion for the random effects assuming that there is only a random intercept. Generalization to the situation with multiple random effects follows as previously discussed.
-}
 
 \begin{proof}
  Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b})$, $\bm{B} = \var(\widehat{\bm{b}})$, $r = \text{rank}(\bm{B})$, and $\ell = $ the number of elements in $\widehat{\bm{b}}$. Note that by definition $\bm{A}$ and $\bm{B}$ are symmetric and nonnegative definite. Following from above, $\bm{T}_r$ and $\bm{\Lambda}_r$ follow from the spectral (or eigenvalue) decomposition of $\bm{B} = \bm{T_r \Lambda_r T_r}\trans$, and $\bm{U}$ follows from the spectral decomposition of $\bm{A^*} = \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{A T_r \Lambda_r}^{-1/2} = \bm{U} \bm{\Gamma} \bm{U}\trans$. Then, 
