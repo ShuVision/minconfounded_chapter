@@ -451,8 +451,7 @@ Under each simulation setting 1000 data sets were generated for each model and t
 \subsection{Results}\label{sec:sim-results}
 %----------------------------------------------------------------------------------
 
-
-
+Figure~\ref{fig:fc} shows the average fraction confounding for the rotated random intercept (left) and random slope (right) over the different values for $s$ for each variance structure. As $s$ is reduced, the fraction of confounding is reduced.
 
 \begin{figure}[h]
 	\centering
@@ -460,18 +459,47 @@ Under each simulation setting 1000 data sets were generated for each model and t
 	\caption{\label{fig:fc} Change in the fraction confounding (FC) as the dimension of the rotated random effects vector, $s$, is reduced for the three variance structures considered in the simulation study. LOESS smoothers estimate the trajectory of FC as $s$ varies.}
 \end{figure}
 
+Figures~\ref{fig:results-int} and \ref{fig:results-slope} display the estimated type I error rates using the AD normality test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes when $\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$. The other tests performed similarly, and full simulation results can be found in the supplementary material. Both figures show that the type I error rate is stabilized close to the nominal level with the appropriate choice of $s$. For the random intercept most choices of $s$ perform reasonably well, with the type I error rate closest to the nominal level for all error distribution between 30 and 40. For the random slope, $s$ must be chosen to be 30 for type I error to be near the nominal level; however, $s$ may need to be even smaller to achieve the nominal rate. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{ad_intercept_results.pdf}
+	\caption{\label{fig:results-int} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random intercepts (left) and varimax rotated random intercepts (right) by the distribution of the error terms and $s$. }
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{ad_slope_results.pdf}
+	\caption{\label{fig:results-slope} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by the distribution of the error terms and $s$.}
+\end{figure}
+
+Figures~\ref{fig:power-int} and \ref{fig:power-slope} show the estimated power of the AD test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes for the variance structure identified above. We find that the power to detect nonnormal random effects distributions to be amplified by the varimax rotation and larger choices of $s$. Additional simulations (not discussed) using a model with a continuous variable defining the random slope showed results similar to the random intercept (Figure~\ref{fig:power-int}).
+
+While the estimated power is quite low, the fact that the type I error rate can be stabilized indicates that distributional problems detected using the rotated random effects will truly be problems; thus, providing more information than the (unrotated) predicted random effects.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{ad_intercept_power.pdf}
+	\caption{\label{fig:power-int} Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random intercepts (left) and varimax rotated random intercepts (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random intercept.}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{ad_slope_power.pdf}
+	\caption{\label{fig:power-slope}Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random slope.}
+\end{figure}
 
 
 
-\begin{itemize}
-\item Overall, the rotated residuals reduce the type I error rates to rates much closer to the nominal level. When $\sigma^2_\varepsilon > \sigma^2_b$ there is minor inflation of the type I errors when the error terms are non-normal, but less severe than without the rotation. When $\sigma^2_\varepsilon \leq \sigma^2_b$ the type I errors are essentially at the nominal levels.
-
-\item As expected, the power to detect non-normal random effects distributions is quite low for the rotated residuals. The varimax rotation does help amplify the power of detection, though an increase in the type I error rate also results.
-
-\item The power to detect non-normal random effects distributions increases as $\sigma^2_b$ increases relative to $\sigma^2_\varepsilon$.
-
-
-\end{itemize}
+%\begin{itemize}
+%\item Overall, the rotated residuals reduce the type I error rates to rates much closer to the nominal level. When $\sigma^2_\varepsilon > \sigma^2_b$ there is minor inflation of the type I errors when the error terms are non-normal, but less severe than without the rotation. When $\sigma^2_\varepsilon \leq \sigma^2_b$ the type I errors are essentially at the nominal levels.
+%
+%\item As expected, the power to detect non-normal random effects distributions is quite low for the rotated residuals. The varimax rotation does help amplify the power of detection, though an increase in the type I error rate also results.
+%
+%\item The power to detect non-normal random effects distributions increases as $\sigma^2_b$ increases relative to $\sigma^2_\varepsilon$.
+%
+%
+%\end{itemize}
 
 %----------------------------------------------------------------------------------
 \section{Radon data: Revisited}\label{sec:radon2}
