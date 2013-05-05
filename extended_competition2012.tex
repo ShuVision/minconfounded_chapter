@@ -191,9 +191,9 @@ In this example we are able to use the empirical distribution to assess normalit
 	\begin{tabular}{l rrr} \hline
 	& \multicolumn{3}{c}{Test} \\ \cline{2-4}
 	  	&     AD & CVM  & KS \\ \hline
-	Normal       	   &	 0.655 & 0.612 & 0.471  \\ 
-	Heavy tailed 	   & 0.910 & 0.903 & 0.802  \\ 
-	Skewed       	   & 0.847 & 0.821 & 0.710  \\  
+	Normal       	   &	 0.66 & 0.61 & 0.47  \\ 
+	Heavy tailed 	   & 0.91 & 0.90 & 0.80  \\ 
+	Skewed       	   & 0.85 & 0.82 & 0.71  \\  
 	\hline
 	\end{tabular}
 }
@@ -202,9 +202,9 @@ In this example we are able to use the empirical distribution to assess normalit
 	\begin{tabular}{l rrr} \hline
 	& \multicolumn{3}{c}{Test} \\ \cline{2-4}
 	  	&     AD & CVM  & KS \\ \hline
-	Normal       	  & 0.739 & 0.712 & 0.591  \\ 
-	Heavy tailed 	  &	0.939 & 0.938 & 0.8691  \\ 
-	Skewed       	  &	0.888 & 0.866 & 0.792  \\  
+	Normal       	  & 0.74 & 0.71 & 0.59  \\ 
+	Heavy tailed 	  &	0.94 & 0.94 & 0.87  \\ 
+	Skewed       	  &	0.89 & 0.87 & 0.79  \\  
 	\hline
 	\end{tabular}
 }
@@ -453,7 +453,15 @@ Under each simulation setting 1000 data sets were generated for each model and t
 
 
 
-\todo[inline]{Now summarize the results. Below is my informal summary (This is old now... ignore).}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{fc_by_s.pdf}
+	\caption{\label{fig:fc} Change in the fraction confounding (FC) as the dimension of the rotated random effects vector, $s$, is reduced for the three variance structures considered in the simulation study. LOESS smoothers estimate the trajectory of FC as $s$ varies.}
+\end{figure}
+
+
+
 
 \begin{itemize}
 \item Overall, the rotated residuals reduce the type I error rates to rates much closer to the nominal level. When $\sigma^2_\varepsilon > \sigma^2_b$ there is minor inflation of the type I errors when the error terms are non-normal, but less severe than without the rotation. When $\sigma^2_\varepsilon \leq \sigma^2_b$ the type I errors are essentially at the nominal levels.
