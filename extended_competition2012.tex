@@ -473,9 +473,9 @@ Figures~\ref{fig:results-int} and \ref{fig:results-slope} display the estimated 
 	\caption{\label{fig:results-slope} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by the distribution of the error terms and $s$.}
 \end{figure}
 
-Figures~\ref{fig:power-int} and \ref{fig:power-slope} show the estimated power of the AD test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes for the variance structure identified above. We find that the power to detect nonnormal random effects distributions to be amplified by the varimax rotation and larger choices of $s$. Additional simulations (not discussed) using a model with a continuous variable defining the random slope showed results similar to the random intercept (Figure~\ref{fig:power-int}).
+Figures~\ref{fig:power-int} and \ref{fig:power-slope} show the estimated power of the AD test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes for the variance structure identified above. We find the estimated power to detect non-normal random effects distributions to be amplified by the varimax rotation and larger choices of $s$. Additionally, the estimated power is lower than would be expected from randomly sampled values from an exponential or $t_3$ distribution. For example, when $s=30$ simulations indicate the power of the AD test to detect a $t_3$ distribution to be approximately 0.4, whereas our simulations indicate nearly half the power, with the random slope generally having lower power than the random intercept. Interestingly, the there is higher power to detect a heavy tailed distribution than a skewed distribution.  Additional simulations (not discussed) using a model with a continuous variable defining the random slope showed results similar to the random intercept (Figure~\ref{fig:power-int}).
 
-While the estimated power is quite low, the fact that the type I error rate can be stabilized indicates that distributional problems detected using the rotated random effects will truly be problems; thus, providing more information than the (unrotated) predicted random effects.
+While the estimated power is lower than the gold standard, the fact that the type I error rate can be stabilized indicates that distributional problems detected using the rotated random effects will truly be problems; thus, providing more information than the (unrotated) predicted random effects.
 
 \begin{figure}
 	\centering
@@ -504,18 +504,62 @@ While the estimated power is quite low, the fact that the type I error rate can 
 %----------------------------------------------------------------------------------
 \section{Radon data: Revisited}\label{sec:radon2}
 %----------------------------------------------------------------------------------
+Now, we return to the motivating example and use rotated residuals to assess the distribution of the random effects using the rotated random effects. 
+Recall that in Section~\ref{sec:ex} we determined that the error terms were not normally distributed; thus, examination of Q-Q plots of the predicted random effects will likely lead to erroneous conclusions due to the high degree of shrinkage. 
 
-Now, we return to the motivating example and use rotated residuals to assess the distribution of the random effects.
+In order to construct Q-Q plots of the rotated random effects we consider the choice of $s$. For model \eqref{eq:radon} the high degree of shrinkage leads to a large fraction of confounding for each random term: 0.72 for the random intercept and 0.70 for the random slope. In choosing $s$ we wish to reduce the fraction of confounding to approximately 0.5, but we will restrict attention to $s > 30$ so as not to decrease the maximum possible power of a normality test too greatly. Table~\eqref{tab:s} shows the fraction confounding for $s = 30, 40, 50, 60, 70, \text{ and } 80$. 
+%
+\begin{table}[ht]
+\centering
+\caption{\label{tab:s} The fraction of confounding for the rotated random effects at various settings of $s$ for model \eqref{eq:radon}.}
+\begin{tabular}{rrrrrrr}
+  \hline
+  s         & 30 & 40 & 50 & 60 & 70 & 80 \\ \hline
+  Intercept & 0.56 & 0.60 & 0.63 & 0.66 & 0.69 & 0.72 \\ 
+  Slope     & 0.52 & 0.56 & 0.60 & 0.63 & 0.66 & 0.70 \\ 
+   \hline
+\end{tabular}
+\end{table}
+%
+Based on  Table~\eqref{tab:s} we choose $s=30$ for the calculation of the rotated random effects. Figure~\ref{fig:rotate-radon} shows Q-Q plots of the marginal rotated random effects, which do not exhibit large deviations from the assumption of normality.
 
-\begin{itemize}
-\item Show Q-Q plots for the rotated random effects
-\item Discuss choice of $s$ in this example
-\item Recap root of the problems with the raw random effects (errors not normally distributed; large degree of pooling/shrinkage)
-\end{itemize}
+
+
+\begin{figure}[htb]
+	\centering
+	 \subfloat[Random intercept]{
+		\includegraphics[width=0.4\linewidth]{rotatedQQ-intercept.pdf}
+		}
+	  \subfloat[Random slope]{
+		\includegraphics[width=0.4\linewidth]{rotatedQQ-slope.pdf}
+		}	
+	\caption{\label{fig:rotate-radon} Normal Q-Q plots with pointwise 95\% confidence bands of the marginals rotated random effects. The deviations from normality are much less pronounced than before resulting in the failure to reject the null hypothesis of normality.}
+\end{figure}
+
+%\begin{itemize}
+%\item Show Q-Q plots for the rotated random effects
+%\item Discuss choice of $s$ in this example
+%\item Recap root of the problems with the raw random effects (errors not normally distributed; large degree of pooling/shrinkage)
+%\end{itemize}
 
 %----------------------------------------------------------------------------------
 \section{Discussion}\label{sec:discussion}
 %----------------------------------------------------------------------------------
+
+In this paper we have proposed the use of Q-Q plots of rotated residuals as an informal assessment of the distributional assumptions made on the random effects in hierarchical linear model. We have shown that rotated random effects are standardized, uncorrelated, homoscedastic. Following from this result, the pointwise confidence bands shown were not unique to this method, but follow from the development of the normal Q-Q plot (FIND REFERENCE), and were provided as an aid to interpretation, not as a formal test.
+
+Simulation has revealed that tests of normality using the rotated random effects achieve approximately nominal type I error rates with appropriate choice of the length, $s$. This indicates that assessment of the rotated residuals can target the distribution of the random effects in the presence of pooling, which the predicted random effects cannot. The power to detect non-normal random effects distributions is lower than the gold standard, which is to be expected as we have taken linear combinations of predicted random effects in our rotation. The varimax rotation has reduced the impact of the resulting supernormality, other orthogonal rotations (i.e., quartimax) may perform better and is an area for future investigation. We believe the low power is less troubling than the inflated type I error rates resulting from high levels of confounding, as the detection of a distributional deviation is now trustworthy, which previously not the case for highly confounded models. This indicates that the predicted random effects do contain useful diagnostic information even when models are highly confounded, but not in their ``raw'' state.
+ 
+\todo[inline]{Should I say something about  simulation-based methods here?}
+
+
+
+% If a graphical assessment of the random effects distribution is not desired, then there are other available methods for model assessment \cite[c.f., the $\chi^2$ test proposed by][]{Jiang:2001up}, but they do not lend themselves to graphical inspection. While such goodness-of-fit tests can detect distributional deviations, they do not suggest how the assumption as been violated. 
+
+%The rotated random effects can be used with Q-Q plots, which are familiar to analysts. 
+%The use of the rotated random effects results in approximately nominal type I error rates when the dimension, $s$, is properly chosen; however, simulations have revealed that tests using the rotated random effects have low power to detect non-normal alternatives. Despite this fact, the rotated random effects present a method allowing for the predicted random effects to be used in distributional assessment, and when a deviation is detected one has cause to believe this detection, which previously not the case for highly confounded models. Additionally, this method is far less computationally demanding than simulation-based assessments, such as simulation envelopes for Q-Q plots, which are not guaranteed to work in situations with high levels of confounding (see the supplemental materials). Also, orthogonal rotations other than the varimax rotation (such as the quartimax rotation) may provide additional power, and is an area for future investigation. 
+
+
 
 \todo[inline]{
 Summarize everything and talk about future directions (if there are any). I have started a list below}
@@ -1440,12 +1484,14 @@ Skewed       & Normal       && 0.05 &&  0.10 & 0.08 & 0.07 && 0.19 & 0.15 & 0.10
 \rowcolor{gray!20}             &              && 0.10 &&  0.12 & 0.11 & 0.12 && 0.13 & 0.12 & 0.10 \\ 
 \rowcolor{gray!20}             & Skewed       && 0.05 &&  0.06 & 0.06 & 0.06 && 0.05 & 0.05 & 0.05 \\ 
 \rowcolor{gray!20}             &              && 0.10 &&  0.10 & 0.11 & 0.10 && 0.10 & 0.09 & 0.09 \\ 
+ &&&&&&&&&&&\\
 Heavy tailed & Normal       && 0.05 &&  0.22 & 0.19 & 0.15 && 0.38 & 0.34 & 0.28 \\ 
              &              && 0.10 &&  0.30 & 0.26 & 0.24 && 0.48 & 0.43 & 0.38 \\ 
              & Heavy tailed && 0.05 &&  0.25 & 0.23 & 0.19 && 0.43 & 0.40 & 0.32 \\ 
              &              && 0.10 &&  0.33 & 0.30 & 0.26 && 0.50 & 0.47 & 0.42 \\ 
              & Skewed       && 0.05 &&  0.20 & 0.19 & 0.15 && 0.42 & 0.38 & 0.30 \\ 
              &              && 0.10 &&  0.29 & 0.27 & 0.23 && 0.49 & 0.46 & 0.39 \\ 
+              &&&&&&&&&&&\\
 Skewed       & Normal       && 0.05 &&  0.18 & 0.15 & 0.13 && 0.36 & 0.30 & 0.22 \\ 
              &              && 0.10 &&  0.29 & 0.25 & 0.21 && 0.48 & 0.39 & 0.32 \\ 
              & Heavy tailed && 0.05 &&  0.22 & 0.19 & 0.15 && 0.41 & 0.33 & 0.26 \\ 
