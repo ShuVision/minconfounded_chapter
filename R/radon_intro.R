@@ -52,6 +52,7 @@ ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=radon), map = co
   	panel.grid.major =  element_blank(),
   	panel.grid.minor =  element_blank())
 
+ggsave(filename=file.choose(new=T), width = 4, height = 4, units = "in")
 
 twocounties <- subset(mn, county %in% c("hennepin", "winona"))
 twocounties$basement <- twocounties$floor==0
