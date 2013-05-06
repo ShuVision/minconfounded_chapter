@@ -47,6 +47,17 @@ Gentle, J.~E. (2007).
   Statistics}.
 \newblock Springer, New York.
 
+\bibitem[\protect\astroncite{Ghidey et~al.}{2004}]{Ghidey:2004id}
+Ghidey, W., Lesaffre, E., and Eilers, P. (2004).
+\newblock Smooth random effects distribution in a linear mixed model.
+\newblock {\em Biometrics}, 60(4):945--953.
+
+\bibitem[\protect\astroncite{Ghidey et~al.}{2010}]{Ghidey:2010de}
+Ghidey, W., Lesaffre, E., and Verbeke, G. (2010).
+\newblock A comparison of methods for estimating the random effects
+  distribution of a linear mixed model.
+\newblock {\em Statistical Methods in Medical Research}, 19(6):575--600.
+
 \bibitem[\protect\astroncite{Hilden-Minton}{1995}]{HildenMinton:1995wh}
 Hilden-Minton, J.~A. (1995).
 \newblock {\em Multilevel diagnostics for mixed and hierarchical linear
@@ -79,6 +90,19 @@ McDonald, R.~P., Torii, Y., and Nishisato, S. (1979).
   to scaling.
 \newblock {\em Psychometrika}, 44(2):211--227.
 
+\bibitem[\protect\astroncite{Shen and Louis}{1999}]{Shen:1999gd}
+Shen, W. and Louis, T.~A. (1999).
+\newblock Empirical bayes estimation via the smoothing by roughening approach.
+\newblock {\em Journal of Computational and Graphical Statistics},
+  8(4):800--823.
+
+\bibitem[\protect\astroncite{Verbeke and Lesaffre}{1996}]{Verbeke:1996va}
+Verbeke, G. and Lesaffre, E. (1996).
+\newblock A linear mixed-effects model with heterogeneity in the random-effects
+  population.
+\newblock {\em Journal of the American Statistical Association},
+  91(433):217--221.
+
 \bibitem[\protect\astroncite{Verbeke and Lesaffre}{1997}]{Verbeke:1997tf}
 Verbeke, G. and Lesaffre, E. (1997).
 \newblock {The effect of misspecifying the random-effects distribution in
@@ -89,5 +113,11 @@ Verbeke, G. and Lesaffre, E. (1997).
 Wilk, M.~B. and Gnanadesikan, R. (1968).
 \newblock Probability plotting methods for the analysis of data.
 \newblock {\em Biometrika}, 55(1):1--17.
+
+\bibitem[\protect\astroncite{Zhang and Davidian}{2001}]{Zhang:2001wo}
+Zhang, D. and Davidian, M. (2001).
+\newblock Linear mixed models with flexible distributions of random effects for
+  longitudinal data.
+\newblock {\em Biometrics}, 57(3):795--802.
 
 \end{thebibliography}
