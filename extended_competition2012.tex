@@ -28,7 +28,7 @@
 \usepackage{todonotes}
 
 % title formatting
-\usepackage[compact,small]{titlesec} 
+\usepackage[compact,small]{titlesec}
 % page formatting
 \usepackage[margin = 1in]{geometry}
 \usepackage[parfill]{parskip}
@@ -550,6 +550,9 @@ In this paper we have proposed the use of Q-Q plots of rotated residuals as an i
 
 Simulation has revealed that tests of normality using the rotated random effects achieve approximately nominal type I error rates with appropriate choice of the length, $s$. This indicates that assessment of the rotated residuals can target the distribution of the random effects in the presence of pooling, which the predicted random effects cannot. The power to detect non-normal random effects distributions is lower than the gold standard, which is to be expected as we have taken linear combinations of predicted random effects in our rotation. The varimax rotation has reduced the impact of the resulting supernormality, other orthogonal rotations (i.e., quartimax) may perform better and is an area for future investigation. We believe the low power is less troubling than the inflated type I error rates resulting from high levels of confounding, as the detection of a distributional deviation is now trustworthy, which previously not the case for highly confounded models. This indicates that the predicted random effects do contain useful diagnostic information even when models are highly confounded, but not in their ``raw'' state.
  
+It is important to note that the procedure outlined in this paper assumes that the covariance structures in the hierarchical linear model are correctly specified. If this is not the case, then we would expect this model violation to affect assessment of the rotated random effect. Therefore, in practice we recommend an assessment of the covariance structures prior to distributional assessment, but it would be of interest to assess the effectiveness of this methodology with robust covariance estimation techniques, such as that presented by \cite{Li:2013je}.
+
+\todo[inline]{I don't quite know how to wrap this all up...}
 
 % If a graphical assessment of the random effects distribution is not desired, then there are other available methods for model assessment \cite[c.f., the $\chi^2$ test proposed by][]{Jiang:2001up}, but they do not lend themselves to graphical inspection. While such goodness-of-fit tests can detect distributional deviations, they do not suggest how the assumption as been violated. 
 
@@ -558,15 +561,12 @@ Simulation has revealed that tests of normality using the rotated random effects
 
 
 
-\todo[inline]{
-Summarize everything and talk about future directions (if there are any). I have started a list below}
-\begin{itemize}
-\item Mention the robust model fitting procedures
-\item Consideration of other orthogonal rotations (other than varimax)
-\item Fact that we take for granted the estimation of the covariance matrices; thus some discussion of the future benefit of robust techniques would fit. A potential reference as a starting point is:\\ Li, E., \& Pourahmadi, M. (2013). An alternative REML estimation of covariance matrices in linear mixed models. Statistics \& Probability Letters, 83(4), 1071--1077. doi:10.1016/j.spl.2012.12.028
-\item Discuss the relative speed of this procedure to a bootstrap procedure
-\item Discuss why we are not using the ``upward'' residuals analysis approach discussed in the lit review chapter.
-\end{itemize}
+%\todo[inline]{
+%Summarize everything and talk about future directions (if there are any). I have started a list below}
+%\begin{itemize}
+%\item Discuss the relative speed of this procedure to a bootstrap procedure
+%\item Discuss why we are not using the ``upward'' residuals analysis approach discussed in the lit review chapter.
+%\end{itemize}
 
 %----------------------------------------------------------------------------------
 \section*{Appendix: Additional technical details}
@@ -1843,85 +1843,39 @@ Skewed       & Normal       && 0.05 &&  0.17 & 0.15 & 0.12 && 0.31 & 0.25 & 0.19
 
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
-\clearpage
-\paragraph{Radon Data Revisited:}
-We now use the results from Theorem 1 to assess the amount of confounding in the radon example and examine distributional assumptions for the minimally confounded case.
-%Returning to the radon example from Section~\ref{sec:ex}, we use least confounded residuals to assess the distribution of the random effects using individual quantile plots rather than lineups. 
-Figure~\ref{fig:lcqq} shows the marginal minimally confounded residuals for the random intercept (left) and slope (right). Neither Q-Q plot exhibits any indication of departures from normality. This agrees with the assessments based on the lineups. 
-
-Table \ref{tab:edf2} shows the results from the previous simulations. After rotating into the space of least confounding tests for normality of the residual structures now  reject at the correct nominal level of 0.05 again.
-
-
-\begin{figure}[htb]
-	\centering
-	 \subfloat[Random intercepts]{
-		\includegraphics[width=0.33\linewidth]{lcr-intercept-qq.pdf}
-		}
-	  \subfloat[Random slopes]{
-		\includegraphics[width=0.33\linewidth]{lcr-slope-qq.pdf}
-		}	
-%	\includegraphics[width=0.32\textwidth]{raw-slope-qq.pdf}
-	\caption{\label{fig:lcqq} Normal Q-Q plots of the minimally confounded random structures. The deviation from normality are much less pronounced than before -- in fact, it is questionable whether there is a significant amount of deviation; the results from the normal tests are not conclusive.}
-\end{figure}
-
-\begin{table}[ht]
-\caption{\label{tab:edf2} Proportions of tests rejecting the null hypothesis of normality of the predicted error terms and random effects at the .05 significance level. 
-}
-\begin{center}
-\begin{tabular}{l rrrr} \hline
- & \multicolumn{4}{c}{Test} \\  \cline{2-5}
- Residual & SW &  AD & CVM & KS \\ \hline
-Error term			& 0.06 & 0.05 & 0.05 & 0.04 \\
-Random intercept 	& \bf 0.04 & \bf 0.05 & \bf 0.05 & \bf 0.05 \\
-Random slope 		& \bf 0.04 & \bf 0.04 & \bf 0.05 & \bf 0.05 \\
-   \hline
-\end{tabular}
-\end{center}
-\end{table}
-
-
-\section{Exploring the Rotation Matrix}
-
-The interpretation of minimally confounded residuals for purposes other than distributional assessment is complicated by the fact that they are linear combinations of residuals; however, the weights, $\bm{W}\trans$, are known, so interpretation is possible. Notice that the rows of $\bm{W}\trans$ give the weights specifying each linear combination and the columns give the weights assigned to each raw residual. Thus, the columns provide insight into the overall contribution of each raw residual and the rows of $\bm{W}\trans$ provide additional diagnostic information that, for example, can be used to investigate identified. In this section, each aspect will be investigated. To begin we explore the columns to better understand the rotation.
-
-The average weights for each raw residual (column) show that residuals receiving larger weights are located in the center of the distribution of the raw residuals, while residuals receiving less weight are in the tails of the distribution. This is illustrated in Figure~\ref{fig:tailwts} for the predicted random effects using a linked histogram of average weights (right) and Q-Q plot of raw residuals (left).
+%\clearpage
 %
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.4\linewidth]{qq-wts-tail.pdf}
-	\includegraphics[width=0.4\linewidth]{hist-wts-tail.pdf}
-	\caption{\label{fig:tailwts} Q-Q plot (left) and histogram (right) of the average weight for each raw residual given by $\bm{W}\trans$. The largest weights (red) correspond to residuals in the central region of the distribution of raw residuals.}
-\end{figure}
 %
-To gain further insight, we must consider the entries of weight matrix.
-%the two elements that comprise the rotation matrix: the relative precision factor of $\bm{B}$, $ \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans$, and the orthogonal rotation matrix, $\bm{U}$.
-
-%\begin{figure*}[htb]
-%\centering
-%	\includegraphics[width=0.9\textwidth]{tmslope-image.png}
-%	\caption{\label{fig:matimage} Heat map of $\bm{W}\trans$ for the predicted random slopes ordered by the variance of the predicted random effects. The entries were transformed to improve interpretability.
-%	}
-%	
-%\end{figure*}
-
-Figure~\ref{fig:matimage} is a heat map of the  matrix of weights $\bm{W}$ for predicted random slopes  ordered by the variance of the predicted random slopes (with highest variance on the right).  Note that entries are scaled to their signed square root because of skewness in the weights. A block diagonal structure becomes apparent  in the heat map. This indicates  that terms with similar variances are treated similarly in the rotation to the least confounded direction. For example, Wilkin, Murray, and Mahnomen counties have the most variable predictions and are clustered together at the top right. Additionally, the horizontal lines that appear in the top portion of the heat map align with more confounded residuals, showing how information is combined to address this issue. Looking at the rows of the heat map will also aid in the interpretation of outlying points to determine whether a few observations are dominant or if many observations contribute equally.
-
+%\section{Exploring the Rotation Matrix}
+%
+%The interpretation of minimally confounded residuals for purposes other than distributional assessment is complicated by the fact that they are linear combinations of residuals; however, the weights, $\bm{W}\trans$, are known, so interpretation is possible. Notice that the rows of $\bm{W}\trans$ give the weights specifying each linear combination and the columns give the weights assigned to each raw residual. Thus, the columns provide insight into the overall contribution of each raw residual and the rows of $\bm{W}\trans$ provide additional diagnostic information that, for example, can be used to investigate identified. In this section, each aspect will be investigated. To begin we explore the columns to better understand the rotation.
+%
+%The average weights for each raw residual (column) show that residuals receiving larger weights are located in the center of the distribution of the raw residuals, while residuals receiving less weight are in the tails of the distribution. This is illustrated in Figure~\ref{fig:tailwts} for the predicted random effects using a linked histogram of average weights (right) and Q-Q plot of raw residuals (left).
+%%
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=0.4\linewidth]{qq-wts-tail.pdf}
+%	\includegraphics[width=0.4\linewidth]{hist-wts-tail.pdf}
+%	\caption{\label{fig:tailwts} Q-Q plot (left) and histogram (right) of the average weight for each raw residual given by $\bm{W}\trans$. The largest weights (red) correspond to residuals in the central region of the distribution of raw residuals.}
+%\end{figure}
+%%
+%To gain further insight, we must consider the entries of weight matrix.
+%%the two elements that comprise the rotation matrix: the relative precision factor of $\bm{B}$, $ \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans$, and the orthogonal rotation matrix, $\bm{U}$.
+%
+%%\begin{figure*}[htb]
+%%\centering
+%%	\includegraphics[width=0.9\textwidth]{tmslope-image.png}
+%%	\caption{\label{fig:matimage} Heat map of $\bm{W}\trans$ for the predicted random slopes ordered by the variance of the predicted random effects. The entries were transformed to improve interpretability.
+%%	}
+%%	
+%%\end{figure*}
+%
+%Figure~\ref{fig:matimage} is a heat map of the  matrix of weights $\bm{W}$ for predicted random slopes  ordered by the variance of the predicted random slopes (with highest variance on the right).  Note that entries are scaled to their signed square root because of skewness in the weights. A block diagonal structure becomes apparent  in the heat map. This indicates  that terms with similar variances are treated similarly in the rotation to the least confounded direction. For example, Wilkin, Murray, and Mahnomen counties have the most variable predictions and are clustered together at the top right. Additionally, the horizontal lines that appear in the top portion of the heat map align with more confounded residuals, showing how information is combined to address this issue. Looking at the rows of the heat map will also aid in the interpretation of outlying points to determine whether a few observations are dominant or if many observations contribute equally.
+%
 
 %The relative precision factor of $\bm{B}$ performs the variance-covariance standardization of the residuals, and provides information about the relationships between residuals. Figure~\ref{fig:matimage} is a heat map of the relative precision factor for the variance of the predicted random slope that has been ordered by the variance of the predicted random slopes (with highest variance on the right). To aid interpretability, the entries were transformed into their signed square root. There is a clear block diagonal structure in this heat map that reveals counties with similar variances. For example, Wilkin, Murray, and Mahnomen counties have the most variable predictions and are clustered together at the top right. Additionally, the horizontal lines, which diminish from top right to bottom left, align with the amount of confounding in each predicted random slope. This matches expectations, since the confounding and pooling are interrelated, and estimates corresponding to highly confounded residuals will have a higher levels of pooling.
 
 %For example, if an outlier is detected using the least confounded residuals, examination of the entries in the corresponding row of $\bm{M}\trans$ will reveal whether a few observations are dominant or if many contribute equally.
 
-
-
-\section{Discussion}
-We have shown that minimally confounded residuals are standardized, uncorrelated, homoscedastic residuals that address the concerns arising from the use of residuals for distributional assessment in the presence of pooling. The minimally confounded residuals can be used with Q-Q plots, which are familiar to analysts. While these residuals simplify the investigation of distributional assessment, they are linear combinations of residuals, and as such, are not directly applicable to the assessment of other aspects of the model, such as outlier detection; however, an investigation of the weights enables further investigation of unusual observations.
-%
-%however, investigation of the rotation matrix, $\bm{M}$, is itself of diagnostic interest.
-%
-%The rotation matrix, $\bm{M}$, is composed of the inverse square root matrix of the target residual, $ \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans$,  and an orthogonal rotation matrix, $\bm{U}$. Both of these matrices are of diagnostic interest. Examination of the inverse square root matrix 
-%
-%\todo[inline]{I still need to figure out what to say about these matrices individually. I have been looking into them, and am still formulating what information they give us.}
-%
-It is important to note that goodness-of-fit tests are available for residuals at each level of the model \citep{Jiang:2001up}, but they do not lend themselves to graphical inspection, which is the focus of this paper, and the largely preferred method of distributional assessment. 
 
 \end{document}

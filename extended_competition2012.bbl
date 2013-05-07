@@ -84,6 +84,12 @@ Lange, N. and Ryan, L. (1989).
 \newblock Assessing normality in random effects models.
 \newblock {\em The Annals of Statistics}, 17(2):624--642.
 
+\bibitem[\protect\astroncite{Li and Pourahmadi}{2013}]{Li:2013je}
+Li, E. and Pourahmadi, M. (2013).
+\newblock An alternative {REML} estimation of covariance matrices in linear
+  mixed models.
+\newblock {\em Statistics {\&} Probability Letters}, 83(4):1071--1077.
+
 \bibitem[\protect\astroncite{McDonald et~al.}{1979}]{McDonald:1979ca}
 McDonald, R.~P., Torii, Y., and Nishisato, S. (1979).
 \newblock Some results on proper eigenvalues and eigenvectors with applications
