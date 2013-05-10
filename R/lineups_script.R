@@ -151,14 +151,14 @@ p.b1  <- Fn.b0(b[,2] / msd[,2])                       ## calc. probs
 qplot(x = qnorm(p.b1), y = b[,2] / msd[,2])
 
 
-### Incorporating these into a simulation
+### Incorporating these into a sim2ulation
 
 # standardized random effects
 b0.std <- b[,1] / msd[,1]
 b1.std <- b[,2] / msd[,2]
 
 # Simulation for weighted Q-Q plots for random intercepts
-sim.b0 <- llply(sim.mod, function(x) {
+sim2.b0 <- llply(sim.mod, function(x) {
 	se <- lev2.marginal.var(x)[,1]
 	std.b0 <- ranef(x)[[1]][,1] / se
 	Fn <- wecdf(std.b0, weights = se^2)
@@ -168,34 +168,16 @@ sim.b0 <- llply(sim.mod, function(x) {
 	return(RVAL)
 } )   
 
-sim.b0 <- do.call("rbind", sim.b0)                        ## changing to a single data frame
-sim.b0$sample <- str_extract(rownames(sim.b0), "\\d+")    ## adding col. for sim. number
-sim.b0.df <- rbind(sim.b0,
-			 data.frame(sample = "true", 
-			            intercept = b0.std,
-			            quants = qnorm(p.b0)))            ## adding the true r. intercepts
-
-# Simulation for weighted Q-Q plots for random slopes
-sim.b0 <- llply(sim.mod, function(x) {
-	se <- lev2.marginal.var(x)[,1]
-	std.b0 <- ranef(x)[[1]][,1] / se
-	Fn <- wecdf(std.b0, weights = se^2)
-	p  <- Fn(std.b0)
-	qs <- qnorm(p)
-	RVAL <- data.frame(intercept = std.b0, quants = qs)  ## list of data frames for plotting
-	return(RVAL)
-} )   
-
-sim.b0 <- do.call("rbind", sim.b0)                        ## changing to a single data frame
-sim.b0$sample <- str_extract(rownames(sim.b0), "\\d+")    ## adding col. for sim. number
-sim.b0.df <- rbind(sim.b0,
+sim2.b0 <- do.call("rbind", sim2.b0)                        ## changing to a single data frame
+sim2.b0$sample <- str_extract(rownames(sim2.b0), "\\d+")    ## adding col. for sim. number
+sim2.b0.df <- rbind(sim2.b0,
 			 data.frame(sample = "true", 
 			            intercept = b0.std,
 			            quants = qnorm(p.b0)))            ## adding the true r. intercepts
 
 
 # Simulation for weighted Q-Q plots for random slopes
-sim.b1 <- llply(sim.mod, function(x) {
+sim2.b1 <- llply(sim.mod, function(x) {
 	se <- lev2.marginal.var(x)[,1]
 	std.b1 <- ranef(x)[[1]][,1] / se
 	Fn <- wecdf(std.b1, weights = se^2)
@@ -205,9 +187,9 @@ sim.b1 <- llply(sim.mod, function(x) {
 	return(RVAL)
 } )   
 
-sim.b1 <- do.call("rbind", sim.b1)                        ## changing to a single data frame
-sim.b1$sample <- str_extract(rownames(sim.b1), "\\d+")    ## adding col. for sim. number
-sim.b1.df <- rbind(sim.b1,
+sim2.b1 <- do.call("rbind", sim2.b1)                        ## changing to a single data frame
+sim2.b1$sample <- str_extract(rownames(sim2.b1), "\\d+")    ## adding col. for sim2. number
+sim2.b1.df <- rbind(sim2.b1,
 			 data.frame(sample = "true", 
 			            intercept = b1.std,
 			            quants = qnorm(p.b1)))            ## adding the true r. intercepts

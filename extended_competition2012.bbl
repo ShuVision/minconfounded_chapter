@@ -30,6 +30,12 @@ Dempster, A.~P. and Ryan, L.~M. (1985).
 \newblock {\em Journal of the American Statistical Association},
   80(392):845--850.
 
+\bibitem[\protect\astroncite{Eberly and Thackeray}{2005}]{Eberly:2005ee}
+Eberly, L.~E. and Thackeray, L.~M. (2005).
+\newblock On {L}ange and {R}yan's plotting technique for diagnosing
+  non-normality of random effects.
+\newblock {\em Statistics {\&} Probability Letters}, 75(2):77--85.
+
 \bibitem[\protect\astroncite{Fukunaga}{1990}]{Fukunaga:1990}
 Fukunaga, K. (1990).
 \newblock {\em Introduction to Statistical Pattern Recognition}.
@@ -58,11 +64,23 @@ Ghidey, W., Lesaffre, E., and Verbeke, G. (2010).
   distribution of a linear mixed model.
 \newblock {\em Statistical Methods in Medical Research}, 19(6):575--600.
 
+\bibitem[\protect\astroncite{Haslett and Haslett}{2007}]{Haslett:2007vv}
+Haslett, J. and Haslett, S. (2007).
+\newblock The three basic types of residuals for a linear model.
+\newblock {\em International Statistical Review}, 75(1):1--24.
+
 \bibitem[\protect\astroncite{Hilden-Minton}{1995}]{HildenMinton:1995wh}
 Hilden-Minton, J.~A. (1995).
 \newblock {\em Multilevel diagnostics for mixed and hierarchical linear
   models}.
 \newblock PhD thesis, University of California Los Angeles.
+
+\bibitem[\protect\astroncite{Houseman et~al.}{2004}]{Houseman:2004gq}
+Houseman, E.~A., Ryan, L.~M., and Coull, B.~A. (2004).
+\newblock Cholesky residuals for assessing normal errors in a linear model with
+  correlated outcomes.
+\newblock {\em Journal of the American Statistical Association},
+  99(466):383--394.
 
 \bibitem[\protect\astroncite{Jensen and Ramirez}{1999}]{Jensen:1999iu}
 Jensen, D.~R. and Ramirez, D.~E. (1999).
@@ -95,6 +113,22 @@ McDonald, R.~P., Torii, Y., and Nishisato, S. (1979).
 \newblock Some results on proper eigenvalues and eigenvectors with applications
   to scaling.
 \newblock {\em Psychometrika}, 44(2):211--227.
+
+\bibitem[\protect\astroncite{Nobre and Singer}{2007}]{Nobre:2007ej}
+Nobre, J.~S. and Singer, J. d.~M. (2007).
+\newblock Residual analysis for linear mixed models.
+\newblock {\em Biometrical Journal}, 49(6):863--875.
+
+\bibitem[\protect\astroncite{Pinheiro and Bates}{2000}]{Pinhiero:2000vf}
+Pinheiro, J.~C. and Bates, D.~M. (2000).
+\newblock {\em Mixed-Effects Models in S and S-PLUS}.
+\newblock Springer-Verlag, New York.
+
+\bibitem[\protect\astroncite{Sch{\"u}tzenmeister and
+  Piepho}{2012}]{Schutzenmeister:2012gw}
+Sch{\"u}tzenmeister, A. and Piepho, H.-P. (2012).
+\newblock Residual analysis of linear mixed models using a simulation approach.
+\newblock {\em Computational Statistics {\&} Data Analysis}, 56(6):1405--1416.
 
 \bibitem[\protect\astroncite{Shen and Louis}{1999}]{Shen:1999gd}
 Shen, W. and Louis, T.~A. (1999).
