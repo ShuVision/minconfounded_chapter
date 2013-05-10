@@ -1,0 +1,38 @@
+#-------------------------------------------------------------------------------
+# This script summarizes FC for minimally confounded residuals for models fit to 
+# a subset of the radon data.
+#
+# Adam Loy
+# May 2013
+#-------------------------------------------------------------------------------
+
+### Preliminaries
+library(ggplot2)
+library(reshape2)
+library(plyr)
+
+### Reading in the data
+fc.summary <- read.csv(file.choose()) # read in FCsummary.csv
+
+### formatting df for ggplot
+fc.melted <- melt(fc.summary, id.vars=c("sigma_e", "sigma_b", "e_dsn", "b_dsn", "s_int", "s_slope"), value.name = "fc")
+
+# Some labels for the plots
+fc.melted$`Var. structure` <- with(fc.melted, interaction(sigma_e, sigma_b), drop = T)
+fc.melted$`Var. structure` <- factor(fc.melted$`Var. structure`, levels = levels(fc.melted$`Var. structure`)[c(2,1,3,4)])
+levels(fc.melted$variable) <- c("intercept", "slope")
+
+# Making an 's' column compatible with facetting
+fc.melted$s <- NA
+fc.melted$s[fc.melted$variable == "intercept"] <- fc.melted$s_int[fc.melted$variable == "intercept"]
+fc.melted$s[fc.melted$variable == "slope"] <- fc.melted$s_slope[fc.melted$variable == "slope"]
+
+
+qplot(x = s, y = fc, data = fc.melted, geom = c("point", "smooth"), group = `Var. structure`,  colour = `Var. structure`, facets = ~ variable, se = FALSE, linetype = `Var. structure`, alpha = I(0.5)) + 
+xlim(30, 60) + 
+scale_color_discrete(labels = c(expression(paste(sigma[epsilon]^2==4, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==4)))) + 
+scale_linetype_discrete(labels = c(expression(paste(sigma[epsilon]^2==4, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==4)))) + 
+xlab("s") + ylab("fraction confounding") + theme_bw() + 
+theme(legend.position="top")
+
+ggsave(file.choose(new=T), plot = sp, width = 6.5, height=3.75, units="in")
