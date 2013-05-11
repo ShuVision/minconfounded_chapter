@@ -28,11 +28,11 @@ fc.melted$s[fc.melted$variable == "intercept"] <- fc.melted$s_int[fc.melted$vari
 fc.melted$s[fc.melted$variable == "slope"] <- fc.melted$s_slope[fc.melted$variable == "slope"]
 
 
-qplot(x = s, y = fc, data = fc.melted, geom = c("point", "smooth"), group = `Var. structure`,  colour = `Var. structure`, facets = ~ variable, se = FALSE, linetype = `Var. structure`, alpha = I(0.5)) + 
-xlim(30, 60) + 
-scale_color_discrete(labels = c(expression(paste(sigma[epsilon]^2==4, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==4)))) + 
-scale_linetype_discrete(labels = c(expression(paste(sigma[epsilon]^2==4, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==4)))) + 
-xlab("s") + ylab("fraction confounding") + theme_bw() + 
-theme(legend.position="top")
+qplot(x = s, y = fc, data = fc.melted, geom = c("point"), group = `Var. structure`,  colour = `Var. structure`, facets = ~ variable,  linetype = `Var. structure`, size=I(3), shape=b_dsn) + 
+xlim(30, 60) + #geom_smooth(se = FALSE, size=1.5) +
+scale_color_brewer("Variance structure", palette="Set2", labels = c(expression(paste(sigma[epsilon]^2==4, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==4)))) + 
+scale_linetype_discrete("Variance structure", labels = c(expression(paste(sigma[epsilon]^2==4, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==4)))) + 
+xlab("s") + ylab("fraction of confounding") + theme_bw() + 
+theme(legend.position="bottom", legend.key.width = unit(3, "line")) + geom_line(aes(group=interaction(e_dsn, b_dsn, `Var. structure`))) + scale_shape_manual(values=)
 
-ggsave(file.choose(new=T), plot = sp, width = 6.5, height=3.75, units="in")
+ggsave("fc_by_s.pdf", plot = sp, width = 6.5, height=3.75, units="in")
