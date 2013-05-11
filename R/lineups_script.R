@@ -13,6 +13,9 @@ library(lme4)
 library(plyr)
 library(reshape2)
 library(stringr)
+library(nullabor)
+library(grid)
+library(ggplot2)
 
 radon <- read.csv(file.choose()) ## find radon_for_sims.csv
 
@@ -81,7 +84,34 @@ wecdf <- function(x, weights) {
     return(rval)
 }   
 
+sim_env <- function(x, conf = .95){
+  n <- length(x)
+  P <- ppoints(x)
+  z <- qnorm(P)
+  a <- as.numeric(HLMdiag:::qqlineInfo(x)[1])
+  b <- as.numeric(HLMdiag:::qqlineInfo(x)[2])
+  zz <- qnorm(1 - (1 - conf)/2)
+  SE <- (b/dnorm(z)) * sqrt(P * (1 - P)/n)
+  fit.value <- a + b * z
+  upper <- fit.value + zz * SE
+  lower <- fit.value - zz * SE
+  return(data.frame(lower, upper))
+}
 
+
+weighted_sim_env <- function(quants, conf = .95){
+  n <- length(quants)
+  P <- pnorm(quants)
+  z <- quants
+  a <- 0
+  b <- 1
+  zz <- qnorm(1 - (1 - conf)/2)
+  SE <- (b/dnorm(z)) * sqrt(P * (1 - P)/n)
+  fit.value <- a + b * z
+  upper <- fit.value + zz * SE
+  lower <- fit.value - zz * SE
+  return(data.frame(lower, upper))
+}
 
 # -----------------------------------------------------------------------------------------
 ### Fitting the models
@@ -107,74 +137,55 @@ set.seed(987654321)
 sim.y   <- simulate(fm, nsim = 19)                        ## A 919 x 19 matrix of responses
 sim.mod <- apply(sim.y, 2, refit, object = fm)            ## a list of models
 
-# Simulated level-1 residuals
-sim.e <- llply(sim.mod, resid)                            ## a list of residuals
-sim.e        <- melt( do.call("cbind", sim.e) )[,-1]      ## changing to a data frame
-names(sim.e) <- c("sample", "residual")                   ## setting colnames for faceting
-sim.e.df <- rbind(sim.e, 
-			cbind(sample = "true", residual = e))         ## adding the true residuals
-
-# Simulated random intercepts
-sim.b0 <- llply(sim.mod, function(x) ranef(x)[[1]][,1])   ## a list of random intercepts
-sim.b0 <- melt( do.call("rbind", sim.b0) )[,-2]           ## changing to a data frame
-names(sim.b0) <- c("sample", "intercept")                 ## setting colnames for faceting
-sim.b0        <- arrange(sim.b0, sample)                  ## ordering by simulation
-sim.b0.df <- rbind(sim.b0,
-			 cbind(sample = "true", intercept = b[,1]))   ## adding the true r. intercepts
-sim.b0.df$intercept <- as.numeric(sim.b0.df$intercept)    ## making residuals numeric
-
 ### We are really interested in a lineup for the random slopes for our paper
 # Simulated random slopes
 sim.b1 <- llply(sim.mod, function(x) ranef(x)[[1]][,2])   ## a list of random slopes
 sim.b1 <- melt( do.call("rbind", sim.b1) )[,-2]           ## changing to a data frame
-names(sim.b1) <- c("sample", "slope")                     ## setting colnames for faceting
+names(sim.b1) <- c("sample", "basement")                  ## setting colnames for faceting
 sim.b1        <- arrange(sim.b1, sample)                  ## ordering by simulation
-sim.b1.df <- rbind(sim.b1,
-			 cbind(sample = "true", slope = b[,2]))       ## adding the true r. slopes
-sim.b1.df$slope <- as.numeric(sim.b1.df$slope)            ## making residuals numeric
+# sim.b1.df <- rbind(sim.b1,
+# 			 cbind(sample = "true", slope = b[,2]))       ## adding the true r. slopes
+# sim.b1.df$slope <- as.numeric(sim.b1.df$slope)            ## making residuals numeric
+
+
+### Creating a the lineup
+b1 <- transform(b, band = sim_env(basement), x = sort(qqnorm(basement, plot.it=FALSE)$x))
+
+# some tweaks for nullabor
+
+sim.b1$.n <- as.numeric( str_extract(sim.b1$sample, "\\d+") )
+sim.b1 <- ddply(sim.b1, .(.n), transform, band = sim_env(basement), x = sort(qqnorm(basement, plot.it=FALSE)$x))
+
+qplot(sample = basement, data = b1, stat = "qq") %+%
+	lineup(true = b1, sample = sim.b1) + 
+	facet_wrap(~ .sample, ncol = 5) + 
+	geom_ribbon(aes(x = x, ymin = band.lower, ymax = band.upper), alpha = .25) + 
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") +  
+	theme_bw() + 
+	theme(panel.margin = unit(0, "lines"))
+
+# That looks right in nullabor, so let's make a data frame for facetting
+b1.facet <- b1[,-1]
+b1.facet$sample <- "true"
+sim.b1.facet <- sim.b1[,-3]
+
+sim.b1.df.facetting <- rbind(b1.facet, sim.b1.facet)
 
 # -----------------------------------------------------------------------------------------
 ### Calculations for a weighted Q-Q plot
 # -----------------------------------------------------------------------------------------
 
-library(ggplot2)
-
 # Marginal standard devation for original model
 msd <- lev2.marginal.var(fm) ## ignore the notes
 
-Fn.b0 <- wecdf(b[,1] / msd[,1], weights = msd[,1]^2)  ## create the weighted CDF function
-p.b0  <- Fn.b0(b[,1] / msd[,1])                       ## calc. probs
-qplot(x = qnorm(p.b0), y = b[,1] / msd[,1])
-
 Fn.b1 <- wecdf(b[,2] / msd[,2], weights = msd[,1]^2)  ## create the weighted CDF function
-p.b1  <- Fn.b0(b[,2] / msd[,2])                       ## calc. probs
+p.b1  <- Fn.b1(b[,2] / msd[,2])                       ## calc. probs
 qplot(x = qnorm(p.b1), y = b[,2] / msd[,2])
 
-
-### Incorporating these into a sim2ulation
+### Incorporating these into a simulation
 
 # standardized random effects
-b0.std <- b[,1] / msd[,1]
 b1.std <- b[,2] / msd[,2]
-
-# Simulation for weighted Q-Q plots for random intercepts
-sim2.b0 <- llply(sim.mod, function(x) {
-	se <- lev2.marginal.var(x)[,1]
-	std.b0 <- ranef(x)[[1]][,1] / se
-	Fn <- wecdf(std.b0, weights = se^2)
-	p  <- Fn(std.b0)
-	qs <- qnorm(p)
-	RVAL <- data.frame(intercept = std.b0, quants = qs)  ## list of data frames for plotting
-	return(RVAL)
-} )   
-
-sim2.b0 <- do.call("rbind", sim2.b0)                        ## changing to a single data frame
-sim2.b0$sample <- str_extract(rownames(sim2.b0), "\\d+")    ## adding col. for sim. number
-sim2.b0.df <- rbind(sim2.b0,
-			 data.frame(sample = "true", 
-			            intercept = b0.std,
-			            quants = qnorm(p.b0)))            ## adding the true r. intercepts
-
 
 # Simulation for weighted Q-Q plots for random slopes
 sim2.b1 <- llply(sim.mod, function(x) {
@@ -183,13 +194,37 @@ sim2.b1 <- llply(sim.mod, function(x) {
 	Fn <- wecdf(std.b1, weights = se^2)
 	p  <- Fn(std.b1)
 	qs <- qnorm(p)
-	RVAL <- data.frame(intercept = std.b1, quants = qs)  ## list of data frames for plotting
+	RVAL <- data.frame(slope = std.b1, quants = qs)  ## list of data frames for plotting
 	return(RVAL)
 } )   
 
-sim2.b1 <- do.call("rbind", sim2.b1)                        ## changing to a single data frame
-sim2.b1$sample <- str_extract(rownames(sim2.b1), "\\d+")    ## adding col. for sim2. number
-sim2.b1.df <- rbind(sim2.b1,
-			 data.frame(sample = "true", 
-			            intercept = b1.std,
-			            quants = qnorm(p.b1)))            ## adding the true r. intercepts
+sim2.b1 <- do.call("rbind", sim2.b1)                             ## changing to a single data frame
+sim2.b1$.n <- as.numeric(str_extract(rownames(sim2.b1), "\\d+")) ## adding col. for sim2. number
+
+
+### Creating a the lineup
+b1.std.df <- data.frame(slope = b1.std, quants = qnorm(p.b1))
+b1.wtd    <- transform(b1.std.df, band = weighted_sim_env(quants))
+b1.wtd    <- b1.wtd[complete.cases(b1.wtd),]
+
+# some tweaks for nullabor
+
+sim2.b1$.n <- as.numeric( str_extract(sim.b1$sample, "\\d+") )
+sim2.b1 <- ddply(sim2.b1, .(.n), transform, band = weighted_sim_env(quants))
+sim2.b1 <- sim2.b1[complete.cases(sim2.b1),]
+
+qplot(x = quants, y = slope, data = b1.wtd, geom = "point") %+%
+	lineup(true = b1.wtd, sample = sim2.b1) + 
+	facet_wrap(~ .sample, ncol = 5) + 
+	geom_ribbon(aes(x = quants, ymin = band.lower, ymax = band.upper), alpha = .25) + 
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") +  
+	theme_bw() + 
+	theme(panel.margin = unit(0, "lines"))
+
+# That looks right in nullabor, so let's make a data frame for facetting
+b1.wtd.facet <- b1.wtd
+b1.wtd.facet$sample <- "true"
+sim2.b1.facet <- sim2.b1
+names(sim2.b1.facet)[3] <- "sample"
+
+sim2.b1.df.facetting <- rbind(b1.wtd.facet, sim2.b1.facet)
