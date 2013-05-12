@@ -9,9 +9,14 @@
 
 ### Preliminaries
 library(ggplot2)
+library(plyr)
 
 ### Reading in the data
-propreject <- read.csv(file.choose()) # choose PropRejectSummary.csv
+propreject <- read.csv(file.choose())   # choose PropRejectSummary.csv
+load(file.choose()) # choose GoldStandardPower.RData
+
+goldstandard <- ldply(results.05, identity)
+goldstandard$n <- rep(30:59, each = 3) 
 
 #-------------------------------------------------------------------------------
 # Code for the current figures
@@ -43,6 +48,29 @@ qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef != "norm"
 
 # Summarizing results of AD tests for random slopes
 qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef != "norm" & random.effect == "b1" & nortest == "AD" & var.settings == "sige2_sigb1" & alpha == 0.05 & rotation != "EBLUP"), geom = c("point", "smooth"), facets = ~ rotation, colour = error, linetype = ranef, group = interaction(error, ranef), se = F, method = "lm") + 
+	xlab("s") + 
+	ylab("proportion of tests rejected") + 
+	theme_bw() + 
+	scale_color_discrete("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed")) + 
+	scale_linetype_discrete("Random effects\ndistribution", labels = c("Skewed", "Heavy tailed"))
+
+
+#-------------------------------------------------------------------------------
+# Adding power for the AD test
+#-------------------------------------------------------------------------------
+
+# Summarizing results of AD tests for random intercept
+qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef != "norm" & random.effect == "b0" & nortest == "AD" & var.settings == "sige2_sigb1" & alpha == 0.05 & rotation != "EBLUP"), geom = c("point", "smooth"), facets = ~ rotation, linetype = ranef, colour = error, group = interaction(error, ranef), se = F, method = "lm") + 
+	geom_line(aes(x = n, y = AD, group = .id), data = subset(goldstandard, .id != "normal"), inherit.aes = FALSE) + 
+	xlab("s") + 
+	ylab("proportion of tests rejected") + 
+	theme_bw() + 
+	scale_color_discrete("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed")) + 
+	scale_linetype_discrete("Random effects\ndistribution", labels = c("Skewed", "Heavy tailed"))
+
+# Summarizing results of AD tests for random slopes
+qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef != "norm" & random.effect == "b1" & nortest == "AD" & var.settings == "sige2_sigb1" & alpha == 0.05 & rotation != "EBLUP"), geom = c( "smooth"), facets = ~ rotation, colour = error, linetype = ranef, group = interaction(error, ranef), se = F, method = "lm") + 
+	geom_line(aes(x = n, y = AD, group = .id), data = subset(goldstandard, .id != "normal"), inherit.aes = FALSE) + 
 	xlab("s") + 
 	ylab("proportion of tests rejected") + 
 	theme_bw() + 
