@@ -287,6 +287,7 @@ In the remainder of this paper we investigate the root of concern that leads to 
 %\subsection{Hierarchical linear models and residuals}\label{sec:resid}
 %----------------------------------------------------------------------------------
 \hh{What is the purpose of section 3? It doesn't stand on its own - move it as a subsection into section 4} \al{XX Originally when I was writing I was having a hard time seeing how to merge this into any section of the paper. I knew we had to set up the notation and definitions of residual quantities, so I put it here. I am not quite happy with the new name of section 3, but I do see your point of combining the sections.}
+\hh{I think the subsection title is fine - but now the start into the overall section is a bit abrupt.  I think a paragraph before section 3.1 would be good explaining what is going on in this section. }
 
 
 The general stacked representation of the hierarchical linear model is given by
@@ -386,7 +387,6 @@ This problem is solved using the generalized eigenvalue decomposition
 \begin{equation}\label{eq:geigen}
 	\bm{Aw}_k = \gamma_k \bm{Bw}_k
 \end{equation}
-%
 where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}; thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. Computationally, this problem can be solved by simultaneous diagonalization of $\bm{A}$ and $\bm{B}$. We outline this procedure below for reference and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\
 
 
