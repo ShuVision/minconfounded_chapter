@@ -124,7 +124,7 @@ To illustrate the effect of confounding between different levels of residuals, w
 %
 where   $\log(y_{ij})$ denotes the  radon measurement (in log $pCi/L$, i.e log picoCurie per litre) for house~$j$ within county~$i$ ($1 \le j \le n_i, 1 \le i \le 85$),
  $x_{1ij}$ is a binary variable describing the level at which the measurement was taken (0 for the basement and 1 for a higher level), and $x_{2i}$ denotes the average soil uranium content for  county~$i$. 
- We assume i.i.d. normal errors $\varepsilon_{ij} \sim \mathcal{N} (0,\ \sigma^2_{\varepsilon})$  and $\bm{b}_i \sim \mathcal{N}(\bm{0},\ \bm{D})$, where $\bm{D}$ allows for correlation between \hh{random effects within the same county $i$}, $b_{0i}$ and $b_{1i}$. Further, we assume independence between random effects and error \al{terms}. 
+ We assume i.i.d. normal errors $\varepsilon_{ij} \sim \mathcal{N} (0,\ \sigma^2_{\varepsilon})$  and $\bm{b}_i \sim \mathcal{N}(\bm{0},\ \bm{D})$, where $\bm{D}$ allows for correlation between random effects within the same county $i$, $b_{0i}$ and $b_{1i}$. Further, we assume independence between random effects and error terms. 
 
 
 Figure \ref{fig:map} shows a map of counties in Minnesota. The color shading represents average radon activity in a county. For two counties no data is available. Generally, more southern locations exhibit higher  levels of Radon activity. Figure \ref{fig:tc} focuses on Hennepin (home to Minneapolis) and Winona (home to the city of the same name) counties, plotting radon level by floor level. Radon levels are usually the highest at the basement level of a house. 
@@ -152,20 +152,20 @@ The within-county sample sizes, $n_i$, are extremely unbalanced, ranging from on
 		\includegraphics[width=0.33\linewidth]{raw-intercept-qq.pdf}
 		}
 %	\includegraphics[width=0.32\textwidth]{raw-slope-qq.pdf}
-	\caption{\label{fig:qqplots1} Q-Q plots of predict\al{ed residuals} at different levels %, and random slopes (right) 
-	for model~\eqref{eq:radon}. \hh{Both plots suggest a deviation of residuals from a normal distribution.} Note that random slopes (see figure~\ref{fig:lineup}) exhibited the largest deviation from normality. }
+	\caption{\label{fig:qqplots1} Q-Q plots of predicted residuals at different levels %, and random slopes (right) 
+	for model~\eqref{eq:radon}. Both plots suggest a deviation of residuals from a normal distribution. Note that random slopes (see figure~\ref{fig:lineup}) exhibit the largest deviation from normality. }
 \end{figure}
 
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{test.jpeg}%lineup-rslope.pdf}
-	\caption{\label{fig:lineup} Lineup of normal Q-Q plots for the random slope term in model~\eqref{eq:radon}. The 19 null plots were obtained by simulation from the model. Can you identify the observed Q-Q plot? }
+	\caption{\label{fig:lineup} Lineup of normal Q-Q plots for the random slope term in model~\eqref{eq:radon}. The 19 null plots are obtained by simulation from the model. Can you identify the observed Q-Q plot? }
 \end{figure}
 
 
 In this example, Q-Q plots (Figure~\ref{fig:qqplots1}) for the residuals show that normality 
 seems to be violated for the error terms and both random effects. But is this cause for concern?
-\al{As} there is little pooling at the observation level \al{(level 1)} we expect the distributional assessment of the error terms to be reliable, but  the high degree of pooling  for the random effects  casts doubt on the reliability of their Q-Q plots. 
+As there is little pooling at the observation level (level 1) we expect the distributional assessment of the error terms to be reliable, but  the high degree of pooling  for the random effects  casts doubt on the reliability of their Q-Q plots. 
  We find our doubts increasing in a simulation-based assessment of distributions for residuals and random effects. \hh{this sentence is a lead in to the next paragraph, right? It needs to that more explicitly.}
 
 Figure~\ref{fig:lineup} shows a lineup \citep{buja:2009} of 20 Q-Q plots for the predicted random slope. The Q-Q plot of the observed random slopes is placed among 19 decoy plots of parametric bootstrap samples based on model~\eqref{eq:radon} satisfying the normal distribution assumptions. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
@@ -187,10 +187,14 @@ Further investigation  reveals  that a  proportion far above the nominal $\alpha
 %%: $\widehat{\beta_0} = 1.46$, $\widehat{\beta_1} = -0.64$, $\widehat{\beta_2} = 0.77$, $\widehat{\sigma}_{\varepsilon} = 0.75$, $\widehat{\sigma}_{b_0} = 0.12$, $\widehat{\sigma}_{b_1} = 0.35$, and $\widehat{\rho} = 0.26$. 
 
 
-Table~\ref{tab:edf} shows results from 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal ($\varepsilon_{ij}^* \sim \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
-For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
+Table~\ref{tab:edf} shows results from 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated either as (i) normal ($\varepsilon_{ij}^* \sim \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), (ii) heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), or (iii) skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
+For each simulated data set,  the assumption of normality for both the level-1 and -2 residuals is evaluated using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
 %Table~\ref{tab:edf} shows the proportions of the tests of the empirical distribution function rejecting the null hypothesis of normality at the .05 significance level. 
+<<<<<<< HEAD
 The type I error rates are hugely inflated for both random effects, making an assessment of normality based on the empirical distribution impossible. \hh{pick one of the numbers from the table and use it as an example.} Use of standardized random effects and \citetapos{Lange:1989uu} weighted Q-Q plot \hh{how can you test the weighted Q-Q plot?} \al{XX I wrote a weighted version of the KS test and used a parametric bootstrap to create the reference distribution. The results are included in the supplement.} reduce the type I errors to the nominal level when the level-1 residuals are normal, but the type I errors remain inflated for non-normal level-1 residuals. Similarly, when the random effects are not normal, simulations (not shown) revealed that the tests were  often unable to reject the null hypothesis of normality when the level-1 residuals were normal. \al{Based on the above results we find that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.}
+=======
+The type I error rates are hugely inflated for both random effects, making an assessment of normality based on the empirical distribution impossible. \hh{pick one of the numbers from the table and use it as an example.} Use of standardized random effects and \citetapos{Lange:1989uu} weighted Q-Q plot \hh{how can you test the weighted Q-Q plot?} reduce the type I errors to the nominal level when the level-1 residuals are normal, but the type I errors remain inflated for non-normal level-1 residuals \hh{explicitly say, what we expect. the non-normal level-1 residuals make it sound like it's good that the type I errors are high.}. Similarly, when the random effects are not normal, simulations (not shown) revealed that the tests were  often unable to reject the null hypothesis of normality when the level-1 residuals were normal. \al{Based on the above results we find that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.}
+>>>>>>> some more comments up to results section
 %The inflated type I error rates for the random effects indicate that the empirical distribution of the random effects cannot be used to assess the assumption of normality. 
 In this example we are able to use the empirical distribution to assess normality of  level-1 residuals  as  pooling is minimal at this level. In situations with higher levels of pooling, this may not be the case.
 
@@ -310,7 +314,11 @@ is unaffected by this interrelationship; however, this is not the case with the 
 \subsection{Rotating the random effects}\label{sec:rotate}
 %----------------------------------------------------------------------------------
 
-To combat \al{the confounded nature of the predicted random effects}, we derive a reduced set of rotated residuals that are standardized, uncorrelated, and homoscedastic. \al{We focus our discussion (and notation) on a two-level model with a single random effect in this section for ease of explanation, and describe how to extend this method at the end of this section.} \cite{HildenMinton:1995wh} presents the derivation of a similar set of residuals for the error terms, but does not address the random effects which are the focus of this paper. 
+To combat  confounding between different  levels of residuals, we derive a reduced set of rotated residuals that are standardized, uncorrelated, and homoscedastic. We focus our discussion (and notation) on a two-level model with a single random effect in this section for ease of explanation, and describe how to extend this method at the end of this section.
+
+\hh{how about here for section 3?}
+
+
 
 First, we define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}. \\
 
@@ -370,7 +378,13 @@ This problem is solved using the generalized eigenvalue decomposition
 \begin{equation}\label{eq:geigen}
 	\bm{Aw}_k = \gamma_k \bm{Bw}_k
 \end{equation}
+<<<<<<< HEAD
 where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}; thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. Computationally, this problem can be solved by simultaneous diagonalization of $\bm{A}$ and $\bm{B}$. We outline this procedure below for reference and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\
+=======
+where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}; thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. Computationally, this problem can be solved by simultaneous diagonalization of $\bm{A}$ and $\bm{B}$. We outline this procedure below for reference and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.
+% \cite{HildenMinton:1995wh} presents the derivation of a similar set of residuals for the error terms, but does not address the random effects which are the focus of this paper. 
+
+>>>>>>> some more comments up to results section
 
 \begin{algorithm}[Simultaneous diagonalization]
 Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices. The transformation that simultaneously diagonalizes both matrices can be found through the following procedure:
@@ -440,10 +454,14 @@ We conducted a simulation study to assess the specificity and sensitivity of tes
 \subsection{Design}\label{sec:sim-design}
 %----------------------------------------------------------------------------------
 
-The simulation study examined the proportion of Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and Kolmogorov-Smirnov (KS) tests that rejected the null hypothesis of normality. This allows us to examine situations in which we correctly and incorrectly reject the null hypothesis of normality---that is, power and type I error, respectively.  These test statistics each measure the discrepancy between the empirical distribution of the rotated random effects and assumed distribution of the random effects, which sheds light on the behavior of Q-Q plots constructed from the rotated residuals. 
+\hh{We want} to examine situations in which we correctly and incorrectly reject the null hypothesis of normality---that is, power and type I error, respectively. \hh{We compute the proportion of Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and Kolmogorov-Smirnov (KS) tests that rejected the null hypothesis of normality.
+}
+ These test statistics each measure the discrepancy between the empirical distribution of the rotated random effects and assumed distribution of the random effects, which sheds light on the behavior of Q-Q plots constructed from the rotated residuals. 
 
-The design matrices from model \eqref{eq:radon} were used as templates for realistic data generation; however, only the 60 counties with full rank $\bm{Z}$ matrices were included for simplicity of the simulation design.
+
+The design matrices from model \eqref{eq:radon} were used as templates for realistic data generation;  for simplicity of the simulation design, only the 60 counties with full rank $\bm{Z}$ matrices were included.
 The following distributions were used to generate simulated residuals $\varepsilon_{ij}^*$, $b_{0i}^*$, and $b_{1i}^*$ from which data were generated:
+\hh{describe the situations in words first: normal, heavy-tail or skewed distributions were used to generate errors, random intercepts and slopes. -- wasn't it just nine cases? if this is a full random design, we would get 27 distribution triples! how do the two random effects influence each other, i.e. what are you assuming for D?}
 %
 \begin{itemize}
 \item $\varepsilon_{ij}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{\varepsilon})$, or $\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$ , or $\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$
@@ -453,16 +471,19 @@ The following distributions were used to generate simulated residuals $\varepsil
 \item $b_{1i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{1}})$, or $b_{1i}^* \overset{iid}{\sim} (\sigma_{b_{1}} / \sqrt{3})\, t_3$ , or $b_{1i}^* \overset{iid}{\sim} \sigma_{b_{1}} \, \{ \text{Exp}(1) - 1 \}$
 \end{itemize}
 %
-For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. Additionally, the the fixed effects coefficients were set to the maximum likelihood estimates.
+For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. \hh{ok, this answers most of it, but it would be better to make the bullets above a 3 by 3 table with the corresponding distributions in the margins.}
+
+Additionally, the the fixed effects coefficients were set to the maximum likelihood estimates.
 
 To investigate the effect that pooling has on the rotated random effects we considered  three variance structures:
 %
-\begin{itemize}
-\item $\sigma^2_\varepsilon = 4$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
-\item $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
-\item $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 4$
+\hh{give each of these cases a good name}
+\begin{description}
+\item[large error term: ] $\sigma^2_\varepsilon = 4$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
+\item[equal error term: ] $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
+\item[small error term: ] $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 4$
 
-\end{itemize}
+\end{description}
 %
 
 Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$ (which are 58 and 59 for the random intercept and slope, respectively) as well as $s =$ 55, 50, 45, 40, 35, and 30.
@@ -483,6 +504,7 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 
 Figures~\ref{fig:results-int} and \ref{fig:results-slope} display the estimated type I error rates using the AD normality test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes when $\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$. The other tests performed similarly, and full simulation results can be found in the supplementary material. Both figures show that the type I error rate is stabilized close to the nominal level with the appropriate choice of $s$. For the random intercept most choices of $s$ perform reasonably well, with the type I error rate closest to the nominal level for all error distributions between 30 and 40. For the random slope, $s$ must be chosen to be 30 for type I error to be near the nominal level; however, $s$ may need to be even smaller to achieve the nominal rate. 
 
+\hh{the code for figures 7 and onwards doesn't quite work - otherwise I would have played with that as well.}
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{ad_intercept_results.pdf}
@@ -526,7 +548,7 @@ While the estimated power is lower than the gold standard, the fact that the typ
 %----------------------------------------------------------------------------------
 \section{Radon data: Revisited}\label{sec:radon2}
 %----------------------------------------------------------------------------------
-Next, we return to the motivating example and use rotated residuals to assess the distribution of the random effects using the rotated random effects. 
+%Next, we return to the motivating example and use rotated residuals to assess the distribution of the random effects using the rotated random effects. 
 Recall that in Section~\ref{sec:ex} we determined that the error terms were not normally distributed. Consequently, examination of Q-Q plots of the predicted random effects will likely lead to erroneous conclusions due to the high degree of shrinkage. 
 
 In order to construct Q-Q plots of the rotated random effects we first consider the choice of $s$. For model \eqref{eq:radon} the high degree of shrinkage leads to a large fraction of confounding for each random term: 0.72 for the random intercept and 0.70 for the random slope. In choosing $s$ we wish to reduce the fraction of confounding to approximately 0.5, but we will restrict attention to $s > 30$ so as not to decrease the maximum possible power of a normality test too severly. Table~\eqref{tab:s} shows the fraction confounding for $s = 30, 40, 50, 60, 70, \text{ and } 80$. 
