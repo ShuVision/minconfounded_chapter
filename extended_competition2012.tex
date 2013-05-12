@@ -180,40 +180,23 @@ Note that in practice we must blind ourselves from the true plot for proper use 
 %
 %To further explore the distributional assumptions made on the random effects we create lineups \citep{buja:2009} of quantile plots were created by randomly inserting the true quantile plot for each term into a field of 19 plots generated under the null hypothesis of normality. A lineup for the random slopes is presented in Figure~\ref{fig:lineup}. The observed quantile plot (panel 16) is indistinguishable from the field of null plots, indicating that these predicted random slopes do not deviate from what would be expected under model~\eqref{eq:radon}, contradicting the results of the AD test. 
 
-What becomes apparent from the lineup, is that, astonishingly, {\it none} of the null plots conform to normality. \al{To further investigate the apparent non-normal behavior of predicted random effects we conduct a small simulation study.}
-%Further investigation  reveals  that a  proportion far above the nominal $\alpha=0.05$ level of random intercepts also fail the normality tests. 
-\hh{same thing as before - this is supposed to be the lead in to the next sentence, but it seems to indicate that you recite a result that you have done and don't want to show, which makes it a bit cryptic as to what you are doing next.}
-\al{XX How about this?}
+What becomes apparent from the lineup, is that, astonishingly, {\it none} of the null plots conform to normality. To further investigate the apparent non-normal behavior of predicted random effects we conduct a small simulation study: \hh{nice!}
 
-
-%Further evidence of the impact of this dependence is evident from a small scale simulation study. We used the design of the radon study to simulate 5000 data sets under model~\eqref{eq:radon} satisfying the assumptions discussed above. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
-%%: $\widehat{\beta_0} = 1.46$, $\widehat{\beta_1} = -0.64$, $\widehat{\beta_2} = 0.77$, $\widehat{\sigma}_{\varepsilon} = 0.75$, $\widehat{\sigma}_{b_0} = 0.12$, $\widehat{\sigma}_{b_1} = 0.35$, and $\widehat{\rho} = 0.26$. 
-
-
-%<<<<<<< HEAD
-%%Table~\ref{tab:edf} shows results from 
-%We generated 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal ($\varepsilon_{ij}^* \sim \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
-%For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
-%Table~\ref{tab:edf} shows the proportions of these tests rejecting the null hypothesis of normality at the .05 significance level. 
-%
-%The type I error rates are hugely inflated for both random effects, making an assessment of normality based on the empirical distribution impossible. \al{For example, 85\% of the AD tests of the random intercept rejected the null hypothesis of normality when the error terms were skewed.} 
-%\hh{pick one of the numbers from the table and use it as an example.} 
-%Use of standardized random effects and \citetapos{Lange:1989uu} weighted Q-Q plot \hh{how can you test the weighted Q-Q plot?} \al{XX I wrote a weighted version of the KS test and used a parametric bootstrap to create the reference distribution. The results are included in the supplement.} reduce the type I errors to the nominal level when the level-1 residuals are normal, but the type I errors remain inflated for non-normal level-1 residuals. Similarly, when the random effects are not normal, simulations (not shown) revealed that the tests were  often unable to reject the null hypothesis of normality when the level-1 residuals were normal. \al{Based on the above results we find that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.}
-%=======
-%Table~\ref{tab:edf} shows results from 
 We generated 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal ($\varepsilon_{ij}^* \sim \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
 For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
 Table~\ref{tab:edf} shows the proportions of these tests rejecting the null hypothesis of normality at the .05 significance level. 
 
 The type I error rates are hugely inflated for both random effects, making an assessment of normality based on the empirical distribution impossible. 
-\al{For example, 85\% of the AD tests of the random intercept rejected the null hypothesis of normality when the error terms were skewed.}
-\hh{pick one of the numbers from the table and use it as an example.} Use of standardized random effects and \al{the weighted cumulative distribution function proposed by \cite{Lange:1989uu}} reduce the type I errors to the nominal level when the level-1 residuals are normal, but the type I errors remain inflated for non-normal level-1 residuals. 
-\hh{how can you test the weighted Q-Q plot?} \al{XX I wrote a weighted version of the KS test and used a parametric bootstrap to create the reference distribution. The results are included in the supplement.} \hh{then it's weighted residuals used in the weighted Q=Q plot, but not the weighted Q-Q plot itself - sorry to be so nitpicky, but it sounds like you're bringing in a visual inspection or trying to automate it.  }  \al{XX I think it is good to be nitpicky as we know reviewers will be. Since I used a KS test to assess this, I thought talking about the weighted CDF was more precise than weighted residuals.}
-Similarly, when the random effects are not normal, simulations (not shown) revealed that the tests were  often unable to reject the null hypothesis of normality when the level-1 residuals were normal. \al{Based on the above results we find that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.}
-
+For example, 85\% of the AD tests of the random intercept rejected the null hypothesis of normality when the error terms were skewed.
+ Use of standardized random effects and the weighted cumulative distribution function proposed by \cite{Lange:1989uu} reduce the type I errors to the nominal level when the level-1 residuals are normal, but the type I errors remain inflated for non-normal level-1 residuals. 
+%Similarly, when the random effects are not normal, simulations (not shown) revealed that the tests were  often unable to reject the null hypothesis of normality when the level-1 residuals were normal. 
+\hh{Similarly, tests of non-normal random effects often failed to reject if the level-1 residuals were normally distributed. }
+\hh{This inability to assess distributional assumptions correctly is a symptom typical of confounding between levels of residuals.}
+%Based on the above results we find that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.
 
 %The inflated type I error rates for the random effects indicate that the empirical distribution of the random effects cannot be used to assess the assumption of normality. 
-In this example we are able to use the empirical distribution to assess normality of  level-1 residuals  as  pooling is minimal at this level. In situations with higher levels of pooling, this may not be the case.
+\hh{In situations with a large amount of pooling, confounding also affects level-1 residuals, which in this particular example were the least affected and did not exhibit signs of deviation from normality.}
+%In this example we are able to use the empirical distribution to assess normality of  level-1 residuals  as  pooling is minimal at this level. In situations with higher levels of pooling, this may not be the case.
 
 \begin{table}[t]
 \centering
@@ -294,9 +277,6 @@ In this section we develop the rotated random effects and discuss computational 
 \subsection{Model notation and residuals}\label{sec:resid}
 %\subsection{Hierarchical linear models and residuals}\label{sec:resid}
 %----------------------------------------------------------------------------------
-\hh{What is the purpose of section 3? It doesn't stand on its own - move it as a subsection into section 4} \al{XX Originally when I was writing I was having a hard time seeing how to merge this into any section of the paper. I knew we had to set up the notation and definitions of residual quantities, so I put it here. I am not quite happy with the new name of section 3, but I do see your point of combining the sections.}
-\hh{I think the subsection title is fine - but now the start into the overall section is a bit abrupt.  I think a paragraph before section 3.1 would be good explaining what is going on in this section. }
-
 
 The general stacked representation of the hierarchical linear model is given by
 %
@@ -486,6 +466,7 @@ Error terms  & Normal       & X & X & X \\
 \end{tabular} 
 \end{table}
 \al{XX How much information should we include in the table? Do we still need to explicitly write out the distributions in notation?}
+\hh{yes, write out the distributions}
 
 %The following distributions were used to generate simulated residuals $\varepsilon_{ij}^*$, $b_{0i}^*$, and $b_{1i}^*$ from which data were generated:
 %\hh{describe the situations in words first: normal, heavy-tail or skewed distributions were used to generate errors, random intercepts and slopes. -- wasn't it just nine cases? if this is a full random design, we would get 27 distribution triples! how do the two random effects influence each other, i.e. what are you assuming for D?}
@@ -523,7 +504,7 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 	\centering
 	\includegraphics[width=\textwidth]{fc_by_s.pdf}
 	\caption{\label{fig:fc} Change in the fraction of confounding (FC) as the dimension of the rotated random effects vector, $s$, is reduced for the three variance structures considered in the simulation study. %LOESS smoothers estimate the trajectory of FC as $s$ varies.} 
-	\hh{Adam, I am not sure what b density is - could you fix that?} \al{ xxIs this what you had in mind? b\_dsn was just what distribution the random effects followed.}
+	\hh{Adam, I am not sure what b density is - could you fix that?} \al{ xxIs this what you had in mind? b\_dsn was just what distribution the random effects followed.} \hh{yes, this is great!, but the math notation is a teensy bit small now .... that might have been me}
 	}
 \end{figure}
 
@@ -633,7 +614,7 @@ Based on  Table~\eqref{tab:s} we choose $s=30$ for the calculation of the rotate
 	  \subfloat[Random slope]{
 		\includegraphics[width=0.35\linewidth]{rotatedQQ-slope.pdf}
 		}	
-	\caption{\label{fig:rotate-radon} Normal Q-Q plots with pointwise 95\% confidence bands of the marginals rotated random effects. The deviations from normality are much less pronounced than before resulting in the failure to reject the null hypothesis of normality.}
+	\caption{\label{fig:rotate-radon} Normal Q-Q plots with pointwise 95\% confidence bands of the marginals rotated random effects. The deviations from normality are much less pronounced than before resulting in the failure to reject the null hypothesis of normality. \hh{what do the normality tests say?}}
 \end{figure}
 
 %\begin{itemize}
