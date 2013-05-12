@@ -179,31 +179,7 @@ Note that in practice we must blind ourselves from the true plot for proper use 
 %
 %To further explore the distributional assumptions made on the random effects we create lineups \citep{buja:2009} of quantile plots were created by randomly inserting the true quantile plot for each term into a field of 19 plots generated under the null hypothesis of normality. A lineup for the random slopes is presented in Figure~\ref{fig:lineup}. The observed quantile plot (panel 16) is indistinguishable from the field of null plots, indicating that these predicted random slopes do not deviate from what would be expected under model~\eqref{eq:radon}, contradicting the results of the AD test. 
 
-<<<<<<< HEAD
-What becomes apparent from the lineup, is that, astonishingly, {\it none} of the null plots conform to normality. \al{To further investigate the apparent non-normal behavior of predicted random effects we conduct a small simulation study.}
-%Further investigation  reveals  that a  proportion far above the nominal $\alpha=0.05$ level of random intercepts also fail the normality tests. 
-\hh{same thing as before - this is supposed to be the lead in to the next sentence, but it seems to indicate that you recite a result that you have done and don't want to show, which makes it a bit cryptic as to what you are doing next.}
-\al{XX How about this?}
-
-
-%Further evidence of the impact of this dependence is evident from a small scale simulation study. We used the design of the radon study to simulate 5000 data sets under model~\eqref{eq:radon} satisfying the assumptions discussed above. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
-%%: $\widehat{\beta_0} = 1.46$, $\widehat{\beta_1} = -0.64$, $\widehat{\beta_2} = 0.77$, $\widehat{\sigma}_{\varepsilon} = 0.75$, $\widehat{\sigma}_{b_0} = 0.12$, $\widehat{\sigma}_{b_1} = 0.35$, and $\widehat{\rho} = 0.26$. 
-
-
-%<<<<<<< HEAD
-%%Table~\ref{tab:edf} shows results from 
-%We generated 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal ($\varepsilon_{ij}^* \sim \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
-%For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
-%Table~\ref{tab:edf} shows the proportions of these tests rejecting the null hypothesis of normality at the .05 significance level. 
-=======
 What becomes apparent from the lineup, is that, astonishingly, {\it none} of the null plots conform to normality. To further investigate the apparent non-normal behavior of predicted random effects we conduct a small simulation study: \hh{nice!}
-%%Further investigation  reveals  that a  proportion far above the nominal $\alpha=0.05$ level of random intercepts also fail the normality tests. 
-%
-%%Further evidence of the impact of this dependence is evident from a small scale simulation study. We used the design of the radon study to simulate 5000 data sets under model~\eqref{eq:radon} satisfying the assumptions discussed above. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
-%%%: $\widehat{\beta_0} = 1.46$, $\widehat{\beta_1} = -0.64$, $\widehat{\beta_2} = 0.77$, $\widehat{\sigma}_{\varepsilon} = 0.75$, $\widehat{\sigma}_{b_0} = 0.12$, $\widehat{\sigma}_{b_1} = 0.35$, and $\widehat{\rho} = 0.26$. 
-%
->>>>>>> reading again from start and liking it!
-%
 
 We generated 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal ($\varepsilon_{ij}^* \sim \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
 For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
