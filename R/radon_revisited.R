@@ -10,6 +10,7 @@ library(lme4)
 library(MASS)
 library(RcppEigen)
 library(inline)
+library(nortest)
 
 setwd("~/Documents/Thesis/Dissertation/eresids-chapter/minconfounded_chapter")
 
@@ -89,3 +90,12 @@ ggplot(data.frame(b1.rot), aes(sample = b1.rot)) +
 	xlab("Normal Quantiles") + ylab("Sample Quantiles") + 
 	theme_bw()
 ggsave(filename = "/Users/adam/Documents/Thesis/Dissertation/eresids-chapter/minconfounded_chapter/figures/rotatedQQ-slope.pdf", width = 3, height = 3)
+
+ad.test(b0.rot)
+ad.test(b1.rot)
+
+cvm.test(b0.rot)
+cvm.test(b1.rot)
+
+lillie.test(b0.rot)
+lillie.test(b1.rot)
