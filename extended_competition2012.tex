@@ -44,7 +44,6 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{multirow}
-\usepackage{lipsum}
 
 \newtheorem{proposition}{Proposition}
 \newtheorem{theorem}{Theorem}
@@ -203,8 +202,11 @@ We generated 1000 parametric bootstrap samples of model~\eqref{eq:radon} assumin
 For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
 Table~\ref{tab:edf} shows the proportions of these tests rejecting the null hypothesis of normality at the .05 significance level. 
 
-The type I error rates are hugely inflated for both random effects, making an assessment of normality based on the empirical distribution impossible. \hh{pick one of the numbers from the table and use it as an example.} Use of standardized random effects and \citetapos{Lange:1989uu} weighted Q-Q plot \hh{how can you test the weighted Q-Q plot?} \al{XX I wrote a weighted version of the KS test and used a parametric bootstrap to create the reference distribution. The results are included in the supplement.} \hh{then it's weighted residuals used in the weighted Q=Q plot, but not the weighted Q-Q plot itself - sorry to be so nitpicky, but it sounds like you're bringing in a visual inspection or trying to automate it.  } 
-reduce the type I errors to the nominal level when the level-1 residuals are normal, but the type I errors remain inflated for non-normal level-1 residuals. Similarly, when the random effects are not normal, simulations (not shown) revealed that the tests were  often unable to reject the null hypothesis of normality when the level-1 residuals were normal. \al{Based on the above results we find that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.}
+The type I error rates are hugely inflated for both random effects, making an assessment of normality based on the empirical distribution impossible. 
+\al{For example, 85\% of the AD tests of the random intercept rejected the null hypothesis of normality when the error terms were skewed.}
+\hh{pick one of the numbers from the table and use it as an example.} Use of standardized random effects and \al{the weighted cumulative distribution function proposed by \cite{Lange:1989uu}} reduce the type I errors to the nominal level when the level-1 residuals are normal, but the type I errors remain inflated for non-normal level-1 residuals. 
+\hh{how can you test the weighted Q-Q plot?} \al{XX I wrote a weighted version of the KS test and used a parametric bootstrap to create the reference distribution. The results are included in the supplement.} \hh{then it's weighted residuals used in the weighted Q=Q plot, but not the weighted Q-Q plot itself - sorry to be so nitpicky, but it sounds like you're bringing in a visual inspection or trying to automate it.  }  \al{XX I think it is good to be nitpicky as we know reviewers will be. Since I used a KS test to assess this, I thought talking about the weighted CDF was more precise than weighted residuals.}
+Similarly, when the random effects are not normal, simulations (not shown) revealed that the tests were  often unable to reject the null hypothesis of normality when the level-1 residuals were normal. \al{Based on the above results we find that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.}
 
 
 %The inflated type I error rates for the random effects indicate that the empirical distribution of the random effects cannot be used to assess the assumption of normality. 
@@ -282,6 +284,8 @@ In the remainder of this paper we investigate the root of concern that leads to 
 %----------------------------------------------------------------------------------
 \section{Assessing the distribution of the random effects}\label{sec:}
 %----------------------------------------------------------------------------------
+
+\todo[inline]{Add intro to this section.}
 
 %----------------------------------------------------------------------------------
 \subsection{Model notation and residuals}\label{sec:resid}
@@ -463,31 +467,43 @@ We conducted a simulation study to assess the specificity and sensitivity of tes
  These test statistics each measure the discrepancy between the empirical distribution of the rotated random effects and assumed distribution of the random effects, which sheds light on the behavior of Q-Q plots constructed from the rotated residuals. 
 
 
-The design matrices from model \eqref{eq:radon} were used as templates for realistic data generation;  for simplicity of the simulation design, only the 60 counties with full rank $\bm{Z}$ matrices were included.
-The following distributions were used to generate simulated residuals $\varepsilon_{ij}^*$, $b_{0i}^*$, and $b_{1i}^*$ from which data were generated:
-\hh{describe the situations in words first: normal, heavy-tail or skewed distributions were used to generate errors, random intercepts and slopes. -- wasn't it just nine cases? if this is a full random design, we would get 27 distribution triples! how do the two random effects influence each other, i.e. what are you assuming for D?}
-%
-\begin{itemize}
-\item $\varepsilon_{ij}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{\varepsilon})$, or $\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$ , or $\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$
+The design matrices from model \eqref{eq:radon} were used as templates for realistic data generation;  for simplicity of the simulation design, only the 60 counties with full rank $\bm{Z}$ matrices were included. 
+\al{Normal, heavy-tailed, and skewed distributions were used to generate the simulated errors and random effects. We used a rescaled $t$ distribution with 3 degrees of freedom to generate heavy tailed residuals, and a centered and rescaled exponential distribution with a rate parameter of 1 to generate skewed residuals. For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. The 9 distributional settings considered in the simulation study are summarized in Table~\ref{tab:simdsns}.}
 
-\item $b_{0i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{0}})$, or $b_{0i}^* \overset{iid}{\sim} (\sigma_{b_{0}} / \sqrt{3})\, t_3$ , or $b_{0i}^* \overset{iid}{\sim} \sigma_{b_{0}} \, \{ \text{Exp}(1) - 1 \}$
+\begin{table}[htdp]\centering
+\caption{\label{tab:simdsns} A summary of the distributional settings considered in the simulation study.}
+\begin{tabular}{llccc}\hline
+& & \multicolumn{3}{c}{Random effects} \\ 
+           & & Normal & Heavy tailed & Skewed \\ \hline
+Error terms  & Normal       & X & X & X \\
+             & Heavy tailed & X & X & X \\
+             & Skewed       & X & X & X \\ 
+\hline
+\end{tabular} \end{table}
+\al{XX How much information should we include in the table? Do we still need to explicitly write out the distributions in notation?}
 
-\item $b_{1i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{1}})$, or $b_{1i}^* \overset{iid}{\sim} (\sigma_{b_{1}} / \sqrt{3})\, t_3$ , or $b_{1i}^* \overset{iid}{\sim} \sigma_{b_{1}} \, \{ \text{Exp}(1) - 1 \}$
-\end{itemize}
+%The following distributions were used to generate simulated residuals $\varepsilon_{ij}^*$, $b_{0i}^*$, and $b_{1i}^*$ from which data were generated:
+%\hh{describe the situations in words first: normal, heavy-tail or skewed distributions were used to generate errors, random intercepts and slopes. -- wasn't it just nine cases? if this is a full random design, we would get 27 distribution triples! how do the two random effects influence each other, i.e. what are you assuming for D?}
+%%
+%\begin{itemize}
+%\item $\varepsilon_{ij}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{\varepsilon})$, or $\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$ , or $\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$
 %
-For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. \hh{ok, this answers most of it, but it would be better to make the bullets above a 3 by 3 table with the corresponding distributions in the margins.}
+%\item $b_{0i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{0}})$, or $b_{0i}^* \overset{iid}{\sim} (\sigma_{b_{0}} / \sqrt{3})\, t_3$ , or $b_{0i}^* \overset{iid}{\sim} \sigma_{b_{0}} \, \{ \text{Exp}(1) - 1 \}$
+%
+%\item $b_{1i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{1}})$, or $b_{1i}^* \overset{iid}{\sim} (\sigma_{b_{1}} / \sqrt{3})\, t_3$ , or $b_{1i}^* \overset{iid}{\sim} \sigma_{b_{1}} \, \{ \text{Exp}(1) - 1 \}$
+%\end{itemize}
+%%
+%For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. \hh{ok, this answers most of it, but it would be better to make the bullets above a 3 by 3 table with the corresponding distributions in the margins.}
 
 Additionally, the the fixed effects coefficients were set to the maximum likelihood estimates.
 
-To investigate the effect that pooling has on the rotated random effects we considered  three variance structures:
+To investigate the effect that pooling has on the rotated random effects we considered  three variance structures \al{to represent different degrees of confounding for the random effects}:\\
 %
-\hh{give each of these cases a good name}
-\begin{description}
-\item[large error term: ] $\sigma^2_\varepsilon = 4$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
-\item[equal error term: ] $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$
-\item[small error term: ] $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 4$
-
-\end{description}
+\begin{tabular}{ll}
+\textbf{high:} & $\sigma^2_\varepsilon = 4$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$ \\
+\textbf{moderate:} & $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$ \\
+\textbf{low:} & $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 4$ \\
+\end{tabular}
 %
 
 Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$ (which are 58 and 59 for the random intercept and slope, respectively) as well as $s =$ 55, 50, 45, 40, 35, and 30.
@@ -509,6 +525,7 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 Figures~\ref{fig:results-int} and \ref{fig:results-slope} display the estimated type I error rates using the AD normality test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes when $\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$. The other tests performed similarly, and full simulation results can be found in the supplementary material. Both figures show that the type I error rate is stabilized close to the nominal level with the appropriate choice of $s$. For the random intercept most choices of $s$ perform reasonably well, with the type I error rate closest to the nominal level for all error distributions between 30 and 40. For the random slope, $s$ must be chosen to be 30 for type I error to be near the nominal level; however, $s$ may need to be even smaller to achieve the nominal rate. 
 
 \hh{the code for figures 7 and onwards doesn't quite work - otherwise I would have played with that as well. }
+\al{I broke the code a bit trying to allow for a third panel showing where we were starting with the unrotated random effects. I just added code that works to the file.}
 
 \hh{I would move at least one part of the tables from the supplementary material into the discussion of this section. You need to explain to the audience how they are supposed to read these tables, a=otherwise nobody will care about the supplement and all of that nice work will go unnoticed. I would suggest the data for figure 9 - the overlap makes it harder to read the figure. }
 \begin{figure}
