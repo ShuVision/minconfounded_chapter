@@ -21,6 +21,7 @@
 \newcommand{\al}[1]{{\color{red} #1}}
 
 % color in tables
+\usepackage{rotating}
 \usepackage{color}
 \usepackage{colorbl}
 
@@ -532,7 +533,7 @@ Figures~\ref{fig:results-int} and \ref{fig:results-slope} display the estimated 
 \al{I broke the code a bit trying to allow for a third panel showing where we were starting with the unrotated random effects. I just added code that works to the file.}
 
 \hh{I would move at least one part of the tables from the supplementary material into the discussion of this section. You need to explain to the audience how they are supposed to read these tables, a=otherwise nobody will care about the supplement and all of that nice work will go unnoticed. I would suggest the data for figure 9 - the overlap makes it harder to read the figure. }
-\al{XX OK. We should be able to do this for figure 9. I will work on reformatting the table to work, since the tables in the supplement are currently broken down by s, which we will want to combine in the table we present,}
+\al{XX OK. We should be able to do this for figure 9. I have included a first attempt at a table to replace the figures for the random intercept (figs 7 and 9). Since the tables in the supplement are currently broken down by s, the table is a little hard to build... This was just one thought at the organization.}
 
 \begin{figure}
 	\centering
@@ -565,6 +566,29 @@ While the estimated power is lower than the gold standard, the fact that the typ
 	\caption{\label{fig:power-slope}Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random slope.}
 \end{figure}
 
+
+\begin{sidewaystable}
+\centering
+\caption{Proportions of AD tests rejecting the null hypothesis of normality at the .05 significance level for the rotated (Rot) and varimax rotated (Vmx) random intercepts by $s$. The gray shading indicates the situations where the random intercept is normal (i.e., type I error).}
+\begin{footnotesize}
+\begin{tabular}{ll cccccccccccccc}\hline
+Random & & \multicolumn{2}{c}{s = 58} & \multicolumn{2}{c}{s = 55} & \multicolumn{2}{c}{s = 50} & \multicolumn{2}{c}{s = 45} & \multicolumn{2}{c}{s = 40} & \multicolumn{2}{c}{s = 35} & \multicolumn{2}{c}{s = 30} \\
+Intercept	&	Error	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	\\ \hline
+\rowcolor{gray!20}Normal	&	Normal			&	0.04	&	0.05	&	0.04	&	0.05	&	0.05	&	0.05	&	0.04	&	0.05	&	0.04	&	0.05	&	0.05	&	0.05	&	0.06	&	0.06	\\
+\rowcolor{gray!20}	    &	Heavy tailed		&	0.07	&	0.09	&	0.08	&	0.09	&	0.07	&	0.08	&	0.06	&	0.07	&	0.05	&	0.06	&	0.04	&	0.05	&	0.05	&	0.05	\\
+\rowcolor{gray!20}	    &	Skewed			&	0.05	&	0.05	&	0.05	&	0.05	&	0.06	&	0.04	&	0.06	&	0.06	&	0.06	&	0.06	&	0.06	&	0.05	&	0.06	&	0.06	\\
+	&		&		&		&		&		&		&		&		&		&		&		&		&		&		&		\\
+Heavy tailed	&	Normal		&	0.14	&	0.22	&	0.14	&	0.22	&	0.13	&	0.23	&	0.13	&	0.23	&	0.13	&	0.23	&	0.13	&	0.22	&	0.12	&	0.22	\\
+	        &	Heavy tailed	&	0.19	&	0.34	&	0.19	&	0.33	&	0.17	&	0.32	&	0.16	&	0.32	&	0.16	&	0.30	&	0.15	&	0.27	&	0.14	&	0.27	\\
+			&	Skewed		&	0.15	&	0.28	&	0.15	&	0.27	&	0.14	&	0.26	&	0.14	&	0.27	&	0.13	&	0.24	&	0.13	&	0.23	&	0.12	&	0.22	\\
+			&		&		&		&		&		&		&		&		&		&		&		&		&		&		&		\\
+Skewed	&	Normal			&	0.10	&	0.20	&	0.09	&	0.21	&	0.10	&	0.21	&	0.10	&	0.22	&	0.10	&	0.23	&	0.11	&	0.21	&	0.10	&	0.22	\\
+		&	Heavy tailed		&	0.13	&	0.30	&	0.12	&	0.28	&	0.12	&	0.27	&	0.11	&	0.25	&	0.10	&	0.26	&	0.11	&	0.25	&	0.11	&	0.24	\\
+		&	Skewed			&	0.13	&	0.22	&	0.13	&	0.23	&	0.12	&	0.22	&	0.12	&	0.23	&	0.11	&	0.21	&	0.11	&	0.23	&	0.11	&	0.21	\\
+\hline
+\end{tabular}
+\end{footnotesize}
+\end{sidewaystable}
 
 
 %\begin{itemize}
