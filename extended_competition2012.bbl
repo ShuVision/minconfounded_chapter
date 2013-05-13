@@ -102,12 +102,6 @@ Lange, N. and Ryan, L. (1989).
 \newblock Assessing normality in random effects models.
 \newblock {\em The Annals of Statistics}, 17(2):624--642.
 
-\bibitem[\protect\astroncite{Li and Pourahmadi}{2013}]{Li:2013je}
-Li, E. and Pourahmadi, M. (2013).
-\newblock An alternative {REML} estimation of covariance matrices in linear
-  mixed models.
-\newblock {\em Statistics {\&} Probability Letters}, 83(4):1071--1077.
-
 \bibitem[\protect\astroncite{McDonald et~al.}{1979}]{McDonald:1979ca}
 McDonald, R.~P., Torii, Y., and Nishisato, S. (1979).
 \newblock Some results on proper eigenvalues and eigenvectors with applications
@@ -123,12 +117,6 @@ Nobre, J.~S. and Singer, J. d.~M. (2007).
 Pinheiro, J.~C. and Bates, D.~M. (2000).
 \newblock {\em Mixed-Effects Models in S and S-PLUS}.
 \newblock Springer-Verlag, New York.
-
-\bibitem[\protect\astroncite{Sch{\"u}tzenmeister and
-  Piepho}{2012}]{Schutzenmeister:2012gw}
-Sch{\"u}tzenmeister, A. and Piepho, H.-P. (2012).
-\newblock Residual analysis of linear mixed models using a simulation approach.
-\newblock {\em Computational Statistics {\&} Data Analysis}, 56(6):1405--1416.
 
 \bibitem[\protect\astroncite{Shen and Louis}{1999}]{Shen:1999gd}
 Shen, W. and Louis, T.~A. (1999).
