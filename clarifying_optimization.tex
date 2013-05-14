@@ -1,0 +1,114 @@
+\documentclass[12pt]{article} % JASA requires 12 pt font for manuscripts
+%\usepackage{JASA_manu}        % For JASA manuscript formatting
+
+% for citations
+\usepackage[authoryear]{natbib} % natbib required for JASA
+\usepackage[colorlinks=true, citecolor=blue, linkcolor=blue]{hyperref}
+\newcommand{\citetapos}[1]{\citeauthor{#1}{\textcolor{blue}{'s}} }
+
+%\definecolor{Blue}{rgb}{0,0,0.5}
+
+\usepackage{amsthm}
+
+% for figures
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subfig}
+\captionsetup[subfloat]{font=normalsize}
+%\usepackage{subcaption}
+\graphicspath{{figures/}}
+\newcommand{\hh}[1]{{\color{orange} #1}}
+\newcommand{\al}[1]{{\color{red} #1}}
+
+% color in tables
+\usepackage{rotating}
+\usepackage{color}
+\usepackage{colorbl}
+
+% help with editing and coauthoring
+\usepackage{todonotes}
+
+% title formatting
+\usepackage[compact,small]{titlesec}
+% page formatting
+\usepackage[margin = 1in]{geometry}
+\usepackage[parfill]{parskip}
+
+% line spacing
+\usepackage{setspace}
+\doublespace
+
+% For math typsetting
+\usepackage{bm}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{multirow}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{algorithm}[theorem]{Algorithm}
+
+% A few commands to make typing less tedious
+\newcommand{\inv}{\ensuremath{^{-1}}}
+\newcommand{\ginv}{\ensuremath{^{-}}}
+\newcommand{\trans}{\ensuremath{^\prime}}
+\newcommand{\E}{\ensuremath{\mathrm{E}}}
+\newcommand{\var}{\ensuremath{\mathrm{Var}}}
+\newcommand{\cov}{\ensuremath{\mathrm{Cov}}}
+\DeclareMathOperator{\tr}{Trace}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator*{\argmin}{argmin}
+
+\begin{document}
+
+In this document I am going to try to clarify the optimization process, and by doing so, I hope that I answer your question about why the amount of confounding is not being reduced more. I thought that starting this as a separate note and then integrating it into the paper were necessary would be easier to work with than trying to make notes in the paper at this point.
+
+\paragraph{Our optimization problem.} We propose solving the following optimization problem in an effort to minimize the amount of confounding in the problem for a specified dimension, $s$
+%
+\begin{equation}\label{eq:minimize}
+\bm{W}^* = \argmin_{W \in \mathbb{R}^{\ell \times s} } 
+\tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right)
+%\displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{W} \bm{A} \bm{W}\trans \bm{v_i}}
+%		{\bm{v_i}\trans \bm{W} \bm{B} \bm{W}\trans \bm{v_i}}
+\end{equation}
+%
+Mathematically, this problem is solved using the generalized eigenvalue decomposition
+\begin{equation}\label{eq:geigen}
+	\bm{Aw}_k = \gamma_k \bm{Bw}_k
+\end{equation}
+where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively; thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. Computationally we solve this problem through simultaneous diagonalization, which requires $\bm{W}$ to satisfy $\bm{W\trans B W} = \bm{I}$ (this is sometimes called $\bm{B}$-orthgonality); thus, \eqref{eq:minimize} can be rewritten as
+%
+\begin{equation}
+\bm{W}^* = \argmin_{ 
+\begin{scriptsize}
+	\begin{cases}
+      \bm{W} \in \mathbb{R}^{\ell \times s} \\
+      \bm{W\trans B W} = \bm{I}
+	\end{cases}
+\end{scriptsize}
+	} 
+\tr\left( \bm{W\trans A W} \right) 
+\end{equation}
+%
+So simultaneous diagonalization (Algorithm 1 in the paper) first ensures that the constraint is satisfied, and then diagonalizes $\bm{A}$ which gives us our solution (those details are pretty good in the paper). Note that through simultaneous diagonalization we also get $\bm{W}\trans \bm{W} = \bm{WW}\trans = \bm{I}$.
+
+\paragraph{Why doesn't FC shrink faster?\\}
+\todo[inline]{I left the piece of paper I worked this part of the argument out on in Snedecor, so this is rougher than it should be, and I am more tired than I was this morning.}
+To answer this, we first need to think about the properties of the trace. Recall that the trace is invariant to cyclic permutations; thus, 
+\[
+	\tr(\bm{W\trans A W}) = \tr(\bm{A W W\trans}) = \tr(\bm{A})
+\] 
+Also recall that $\tr (\bm{A}) = \sum_i \lambda_i$, where $\lambda_1, \ldots, \lambda_n$ are the ordered eigenvalues of $\bm{A}$. Since $\bm{A}$ is not full rank (it has the same rank as $\bm{B}$), but is positive semidefinite, then we can write $\tr (\bm{A}) = \lambda_1 + \cdots + \lambda_r + 0 + \cdots + 0$. 
+
+%We are minimizing the trace given a choice of the dimension of the resulting subspace. If we choose $s=1$, then the minimum is the smallest eigenvalue. If we choose $s=2$, then the minimum is the sum of the two smallest eigenvalues. This goes on and yields that if we choose $s = \rank(\bm{M})$
+
+\todo[inline]{Essentially, I believe FC isn't shrinking faster because \\
+(1) if we don't reduce $s$ from the rank we don't reduce FC at all\\ 
+(2) The radon example, and the simulations from it, have many highly confounded groups. This means that the high FC isn't just a few highly confounded groups that inflate the calculation of FC, which would be shrunken quickly using our optimization, but has an overall high level of confounding in many groups.\\[1em]
+I have lost my concentration on this for the night, so I will have to pick it up from here in the morning, but I wanted to make sure you could see something.
+}
+
+\end{document}
