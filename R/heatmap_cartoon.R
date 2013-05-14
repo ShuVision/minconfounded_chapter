@@ -1,6 +1,11 @@
 
 library(lme4)
 library(ggplot2)
+library(inline)
+library(RcppEigen)
+library(MASS)
+
+source('~/Documents/Thesis/Dissertation/eresids-chapter/simulations/functions/cpp_functions.R')
 
 # First let's generate a data set.
 
@@ -33,7 +38,7 @@ data.set = data.frame(class.id = rep(1:nclass, time=nstud),
 data.set$outcomes = data.set$class.effect + data.set$student.effect
 
 head(data.set)
-lmer(outcomes ~ 1 + (1|class.id), data=data.set)
+fm <- lmer(outcomes ~ 1 + (1|class.id), data=data.set)
 
 BlockZ <- function(object) {
   Z <- getME(object, "Z")
@@ -133,9 +138,9 @@ P      <- cxxmatsub(as.matrix(Vinv), as.matrix(M))
 A <-  crossprod( P %*% Z %*% D )
 B <- D %*% t(Z) %*% P %*% Z %*% D
 
-fc.int   <- diag(ginv(as.matrix(B.int)) %*% A.int)
+fc.int   <- diag(ginv(as.matrix(B)) %*% A)
 
-W.int <- as.matrix( mcrotate(A = A.int, B = B.int, s = s) )
+W.int <- as.matrix( mcrotate(A = A, B = B, s = s) )
 W.vmx.int <- varimax( W.int, normalize = FALSE )$loadings
 
 Wt.int <- as.matrix( zapsmall( t(W.int) ) )
