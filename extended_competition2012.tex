@@ -454,26 +454,26 @@ Normal, heavy-tailed, and skewed distributions are used to generate the simulate
 \caption{\label{tab:simdsns} A summary of the distributional settings considered in the simulation study.}
 \begin{tabular}{llccc}\hline
 & & \multicolumn{3}{c}{Random effects} \\ 
-           & & Normal & Heavy tailed & Skewed \\ \hline
-Error terms  & Normal       & X & X & X \\
-             & Heavy tailed & X & X & X \\
-             & Skewed       & X & X & X \\ 
+           & & $\mathcal{N}(0, \ \sigma^2_{b})$ & $(\sigma_{b} / \sqrt{3})\, t_3$ & $\sigma_{b} \, \{ \text{Exp}(1) - 1 \}$ \\ \hline
+Error terms  & $\mathcal{N}(0, \ \sigma^2_{\varepsilon})$       & X & X & X \\
+             & $(\sigma_{\varepsilon} / \sqrt{3})\, t_3$  & X & X & X \\
+             & $\sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$       & X & X & X \\ 
 \hline
 \end{tabular} 
 \end{table}
 \al{XX How much information should we include in the table? Do we still need to explicitly write out the distributions in notation?}
-\hh{yes, write out the distributions}
+\hh{yes, write out the distributions} \al{Do you think writing the distributions in the interior is better? I stuck in a formatting debate with myself.}
 
 %The following distributions were used to generate simulated residuals $\varepsilon_{ij}^*$, $b_{0i}^*$, and $b_{1i}^*$ from which data were generated:
 %\hh{describe the situations in words first: normal, heavy-tail or skewed distributions were used to generate errors, random intercepts and slopes. -- wasn't it just nine cases? if this is a full random design, we would get 27 distribution triples! how do the two random effects influence each other, i.e. what are you assuming for D?}
 %%
-%\begin{itemize}
-%\item $\varepsilon_{ij}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{\varepsilon})$, or $\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$ , or $\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$
-%
-%\item $b_{0i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{0}})$, or $b_{0i}^* \overset{iid}{\sim} (\sigma_{b_{0}} / \sqrt{3})\, t_3$ , or $b_{0i}^* \overset{iid}{\sim} \sigma_{b_{0}} \, \{ \text{Exp}(1) - 1 \}$
-%
-%\item $b_{1i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{1}})$, or $b_{1i}^* \overset{iid}{\sim} (\sigma_{b_{1}} / \sqrt{3})\, t_3$ , or $b_{1i}^* \overset{iid}{\sim} \sigma_{b_{1}} \, \{ \text{Exp}(1) - 1 \}$
-%\end{itemize}
+\begin{itemize}
+\item $\varepsilon_{ij}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{\varepsilon})$, or $\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$ , or $\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$
+
+\item $b_{0i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{0}})$, or $b_{0i}^* \overset{iid}{\sim} (\sigma_{b_{0}} / \sqrt{3})\, t_3$ , or $b_{0i}^* \overset{iid}{\sim} \sigma_{b_{0}} \, \{ \text{Exp}(1) - 1 \}$
+
+\item $b_{1i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{1}})$, or $b_{1i}^* \overset{iid}{\sim} (\sigma_{b_{1}} / \sqrt{3})\, t_3$ , or $b_{1i}^* \overset{iid}{\sim} \sigma_{b_{1}} \, \{ \text{Exp}(1) - 1 \}$
+\end{itemize}
 %%
 %For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. \hh{ok, this answers most of it, but it would be better to make the bullets above a 3 by 3 table with the corresponding distributions in the margins.}
 
@@ -624,18 +624,19 @@ Based on  Table~\eqref{tab:s} we choose $s=30$ for the calculation of the rotate
 \section{Discussion}\label{sec:discussion}
 %----------------------------------------------------------------------------------
 
-In this paper we have proposed the use of Q-Q plots of rotated residuals as an informal assessment of the distributional assumptions made on the random effects in hierarchical linear model. We have shown that rotated random effects are standardized, uncorrelated, homoscedastic. Following from this result, the pointwise confidence bands shown were not unique to this method, but follow from the development of the normal Q-Q plot (FIND REFERENCE), and were provided as an aid to interpretation, not as a formal test.
+In this paper we have proposed the use of Q-Q plots of rotated residuals as an informal assessment of the distributional assumptions made on the random effects in hierarchical linear model. We have shown that rotated random effects are standardized, uncorrelated, homoscedastic. It is important to note that formal tests have been proposed to to detect mixture distributions \citep{Verbeke:1996va} in the random effects and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001up}; however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software. Our method requires only byproducts of the model fitting procedure and the use of matrix decompositions for simultaneous diagonalization, which we believe are widely accessible.
+%Following from this result, the pointwise confidence bands shown were not unique to this method, but follow from the development of the normal Q-Q plot (FIND REFERENCE), and were provided as an aid to interpretation, not as a formal test.
 
-Simulation has revealed that tests of normality using the rotated random effects achieve approximately nominal type I error rates with appropriate choice of the length, $s$. This indicates that assessment of the rotated residuals can target the distribution of the random effects in the presence of pooling, which the predicted random effects cannot. The power to detect non-normal random effects distributions is lower than the gold standard, which is to be expected as we have taken linear combinations of predicted random effects in our rotation. The varimax rotation has reduced the impact of the resulting supernormality, but other orthogonal rotations (i.e., quartimax) may perform better and is an area for future investigation. We believe the low power is less troubling than the inflated type I error rates resulting from high levels of confounding, as the detection of a distributional deviation is now trustworthy, which previously not the case for highly confounded models. This indicates that the predicted random effects do contain useful diagnostic information even when models are highly confounded, but not in their ``raw'' state.
+Simulation has revealed that tests of normality using the rotated random effects achieve approximately nominal type I error rates with appropriate choice of the length, $s$. This indicates that assessment of the rotated residuals can target the distribution of the random effects in the presence of pooling, which the predicted random effects cannot. The power to detect non-normal random effects distributions is lower than the gold standard, which is to be expected as we have taken linear combinations of predicted random effects in our rotation. The varimax rotation has reduced the impact of the resulting supernormality, but other orthogonal rotations (i.e., quartimax) may perform better resulting in increased power and is an area for future investigation. We believe the loss of power is less troubling than the inflated type I error rates resulting from high levels of confounding, as the detection of a distributional deviation is now trustworthy, which previously was not the case for highly confounded models. This indicates that the predicted random effects do contain useful diagnostic information even when models are highly confounded, but not in their ``raw'' state.
  
-It is important to note that the procedure outlined in this paper assumes that the covariance structures in the hierarchical linear model are correctly specified. If this is not the case, then we would expect this model violation to affect assessment of the rotated random effect. Therefore, in practice we recommend an assessment of the covariance structures prior to distributional assessment, but it would be of interest to assess the effectiveness of this methodology with robust covariance estimation techniques.
+It is important to note that the procedure outlined in this paper assumes that the covariance structures in the hierarchical linear model are correctly specified. If this is not the case, then we would expect this model violation to affect assessment of the rotated random effect. Therefore, in practice we recommend an assessment of the covariance structures prior to distributional assessment. It would be of interest to assess the effectiveness of this methodology with robust covariance estimation techniques.
 
-\todo[inline]{I don't quite know how to wrap this all up...}
+\todo[inline]{Should I talk about the more alternative objective function that I have recently discovered that might lead to better results but is computationally more complex as there is no closed form solution? I see this as an area of future investigation, but I don't know how much of that is conventional to put in the article.}
 
-\todo[inline]{Things to return to in the discussion (moved from elsewhere)}
-\hh{the next paragraph needs a bit of attention. my first reaction as a reviewer would be to say - ok, it's not graphical, but how do those tests do? It distracts a bit from the main intention of the paper. I'd be in favor to remove the paragraph from here and maybe leave it for the discussion that there are other , non-graphical tests. }
-\al{I see your point. I will work on incorporating this to the discussion.}
-Several methods to assess the random effects distribution have been proposed. Formal tests have been proposed to to detect mixture distributions \citep{Verbeke:1996va} in the random effects and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001up}; however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software.
+%\todo[inline]{Things to return to in the discussion (moved from elsewhere)}
+%\hh{the next paragraph needs a bit of attention. my first reaction as a reviewer would be to say - ok, it's not graphical, but how do those tests do? It distracts a bit from the main intention of the paper. I'd be in favor to remove the paragraph from here and maybe leave it for the discussion that there are other , non-graphical tests. }
+%\al{I see your point. I will work on incorporating this to the discussion.}
+%Several methods to assess the random effects distribution have been proposed. Formal tests have been proposed to to detect mixture distributions \citep{Verbeke:1996va} in the random effects and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001up}; however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software.
 
 
 % If a graphical assessment of the random effects distribution is not desired, then there are other available methods for model assessment \cite[c.f., the $\chi^2$ test proposed by][]{Jiang:2001up}, but they do not lend themselves to graphical inspection. While such goodness-of-fit tests can detect distributional deviations, they do not suggest how the assumption as been violated. 
