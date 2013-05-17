@@ -8,11 +8,19 @@
 
 ### Preliminaries
 library(ggplot2)
+library(grid)
 library(reshape2)
 library(plyr)
 
 ### Reading in the data
 fc.summary <- read.csv(file.choose()) # read in FCsummary.csv
+
+# correcting fc
+fc.summary$fc.b0 <- fc.summary$fc.b0 * fc.summary$s_int
+fc.summary$fc.b1 <- fc.summary$fc.b1 * fc.summary$s_slope
+
+fc.summary$fc.b0 <- fc.summary$fc.b0 / 60
+fc.summary$fc.b1 <- fc.summary$fc.b1 / 60
 
 ### formatting df for ggplot
 fc.melted <- melt(fc.summary, id.vars=c("sigma_e", "sigma_b", "e_dsn", "b_dsn", "s_int", "s_slope"), value.name = "fc")
@@ -28,7 +36,7 @@ fc.melted$s[fc.melted$variable == "intercept"] <- fc.melted$s_int[fc.melted$vari
 fc.melted$s[fc.melted$variable == "slope"] <- fc.melted$s_slope[fc.melted$variable == "slope"]
 
 
-qplot(x = s, y = fc, data = fc.melted, geom = c("point"), group = `Var. structure`,  colour = `Var. structure`, facets = ~ variable,  linetype = `Var. structure`, size=I(3), shape=b_dsn) + 
+qplot(x = s, y = fc, data = fc.melted, geom = c("point"), group = `Var. structure`,  colour = `Var. structure`, facets = ~ variable,  linetype = `Var. structure`, size=I(2.5), shape=b_dsn) + 
 xlim(30, 60) + #geom_smooth(se = FALSE, size=1.5) +
 scale_color_brewer("Variance structure", palette="Set2", labels = c(expression(paste(sigma[epsilon]^2==4, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==4)))) + 
 scale_linetype_discrete("Variance structure", labels = c(expression(paste(sigma[epsilon]^2==4, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==4)))) + 

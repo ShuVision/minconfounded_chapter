@@ -494,14 +494,15 @@ Under each simulation setting 1000 data sets were generated for each model and t
 \subsection{Results}\label{sec:sim-results}
 %----------------------------------------------------------------------------------
 
+\todo[inline]{Change the figure/table references once we set the final tables.}
+
 Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated random intercept (left) and random slope (right) over the different values for $s$ for each variance structure. As $s$ is reduced, the fraction of confounding is reduced, which aligns with expectation as smaller choices of $s$ reduce the contributions of more highly confounded groups.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{fc_by_s_trial.pdf}
 	\caption{\label{fig:fc} Change in the fraction of confounding (FC) as the dimension of the rotated random effects vector, $s$, is reduced for the three variance structures considered in the simulation study. %LOESS smoothers estimate the trajectory of FC as $s$ varies.} 
-	\hh{yes, this is great!, but the math notation is a teensy bit small now .... that might have been me}
-	\al{Is this any better? I didn't overwrite the last plot, but I resized this version before saving. The math notation looks bigger to me, but did we lose any clarity elsewhere? I am having trouble deciding. Alternatively I could increase the font size of the legend and go back to the original plot size.}
+	\al{XX Here is the correction to the calculation of FC that we discussed yesterday. I also made the point sizes a little smaller.}
 	}
 \end{figure}
 
@@ -513,11 +514,11 @@ Figures~\ref{fig:results-int} and \ref{fig:results-slope} display the estimated 
 \hh{I would move at least one part of the tables from the supplementary material into the discussion of this section. You need to explain to the audience how they are supposed to read these tables, a=otherwise nobody will care about the supplement and all of that nice work will go unnoticed. I would suggest the data for figure 9 - the overlap makes it harder to read the figure. }
 \al{XX OK. We should be able to do this for figure 9. I have included a first attempt at a table to replace the figures for the random intercept (figs 7 and 9). Since the tables in the supplement are currently broken down by s, the table is a little hard to build... This was just one thought at the organization.}
 
-\begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{ad_intercept_results.pdf}
-	\caption{\label{fig:results-int} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random intercepts (left) and varimax rotated random intercepts (right) by the distribution of the error terms and $s$. }
-\end{figure}
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=\textwidth]{ad_intercept_results.pdf}
+%	\caption{\label{fig:results-int} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random intercepts (left) and varimax rotated random intercepts (right) by the distribution of the error terms and $s$. }
+%\end{figure}
 
 \begin{figure}
 	\centering
@@ -532,11 +533,11 @@ For example, when $s=30$, simulations indicate the power of the AD test to detec
 
 While the estimated power is lower than the gold standard, the fact that the type I error rate can be stabilized indicates that distributional problems detected using the rotated random effects will truly be problems; thus, providing more diagnostic information than the (unrotated) predicted random effects.
 
-\begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{ad_intercept_power.pdf}
-	\caption{\label{fig:power-int} Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random intercepts (left) and varimax rotated random intercepts (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random intercept.}
-\end{figure}
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=\textwidth]{ad_intercept_power.pdf}
+%	\caption{\label{fig:power-int} Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random intercepts (left) and varimax rotated random intercepts (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random intercept.}
+%\end{figure}
 
 \begin{figure}
 	\centering
@@ -544,29 +545,68 @@ While the estimated power is lower than the gold standard, the fact that the typ
 	\caption{\label{fig:power-slope}Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random slope.}
 \end{figure}
 
-\begin{sidewaystable}
-\centering
-\caption{Proportions of AD tests rejecting the null hypothesis of normality at the .05 significance level for the rotated (Rot) and varimax rotated (Vmx) random intercepts by $s$. The gray shading indicates the situations where the random intercept is normal (i.e., type I error). \al{This could be made into 2 tables: 1 for Rot, 1 for Vmx}}
-\begin{footnotesize}
-\begin{tabular}{ll cccccccccccccc}\hline
-Random & & \multicolumn{2}{c}{s = 58} & \multicolumn{2}{c}{s = 55} & \multicolumn{2}{c}{s = 50} & \multicolumn{2}{c}{s = 45} & \multicolumn{2}{c}{s = 40} & \multicolumn{2}{c}{s = 35} & \multicolumn{2}{c}{s = 30} \\
-Intercept	&	Error	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	\\ \hline
-\rowcolor{gray!20}Normal	&	Normal			&	0.04	&	0.05	&	0.04	&	0.05	&	0.05	&	0.05	&	0.04	&	0.05	&	0.04	&	0.05	&	0.05	&	0.05	&	0.06	&	0.06	\\
-\rowcolor{gray!20}	    &	Heavy tailed		&	0.07	&	0.09	&	0.08	&	0.09	&	0.07	&	0.08	&	0.06	&	0.07	&	0.05	&	0.06	&	0.04	&	0.05	&	0.05	&	0.05	\\
-\rowcolor{gray!20}	    &	Skewed			&	0.05	&	0.05	&	0.05	&	0.05	&	0.06	&	0.04	&	0.06	&	0.06	&	0.06	&	0.06	&	0.06	&	0.05	&	0.06	&	0.06	\\
-	&		&		&		&		&		&		&		&		&		&		&		&		&		&		&		\\
-Heavy tailed	&	Normal		&	0.14	&	0.22	&	0.14	&	0.22	&	0.13	&	0.23	&	0.13	&	0.23	&	0.13	&	0.23	&	0.13	&	0.22	&	0.12	&	0.22	\\
-	        &	Heavy tailed	&	0.19	&	0.34	&	0.19	&	0.33	&	0.17	&	0.32	&	0.16	&	0.32	&	0.16	&	0.30	&	0.15	&	0.27	&	0.14	&	0.27	\\
-			&	Skewed		&	0.15	&	0.28	&	0.15	&	0.27	&	0.14	&	0.26	&	0.14	&	0.27	&	0.13	&	0.24	&	0.13	&	0.23	&	0.12	&	0.22	\\
-			&		&		&		&		&		&		&		&		&		&		&		&		&		&		&		\\
-Skewed	&	Normal			&	0.10	&	0.20	&	0.09	&	0.21	&	0.10	&	0.21	&	0.10	&	0.22	&	0.10	&	0.23	&	0.11	&	0.21	&	0.10	&	0.22	\\
-		&	Heavy tailed		&	0.13	&	0.30	&	0.12	&	0.28	&	0.12	&	0.27	&	0.11	&	0.25	&	0.10	&	0.26	&	0.11	&	0.25	&	0.11	&	0.24	\\
-		&	Skewed			&	0.13	&	0.22	&	0.13	&	0.23	&	0.12	&	0.22	&	0.12	&	0.23	&	0.11	&	0.21	&	0.11	&	0.23	&	0.11	&	0.21	\\
-\hline
-\end{tabular}
-\end{footnotesize}
-\end{sidewaystable}
+%\begin{sidewaystable}
+%\centering
+%\caption{Proportions of AD tests rejecting the null hypothesis of normality at the .05 significance level for the rotated (Rot) and varimax rotated (Vmx) random intercepts by $s$. The gray shading indicates the situations where the random intercept is normal (i.e., type I error). \al{This could be made into 2 tables: 1 for Rot, 1 for Vmx}}
+%\begin{footnotesize}
+%\begin{tabular}{ll cccccccccccccc}\hline
+%Random & & \multicolumn{2}{c}{s = 58} & \multicolumn{2}{c}{s = 55} & \multicolumn{2}{c}{s = 50} & \multicolumn{2}{c}{s = 45} & \multicolumn{2}{c}{s = 40} & \multicolumn{2}{c}{s = 35} & \multicolumn{2}{c}{s = 30} \\
+%Intercept	&	Error	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	&	Rot	&	Vmx	\\ \hline
+%Normal	&	Normal			&	0.04	&	0.05	&	0.04	&	0.05	&	0.05	&	0.05	&	0.04	&	0.05	&	0.04	&	0.05	&	0.05	&	0.05	&	0.06	&	0.06	\\
+%	    &	Heavy tailed		&	0.07	&	0.09	&	0.08	&	0.09	&	0.07	&	0.08	&	0.06	&	0.07	&	0.05	&	0.06	&	0.04	&	0.05	&	0.05	&	0.05	\\
+%	    &	Skewed			&	0.05	&	0.05	&	0.05	&	0.05	&	0.06	&	0.04	&	0.06	&	0.06	&	0.06	&	0.06	&	0.06	&	0.05	&	0.06	&	0.06	\\
+%Heavy tailed	&	Normal		&	0.14	&	0.22	&	0.14	&	0.22	&	0.13	&	0.23	&	0.13	&	0.23	&	0.13	&	0.23	&	0.13	&	0.22	&	0.12	&	0.22	\\
+%	        &	Heavy tailed	&	0.19	&	0.34	&	0.19	&	0.33	&	0.17	&	0.32	&	0.16	&	0.32	&	0.16	&	0.30	&	0.15	&	0.27	&	0.14	&	0.27	\\
+%			&	Skewed		&	0.15	&	0.28	&	0.15	&	0.27	&	0.14	&	0.26	&	0.14	&	0.27	&	0.13	&	0.24	&	0.13	&	0.23	&	0.12	&	0.22	\\
+%Skewed	&	Normal			&	0.10	&	0.20	&	0.09	&	0.21	&	0.10	&	0.21	&	0.10	&	0.22	&	0.10	&	0.23	&	0.11	&	0.21	&	0.10	&	0.22	\\
+%		&	Heavy tailed		&	0.13	&	0.30	&	0.12	&	0.28	&	0.12	&	0.27	&	0.11	&	0.25	&	0.10	&	0.26	&	0.11	&	0.25	&	0.11	&	0.24	\\
+%		&	Skewed			&	0.13	&	0.22	&	0.13	&	0.23	&	0.12	&	0.22	&	0.12	&	0.23	&	0.11	&	0.21	&	0.11	&	0.23	&	0.11	&	0.21	\\
+%\hline
+%\end{tabular}
+%\end{footnotesize}
+%\end{sidewaystable}
 
+\begin{table}
+\centering
+\caption{Proportions of AD tests rejecting the null hypothesis of normality at the .05 significance level for the rotated (a) and varimax rotated (b) random intercepts by $s$. The gray shading indicates the situations where the random intercept is normal (i.e., type I error). \al{I will change this to \% with 1 decimal place, but I wanted to reformat and have something here to before I reran the formatting code.}}
+\subfloat[Rotated random intercept.]{
+	\begin{tabular}{ll rrrrrrr} \hline
+	& & \multicolumn{7}{c}{$s$} \\ \cline{3-9}
+	Random intercept & Error term & 58 & 55 & 50 & 45 & 40 & 35 & 30\\ \hline 
+\rowcolor{gray!20}Normal	&	Normal			& 0.04	& 	0.04	& 0.05	& 0.04	&	0.04	&	0.05	&	0.06 \\
+\rowcolor{gray!20}	    &	Heavy tailed		& 0.07	&	0.08	& 0.07	& 0.06	&	0.05	&	0.04	&	0.05 \\	
+\rowcolor{gray!20}	    &	Skewed			& 0.05	&	0.05	& 0.06	& 0.06	&	0.06	&	0.06	&	0.06 \\	
+&&&&&&&&\\
+Heavy tailed	&	Normal		& 0.14	&	0.14	& 0.13	& 0.13	&	0.13	&	0.13	&	0.12 \\	
+	        & Heavy tailed	& 0.19	&	0.19	& 0.17	& 0.16	&	0.16	&	0.15	&	0.14 \\	
+			& Skewed			& 0.15	&	0.15	& 0.14	& 0.14	&	0.13	&	0.13	&	0.12 \\
+&&&&&&&&\\
+Skewed	&	Normal			& 0.10	&	0.09	& 0.10	& 0.10	&	0.10	&	0.11	&	0.10 \\	
+		&	Heavy tailed		& 0.13	&	0.12	& 0.12	& 0.11	&	0.10	&	0.11	&	0.11 \\	
+		&	Skewed			& 0.13	&	0.13	& 0.12	& 0.12	&	0.11	&	0.11	&	0.11 \\
+\hline
+	\end{tabular}
+}
+
+\subfloat[Varimax rotated random intercept.]{
+	\begin{tabular}{ll rrrrrrr} \hline
+	& & \multicolumn{7}{c}{$s$} \\ \cline{3-9}
+	Random intercept & Error term &  58 & 55 & 50 & 45 & 40 & 35 & 30\\ \hline
+\rowcolor{gray!20}Normal	&	Normal			& 	0.05	& 	0.05	&	0.05	&	0.05	&	0.05	&	0.05	&	0.06	\\
+\rowcolor{gray!20}	    &	Heavy tailed		& 	0.09	&	0.09	&	0.08	&	0.07	&	0.06	&	0.05	&	0.05	\\
+\rowcolor{gray!20}	    &	Skewed			& 	0.05	&	0.05	&	0.04	&	0.06	&	0.06	&	0.05	&	0.06	\\
+&&&&&&&&\\
+Heavy tailed	&	Normal		& 	0.22	&	0.22	&	0.23	&	0.23	&	0.23	&	0.22	&	0.22	\\
+	        & Heavy tailed	& 	0.34	&	0.33	&	0.32	&	0.32	&	0.30	&	0.27	&	0.27	\\
+			& Skewed			& 	0.28	&	0.27	&	0.26	&	0.27	&	0.24	&	0.23	&	0.22	\\
+&&&&&&&&\\
+Skewed	&	Normal			& 	0.20	&	0.21	&	0.21	&	0.22	&	0.23	&	0.21	&	0.22	\\
+		&	Heavy tailed		& 	0.30	&	0.28	&	0.27	&	0.25	&	0.26	&	0.25	&	0.24	\\
+		&	Skewed			& 	0.22	&	0.23	&	0.22	&	0.23	&	0.21	&	0.23	&	0.21	\\
+\hline
+	\end{tabular}
+}
+\end{table}
 
 %\begin{itemize}
 %\item Overall, the rotated residuals reduce the type I error rates to rates much closer to the nominal level. When $\sigma^2_\varepsilon > \sigma^2_b$ there is minor inflation of the type I errors when the error terms are non-normal, but less severe than without the rotation. When $\sigma^2_\varepsilon \leq \sigma^2_b$ the type I errors are essentially at the nominal levels.

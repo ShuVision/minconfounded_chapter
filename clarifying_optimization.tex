@@ -8,8 +8,6 @@
 
 %\definecolor{Blue}{rgb}{0,0,0.5}
 
-\usepackage{amsthm}
-
 % for figures
 \usepackage{graphicx}
 \usepackage{caption}
@@ -42,9 +40,12 @@
 \usepackage{bm}
 \usepackage{amstext}
 \usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{multirow}
+
+\usepackage{ulem}
 
 \newtheorem{proposition}{Proposition}
 \newtheorem{theorem}{Theorem}
@@ -93,7 +94,7 @@ where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvec
 \tr\left( \bm{W\trans A W} \right) 
 \end{equation}
 %
-So simultaneous diagonalization (Algorithm 1 in the paper) first ensures that the constraint is satisfied, and then diagonalizes $\bm{A}$ which gives us our solution (those details are pretty good in the paper). Note that through simultaneous diagonalization we also get $\bm{W}\trans \bm{W} = \bm{WW}\trans = \bm{I}$.
+So simultaneous diagonalization (Algorithm 1 in the paper) first ensures that the constraint is satisfied, and then diagonalizes $\bm{A}$ which gives us our solution (those details are pretty good in the paper). \sout{Note that through simultaneous diagonalization we also get $\bm{W}\trans \bm{W} = \bm{WW}\trans = \bm{I}$.}\todo{This was wrong}
 
 
 Note that this optimization problem is essentially optimizing

@@ -62,37 +62,74 @@ e.dsn <- c("norm", "t", "exp")
 # Simulate data and refit the models - you need a sim_models folder
 #-------------------------------------------------------------------------------
 
-## Set seed and warning handler
-set.seed(7231985)
-options(warn = 2) # turns warnings into errors
+# ## Set seed and warning handler
+# set.seed(7231985)
+# options(warn = 2) # turns warnings into errors
+# 
+# ## Simulating
+# for(i in seq_along(e.dsn)) {
+# 	# Simulate
+# 	sim.fm <- sim.hlm( fm, nsim = 1000, e.dsn = e.dsn[i])
+#                    	   
+# 	# Excluding those simulations with convergence issues 
+# 	# and replacing them with new simulations
+# 
+# 	repeat{
+#   		sim.models <- lapply(sim.fm, function(x) try(refit(object = fm, newresp = x)))
+#   
+#   		conv.issues <- which(sapply(sim.models, function(x) class(x) == "try-error"))
+#   
+#   		if(length(conv.issues) == 0) break
+#   
+#   		# remove simulations with convergence issues
+#   		sim.fm <- sim.fm[,-conv.issues]
+#   
+#   		if(length(sim.fm) == 1000) break
+#   
+#   		# Additional simulations to achieve correct number of simulations
+#   		sim.fm <- cbind( sim.fm, sim.hlm(fm, nsim = length(conv.issues), 
+#   		                         e.dsn = e.dsn[i])
+# 	}
+# 	
+# 	saveRDS(sim.models, paste(e.dsn[i], "_models.RDS", sep = ""))
+# }
 
-## Simulating
+
+#-------------------------------------------------------------------------------
+# Extract the residuals
+#-------------------------------------------------------------------------------
+
+library(inline)
+library(RcppEigen)
+
+source("../../functions/cpp_functions.R")
+source("../../functions/resid_functions.R")
+source("../../functions/utility_functions.R")
+
+## Distributional settings
+e.dsn <- c("norm", "t", "exp")
+
+level1.resids <- level2.resids <- vector("list", length = 3L)
+
 for(i in seq_along(e.dsn)) {
-	# Simulate
-	sim.fm <- sim.hlm( fm, nsim = 1000, e.dsn = e.dsn[i])
-                   	   
-	# Excluding those simulations with convergence issues 
-	# and replacing them with new simulations
-
-	repeat{
-  		sim.models <- lapply(sim.fm, function(x) try(refit(object = fm, newresp = x)))
-  
-  		conv.issues <- which(sapply(sim.models, function(x) class(x) == "try-error"))
-  
-  		if(length(conv.issues) == 0) break
-  
-  		# remove simulations with convergence issues
-  		sim.fm <- sim.fm[,-conv.issues]
-  
-  		if(length(sim.fm) == 1000) break
-  
-  		# Additional simulations to achieve correct number of simulations
-  		sim.fm <- cbind( sim.fm, sim.hlm(fm, nsim = length(conv.issues), 
-  		                         e.dsn = e.dsn[i])
-	}
+	models <- readRDS(paste(e.dsn[i], "_models.RDS", sep = ""))
 	
-	saveRDS(sim.models, paste(e.dsn[i], "_models.RDS", sep = ""))
+	level1.resids[[i]] <- lapply(models, lev1.resid)
+	level2.resids[[i]] <- lapply(models, lev2.resid)
+	
+	rm(models)
 }
 
+#-------------------------------------------------------------------------------
+# Tests for normality
+#-------------------------------------------------------------------------------
 
+library(plyr)
+library(nortest)
+source("../../functions/normality_functions.R")
 
+e  <- test.simulation.results(sims = level1.resids, settings = e.dsn)
+b0 <- test.simulation.results(sims = level2.resids, settings = e.dsn, column = 1)
+b1 <- test.simulation.results(sims = level2.resids, settings = e.dsn, column = 2)
+
+save(e, b0, b1, file="small_sim_results.RData")
