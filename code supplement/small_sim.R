@@ -128,8 +128,19 @@ library(plyr)
 library(nortest)
 source("../../functions/normality_functions.R")
 
-e  <- test.simulation.results(sims = level1.resids, settings = e.dsn)
-b0 <- test.simulation.results(sims = level2.resids, settings = e.dsn, column = 1)
-b1 <- test.simulation.results(sims = level2.resids, settings = e.dsn, column = 2)
+summarize.small.sim <- function(sims, settings, column = NULL) {
+    if(!is.null(column)) {
+    	sims <- lapply(sims, FUN = function(x) lapply(x, FUN = function(x) x[,column]))
+    }
 
-save(e, b0, b1, file="small_sim_results.RData")
+	pvals <- lapply(sims, normality.tests)
+	a05 <- lapply(pvals, summarize.tests, alpha = .05)
+	a05 <- round(do.call("rbind", a05), 3)
+	a05 <- data.frame(settings, alpha = rep(.05, nrow(a05)), a05)
+	
+	return(a05)
+}
+
+e  <- summarize.small.sim(sims = level1.resids, settings = e.dsn)
+b0 <- summarize.small.sim(sims = level2.resids, settings = e.dsn, column = 1)
+b1 <- summarize.small.sim(sims = level2.resids, settings = e.dsn, column = 2)

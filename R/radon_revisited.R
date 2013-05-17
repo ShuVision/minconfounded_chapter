@@ -11,6 +11,7 @@ library(MASS)
 library(RcppEigen)
 library(inline)
 library(nortest)
+library(ggplot2)
 
 setwd("~/Documents/Thesis/Dissertation/eresids-chapter/minconfounded_chapter")
 
@@ -34,14 +35,32 @@ L.b1  <- kronecker(Diagonal(ngrps), c(0, 1))
 FC(fm, L.b0)  # 0.72
 FC(fm, L.b1)  # 0.70
 
+### Initial trace values
+tr(fm, L.b0)  # 61.53067
+tr(fm, L.b1)  # 59.5131
+
+### Reducing the trace
+reduced.tr <- data.frame(s = seq(1, 85, by = 1), b0 = NA, b1 = NA)
+
+for(i in seq( nrow(reduced.tr) )){
+	reduced.tr[i, "b0"] <- tr2(.mod = fm, .L = L.b0, s = reduced.tr[i, "s"])
+	reduced.tr[i, "b1"] <- tr2(.mod = fm, .L = L.b1, s = reduced.tr[i, "s"])
+}
+
+qplot(x = 85 - s, y = b0, data = reduced.tr, geom = c("point", "line"))
+qplot(x = 85 - s, y = b1, data = reduced.tr, geom = c("point", "line"))
+
+qplot(x = 85 - s, y = b0 / tr(fm, L.b0), data = reduced.tr, geom = c("point", "line"))
+qplot(x = 85 - s, y = b1 / tr(fm, L.b1), data = reduced.tr, geom = c("point", "line"))
+
 
 ### Reducing the fraction of confounding
-reduced.fc <- data.frame(s = seq(30, 80, by = 10), b0 = NA, b1 = NA)
+reduced.fc <- reduced.tr
+reduced.fc[,2:3] <- reduced.fc[,2:3] / 85
 
-for(i in seq( nrow(reduced.fc) )){
-	reduced.fc[i, "b0"] <- FC2(.mod = fm, .L = L.b0, s = reduced.fc[i, "s"])
-	reduced.fc[i, "b1"] <- FC2(.mod = fm, .L = L.b1, s = reduced.fc[i, "s"])
-}
+qplot(x = 85 - s, y = b0, data = reduced.fc, geom = c("point", "line"))
+qplot(x = 85 - s, y = b1, data = reduced.fc, geom = c("point", "line"))
+
 
 ### Obtaining the rotated random effects for Q-Q plots
 b0.rot <- mcresid2(.mod = fm, .L = L.b0, s = 30)
