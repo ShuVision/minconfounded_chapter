@@ -15,7 +15,7 @@ library(ggplot2)
 
 setwd("~/Documents/Thesis/Dissertation/eresids-chapter/minconfounded_chapter")
 
-# Readingin the data
+# Reading in the data
 radon <- read.csv("data/original_radon.csv")
 
 ### Loading self-written functions
@@ -58,7 +58,7 @@ qplot(x = 85 - s, y = b1 / tr(fm, L.b1), data = reduced.tr, geom = c("point", "l
 reduced.fc <- reduced.tr
 reduced.fc[,2:3] <- reduced.fc[,2:3] / 85
 
-qplot(x = 85 - s, y = b0, data = reduced.fc, geom = c("point", "line"))
+qplot(x = 85 - s, y = b0, data = reduced.fc, geom = c("point", "line")) + ylim(c(0,1))
 qplot(x = 85 - s, y = b1, data = reduced.fc, geom = c("point", "line"))
 
 
