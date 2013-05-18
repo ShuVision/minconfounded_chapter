@@ -60,7 +60,7 @@
 \newcommand{\cov}{\ensuremath{\mathrm{Cov}}}
 \DeclareMathOperator{\tr}{Trace}
 \DeclareMathOperator{\rank}{rank}
-\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmin}{arg\, min}
 
 \title{Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models}
 \author{
@@ -342,37 +342,53 @@ First, we define the \emph{fraction of confounding} for the random effects, whic
 %\end{definition}
 
 \begin{definition}[Fraction of confounding]
-Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$ and $\bm{B} = \var(\widehat{\bm{b}})$, which are positive semidefinite matrices by definition, then the fraction of confounding in $\widehat{\bm{b}}$ is given by
+Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$ and $\bm{B} = \var(\widehat{\bm{b}})$, which are positive semidefinite matrices by definition. \al{Also, let $\bm{W}$ be a linear transformation from the original $q$-dimensional space to an $s$-dimensional space ($s \leq q$).} The fraction of confounding in $\widehat{\bm{b}}$ \al{in this $s$-dimensional space} is given by
 %
 \begin{equation}\label{eq:fc2}
-\text{FC}(\widehat{\bm{b}}) = \frac{1}{\ell} \tr\left( \bm{B}\ginv\bm{A} \right)
+\text{FC}(s; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right)
 %\dfrac{1}{\ell} \displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
 %		{\bm{v_i}\trans \bm{B} \bm{v_i}}.
 \end{equation}
-where $\ell$ is the length of vector $\widehat{\bm{b}}$.
+%where $\ell$ is the length of vector $\widehat{\bm{b}}$.
 \end{definition}
-The fraction of confounding measures the contribution of the error terms  to the variance of the random effects. $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while 0 indicates no confounding. 
+The fraction of confounding measures the contribution of the error terms  to the variance of the random effects. $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while 0 indicates no confounding. \al{Notice that if $\bm{W} = \bm{I}$, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects.}
 
 
-In order to correct residuals for the impact of confounding, we propose using a linear transformation of the random effects, $\bm{W}^{*\prime} \widehat{\bm{b}}$, that projects the random effects into $s$-dimensional space and satisfies
-%find weights $\bm{w_i}$ to apply to each of the residual contributions that minimize $\tr\left( \bm{B}\ginv\bm{A} \right)$. This can be re-expressed as the following minimization problem:
-%\[
-%\bm{w}_{\ell-r} = \arg \min_{w \neq 0} \frac{\bm{w}\trans \bm{A} \bm{w}}
-%		{\bm{w}\trans \bm{B} \bm{w}}.
-%\]
+In order to correct residuals for the impact of confounding, we propose \al{using the linear transformation of the predicted random effects that substantially reduces the amount of confounding. To do this, we must determine the $s$-dimensional space in which confounding is substantially reduced and find the $\bm{W}$ that minimizes confounding within that space. To determine the dimension of the subspace spanned by the rotated residuals we propose the use of a a visual tool similar to the scree plots used for selecting the number of principal components. The construction of such plots depends on the linear transformation selected, so we first discuss the selection of $\bm{W}$ given the selection of choice of $s$.}
+
+\paragraph{Selecting the optimal linear transformation.}
+\al{For a given $s$-dimensional space, the linear combination $\bm{W} \in \mathbb{R}^{q \times s}$ that minimizes \eqref{eq:fc2} also minimizes
+%
 \begin{equation}\label{eq:minimize}
-\bm{W}^* = \argmin_{W \in \mathbb{R}^{\ell \times s} } 
-\tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right)
+J_1(s) = \tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right)
 %\displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{W} \bm{A} \bm{W}\trans \bm{v_i}}
 %		{\bm{v_i}\trans \bm{W} \bm{B} \bm{W}\trans \bm{v_i}}
 \end{equation}
-%where $\ell$ is the length of vector $\bm{b}$. %and $r = \text{rank}(\bm{B})$. 
-This problem is solved using the generalized eigenvalue decomposition
+%
+Mathematically,} this problem is solved using the generalized eigenvalue decomposition
+%
 \begin{equation}\label{eq:geigen}
 	\bm{Aw}_k = \gamma_k \bm{Bw}_k
 \end{equation}
-where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}; thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. Computationally, this problem can be solved by simultaneous diagonalization of $\bm{A}$ and $\bm{B}$. We outline this procedure below for reference and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\
-
+%
+where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}. 
+%thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. 
+Computationally, \al{we solve this problem by} simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ \citep{McDonald:1979ca, deLeeuw:1982to}. Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ requires $\bm{W}$ to be $\bm{B}$-orthogonal, so the optimal $\bm{W}$ is found to be
+%
+\begin{equation}\label{eq:optimw}
+	\bm{W}^*(s) = \argmin_{ 
+\begin{scriptsize}
+	\begin{cases}
+      \bm{W} \in \mathbb{R}^{q \times s} \\
+      \bm{W\trans B W} = \bm{I}
+	\end{cases}
+\end{scriptsize}
+	} 
+\tr\left( \bm{W\trans A W} \right) 
+\end{equation}
+%
+Below, we outline the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ for reference.\\
+%and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\
 
 \begin{algorithm}[Simultaneous diagonalization]
 Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices. The transformation that simultaneously diagonalizes both matrices can be found through the following procedure:
@@ -389,10 +405,9 @@ Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices. The transformat
 \end{enumerate}
 
 Based on the above three steps, the transformation that simultaneously diagonalizes $\bm{A}$ and $\bm{B}$ is $\bm{T_r \Lambda_r}^{-1/2} \bm{U}$.\\ 
-
 \end{algorithm}
 
-The above procedure can be used to find the general solution to \eqref{eq:geigen}. To find the more specific transformation $\bm{W}^*$ that projects the random effects into an $s$-dimensional space satisfying \eqref{eq:minimize}, we focus on the $s$ eigenvectors associated with $s$ the smallest eigenvalues of $\bm{A}^*$, $\bm{U}_s$, making
+The above procedure can be used to find the general solution to \eqref{eq:geigen}. To find the more specific transformation defined by \eqref{eq:optimw}, we focus on the $s$ eigenvectors associated with $s$ the smallest eigenvalues of $\bm{A}^*$, $\bm{U}_s$, making
 %
 \begin{equation}\label{eq:w}
 \bm{W}^* = \bm{T_r \Lambda_r}^{-1/2} \bm{U}_s
@@ -404,14 +419,23 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 %Since $\bm{B}$ is only positive semidefinite, it is important to note that the order of the groups in the data change the resulting residuals. In this case, the transformation in \eqref{eq:astar} eliminates a group
 
 
-Having considered the computational aspects of the problem we must next consider the more practical aspects. 
+%Having considered the computational aspects of the problem we must next consider the more practical aspects. 
+
+\al{Having considered the optimal linear transformation for a given $s$-dimensional subspace, we return to the problem of selecting the dimension which substantially reduces the fraction of confounding.}
+
 
 \paragraph{Selecting the dimension of the subspace.}
-First, we must consider the selection of the dimension of the subspace spanned by the rotated residuals, $s$---that is, the length of the resulting transformed residual vector. One choice is $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. 
-%This selection has the advantage that it works in all situations, but the disadvantage that the fraction of confounding will \al{often} not be \al{significantly} reduced. 
-An alternative approach is to select $s$ based on the desired reduction in the fraction of confounding. \hh{You need to sell this point a bit more - what is the theoretical advantage of going down on the number of residuals? -- if the approach is to get FC down as much as possible, but have s at least 30, it is always going to end up at 30. What I still don't understand is that the minimization is not taking care of the percent of confounding to a higher degree, because that's really what it was supposed to do. }
-%A starting point for this approach can be determined for a given reduction in the fraction of confounding by considering the relative contributions of the ordered diagonal elements of $\bm{B}\ginv\bm{A}$ to \eqref{eq:fc2}. 
-We consider this approach in the simulation study presented in Section~\ref{sec:simulation} and present the results in Figure~\ref{fig:fc}. Note that in some situations it will not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
+\al{Selection of the dimension of the subspace spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. Since our ultimate objective is distributional assessment, we must balance this reduction in the fraction of confounding with the the loss in power of a test of the empirical distribution function (e.g., the Anderson-Darling test for normality) associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the scree plot used to select the number of principal components used.}
+
+
+
+%%First, we must consider the selection of the dimension of the subspace spanned by the rotated residuals, $s$---that is, the length of the resulting transformed residual vector. 
+%For the level-1 residuals \cite{HildenMinton:1995wh} suggests using $s = \rank(\bm{B})$;
+%%One choice is $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. 
+%%This selection has the advantage that it works in all situations, but the disadvantage that the fraction of confounding will \al{often} not be \al{significantly} reduced. 
+%An alternative approach is to select $s$ based on the desired reduction in the fraction of confounding. \hh{You need to sell this point a bit more - what is the theoretical advantage of going down on the number of residuals? -- if the approach is to get FC down as much as possible, but have s at least 30, it is always going to end up at 30. What I still don't understand is that the minimization is not taking care of the percent of confounding to a higher degree, because that's really what it was supposed to do. }
+%%A starting point for this approach can be determined for a given reduction in the fraction of confounding by considering the relative contributions of the ordered diagonal elements of $\bm{B}\ginv\bm{A}$ to \eqref{eq:fc2}. 
+%We consider this approach in the simulation study presented in Section~\ref{sec:simulation} and present the results in Figure~\ref{fig:fc}. Note that in some situations it will not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
 
 \paragraph{Correcting for supernormality.}
 The transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution, if the underlying distribution is not normal. This issue is often referred to as supernormality \citep{Atkinson:1985}. One approach to address supernormality in this context is to reduce the number of elements in the linear combinations, which should reduce the extent of the problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we rotate the factor loadings in factor analysis. Using this approach, the rotated residuals are obtained by $\bm{Q}\trans \bm{W}^{*\prime} \widehat{\bm{b}}$. One rotation that will produce rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Figure~\ref{fig:cartoon} displays heatmaps of $\bm{W}^{*\prime}$ (left) and $\bm{Q}\trans\bm{W}^{*\prime}$ (right) for a simulated random intercept model with 20 groups, and demonstrates that the varimax rotation reduces the number of groups loading highly on each rotated residual. \hh{what amount of confounding is there on the left and then on the right?} \al{The amount of confounding is the same between the right and the left. The only different between the two is that we applied the varimax transform to the plot on the right. Regardless, $FC \approx .25$. I used this small simulated model because I thought it showed what the varimax can do for us.} Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu}, who used the raw varimax rotation to produce recovered errors for distributional assessment in the ordinary regression model.
@@ -508,11 +532,6 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 
 Figures~\ref{fig:results-int} and \ref{fig:results-slope} display the estimated type I error rates using the AD normality test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes when $\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$. The other tests performed similarly, and full simulation results can be found in the supplementary material. Both figures show that the type I error rate is stabilized close to the nominal level with the appropriate choice of $s$. For the random intercept most choices of $s$ perform reasonably well, with the type I error rate closest to the nominal level for all error distributions between 30 and 40. For the random slope, $s$ must be chosen to be 30 for type I error to be near the nominal level; however, $s$ may need to be even smaller to achieve the nominal rate. 
 
-\hh{the code for figures 7 and onwards doesn't quite work - otherwise I would have played with that as well. }
-\al{I broke the code a bit trying to allow for a third panel showing where we were starting with the unrotated random effects. I just added code that works to the file.}
-
-\hh{I would move at least one part of the tables from the supplementary material into the discussion of this section. You need to explain to the audience how they are supposed to read these tables, a=otherwise nobody will care about the supplement and all of that nice work will go unnoticed. I would suggest the data for figure 9 - the overlap makes it harder to read the figure. }
-\al{XX OK. We should be able to do this for figure 9. I have included a first attempt at a table to replace the figures for the random intercept (figs 7 and 9). Since the tables in the supplement are currently broken down by s, the table is a little hard to build... This was just one thought at the organization.}
 
 %\begin{figure}
 %	\centering
