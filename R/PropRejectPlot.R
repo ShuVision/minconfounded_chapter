@@ -10,7 +10,6 @@
 ### Preliminaries
 library(ggplot2)
 library(plyr)
-library(grid)
 
 ### Reading in the data
 propreject <- read.csv(file.choose())   # choose PropRejectSummary.csv
@@ -18,8 +17,6 @@ load(file.choose()) # choose GoldStandardPower.RData
 
 goldstandard <- ldply(results.05, identity)
 goldstandard$n <- rep(30:59, each = 3) 
-goldstandard$ranef <- factor(goldstandard$.id)
-levels(goldstandard$ranef)[c(1,3)] <- c("exp", "t")
 
 #-------------------------------------------------------------------------------
 # Code for the current figures
@@ -35,7 +32,7 @@ qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef == "norm"
 # Summarizing results of AD tests for random slope
 ggplot(data = subset(propreject, subset = ranef == "norm" & nortest == "AD" &  alpha == 0.05 & random.effect == "b1" & var.settings == "sige2_sigb1" & rotation != "EBLUP"),
 aes(x=s, y=prop.reject, colour=error, group=error, linetype=error, shape=error)) + 
-geom_point(size=2.5) + geom_smooth(se=FALSE, method="lm") + 
+geom_point(size=3) + geom_smooth(size=1, se=FALSE, method="lm") + 
 	facet_grid(. ~ rotation, scales = "free") + 
 	xlab("subspace dimension s") +
 	ylab("proportion of tests rejected") + theme_bw() +
@@ -57,7 +54,7 @@ qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef != "norm"
 # Summarizing results of AD tests for random slopes
 ggplot(data = subset(propreject, subset = ranef != "norm" & random.effect == "b1" & nortest == "AD" & var.settings == "sige2_sigb1" & alpha == 0.05 & rotation != "EBLUP"),
 aes(x=s,y = prop.reject, colour=error, linetype=ranef, shape=error, group= interaction(error, ranef))) +
-geom_point(size=2.5) +geom_smooth(method="lm", se=F) +
+geom_point(size=3) +geom_smooth(method="lm", size=1, se=F) +
 	facet_wrap(~rotation) +
 	xlab("subspace dimension s") + 
 	ylab("proportion of tests rejected") + 
@@ -66,7 +63,7 @@ geom_point(size=2.5) +geom_smooth(method="lm", se=F) +
 	scale_linetype_discrete("Random effects\ndistribution", labels = c("Skewed", "Heavy tailed")) + theme_bw() +
 	scale_shape_manual("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed"), values=c(1, 17, 15)) + theme(legend.position="bottom", legend.key.width = unit(3, "line"))   + ylim(c(0,0.4))
 	
-ggsave("", width=8, height=5.5)
+ggsave("ad_slope_power.pdf", width=8, height=5.5)
 #-------------------------------------------------------------------------------
 # Adding power for the AD test
 #-------------------------------------------------------------------------------
@@ -81,17 +78,13 @@ qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef != "norm"
 	scale_linetype_discrete("Random effects\ndistribution", labels = c("Skewed", "Heavy tailed"))
 
 # Summarizing results of AD tests for random slopes
-qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef != "norm" & random.effect == "b1" & nortest == "AD" & var.settings == "sige2_sigb1" & alpha == 0.05 & rotation != "EBLUP"), geom = "point", facets = ~ rotation, colour = error, linetype = ranef, shape = ranef, group = interaction(error, ranef), size = I(2.5)) + 
-	geom_smooth(se = F, method = "lm",  size = I(.75)) + 
-	scale_color_brewer( "Error distribution", palette = "Set2", labels = c("Exponential", "Normal", expression(t[3]))) + 
-	geom_line(aes(x = n, y = AD, group = .id, linetype = ranef), data = subset(goldstandard, .id != "normal"), inherit.aes = FALSE, size = I(.75)) + 
-#	geom_line(aes(x = n, y = AD, group = .id), data = subset(goldstandard, .id != "normal"), inherit.aes = FALSE, colour = "#FFD92F") + 
+qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef != "norm" & random.effect == "b1" & nortest == "AD" & var.settings == "sige2_sigb1" & alpha == 0.05 & rotation != "EBLUP"), geom = c( "smooth"), facets = ~ rotation, colour = error, linetype = ranef, group = interaction(error, ranef), se = F, method = "lm") + 
+	geom_line(aes(x = n, y = AD, group = .id), data = subset(goldstandard, .id != "normal"), inherit.aes = FALSE) + 
 	xlab("s") + 
 	ylab("proportion of tests rejected") + 
-	theme_bw() +  
-	scale_linetype_discrete("Random effects\ndistribution", labels = c("Exponential",  expression(t[3]))) + 
-	scale_shape_discrete("Random effects\ndistribution", labels = c("Exponential",  expression(t[3]))) + 
-	theme(legend.position = "bottom", legend.key.width = unit(3, "line"))
+	theme_bw() + 
+	scale_color_discrete("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed")) + 
+	scale_linetype_discrete("Random effects\ndistribution", labels = c("Skewed", "Heavy tailed"))
 
 
 
