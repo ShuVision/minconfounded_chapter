@@ -30,12 +30,17 @@ qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef == "norm"
 	scale_linetype_discrete("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed")) + 	scale_color_discrete("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed"))
 
 # Summarizing results of AD tests for random slope
-qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef == "norm" & nortest == "AD" &  alpha == 0.05 & random.effect == "b1" & var.settings == "sige2_sigb1" & rotation != "EBLUP"), geom = c("point", "smooth"), colour = error, group = error, linetype = error, se = F, method = "lm") + 
+ggplot(data = subset(propreject, subset = ranef == "norm" & nortest == "AD" &  alpha == 0.05 & random.effect == "b1" & var.settings == "sige2_sigb1" & rotation != "EBLUP"),
+aes(x=s, y=prop.reject, colour=error, group=error, linetype=error, shape=error)) + 
+geom_point(size=2.5) + geom_smooth(se=FALSE, method="lm") + 
 	facet_grid(. ~ rotation, scales = "free") + 
-	xlab("s") +
-	ylab("proportion of tests rejected") + 
-	scale_linetype_discrete("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed")) + 	scale_color_discrete("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed")) + 
-	ylim(0, .4)
+	xlab("subspace dimension s") +
+	ylab("proportion of tests rejected") + theme_bw() +
+	scale_shape_manual("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed"), values=c(1, 17, 15)) +
+	scale_linetype_discrete("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed")) + 	scale_color_brewer("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed"), palette="Set2") + theme(legend.position="bottom", legend.key.width = unit(3, "line"))  + 
+	ylim(0, .4) 
+
+ggsave("ad_slope_results.pdf", width=8, height=5)
 
 ### Plotting the power
 # Summarizing results of AD tests for random intercept
