@@ -445,10 +445,10 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 \begin{figure}[htb]
 	\centering
 	 \subfloat[Model 1]{
-		\includegraphics[width=0.49\linewidth]{elbow1.pdf}
+		\includegraphics[width=0.4\linewidth]{elbow1.pdf}
 		}
 	  \subfloat[Model 2]{
-		\includegraphics[width=0.49\linewidth]{elbow2.pdf}
+		\includegraphics[width=0.4\linewidth]{elbow2.pdf}
 		}	
 	\caption{\label{fig:elbow} Plots of the fraction of confounding for each reduction in the dimension of subspace spanned by the rotated random intercepts from two simulation models. Model 1 has 50 groups: 40 groups of size 30, and 10 groups of size 5. Model 2 has 50 groups with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). Based on these plots we would choose $s = 39$, corresponding to a dimension reduction of 11.}
 \end{figure}
@@ -463,7 +463,7 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 %We consider this approach in the simulation study presented in Section~\ref{sec:simulation} and present the results in Figure~\ref{fig:fc}. Note that in some situations it will not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
 
 \paragraph{Correcting for supernormality.}
-The transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution, if the underlying distribution is not normal. This issue is often referred to as supernormality \citep{Atkinson:1985}. One approach to address supernormality in this context is to reduce the number of elements in the linear combinations, which should reduce the extent of the problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we rotate the factor loadings in factor analysis. Using this approach, the rotated residuals are obtained by $\bm{Q}\trans \bm{W}^{*\prime} \widehat{\bm{b}}$. One rotation that will produce rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Figure~\ref{fig:cartoon} displays heatmaps of $\bm{W}^{*\prime}$ (left) and $\bm{Q}\trans\bm{W}^{*\prime}$ (right) for a simulated random intercept model with 20 groups, and demonstrates that the varimax rotation reduces the number of groups loading highly on each rotated residual. %\hh{what amount of confounding is there on the left and then on the right?} \al{The amount of confounding is the same between the right and the left. The only different between the two is that we applied the varimax transform to the plot on the right. Regardless, $FC \approx .25$. I used this small simulated model because I thought it showed what the varimax can do for us.} 
+The transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution, if the underlying distribution is not normal. This issue is often referred to as supernormality \citep{Atkinson:1985}. One approach to address supernormality in this context is to reduce the number of elements in the linear combinations, which should reduce the extent of the problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we rotate the factor loadings in factor analysis. Using this approach, the rotated residuals are obtained by $\bm{Q}\trans \bm{W}^{*\prime} \widehat{\bm{b}}$. One rotation that will produce rotated residuals comprised of a small number of raw residuals is the raw varimax rotation \citep{Johnson:2007}. Figure~\ref{fig:cartoon} displays heatmaps of $\bm{W}^{*\prime}$ (left) and $\bm{Q}\trans\bm{W}^{*\prime}$ (right) for a simulated random intercept model with 20 groups, and demonstrates that the raw varimax rotation reduces the number of groups loading highly on each rotated residual. %\hh{what amount of confounding is there on the left and then on the right?} \al{The amount of confounding is the same between the right and the left. The only different between the two is that we applied the varimax transform to the plot on the right. Regardless, $FC \approx .25$. I used this small simulated model because I thought it showed what the varimax can do for us.} 
 Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu}, who used the raw varimax rotation to produce recovered errors for distributional assessment in the ordinary regression model.
 
 \begin{figure}[t]
@@ -475,7 +475,7 @@ Other orthogonal rotations could be used, but the varimax rotation is familiar t
 	\subfloat[$\bm{Q}\trans\bm{W}^{*\prime}$]{
 		\includegraphics[width=0.4\textwidth]{cropped_cartoon_heatmap_varimax.pdf}
 	}
-	\caption{\label{fig:cartoon} Heatmap of $\bm{W}^{*\prime}$ and $\bm{Q}\trans\bm{W}^{*\prime}$ calculated where $\bm{Q}$ for a simulated random intercept model with 20 groups. Applying the varimax rotation, $\bm{Q}$, reduces the number of groups loading on a given rotated residual.}
+	\caption{\label{fig:cartoon} Heatmap of $\bm{W}^{*\prime}$ and $\bm{Q}\trans\bm{W}^{*\prime}$ calculated where $\bm{Q}$ for a simulated random intercept model with 20 groups. Applying the raw varimax rotation, $\bm{Q}$, reduces the number of groups loading on a given rotated residual.}
 \end{figure}
 
 \paragraph{Extension to multiple random effects.}
@@ -492,7 +492,6 @@ We conducted a simulation study to assess the specificity and sensitivity of tes
 %----------------------------------------------------------------------------------
 
 We want to examine situations in which we correctly and incorrectly reject the null hypothesis of normality---that is, power and type I error, respectively. We compute the proportion of Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and Kolmogorov-Smirnov (KS) tests that rejected the null hypothesis of normality.
-
  These test statistics each measure the discrepancy between the empirical distribution of the rotated random effects and assumed distribution of the random effects, which sheds light on the behavior of Q-Q plots constructed from the rotated residuals. 
 
 
@@ -501,7 +500,7 @@ Normal, heavy-tailed, and skewed distributions are used to generate the simulate
 
 \begin{table}[htdp]
 \centering
-\caption{\label{tab:simdsns} A summary of the distributional settings considered in the simulation study.}
+\caption{\label{tab:simdsns} A summary of the 9 distributional settings considered in the simulation study.}
 \begin{tabular}{llccc}\hline
 Distributions of & & \multicolumn{3}{c}{Random effects, $F_2$} \\ \cline{3-5}
            & & $\mathcal{N}(0, \ \sigma^2_{b})$ & $(\sigma_{b} / \sqrt{3})\, t_3$ & $\sigma_{b} \, \{ \text{Exp}(1) - 1 \}$ \\ \hline
@@ -523,7 +522,7 @@ To investigate the effect that pooling has on the rotated random effects we cons
 \end{tabular}
 %
 
-Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$ (which are 58 and 59 for the random intercept and slope, respectively) as well as $s =$ 55, 50, 45, 40, 35, and 30.
+Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$ (which is 58 and 59 for the random intercept and slope, respectively) as well as $s =$ 55, 50, 45, 40, 35, and 30.
 
 
 \subsection{Results}\label{sec:sim-results}
@@ -538,7 +537,7 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 	}
 \end{figure}
 
-\al{Table~\ref{tab:results-int} and Figure~\ref{fig:results-slope}} display the estimated type I error rates using the AD normality test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes, \al{respectively}, when $\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$. The other tests performed similarly, and full simulation results can be found in the supplementary material. Both figures show that the type I error rate is stabilized close to the nominal level with the appropriate choice of $s$. For the random intercept most choices of $s$ perform reasonably well, with the type I error rate closest to the nominal level for all error distributions between 30 and 40. For the random slope, $s$ must be chosen to be 30 for type I error to be near the nominal level; however, $s$ may need to be even smaller to achieve the nominal rate. 
+\al{Table~\ref{tab:results-int} and Figure~\ref{fig:results-slope}} display the estimated type I error rates using the AD normality test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes, \al{respectively}, when $\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$. The CVM and KS tests performed similarly and are omitted for brevity (full simulation results can be found in the supplementary material). Both figures show that the type I error rate is stabilized close to the nominal level with the appropriate choice of $s$. For the random intercept most choices of $s$ perform reasonably well, with the type I error rate closest to the nominal level for all error distributions between 30 and 40. For the random slope, $s$ must be chosen to be 30 for type I error to be near the nominal level; however, $s$ may need to be even smaller to achieve the nominal rate. 
 
 
 %\begin{figure}
@@ -553,7 +552,7 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 	\caption{\label{fig:results-slope} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by the distribution of the error terms and $s$.}
 \end{figure}
 
-\al{Table~\ref{tab:results-int}  and Figure~\ref{fig:power-slope}} show the estimated power of the AD test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes for the variance structure identified above. We find the estimated power to detect non-normal random effects distributions is amplified by the varimax rotation and larger choices of $s$. We also find that the estimated power is lower than would be expected from randomly sampled values from an exponential or $t_3$ distribution (what we will refer to as the ``gold standard''). 
+\al{Table~\ref{tab:results-int}  and Figure~\ref{fig:power-slope}} show the estimated power of the AD test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes, respectively, for the highly confounded variance structure. The estimated power to detect non-normal random effects distributions is amplified by the varimax rotation and larger choices of $s$. We also find that the estimated power is lower than would be expected from randomly sampled values from an exponential or $t_3$ distribution (what we will refer to as the ``gold standard''). 
 %\hh{the gold standard should show in your figures as well, so that we have a way of gauging the loss in power other than perfect power of 1, which is going to make any gain in power look small.} 
 %\al{I can do this, but the power for detecting the exponential at these sample sizes is very high, which makes things look small. The AD test has less power to detect the t distribution at these sample sizes.}
 For example, when $s=30$, simulations indicate the power of the AD test to detect a $t_3$ distribution to be approximately 0.4, whereas our simulations indicate nearly half the power, with the random slope generally having lower power than the random intercept. Interestingly,  there is higher power to detect a heavy tailed distribution than a skewed distribution.  Additional simulations (not discussed) using a model with a continuous variable defining the random slope showed results similar to the random intercept(Table~\ref{tab:results-int}).
@@ -561,16 +560,11 @@ For example, when $s=30$, simulations indicate the power of the AD test to detec
 
 While the estimated power is lower than the gold standard, the fact that the type I error rate can be stabilized indicates that distributional problems detected using the rotated random effects will truly be problems; thus, providing more diagnostic information than the (unrotated) predicted random effects.
 
-%\begin{figure}
-%	\centering
-%	\includegraphics[width=\textwidth]{ad_intercept_power.pdf}
-%	\caption{\label{fig:power} Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random intercepts (left) and varimax rotated random intercepts (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random intercept.}
-%\end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\textwidth]{ad_slope_power.pdf}
-	\caption{\label{fig:power-slope}Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by $s$. he color denotes the distribution of the errors and the linetype denotes the distribution of the random slope.}
+	\caption{\label{fig:power-slope}Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by $s$. The color denotes the distribution of the errors and the line type denotes the distribution of the random slope.}
 \end{figure}
 
 
@@ -616,15 +610,6 @@ Skewed	&	Normal			& 	19.7	&	21.2	&	21.3	&	22.1	&	22.7	&	21.1	&	22.3	\\
 }
 \end{table}
 
-%\begin{itemize}
-%\item Overall, the rotated residuals reduce the type I error rates to rates much closer to the nominal level. When $\sigma^2_\varepsilon > \sigma^2_b$ there is minor inflation of the type I errors when the error terms are non-normal, but less severe than without the rotation. When $\sigma^2_\varepsilon \leq \sigma^2_b$ the type I errors are essentially at the nominal levels.
-%
-%\item As expected, the power to detect non-normal random effects distributions is quite low for the rotated residuals. The varimax rotation does help amplify the power of detection, though an increase in the type I error rate also results.
-%
-%\item The power to detect non-normal random effects distributions increases as $\sigma^2_b$ increases relative to $\sigma^2_\varepsilon$.
-%
-%
-%\end{itemize}
 
 %----------------------------------------------------------------------------------
 \section{Radon data: Revisited}\label{sec:radon2}

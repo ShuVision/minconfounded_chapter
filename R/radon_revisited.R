@@ -47,8 +47,8 @@ for(i in seq( nrow(reduced.tr) )){
 	reduced.tr[i, "b1"] <- tr2(.mod = fm, .L = L.b1, s = reduced.tr[i, "s"])
 }
 
-qplot(x = 85 - s, y = b0, data = reduced.tr, geom = c("point", "line"))
-qplot(x = 85 - s, y = b1, data = reduced.tr, geom = c("point", "line"))
+qplot(x = 85 - s, y = b0 / 85, data = reduced.tr, geom = c("point", "line"))
+qplot(x = 85 - s, y = b1 / 85, data = reduced.tr, geom = c("point", "line"))
 
 qplot(x = 85 - s, y = b0 / tr(fm, L.b0), data = reduced.tr, geom = c("point", "line"))
 qplot(x = 85 - s, y = b1 / tr(fm, L.b1), data = reduced.tr, geom = c("point", "line"))
