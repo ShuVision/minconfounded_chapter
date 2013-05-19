@@ -341,16 +341,32 @@ First, we define the \emph{fraction of confounding} for the random effects, whic
 %\end{equation}
 %\end{definition}
 
-\begin{definition}[Fraction of confounding]
-Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$ and $\bm{B} = \var(\widehat{\bm{b}})$, which are positive semidefinite matrices by definition. \al{Also, let $\bm{W}$ be a linear transformation from the original $q$-dimensional space to an $s$-dimensional space ($s \leq q$).} The fraction of confounding in $\widehat{\bm{b}}$ \al{in this $s$-dimensional space} is given by
+\begin{definition}[Fraction of confounding] \hh{define $\bm{b}$ and $\widehat{\bm{b}}$ as well}
+Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$ and $\bm{B} = \var(\widehat{\bm{b}})$, %which are positive semidefinite matrices by definition. \hh{that doesn't belong in a definition.}
+\al{Also, let $\bm{W}$ be a linear transformation from the original $q$-dimensional space to an $s$-dimensional space ($s \leq q$).} \hh{Where does q come from? } The fraction of confounding in $\widehat{\bm{b}}$ \al{in this $s$-dimensional space} is given by
 %
 \begin{equation}\label{eq:fc2}
 \text{FC}(s; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right)
 %\dfrac{1}{\ell} \displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
 %		{\bm{v_i}\trans \bm{B} \bm{v_i}}.
 \end{equation}
+\hh{If FC only depends on s, you imply that for different Ws that have the same rank, you get the same FC. that's not true - so FC needs to be dependent on W. }
 %where $\ell$ is the length of vector $\widehat{\bm{b}}$.
 \end{definition}
+
+\hh{
+\begin{definition}[Fraction of confounding]
+Let $b$ be ... and $\widehat{\bm b}$ its predictions. For full rank matrix $W \in R^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $W$ is defined as 
+\begin{equation}\label{eq:fc2}
+\text{FC}(W; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right),
+%\dfrac{1}{\ell} \displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
+%		{\bm{v_i}\trans \bm{B} \bm{v_i}}.
+\end{equation}
+where $\bm{B}$ is the covariance structure of $\bm b$, $\bm{B} = \var(\widehat{\bm{b}})$, and $A$ is the conditional covariance structure of  $\widehat{\bm{b}}$ given $\bm{b}$,  i.e. $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$.
+\end{definition}
+Note that both $A$ and $B$ are  positive semidefinite matrices by definition. 
+}
+
 The fraction of confounding measures the contribution of the error terms  to the variance of the random effects. $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while 0 indicates no confounding. \al{Notice that if $\bm{W} = \bm{I}$, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects.}
 
 
