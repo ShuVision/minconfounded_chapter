@@ -355,8 +355,8 @@ First, we define the \emph{fraction of confounding} for the random effects, whic
 %\end{definition}
 
 
-\begin{definition}[Fraction of confounding] \hh{being nitpicky again: how do you get to q?} \al{This is where my ``simplifying'' choice to discuss a model with a single random effect I think made notation choices odd. I originally had $\ell$, which was the length of $\bm{b}$, but then I switched to $q$ since for a single random effect $\ell = q$ (I define q to be the length of $\bm{b}$ on page 8). When I made the switch I thought using $q$ would help reduce the notation flying around, but now that I start to think of the case with multiple random effects I am not so sure anymore.}
-Let $\bm{b}$ denote the vector of random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
+\begin{definition}[Fraction of confounding] 
+Let $\bm{b}$ denote the vector of $q$ random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
 \begin{equation}\label{eq:fc2}
 \text{FC}(W; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right),
 %\dfrac{1}{\ell} \displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
@@ -557,20 +557,21 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 \al{Table~\ref{tab:results-int}  and Figure~\ref{fig:power-slope}} show the estimated power of the AD test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes for the variance structure identified above. We find the estimated power to detect non-normal random effects distributions is amplified by the varimax rotation and larger choices of $s$. We also find that the estimated power is lower than would be expected from randomly sampled values from an exponential or $t_3$ distribution (what we will refer to as the ``gold standard''). 
 %\hh{the gold standard should show in your figures as well, so that we have a way of gauging the loss in power other than perfect power of 1, which is going to make any gain in power look small.} 
 %\al{I can do this, but the power for detecting the exponential at these sample sizes is very high, which makes things look small. The AD test has less power to detect the t distribution at these sample sizes.}
-For example, when $s=30$, simulations indicate the power of the AD test to detect a $t_3$ distribution to be approximately 0.4, whereas our simulations indicate nearly half the power, with the random slope generally having lower power than the random intercept. Interestingly,  there is higher power to detect a heavy tailed distribution than a skewed distribution.  Additional simulations (not discussed) using a model with a continuous variable defining the random slope showed results similar to the random intercept.
+For example, when $s=30$, simulations indicate the power of the AD test to detect a $t_3$ distribution to be approximately 0.4, whereas our simulations indicate nearly half the power, with the random slope generally having lower power than the random intercept. Interestingly,  there is higher power to detect a heavy tailed distribution than a skewed distribution.  Additional simulations (not discussed) using a model with a continuous variable defining the random slope showed results similar to the random intercept(Table~\ref{tab:results-int}).
+
 
 While the estimated power is lower than the gold standard, the fact that the type I error rate can be stabilized indicates that distributional problems detected using the rotated random effects will truly be problems; thus, providing more diagnostic information than the (unrotated) predicted random effects.
 
 %\begin{figure}
 %	\centering
 %	\includegraphics[width=\textwidth]{ad_intercept_power.pdf}
-%	\caption{\label{fig:power-int} Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random intercepts (left) and varimax rotated random intercepts (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random intercept.}
+%	\caption{\label{fig:power} Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random intercepts (left) and varimax rotated random intercepts (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random intercept.}
 %\end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth]{ad_slope_power.pdf}
-	\caption{\label{fig:power-slope}Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random slope. \al{The estimated power of the AD test for exponential and $t_3$ deviates is displayed in black.}}
+	\includegraphics[width=0.9\textwidth]{ad_slope_power.pdf}
+	\caption{\label{fig:power-slope}Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by $s$. he color denotes the distribution of the errors and the linetype denotes the distribution of the random slope.}
 \end{figure}
 
 
@@ -659,7 +660,7 @@ Based on  Table~\eqref{tab:s} we choose $s=30$ for the calculation of the rotate
 	  \subfloat[Random slope]{
 		\includegraphics[width=0.35\linewidth]{rotatedQQ-slope.pdf}
 		}	
-	\caption{\label{fig:rotate-radon} Normal Q-Q plots with pointwise 95\% confidence bands of the marginals rotated random effects. The deviations from normality are much less pronounced than before resulting in the failure to reject the null hypothesis of normality. \hh{what do the normality tests say?} \al{The tests all say fail to reject.}}
+	\caption{\label{fig:rotate-radon} Normal Q-Q plots with point-wise 95\% confidence bands of the marginals rotated random effects. The deviations from normality are much less pronounced than before resulting in the failure to reject the null hypothesis of normality.} %\hh{what do the normality tests say?} \al{The tests all say fail to reject.}}
 \end{figure}
 
 %\begin{itemize}

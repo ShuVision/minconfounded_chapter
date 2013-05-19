@@ -41,7 +41,7 @@ geom_point(size=2.5) + geom_smooth(se=FALSE, method="lm") +
 	ylab("proportion of tests rejected") + theme_bw() +
 	scale_shape_manual("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed"), values=c(1, 17, 15)) +
 	scale_linetype_discrete("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed")) + 	scale_color_brewer("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed"), palette="Set2") + theme(legend.position="bottom", legend.key.width = unit(3, "line"))  + 
-	ylim(0, .4) 
+	ylim(0, .25) 
 
 ggsave("ad_slope_results.pdf", width=8, height=5)
 
@@ -55,14 +55,18 @@ qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef != "norm"
 	scale_linetype_discrete("Random effects\ndistribution", labels = c("Skewed", "Heavy tailed"))
 
 # Summarizing results of AD tests for random slopes
-qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef != "norm" & random.effect == "b1" & nortest == "AD" & var.settings == "sige2_sigb1" & alpha == 0.05 & rotation != "EBLUP"), geom = c("point", "smooth"), facets = ~ rotation, colour = error, linetype = ranef, group = interaction(error, ranef), se = F, method = "lm") + 
-	xlab("s") + 
+ggplot(data = subset(propreject, subset = ranef != "norm" & random.effect == "b1" & nortest == "AD" & var.settings == "sige2_sigb1" & alpha == 0.05 & rotation != "EBLUP"),
+aes(x=s,y = prop.reject, colour=error, linetype=ranef, shape=error, group= interaction(error, ranef))) +
+geom_point(size=2.5) +geom_smooth(method="lm", se=F) +
+	facet_wrap(~rotation) +
+	xlab("subspace dimension s") + 
 	ylab("proportion of tests rejected") + 
 	theme_bw() + 
-	scale_color_discrete("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed")) + 
-	scale_linetype_discrete("Random effects\ndistribution", labels = c("Skewed", "Heavy tailed"))
-
-
+	scale_color_brewer("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed"), palette="Set2") + 
+	scale_linetype_discrete("Random effects\ndistribution", labels = c("Skewed", "Heavy tailed")) + theme_bw() +
+	scale_shape_manual("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed"), values=c(1, 17, 15)) + theme(legend.position="bottom", legend.key.width = unit(3, "line"))   + ylim(c(0,0.4))
+	
+ggsave("", width=8, height=5.5)
 #-------------------------------------------------------------------------------
 # Adding power for the AD test
 #-------------------------------------------------------------------------------
