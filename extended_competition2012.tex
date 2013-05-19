@@ -355,7 +355,7 @@ First, we define the \emph{fraction of confounding} for the random effects, whic
 %\end{definition}
 
 
-\begin{definition}[Fraction of confounding] \hh{being nitpicky again: how do you get to q?}
+\begin{definition}[Fraction of confounding] \hh{being nitpicky again: how do you get to q?} \al{This is where my ``simplifying'' choice to discuss a model with a single random effect I think made notation choices odd. I originally had $\ell$, which was the length of $\bm{b}$, but then I switched to $q$ since for a single random effect $\ell = q$ (I define q to be the length of $\bm{b}$ on page 8). When I made the switch I thought using $q$ would help reduce the notation flying around, but now that I start to think of the case with multiple random effects I am not so sure anymore.}
 Let $\bm{b}$ denote the vector of random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
 \begin{equation}\label{eq:fc2}
 \text{FC}(W; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right),
