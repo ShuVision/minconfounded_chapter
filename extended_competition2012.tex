@@ -131,7 +131,7 @@ Figure \ref{fig:map} shows a map of counties in Minnesota. The color shading rep
 %
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.5\textwidth]{figures/map.png}
+\includegraphics[width=0.45\textwidth]{figures/map.png}
 \caption{\label{fig:map} Map of the counties in Minnesota. The color shading represents average Radon activity.}
 \end{figure}
 %
@@ -441,13 +441,18 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 
 
 \paragraph{Selecting the dimension of the subspace.}
-\al{Selection of the dimension of the subspace spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. Since our ultimate objective is distributional assessment, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function (e.g., the Anderson-Darling test for normality) associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the scree plot used to select the number of principal components. Figure~...}
-
-
-%\begin{figure}
-%\centering
-%\includegraphics[]{}
-%\end{figure}
+\al{Selection of the dimension of the subspace spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. Since our ultimate objective is distributional assessment, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function (e.g., the Anderson-Darling test for normality) associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the scree plot used to select the number of principal components. To illustrate the use of this plot we simulated two simple random intercept models with a group-level predictor: the first model had 40 groups of 30 observations and 10 groups of 5 observations; the second model also had 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$.}
+%
+\begin{figure}[htb]
+	\centering
+	 \subfloat[Model 1]{
+		\includegraphics[width=0.49\linewidth]{elbow1.pdf}
+		}
+	  \subfloat[Model 2]{
+		\includegraphics[width=0.49\linewidth]{elbow2.pdf}
+		}	
+	\caption{\label{fig:elbow} Plots of the fraction of confounding for each reduction in the dimension of subspace spanned by the rotated random intercepts from two simulation models. Model 1 has 50 groups: 40 groups of size 30, and 10 groups of size 5. Model 2 has 50 groups with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). Based on these plots we would choose $s = 39$, corresponding to a dimension reduction of 11.}
+\end{figure}
 
 
 %%First, we must consider the selection of the dimension of the subspace spanned by the rotated residuals, $s$---that is, the length of the resulting transformed residual vector. 

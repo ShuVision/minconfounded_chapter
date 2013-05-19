@@ -14,6 +14,7 @@ source('~/Documents/Thesis/Dissertation/eresids-chapter/simulations/functions/ut
 
 
 ### Simulating data
+set.seed(6132013)
 m  <- 50       ## no. of groups
 ni <- 30       ## no. obs. per group
 N  <- ni * m   ## total no. of obs.
@@ -41,14 +42,14 @@ for(i in which.groups) {
 }
 
 # Introducing variability
-n.var.grps <- 5
-which.groups2 <- sample.int(m, size = n.var.grps)
-mult.factor <- 3
+# n.var.grps <- 10
+# which.groups2 <- sample.int(m, size = n.var.grps)
+# mult.factor <- 2
 
-for(i in which.groups2) {
-	index <- which(sim.df$group == i)
-	sim.df[index, "e"] <- rnorm(length(index), 0, mult.factor * sig.e)	
-}
+# for(i in which.groups2) {
+#	index <- which(sim.df$group == i)
+#	sim.df[index, "e"] <- rnorm(length(index), 0, mult.factor * sig.e)	
+# }
 
 sim.df$y <- with(sim.df, 1 + .3 * grp.var + b + e)
 
@@ -63,12 +64,15 @@ for(i in seq( nrow(reduced.tr) )){
 }
 
 qplot(x = m-s, y = b0/m, data = reduced.tr[-m,], geom = c("point", "line")) + 
-	xlab("dimension reduction") + ylab("fraction of confounding") + theme_bw()
-
+	xlab("dimension reduction") + 
+	ylab("fraction of confounding") + 
+	theme_bw() + 
+	ylim(c(0, .31))
+# ggsave(filename = file.choose(new=T), width = 4, height = 4)
 
 ### Simulating an example -- a less obvious elbow
-m  <- 85       ## no. of groups
-ni <- c(rpois(60, 30), rpois(25, 5) + 1)        ## no. obs. per group
+m  <- 50       ## no. of groups
+ni <- c(rpois(40, 30), rpois(10, 5) + 1)        ## no. obs. per group
 N  <- sum(ni)   ## total no. of obs.
 
 sig.e <- 3
@@ -89,10 +93,15 @@ mod <- lmer(y ~ grp.var + (1 | group), data = sim.df)
 
 ### plotting
 ### Reducing the trace
-reduced.tr <- data.frame(s = seq(1, m, by = 1), b0 = NA)
+reduced.tr2 <- data.frame(s = seq(1, m, by = 1), b0 = NA)
 
 for(i in seq( nrow(reduced.tr) )){
-	reduced.tr[i, "b0"] <- tr2(.mod = mod, .L = Diagonal(m), s = reduced.tr[i, "s"])
+	reduced.tr2[i, "b0"] <- tr2(.mod = mod, .L = Diagonal(m), s = reduced.tr[i, "s"])
 }
 
-qplot(x = m - s, y = b0 / m , data = reduced.tr, geom = c("point", "line"))
+qplot(x = m - s, y = b0 / m , data = reduced.tr2, geom = c("point", "line")) + 
+	xlab("dimension reduction") + 
+	ylab("fraction of confounding") + 
+	theme_bw() + 
+	ylim(c(0, .31))
+ggsave(filename = file.choose(new=T), width = 4, height = 4)
