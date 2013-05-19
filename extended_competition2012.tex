@@ -177,7 +177,7 @@ Note that in practice we must blind ourselves from the true plot for proper use 
 
 What becomes apparent from the lineup, is that, astonishingly, {\it none} of the null plots conform to normality. To further investigate the apparent non-normal behavior of predicted random effects we conduct a small simulation study: 
 %
-We generated 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal ($\varepsilon_{ij}^* \sim \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
+We generated 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal ($\varepsilon_{ij}^* \overset{iid}{\sim}  \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
 For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
 Table~\ref{tab:edf} shows the proportions of these tests rejecting the null hypothesis of normality at the 5\% significance level. 
 
@@ -355,7 +355,7 @@ First, we define the \emph{fraction of confounding} for the random effects, whic
 
 
 \begin{definition}[Fraction of confounding] 
-Let $\bm{b}$ denote the vector of $q$ random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
+Let $\bm{b}$ denote a vector of $q$ random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
 \begin{equation}\label{eq:fc2}
 \text{FC}(\bm{W}; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right),
 %\dfrac{1}{\ell} \displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
@@ -440,7 +440,7 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 
 
 \paragraph{Selecting the dimension of the subspace.}
-\al{Selection of the dimension of the subspace spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. Since our ultimate objective is distributional assessment, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function (e.g., the Anderson-Darling test for normality) associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the scree plot used to select the number of principal components. To illustrate the use of this plot we simulated two simple random intercept models with a group-level predictor: the first model had 40 groups of 30 observations and 10 groups of 5 observations; the second model also had 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$.}
+Selection of the dimension of the subspace spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. Since our ultimate objective is distributional assessment, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function (e.g., the Anderson-Darling test for normality) associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the scree plot used to select the number of principal components. To illustrate the use of this plot we simulated two simple random intercept models with a group-level predictor: the first model had 40 groups of 30 observations and 10 groups of 5 observations; the second model also had 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$.
 %
 \begin{figure}[htb]
 	\centering
@@ -622,17 +622,17 @@ In order to construct Q-Q plots of the rotated random effects we first consider 
 \todo[inline]{We could show this in a plot if room isn't an issue.}
 \begin{table}[ht]
 \centering
-\caption{\label{tab:s} The fraction of confounding for the rotated random effects at various settings of $s$ for model \eqref{eq:radon}.}
+\caption{\label{tab:s} The fraction of confounding for the rotated random effects at various settings of $s$ for model \eqref{eq:radon}. \hh{At which dimension does the normality test switch from rejection to acceptance?}}
 \begin{tabular}{rrrrrrr}
   \hline
-  s         & 30 & 40 & 50 & 60 & 70 & 80 \\ \hline
+subspace dimension  $s$         & 30 & 40 & 50 & 60 & 70 & 80 \\ \hline
   Intercept & 0.56 & 0.60 & 0.63 & 0.66 & 0.69 & 0.72 \\ 
   Slope     & 0.52 & 0.56 & 0.60 & 0.63 & 0.66 & 0.70 \\ 
    \hline
 \end{tabular}
 \end{table}
 %
-Based on  Table~\eqref{tab:s} we choose $s=30$ for the calculation of the rotated random effects. Figure~\ref{fig:rotate-radon} shows Q-Q plots of the marginal rotated random effects, which do not exhibit large deviations from the assumption of normality.
+Based on  Table~\eqref{tab:s} we choose $s=30$ for the calculation of the rotated random effects. Figure~\ref{fig:rotate-radon} shows Q-Q plots of the marginal rotated random effects, which do not exhibit \hh{significant} deviations from the assumption of normality.
 
 
 
