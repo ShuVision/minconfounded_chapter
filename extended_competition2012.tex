@@ -108,7 +108,6 @@ Q-Q plots, in their weighted \citep{Dempster:1985tr, Lange:1989uu} or unweighted
 
 In this paper, we address the problem of distributional assessment due to confounding in residual structures. 
 First, we illustrate the inadequacy of existing methods based on the predicted random effects.
-
 We then introduce  the concept of rotated residuals for the random effects and present a general method to obtain rotated residuals at all levels of the model. We demonstrate how this enables an appropriate graphical assessment  of distributional assumptions. %\al{using only side products of the model fitting procedure}.
 \todo[inline]{Return to this paragraph after more writing...}
 
@@ -127,12 +126,12 @@ where   $\log(y_{ij})$ denotes the  radon measurement (in log $pCi/L$, i.e log p
  We assume i.i.d. normal errors $\varepsilon_{ij} \sim \mathcal{N} (0,\ \sigma^2_{\varepsilon})$  and $\bm{b}_i \sim \mathcal{N}(\bm{0},\ \bm{D})$, where $\bm{D}$ allows for correlation between random effects within the same county $i$, $b_{0i}$ and $b_{1i}$. Further, we assume independence between random effects and error terms. 
 
 
-Figure \ref{fig:map} shows a map of counties in Minnesota. The color shading represents average radon activity in a county. For two counties no data is available. Generally, more southern locations exhibit higher  levels of Radon activity. Figure \ref{fig:tc} focuses on Hennepin (home to Minneapolis) and Winona (home to the city of the same name) counties, plotting radon level by floor level. Radon levels are usually the highest at the basement level of a house. 
+Figure \ref{fig:map} shows a map of counties in Minnesota. The color shading represents average radon activity in a county. For two counties no data is available. Generally, more southern locations exhibit higher  levels of radon activity. Figure \ref{fig:tc} focuses on Hennepin (home to Minneapolis) and Winona (home to the city of the same name) counties, plotting radon level by floor level. Radon levels are usually the highest at the basement level of a house. 
 %
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.45\textwidth]{figures/map.png}
-\caption{\label{fig:map} Map of the counties in Minnesota. The color shading represents average Radon activity.}
+\caption{\label{fig:map} Map of the counties in Minnesota. The color shading represents average radon activity.}
 \end{figure}
 %
 \begin{figure}[htb]
@@ -180,7 +179,7 @@ What becomes apparent from the lineup, is that, astonishingly, {\it none} of the
 %
 We generated 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal ($\varepsilon_{ij}^* \sim \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
 For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
-Table~\ref{tab:edf} shows the proportions of these tests rejecting the null hypothesis of normality at the .05 significance level. 
+Table~\ref{tab:edf} shows the proportions of these tests rejecting the null hypothesis of normality at the 5\% significance level. 
 
 The type I error rates are hugely inflated for both random effects, making an assessment of normality based on the empirical distribution impossible. 
 For example, 84.1\% of the AD tests of the random intercept rejected the null hypothesis of normality when the error terms were skewed.
@@ -302,7 +301,7 @@ The use of standardized residuals can correct the latter issue, but does not add
 \bm{z}_{\varepsilon} =  \text{diag} \left(\bm{RPR} \right)^{-1/2} \widehat{\bm{\varepsilon}}
 \]
 %
-is unaffected by this interrelationship; however, this is not the case with the standardized random effects.  When the degree of pooling is high---as it is in the above radon example, and often is in practice---interpretation of the predicted random effects cannot be separated from the distribution of the error terms. Detailed simulation results documenting the utility of  these residuals are available in the supplementary material.
+is unaffected by this interrelationship. This is not the case with the standardized random effects.  When the degree of pooling is high---as it is in the above radon example, and often is in practice---interpretation of the predicted random effects cannot be separated from the distribution of the error terms. Detailed simulation results documenting the utility of  these residuals are available in the supplementary material.
 
 
 
@@ -358,11 +357,11 @@ First, we define the \emph{fraction of confounding} for the random effects, whic
 \begin{definition}[Fraction of confounding] 
 Let $\bm{b}$ denote the vector of $q$ random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
 \begin{equation}\label{eq:fc2}
-\text{FC}(W; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right),
+\text{FC}(\bm{W}; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right),
 %\dfrac{1}{\ell} \displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
 %		{\bm{v_i}\trans \bm{B} \bm{v_i}}.
 \end{equation}
-where $\bm{B}$ is the covariance structure of $\bm b$, $\bm{B} = \var(\widehat{\bm{b}})$, and $A$ is the conditional covariance structure of  $\widehat{\bm{b}}$ given $\bm{b}$,  i.e. $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$.
+where $\bm{B}$ is the covariance structure of $\bm b$, $\bm{B} = \var(\widehat{\bm{b}})$, and $\bm{A}$ is the conditional covariance structure of  $\widehat{\bm{b}}$ given $\bm{b}$,  i.e. $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$.
 \end{definition}
 Note that both $\bm{A}$ and $\bm{B}$ are  positive semidefinite matrices by definition. 
 
