@@ -541,7 +541,7 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 	}
 \end{figure}
 
-Figures~\ref{fig:results-int} and \ref{fig:results-slope} display the estimated type I error rates using the AD normality test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes when $\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$. The other tests performed similarly, and full simulation results can be found in the supplementary material. Both figures show that the type I error rate is stabilized close to the nominal level with the appropriate choice of $s$. For the random intercept most choices of $s$ perform reasonably well, with the type I error rate closest to the nominal level for all error distributions between 30 and 40. For the random slope, $s$ must be chosen to be 30 for type I error to be near the nominal level; however, $s$ may need to be even smaller to achieve the nominal rate. 
+\al{Table~\ref{tab:results-int} and Figure~\ref{fig:results-slope}} display the estimated type I error rates using the AD normality test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes, \al{respectively}, when $\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$. The other tests performed similarly, and full simulation results can be found in the supplementary material. Both figures show that the type I error rate is stabilized close to the nominal level with the appropriate choice of $s$. For the random intercept most choices of $s$ perform reasonably well, with the type I error rate closest to the nominal level for all error distributions between 30 and 40. For the random slope, $s$ must be chosen to be 30 for type I error to be near the nominal level; however, $s$ may need to be even smaller to achieve the nominal rate. 
 
 
 %\begin{figure}
@@ -556,10 +556,10 @@ Figures~\ref{fig:results-int} and \ref{fig:results-slope} display the estimated 
 	\caption{\label{fig:results-slope} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by the distribution of the error terms and $s$.}
 \end{figure}
 
-Figures~\ref{fig:power-int} and \ref{fig:power-slope} show the estimated power of the AD test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes for the variance structure identified above. We find the estimated power to detect non-normal random effects distributions is amplified by the varimax rotation and larger choices of $s$. We also find that the estimated power is lower than would be expected from randomly sampled values from an exponential or $t_3$ distribution (what we will refer to as the ``gold standard''). 
+\al{Table~\ref{tab:results-int}  and Figure~\ref{fig:power-slope}} show the estimated power of the AD test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes for the variance structure identified above. We find the estimated power to detect non-normal random effects distributions is amplified by the varimax rotation and larger choices of $s$. We also find that the estimated power is lower than would be expected from randomly sampled values from an exponential or $t_3$ distribution (what we will refer to as the ``gold standard''). 
 %\hh{the gold standard should show in your figures as well, so that we have a way of gauging the loss in power other than perfect power of 1, which is going to make any gain in power look small.} 
 %\al{I can do this, but the power for detecting the exponential at these sample sizes is very high, which makes things look small. The AD test has less power to detect the t distribution at these sample sizes.}
-For example, when $s=30$, simulations indicate the power of the AD test to detect a $t_3$ distribution to be approximately 0.4, whereas our simulations indicate nearly half the power, with the random slope generally having lower power than the random intercept. Interestingly,  there is higher power to detect a heavy tailed distribution than a skewed distribution.  Additional simulations (not discussed) using a model with a continuous variable defining the random slope showed results similar to the random intercept (Figure~\ref{fig:power-int}).
+For example, when $s=30$, simulations indicate the power of the AD test to detect a $t_3$ distribution to be approximately 0.4, whereas our simulations indicate nearly half the power, with the random slope generally having lower power than the random intercept. Interestingly,  there is higher power to detect a heavy tailed distribution than a skewed distribution.  Additional simulations (not discussed) using a model with a continuous variable defining the random slope showed results similar to the random intercept.
 
 While the estimated power is lower than the gold standard, the fact that the type I error rate can be stabilized indicates that distributional problems detected using the rotated random effects will truly be problems; thus, providing more diagnostic information than the (unrotated) predicted random effects.
 
@@ -578,7 +578,7 @@ While the estimated power is lower than the gold standard, the fact that the typ
 
 \begin{table}
 \centering
-\caption{Percentages of AD tests rejecting the null hypothesis of normality at the 5\% significance level for the rotated (a) and varimax rotated (b) random intercepts by $s$. The gray shading indicates the situations where the random intercept is normal (i.e., type I error).}
+\caption{\label{tab:results-int} Percentages of AD tests rejecting the null hypothesis of normality at the 5\% significance level for the rotated (a) and varimax rotated (b) random intercepts by $s$. The gray shading indicates the situations where the random intercept is normal (i.e., type I error).}
 \subfloat[Rotated random intercept.]{
 	\begin{tabular}{ll rrrrrrr} \hline
 	& & \multicolumn{7}{c}{$s$} \\ \cline{3-9}
