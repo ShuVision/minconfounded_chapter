@@ -313,7 +313,7 @@ is unaffected by this interrelationship; however, this is not the case with the 
 To combat  confounding between different  levels of residuals, we derive a reduced set of rotated residuals that are standardized, uncorrelated, and homoscedastic. We focus our discussion (and notation) on a two-level model with a single random effect in this section for ease of explanation, and describe how to extend this method at the end of this section.
 
 
-First, we define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}. \\
+First, we define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}. 
 
 %\begin{definition}[Fraction of confounding]\label{def:fc1}
 %For the $i$th element of the target residual vector, $\widehat{\bm{e}}$, the fraction of confounding is given by
@@ -354,8 +354,8 @@ First, we define the \emph{fraction of confounding} for the random effects, whic
 %%where $\ell$ is the length of vector $\widehat{\bm{b}}$.
 %\end{definition}
 
-\hh{
-\begin{definition}[Fraction of confounding]
+
+\begin{definition}[Fraction of confounding] \hh{being nitpicky again: how do you get to q?}
 Let $\bm{b}$ denote the vector of random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
 \begin{equation}\label{eq:fc2}
 \text{FC}(W; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right),
@@ -365,15 +365,15 @@ Let $\bm{b}$ denote the vector of random effects and $\widehat{\bm{b}}$ its pred
 where $\bm{B}$ is the covariance structure of $\bm b$, $\bm{B} = \var(\widehat{\bm{b}})$, and $A$ is the conditional covariance structure of  $\widehat{\bm{b}}$ given $\bm{b}$,  i.e. $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$.
 \end{definition}
 Note that both $\bm{A}$ and $\bm{B}$ are  positive semidefinite matrices by definition. 
-}
-
-The fraction of confounding measures the contribution of the error terms  to the variance of the random effects. $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while 0 indicates no confounding. \al{Notice that if $\bm{W} = \bm{I}$, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects.}
 
 
-In order to correct residuals for the impact of confounding, we propose \al{using the linear transformation of the predicted random effects that substantially reduces the amount of confounding. To do this, we must determine the $s$-dimensional space in which confounding is substantially reduced and find the $\bm{W}$ that minimizes confounding within that space. To determine the dimension of the subspace spanned by the rotated residuals we propose the use of a a visual tool similar to the scree plots used for selecting the number of principal components. The construction of such plots depends on the linear transformation selected, so we first discuss the selection of $\bm{W}$ given the selection of choice of $s$.}
+The fraction of confounding measures the contribution of the error terms  to the variance of the random effects. $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while 0 indicates no confounding. Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects.
+
+
+In order to correct residuals for the impact of confounding, we propose using the linear transformation of the predicted random effects that substantially reduces the amount of confounding. To do this, we must determine the $s$-dimensional space in which confounding is substantially reduced and find the $\bm{W}$ that minimizes confounding within that space. To determine the dimension of the subspace spanned by the rotated residuals we propose the use of a  visual tool similar to the scree plots used for selecting the number of principal components. The construction of such plots depends on the linear transformation $\bm W$, so we first discuss the selection of $\bm{W}$ \hh{given  a fixed dimension $s$.}
 
 \paragraph{Selecting the optimal linear transformation.}
-\al{For a given $s$-dimensional space, the linear combination $\bm{W} \in \mathbb{R}^{q \times s}$ that minimizes \eqref{eq:fc2} also minimizes
+For a given $s$-dimensional space, the linear combination $\bm{W} \in \mathbb{R}^{q \times s}$ that minimizes \eqref{eq:fc2} also minimizes
 %
 \begin{equation}\label{eq:minimize}
 J_1(s) = \tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right)
@@ -381,7 +381,7 @@ J_1(s) = \tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\rig
 %		{\bm{v_i}\trans \bm{W} \bm{B} \bm{W}\trans \bm{v_i}}
 \end{equation}
 %
-Mathematically,} this problem is solved using the generalized eigenvalue decomposition
+Mathematically, this problem is solved using the generalized eigenvalue decomposition
 %
 \begin{equation}\label{eq:geigen}
 	\bm{Aw}_k = \gamma_k \bm{Bw}_k
@@ -389,16 +389,16 @@ Mathematically,} this problem is solved using the generalized eigenvalue decompo
 %
 where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}. 
 %thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. 
-Computationally, \al{we solve this problem by} simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ \citep{McDonald:1979ca, deLeeuw:1982to}. Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ requires $\bm{W}$ to be $\bm{B}$-orthogonal, so the optimal $\bm{W}$ is found to be
+Computationally, we solve this problem by simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ \citep{McDonald:1979ca, deLeeuw:1982to}. Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ requires $\bm{W}$ to be $\bm{B}$-orthogonal, so the optimal $\bm{W}$ is found to be
 %
 \begin{equation}\label{eq:optimw}
 	\bm{W}^*(s) = \argmin_{ 
-\begin{scriptsize}
-	\begin{cases}
-      \bm{W} \in \mathbb{R}^{q \times s} \\
+%\begin{scriptsize}
+%	\begin{cases}
+      \bm{W} \in \mathbb{R}^{q \times s}, \ \ 
       \bm{W\trans B W} = \bm{I}
-	\end{cases}
-\end{scriptsize}
+%	\end{cases}
+%\end{scriptsize}
 	} 
 \tr\left( \bm{W\trans A W} \right) 
 \end{equation}
@@ -437,7 +437,7 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 
 %Having considered the computational aspects of the problem we must next consider the more practical aspects. 
 
-\al{Having considered the optimal linear transformation for a given $s$-dimensional subspace, we return to the problem of selecting the dimension which substantially reduces the fraction of confounding.}
+%\al{Having considered the optimal linear transformation for a given $s$-dimensional subspace, we return to the problem of selecting the dimension which substantially reduces the fraction of confounding.}
 
 
 \paragraph{Selecting the dimension of the subspace.}
@@ -464,7 +464,8 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 %We consider this approach in the simulation study presented in Section~\ref{sec:simulation} and present the results in Figure~\ref{fig:fc}. Note that in some situations it will not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
 
 \paragraph{Correcting for supernormality.}
-The transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution, if the underlying distribution is not normal. This issue is often referred to as supernormality \citep{Atkinson:1985}. One approach to address supernormality in this context is to reduce the number of elements in the linear combinations, which should reduce the extent of the problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we rotate the factor loadings in factor analysis. Using this approach, the rotated residuals are obtained by $\bm{Q}\trans \bm{W}^{*\prime} \widehat{\bm{b}}$. One rotation that will produce rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Figure~\ref{fig:cartoon} displays heatmaps of $\bm{W}^{*\prime}$ (left) and $\bm{Q}\trans\bm{W}^{*\prime}$ (right) for a simulated random intercept model with 20 groups, and demonstrates that the varimax rotation reduces the number of groups loading highly on each rotated residual. \hh{what amount of confounding is there on the left and then on the right?} \al{The amount of confounding is the same between the right and the left. The only different between the two is that we applied the varimax transform to the plot on the right. Regardless, $FC \approx .25$. I used this small simulated model because I thought it showed what the varimax can do for us.} Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu}, who used the raw varimax rotation to produce recovered errors for distributional assessment in the ordinary regression model.
+The transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution, if the underlying distribution is not normal. This issue is often referred to as supernormality \citep{Atkinson:1985}. One approach to address supernormality in this context is to reduce the number of elements in the linear combinations, which should reduce the extent of the problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we rotate the factor loadings in factor analysis. Using this approach, the rotated residuals are obtained by $\bm{Q}\trans \bm{W}^{*\prime} \widehat{\bm{b}}$. One rotation that will produce rotated residuals comprised of a small number of raw residuals is the varimax rotation \citep{Johnson:2007}. Figure~\ref{fig:cartoon} displays heatmaps of $\bm{W}^{*\prime}$ (left) and $\bm{Q}\trans\bm{W}^{*\prime}$ (right) for a simulated random intercept model with 20 groups, and demonstrates that the varimax rotation reduces the number of groups loading highly on each rotated residual. %\hh{what amount of confounding is there on the left and then on the right?} \al{The amount of confounding is the same between the right and the left. The only different between the two is that we applied the varimax transform to the plot on the right. Regardless, $FC \approx .25$. I used this small simulated model because I thought it showed what the varimax can do for us.} 
+Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu}, who used the raw varimax rotation to produce recovered errors for distributional assessment in the ordinary regression model.
 
 \begin{figure}[t]
 	\centering
@@ -551,13 +552,13 @@ Figures~\ref{fig:results-int} and \ref{fig:results-slope} display the estimated 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth]{ad_slope_results.pdf}
+	\includegraphics[width=0.9\textwidth]{ad_slope_results.pdf}
 	\caption{\label{fig:results-slope} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by the distribution of the error terms and $s$.}
 \end{figure}
 
 Figures~\ref{fig:power-int} and \ref{fig:power-slope} show the estimated power of the AD test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes for the variance structure identified above. We find the estimated power to detect non-normal random effects distributions is amplified by the varimax rotation and larger choices of $s$. We also find that the estimated power is lower than would be expected from randomly sampled values from an exponential or $t_3$ distribution (what we will refer to as the ``gold standard''). 
-\hh{the gold standard should show in your figures as well, so that we have a way of gauging the loss in power other than perfect power of 1, which is going to make any gain in power look small.} 
-\al{I can do this, but the power for detecting the exponential at these sample sizes is very high, which makes things look small. The AD test has less power to detect the t distribution at these sample sizes.}
+%\hh{the gold standard should show in your figures as well, so that we have a way of gauging the loss in power other than perfect power of 1, which is going to make any gain in power look small.} 
+%\al{I can do this, but the power for detecting the exponential at these sample sizes is very high, which makes things look small. The AD test has less power to detect the t distribution at these sample sizes.}
 For example, when $s=30$, simulations indicate the power of the AD test to detect a $t_3$ distribution to be approximately 0.4, whereas our simulations indicate nearly half the power, with the random slope generally having lower power than the random intercept. Interestingly,  there is higher power to detect a heavy tailed distribution than a skewed distribution.  Additional simulations (not discussed) using a model with a continuous variable defining the random slope showed results similar to the random intercept (Figure~\ref{fig:power-int}).
 
 While the estimated power is lower than the gold standard, the fact that the type I error rate can be stabilized indicates that distributional problems detected using the rotated random effects will truly be problems; thus, providing more diagnostic information than the (unrotated) predicted random effects.
