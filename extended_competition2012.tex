@@ -503,29 +503,29 @@ Normal, heavy-tailed, and skewed distributions are used to generate the simulate
 \centering
 \caption{\label{tab:simdsns} A summary of the distributional settings considered in the simulation study.}
 \begin{tabular}{llccc}\hline
-& & \multicolumn{3}{c}{Random effects} \\ 
+Distributions of & & \multicolumn{3}{c}{Random effects, $F_2$} \\ 
            & & $\mathcal{N}(0, \ \sigma^2_{b})$ & $(\sigma_{b} / \sqrt{3})\, t_3$ & $\sigma_{b} \, \{ \text{Exp}(1) - 1 \}$ \\ \hline
-Error terms  & $\mathcal{N}(0, \ \sigma^2_{\varepsilon})$       & X & X & X \\
-             & $(\sigma_{\varepsilon} / \sqrt{3})\, t_3$  & X & X & X \\
-             & $\sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$       & X & X & X \\ 
+Error terms, $F_1$  & $\mathcal{N}(0, \ \sigma^2_{\varepsilon})$       & &&\\
+             & $(\sigma_{\varepsilon} / \sqrt{3})\, t_3$  &  & $\varepsilon_{ij}^* \overset{iid}{\sim} F_1, \ \ b_{0i}^*, b_{1i}^* \overset{iid}{\sim} F_2$ &  \\
+             & $\sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$       & && \\ 
 \hline
 \end{tabular} 
 \end{table}
 \al{XX How much information should we include in the table? Do we still need to explicitly write out the distributions in notation?}
 \hh{yes, write out the distributions} \al{Do you think writing the distributions in the interior is better? I stuck in a formatting debate with myself.}
 
-%The following distributions were used to generate simulated residuals $\varepsilon_{ij}^*$, $b_{0i}^*$, and $b_{1i}^*$ from which data were generated:
-%\hh{describe the situations in words first: normal, heavy-tail or skewed distributions were used to generate errors, random intercepts and slopes. -- wasn't it just nine cases? if this is a full random design, we would get 27 distribution triples! how do the two random effects influence each other, i.e. what are you assuming for D?}
-%%
-\begin{itemize}
-\item $\varepsilon_{ij}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{\varepsilon})$, or $\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$ , or $\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$
-
-\item $b_{0i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{0}})$, or $b_{0i}^* \overset{iid}{\sim} (\sigma_{b_{0}} / \sqrt{3})\, t_3$ , or $b_{0i}^* \overset{iid}{\sim} \sigma_{b_{0}} \, \{ \text{Exp}(1) - 1 \}$
-
-\item $b_{1i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{1}})$, or $b_{1i}^* \overset{iid}{\sim} (\sigma_{b_{1}} / \sqrt{3})\, t_3$ , or $b_{1i}^* \overset{iid}{\sim} \sigma_{b_{1}} \, \{ \text{Exp}(1) - 1 \}$
-\end{itemize}
-%%
-%For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. \hh{ok, this answers most of it, but it would be better to make the bullets above a 3 by 3 table with the corresponding distributions in the margins.}
+%%The following distributions were used to generate simulated residuals $\varepsilon_{ij}^*$, $b_{0i}^*$, and $b_{1i}^*$ from which data were generated:
+%%\hh{describe the situations in words first: normal, heavy-tail or skewed distributions were used to generate errors, random intercepts and slopes. -- wasn't it just nine cases? if this is a full random design, we would get 27 distribution triples! how do the two random effects influence each other, i.e. what are you assuming for D?}
+%%%
+%\begin{itemize}
+%\item $\varepsilon_{ij}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{\varepsilon})$, or $\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$ , or $\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$
+%
+%\item $b_{0i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{0}})$, or $b_{0i}^* \overset{iid}{\sim} (\sigma_{b_{0}} / \sqrt{3})\, t_3$ , or $b_{0i}^* \overset{iid}{\sim} \sigma_{b_{0}} \, \{ \text{Exp}(1) - 1 \}$
+%
+%\item $b_{1i}^* \overset{iid}{\sim} \mathcal{N}(0, \ \sigma^2_{b_{1}})$, or $b_{1i}^* \overset{iid}{\sim} (\sigma_{b_{1}} / \sqrt{3})\, t_3$ , or $b_{1i}^* \overset{iid}{\sim} \sigma_{b_{1}} \, \{ \text{Exp}(1) - 1 \}$
+%\end{itemize}
+%%%
+%%For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. \hh{ok, this answers most of it, but it would be better to make the bullets above a 3 by 3 table with the corresponding distributions in the margins.}
 
 Additionally, the the fixed effects coefficients were set to the maximum likelihood estimates.
 
