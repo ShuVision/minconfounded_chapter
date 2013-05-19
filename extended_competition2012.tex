@@ -166,7 +166,7 @@ The within-county sample sizes, $n_i$, are extremely unbalanced, ranging from on
 In this example, Q-Q plots (Figure~\ref{fig:qqplots1}) for the residuals show that normality 
 seems to be violated for the error terms and both random effects. But is this cause for concern?
 As there is little pooling at the observation level (level 1) we expect the distributional assessment of the error terms to be reliable, but  the high degree of pooling  for the random effects  casts doubt on the reliability of their Q-Q plots. Next, we assess the reliability of the Q-Q plot for the random slope by utilizing the lineup protocol \citep{buja:2009}:
-Figure~\ref{fig:lineup} shows a lineup \citep{buja:2009} of 20 Q-Q plots for the predicted random slope. The Q-Q plot of the observed random slopes is placed among 19 decoy plots of parametric bootstrap samples based on model~\eqref{eq:radon} satisfying the normal distribution assumptions. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
+Figure~\ref{fig:lineup} shows a lineup of 20 Q-Q plots for the predicted random slope. The Q-Q plot of the observed random slopes is placed among 19 decoy plots of parametric bootstrap samples based on model~\eqref{eq:radon} satisfying the normal distribution assumptions. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
 If we can identify the real Q-Q plot in the lineup, this provides evidence that the distribution of the observed random slopes is not normal. However, 
 the observed Q-Q plot (panel $12+2^2$) is virtually indistinguishable from the field of null plots. This suggests that the predicted random slopes  from the data do not deviate significantly from model~\eqref{eq:radon}. 
 %A lineup of the random intercepts revealed the same finding and was omitted for brevity. 
@@ -503,7 +503,7 @@ Normal, heavy-tailed, and skewed distributions are used to generate the simulate
 \centering
 \caption{\label{tab:simdsns} A summary of the distributional settings considered in the simulation study.}
 \begin{tabular}{llccc}\hline
-Distributions of & & \multicolumn{3}{c}{Random effects, $F_2$} \\ 
+Distributions of & & \multicolumn{3}{c}{Random effects, $F_2$} \\ \cline{3-5}
            & & $\mathcal{N}(0, \ \sigma^2_{b})$ & $(\sigma_{b} / \sqrt{3})\, t_3$ & $\sigma_{b} \, \{ \text{Exp}(1) - 1 \}$ \\ \hline
 Error terms, $F_1$  & $\mathcal{N}(0, \ \sigma^2_{\varepsilon})$       & &&\\
              & $(\sigma_{\varepsilon} / \sqrt{3})\, t_3$  &  & $\varepsilon_{ij}^* \overset{iid}{\sim} F_1, \ \ b_{0i}^*, b_{1i}^* \overset{iid}{\sim} F_2$ &  \\
@@ -571,7 +571,7 @@ While the estimated power is lower than the gold standard, the fact that the typ
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{ad_slope_power.pdf}
-	\caption{\label{fig:power-slope}Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random slope.}
+	\caption{\label{fig:power-slope}Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by $s$. The color denotes the distribution of the errors and the linetype denotes the distribution of the random slope. \al{The estimated power of the AD test for exponential and $t_3$ deviates is displayed in black.}}
 \end{figure}
 
 
