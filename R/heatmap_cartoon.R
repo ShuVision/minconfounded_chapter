@@ -38,7 +38,7 @@ data.set = data.frame(class.id = rep(1:nclass, time=nstud),
 data.set$outcomes = data.set$class.effect + data.set$student.effect
 
 head(data.set)
-fm <- lmer(outcomes ~ 1 + (1|class.id), data=data.set)
+fm <- lmer(outcomes ~ class + (1|class.id), data=data.set)
 
 BlockZ <- function(object) {
   Z <- getME(object, "Z")
