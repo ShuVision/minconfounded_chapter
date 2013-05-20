@@ -663,16 +663,18 @@ Based on  Table~\eqref{tab:s} we choose $s=30$ for the calculation of the rotate
 \section{Discussion}\label{sec:discussion}
 %----------------------------------------------------------------------------------
 
-In this paper we have discussed two graphical approaches to assess the distributional assumptions made on the random effects in hierarchical linear models. The first approach used the lineup protocol to compare the predicted random effects produced in estimating observed model to those produced when estimating a properly specified model. This method only assumes a distributional specification for the random effects and does not directly compare the predicted random effects to their hypothesized distribution. Consequently, the conclusions that are drawn from this approach relate to evidence that the predicted random effects either are or are not \hh{consistent} with what is expected under a correctly specified random effects distribution. The second approach rotates the predicted random effects so as to compare them directly to the hypothesized distribution using a Q-Q plot. We have shown that the rotated random effects are standardized, uncorrelated, and homoscedastic, and that the rotation addressing the confounding present allowing for the random effects to be targeted separately from the error terms. While the loss in power due to the rotation may be troubling, we found the lack of diagnostic information in the predicted random effects to be the bigger concern. 
+In this paper we have discussed two graphical approaches to assess the distributional assumptions made on the random effects in hierarchical linear models. The first approach used the lineup protocol to compare the predicted random effects produced in estimating observed model to those produced when estimating a properly specified model. This method only assumes a distributional specification for the random effects and does not directly compare the predicted random effects to their hypothesized distribution. Consequently, the conclusions that are drawn from this approach relate to evidence that the predicted random effects either are or are not \hh{consistent} with what is expected under a correctly specified random effects distribution. The second approach rotates the predicted random effects so as to compare them directly to the hypothesized distribution using a Q-Q plot. We have shown that the rotated random effects are standardized, uncorrelated, and homoscedastic, and that the rotation addressing the confounding present allowing for the random effects to be targeted separately from the error terms. While the loss in power due to the rotation may be troubling, we found the lack of diagnostic information in the predicted random effects to be the bigger concern. \al{XX The last sentence might not be needed if we keep the last paragraph as it is.}
 
-Under either approach, a misspecified covariance structure may lead to erroneous rejection of the null hypothesis. Therefore, in practice we recommend an assessment of the structure of $\bm{R}$ and $\bm{D}$ prior to distributional assessment \todo[inline]{R and D have been introduced way back - rather than using the symbols, describe the matrices in words.}. An alternative approach would be the use of robust covariance estimation techniques to protect against such misspecification; however, \hh{it is not clear how this impacts the diagnostic tools. We will leave this investigation for future study.} %we are unsure of its impact on these diagnostic tools, which is an are for future study.
+Under either approach, a misspecified covariance structure may lead to erroneous rejection of the null hypothesis. Therefore, in practice we recommend an assessment of the structure of \al{the within- and between-group covariance matrices} prior to distributional assessment.
+%\todo[inline]{R and D have been introduced way back - rather than using the symbols, describe the matrices in words.}. 
+An alternative approach would be the use of robust covariance estimation techniques to protect against such misspecification; however, \hh{it is not clear how this impacts the diagnostic tools. We will leave this investigation for future study.} %we are unsure of its impact on these diagnostic tools, which is an are for future study.
 
 It is important to note that formal tests have been proposed  to detect mixture distributions in the random effects \citep{Verbeke:1996va} and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001up}; however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software. Our method, on the other hand, requires only byproducts of the model fitting procedure and the use of matrix decompositions for simultaneous diagonalization, which are \hh{ widely accessible in standard software.}
 %Following from this result, the pointwise confidence bands shown were not unique to this method, but follow from the development of the normal Q-Q plot (FIND REFERENCE), and were provided as an aid to interpretation, not as a formal test.
 
 %\todo[inline]{The paragraphs below here need to be reworked/rethought based on the rewritten paragraphs above.}
 
-Simulation has revealed that tests of normality using the rotated random effects achieve approximately nominal type I error rates with appropriate choice of the length, $s$. This indicates that assessment of the rotated residuals can target the distribution of the random effects in the presence of pooling, which the predicted random effects cannot. The power to detect non-normal random effects distributions is lower than the gold standard, which is to be expected as \hh{the rotated residuals consist of sums of predicted random effects, resulting in a total distribution that is closer to a normal distribution than its individuals. } %we have taken linear combinations of predicted random effects in our rotation. 
+Simulation has revealed that tests of normality using the rotated random effects achieve approximately nominal type I error rates with appropriate choice of the \al{dimension}, $s$. This indicates that assessment of the rotated residuals can target the distribution of the random effects in the presence of pooling, which the predicted random effects cannot. The power to detect non-normal random effects distributions is lower than the gold standard, which is to be expected as \hh{the rotated residuals consist of sums of predicted random effects, resulting in a total distribution that is closer to a normal distribution than its individuals. } %we have taken linear combinations of predicted random effects in our rotation. 
 The varimax rotation \hh{ reduces} the impact of this supernormality effect. %, but other orthogonal rotations (i.e., quartimax) may perform better resulting in increased power and is an area for future investigation. 
 \hh{While we do think that the loss in power is troubling, }
 %We believe the loss of power is less troubling than
@@ -711,10 +713,10 @@ The varimax rotation \hh{ reduces} the impact of this supernormality effect. %, 
 \section*{Appendix: Additional technical details}
 %----------------------------------------------------------------------------------
 
-We present the proof of the claim that the rotated residuals, $\bm{W}^{*\prime} \widehat{\bm{b}}$, are standardized, uncorrelated, and homoscedastic. Following the developments presented in Section~\ref{sec:rotate} we present this discussion for the random effects assuming that there is only a random intercept. Generalization to the situation with multiple random effects follows as previously discussed.
+We present the proof of the claim that the rotated residuals, $\bm{W}^{*\prime} \widehat{\bm{b}}$, are standardized, uncorrelated, and homoscedastic. Following the developments presented in Section~\ref{sec:rotate}, we present this discussion for the random effects assuming that there is only a random intercept. Generalization to the situation with multiple random effects follows as previously discussed.
 
 \begin{proof}
- Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b})$, $\bm{B} = \var(\widehat{\bm{b}})$, $r = \text{rank}(\bm{B})$, and $\ell = $ the number of elements in $\widehat{\bm{b}}$. Note that by definition $\bm{A}$ and $\bm{B}$ are symmetric and nonnegative definite. Following from above, $\bm{T}_r$ and $\bm{\Lambda}_r$ follow from the spectral (or eigenvalue) decomposition of $\bm{B} = \bm{T_r \Lambda_r T_r}\trans$, and $\bm{U}$ follows from the spectral decomposition of $\bm{A^*} = \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{A T_r \Lambda_r}^{-1/2} = \bm{U} \bm{\Gamma} \bm{U}\trans$. Then, 
+ Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b})$, $\bm{B} = \var(\widehat{\bm{b}})$, $r = \text{rank}(\bm{B})$, and $q = $ the number of elements in $\widehat{\bm{b}}$. Note that by definition $\bm{A}$ and $\bm{B}$ are symmetric and positive semidefinite. Following from above, $\bm{T}_r$ and $\bm{\Lambda}_r$ follow from the spectral (or eigenvalue) decomposition of $\bm{B} = \bm{T_r \Lambda_r T_r}\trans$, and $\bm{U}$ follows from the spectral decomposition of $\bm{A^*} = \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{A T_r \Lambda_r}^{-1/2} = \bm{U} \bm{\Gamma} \bm{U}\trans$. Then, 
 \begin{align*}
 \var(\bm{W}^{*\prime} \widehat{\bm{b}}) &= \var(\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \widehat{\bm{b}})\\
 &= (\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \var(\widehat{\bm{b}}) (\bm{T_r \Lambda_r}^{-1/2} \bm{U})\\
@@ -856,19 +858,19 @@ and reveal the deviations of the observations from the conditional model. The va
 \bm{z}_{\varepsilon} =  \text{diag} \left(\bm{RPR} \right)^{-1/2} \widehat{\bm{\varepsilon}}
 \end{equation}
 %
-which have been recommended for distributional assessment \citep{Nobre:2007ej}. An alternative approach is recommended by \cite[Section 4.3]{Pinhiero:2000vf}, who suggest use of the Pearson residuals obtained, which are obtained by dividing the predicted residuals by the estimated within-group standard deviation, $\widehat{\sigma}_\varepsilon$. 
+which have been recommended for distributional assessment \citep{Nobre:2007ej}. An alternative approach is recommended by \citet[Section 4.3]{Pinhiero:2000vf}, who suggest use of the Pearson residuals, which are obtained by dividing the predicted residuals by the estimated within-group standard deviation, $\widehat{\sigma}_\varepsilon$. 
 
 
 
 \paragraph{Level-2 residuals.}
 %-----------------------------
-The final type of residual we consider is the the best linear unbiased predictor (BLUP) of the random effects, providing insight into the differences between the marginal (global) and conditional models. By definition, the BLUP of $\bm{b}$ is
+The final type of residual we consider is the the best linear unbiased predictor (BLUP) of the random effects (i.e., predicted random effects), providing insight into the differences between the marginal (global) and conditional models. By definition, the BLUP of $\bm{b}$ is
 %
 \begin{equation}\label{eq:lev2resid}
 \widehat{\bm{b}} = \bm{D Z\trans V\inv} \left( \bm{y} - \bm{X \widehat{\beta}} \right) = \bm{D Z\trans P y}
 \end{equation}
 %
-which has $\var(\widehat{\bm{b}}) = \bm{DZ\trans P ZD}$. 
+which has variance $\var(\widehat{\bm{b}}) = \bm{DZ\trans P ZD}$. 
 %Rewriting $\var(\widehat{\bm{b}})$ as
 %%
 %\begin{equation}
@@ -907,14 +909,15 @@ As an alternative to Q-Q plots constructed from the BLUPs \cite{Lange:1989uu} pr
 z_{b} = \text{diag} \left(\bm{C\trans DZ\trans V\inv ZDC}\right)^{-1/2} \bm{C\trans}\widehat{\bm{b}}
 \end{equation}
 %
-The specific form of $\bm{C}$ chosen highlight different departures from distributional assumptions---for example, $\bm{C}$s can be chosen to extract the random slope and the random intercept terms individually. When the random effects may be correlated, \citeauthor{Lange:1989uu} suggest examining a range of additional linear combinations in-between the two marginal random effects either through manual specification of $\bm{C}$ or projection pursuit.
+The specific form of $\bm{C}$ chosen highlights different departures from distributional assumptions---for example, $\bm{C}$s can be chosen to extract the random slope and the random intercept terms individually. When the random effects may be correlated, \citeauthor{Lange:1989uu} suggest examining a range of additional linear combinations in-between the two marginal random effects either through manual specification of $\bm{C}$ or projection pursuit.
 After choosing $\bm{C}$ a weighted Q-Q plot is constructed by comparing the weighted empirical cumulative distribution function
 %
 \begin{equation}
 F_m^*(x) = \sum_{i=1}^{m} I(x - z_{b_i} \geq 0) w_i \bigg/ \sum_{i=1}^{m} w_i, 
 \end{equation}
 %
-where $w_i$ is the $i$th element of $\bm{C\trans DZ\trans V\inv ZDC}$, to $\Phi\inv \left ( F_m^*(z_{b_i}) \right)$. For balanced group sizes this simplifies to the unweighted Q-Q plot of $\bm{z}_b$.
+to $\Phi\inv \left ( F_m^*(z_{b_i}) \right)$. Here, $w_i$ is the $i$th element of $\bm{C\trans DZ\trans V\inv ZDC}$.
+For balanced group sizes this simplifies to the unweighted Q-Q plot of $\bm{z}_b$.
 %
 
 \paragraph{Simulation-based approaches}
@@ -929,10 +932,9 @@ One alternative that has been proposed to overcome this problem is the use of th
 
 To evaluate the above proposals we carried out a simulation study under the same settings as in the paper, with the only difference being that the original $\bm{Z}$ was used for data generation. To evaluate the bootstrap tests of normality, a null distribution of 5000 simulated test statistics for each situation was used.
 
-Tables~\ref{tab:eval1}--\ref{tab:evalmarginal} present the results of using standard normality tests to assess the distributional assumptions of the residuals from a hierarchical model. The gray background on the table indicates which simulation settings approximately align with type I error, the other rows present estimated power. Tables~\ref{tab:boot1}--\ref{tab:bootmarginal} present the results of the bootstrap tests for normality. Table~\ref{tab:langeryan} presents the results of using a weighted CDF to evaluate the normality of the random effects, in this case the null distribution was obtained using the parametric bootstrap.
+Tables~\ref{tab:eval1}--\ref{tab:evalmarginal} present the results of using standard normality tests to assess the distributional assumptions of the residuals from a hierarchical model. The gray background on the table indicates which simulation settings present estimated type I error, with the other rows presenting estimated power. Tables~\ref{tab:boot1}--\ref{tab:bootmarginal} present the results of the bootstrap tests for normality. Table~\ref{tab:langeryan} presents the results of using a weighted CDF to evaluate the normality of the random effects, in this case the null distribution was obtained using the parametric bootstrap.
 
-Based on the simulation results it is clear that none of the residual-based diagnostics for assessing distributional assumptions are appropriate in all situations. The error terms can be targeted by the use of either by the use of studentized residuals or a parametric bootstrap; however, the assessment of this assumption is less critical. The random effects, on which predictive inference relies, cannot be targeted by the current methods when the residual variance is larger than the variance component associated with the random effects, a situation that is often encountered in practice. Additionally, use of the parametric bootstrap---to construct simulation envelopes for Q-Q plots, for example---does not appear to remedy this situation based on the performance of the bootstrap tests. Finally, we have shown \citeauthor{Lange:1989uu}'s weighted Q-Q plots also cannot target the random effects distribution when the residual variance is large, resulting in inflated type I error rates for both random effects, and the error terms overly influencing tests for the random slope.
-
+Based on the simulation results it is clear that none of the residual-based diagnostics for assessing distributional assumptions are appropriate in all situations. The error terms can be targeted either by the use of studentized residuals or a parametric bootstrap; however, the assessment of this assumption is less critical. The random effects, on which predictive inference relies, cannot be targeted by the current methods when the residual variance is larger than the variance component associated with the random effects---that is, situations with higher degrees of shrinkage.  Such situations are often encountered in practice. Additionally, use of the parametric bootstrap---to construct simulation envelopes for Q-Q plots, for example---does not appear to remedy this situation based on the performance of the bootstrap tests. Finally, we have shown \citeauthor{Lange:1989uu}'s weighted Q-Q plots cannot target the random effects distribution when the residual variance is large, as the distribution of the error terms overly influences tests for the random slope, resulting in inflated type I error rates for both random effects.
 
 \include{eval_simulation_results}
 
