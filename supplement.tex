@@ -1,4 +1,4 @@
-\documentclass[12pt]{article} % JASA requires 12 pt font for manuscripts
+\documentclass[11pt]{article} % JASA requires 12 pt font for manuscripts
 %\usepackage{JASA_manu}        % For JASA manuscript formatting
 
 % for citations
@@ -12,7 +12,7 @@
 
 % for figures
 \usepackage{graphicx}
-\usepackage{caption}
+\usepackage[font=small]{caption}
 \usepackage{subfig}
 \captionsetup[subfloat]{font=normalsize}
 %\usepackage{subcaption}
@@ -36,7 +36,7 @@
 
 % line spacing
 \usepackage{setspace}
-\doublespace
+%\doublespace
 
 % For math typsetting
 \usepackage{bm}
@@ -156,7 +156,7 @@ For distributional assessment of the BLUPs it makes sense to examine each random
 \bm{DZ\trans P ZD} = \bm{DZ\trans} \bm{V\inv} \left( \bm{V} - \bm{ X} \left( \bm{X\trans V\inv X} \right) \bm{X \trans} \right) \bm{V\inv} \bm{ZD}
 \end{equation}
 %
-leads to two similar standardizations of the BLUPs. The first utilizes the fact that when the number of groups is large $\bm{ X} \left( \bm{X\trans V\inv X} \right)$ will be small \citep{Goldstein:2003}, so for a large number of groups standardized BLUPs can be calculated by
+leads to two similar standardizations of the BLUPs. The first utilizes the fact that when the number of groups is large $\bm{ X} \left( \bm{X\trans V\inv X} \right)$ will be small \citep{Goldstein:2011}, so for a large number of groups standardized BLUPs can be calculated by
 %
 \begin{equation}\label{eq:lev2-std1}
 \bm{z}_{b} = \text{diag} \left(\bm{DZ\trans V\inv ZD}\right)^{-1/2} \widehat{\bm{b}}
@@ -219,16 +219,16 @@ In the paper we described a simulation study and only presented results for the 
 
 \include{rotation_simulation_results}
 
-\section{Alternative rotation}\label{supp:simstudy-alt}
-
-In this section we present results of the tests of normality if we use an alternative $\bm{W}$.
-
-\include{alt_rotation_simulation_results}
+%\section{Alternative rotation}\label{supp:simstudy-alt}
+%
+%In this section we present results of the tests of normality if we use an alternative $\bm{W}$.
+%
+%\include{alt_rotation_simulation_results}
 
 
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
-\bibliographystyle{apa}
+\bibliographystyle{asa}
 \bibliography{lcresid_bib}
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
