@@ -1,8 +1,9 @@
 \documentclass[12pt]{article} % JASA requires 12 pt font for manuscripts
 %\usepackage{JASA_manu}        % For JASA manuscript formatting
+\usepackage{times, asa}
 
 % for citations
-\usepackage[authoryear]{natbib} % natbib required for JASA
+\RequirePackage{natbib} % natbib required for JASA
 \usepackage[colorlinks=true, citecolor=blue, linkcolor=blue]{hyperref}
 \newcommand{\citetapos}[1]{\citeauthor{#1}{\textcolor{blue}{'s}} }
 
@@ -12,7 +13,7 @@
 
 % for figures
 \usepackage{graphicx}
-\usepackage{caption}
+%\usepackage{caption}
 \usepackage{subfig}
 \captionsetup[subfloat]{font=normalsize}
 %\usepackage{subcaption}
@@ -29,7 +30,7 @@
 \usepackage{todonotes}
 
 % title formatting
-\usepackage[compact,small]{titlesec}
+% \usepackage[compact,small]{titlesec}
 % page formatting
 \usepackage[margin = 1in]{geometry}
 \usepackage[parfill]{parskip}
@@ -62,14 +63,12 @@
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator*{\argmin}{arg\, min}
 
-\title{Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models}
-\author{
-	Adam Loy and Heike Hofmann\\
-	Department of Statistics,
-	Iowa State University
-}
-
 \begin{document}
+
+\title{Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models}
+\author{{Adam Loy and Heike Hofmann}
+\thanks{Adam Loy is a PhD student (e-mail: loyad01@gmail.com) and Heike Hofmann is an Associate Professor in the Department of Statistics and Statistical Laboratory, Iowa State University, Ames, IA 50011-1210.}}
+
 \maketitle
 
 %----------------------------------------------------------------------------------
@@ -532,7 +531,7 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{fc_by_s.pdf}
+	\includegraphics[width=0.9\textwidth]{fc_by_s.pdf}
 	\caption{\label{fig:fc} Change in the fraction of confounding (FC) as the dimension of the rotated random effects vector, $s$, is reduced for the three variance structures considered in the simulation study. %LOESS smoothers estimate the trajectory of FC as $s$ varies.} 
 	}
 \end{figure}
@@ -709,7 +708,7 @@ The varimax rotation \hh{ reduces} the impact of this supernormality effect. %, 
 
 
 %----------------------------------------------------------------------------------
-\section*{Appendix: Additional technical details}
+\section{Appendix: Additional technical details}
 %----------------------------------------------------------------------------------
 
 We present the proof of the claim that the rotated residuals, $\bm{W}^{*\prime} \widehat{\bm{b}}$, are standardized, uncorrelated, and homoscedastic. Following the developments presented in Section~\ref{sec:rotate}, we present this discussion for the random effects assuming that there is only a random intercept. Generalization to the situation with multiple random effects follows as previously discussed.
@@ -727,7 +726,7 @@ proving that the rotated errors are standardized, uncorrelated, and homoscedasti
 
 
 %----------------------------------------------------------------------------------
-\section*{Supplementary Material}
+\section{Supplementary Materials}
 %----------------------------------------------------------------------------------
 
 The following supplemental materials can be obtained as a single zip file online:
@@ -736,13 +735,13 @@ The following supplemental materials can be obtained as a single zip file online
 \item[Simulation results: ]
 
 \item[Code: ]
-
 \end{description}
 
+\todo[inline]{What is going on with the reference section?}
 
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
-\bibliographystyle{apa}
+\bibliographystyle{asa}
 \bibliography{lcresid_bib}
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------

@@ -1,129 +1,107 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{22}
+\newcommand{\enquote}[1]{``#1''}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
-\bibitem[\protect\astroncite{Atkinson}{1985}]{Atkinson:1985}
-Atkinson, A.~C. (1985).
-\newblock {\em Plots, Transformations, and Regression: An Introduction to
-  Graphical Methods of Diagnostic Regression Analysis}.
-\newblock Clarendon Press, Oxford.
+\bibitem[{Atkinson(1985)}]{Atkinson:1985}
+Atkinson, A.~C. (1985), \textit{Plots, Transformations, and Regression: An
+  Introduction to Graphical Methods of Diagnostic Regression Analysis}, Oxford:
+  Clarendon Press.
 
-\bibitem[\protect\astroncite{Buja et~al.}{2009}]{buja:2009}
+\bibitem[{Buja et~al.(2009)Buja, Cook, Hofmann, Lawrence, Lee, Swayne, and
+  Wickham}]{buja:2009}
 Buja, A., Cook, D., Hofmann, H., Lawrence, M., Lee, E.-K., Swayne, D.~F., and
-  Wickham, H. (2009).
-\newblock Statistical inference for exploratory data analysis and model
-  diagnostics.
-\newblock {\em Royal Society Philosophical Transactions A},
-  367(1906):4361--4383.
+  Wickham, H. (2009), \enquote{Statistical Inference for Exploratory Data
+  Analysis and Model Diagnostics,} \textit{Royal Society Philosophical
+  Transactions A}, 367, 4361--4383.
 
-\bibitem[\protect\astroncite{Butler and Louis}{1992}]{Butler:1992tx}
-Butler, S. and Louis, T. (1992).
-\newblock Random effects models with non-parametric priors.
-\newblock {\em Statistics in Medicine}, 11(14-15):1981--2000.
+\bibitem[{Butler and Louis(1992)}]{Butler:1992tx}
+Butler, S. and Louis, T. (1992), \enquote{Random effects models with
+  non-parametric priors,} \textit{Statistics in Medicine}, 11, 1981--2000.
 
-\bibitem[\protect\astroncite{de~Leeuw}{1982}]{deLeeuw:1982to}
-de~Leeuw, J. (1982).
-\newblock Generalized eigenvalue problems with positive semi-definite matrices.
-\newblock {\em Psychometrika}, 47(1):87--93.
+\bibitem[{de~Leeuw(1982)}]{deLeeuw:1982to}
+de~Leeuw, J. (1982), \enquote{Generalized eigenvalue problems with positive
+  semi-definite matrices,} \textit{Psychometrika}, 47, 87--93.
 
-\bibitem[\protect\astroncite{Dempster and Ryan}{1985}]{Dempster:1985tr}
-Dempster, A.~P. and Ryan, L.~M. (1985).
-\newblock Weighted normal plots.
-\newblock {\em Journal of the American Statistical Association},
-  80(392):845--850.
+\bibitem[{Dempster and Ryan(1985)}]{Dempster:1985tr}
+Dempster, A.~P. and Ryan, L.~M. (1985), \enquote{Weighted Normal Plots,}
+  \textit{Journal of the American Statistical Association}, 80, 845--850.
 
-\bibitem[\protect\astroncite{Eberly and Thackeray}{2005}]{Eberly:2005ee}
-Eberly, L.~E. and Thackeray, L.~M. (2005).
-\newblock On {L}ange and {R}yan's plotting technique for diagnosing
-  non-normality of random effects.
-\newblock {\em Statistics {\&} Probability Letters}, 75(2):77--85.
+\bibitem[{Eberly and Thackeray(2005)}]{Eberly:2005ee}
+Eberly, L.~E. and Thackeray, L.~M. (2005), \enquote{On {L}ange and {R}yan's
+  plotting technique for diagnosing non-normality of random effects,}
+  \textit{Statistics {\&} Probability Letters}, 75, 77--85.
 
-\bibitem[\protect\astroncite{Fukunaga}{1990}]{Fukunaga:1990}
-Fukunaga, K. (1990).
-\newblock {\em Introduction to Statistical Pattern Recognition}.
-\newblock Academic Press, San Diego, 2nd edition.
+\bibitem[{Fukunaga(1990)}]{Fukunaga:1990}
+Fukunaga, K. (1990), \textit{Introduction to Statistical Pattern Recognition},
+  San Diego: Academic Press, 2nd ed.
 
-\bibitem[\protect\astroncite{Gelman and Pardoe}{2006}]{Gelman:2006ue}
-Gelman, A. and Pardoe, I. (2006).
-\newblock Bayesian measures of explained variance and pooling in multilevel
-  (hierarchical) models.
-\newblock {\em Technometrics}, 48(2):241--251.
+\bibitem[{Gelman and Pardoe(2006)}]{Gelman:2006ue}
+Gelman, A. and Pardoe, I. (2006), \enquote{Bayesian Measures of Explained
+  Variance and Pooling in Multilevel (Hierarchical) Models,}
+  \textit{Technometrics}, 48, 241--251.
 
-\bibitem[\protect\astroncite{Gentle}{2007}]{Gentle:2007}
-Gentle, J.~E. (2007).
-\newblock {\em Matrix Algebra: Theory, Computations, and Applications in
-  Statistics}.
-\newblock Springer, New York.
+\bibitem[{Gentle(2007)}]{Gentle:2007}
+Gentle, J.~E. (2007), \textit{Matrix Algebra: Theory, Computations, and
+  Applications in Statistics}, New York: Springer.
 
-\bibitem[\protect\astroncite{Ghidey et~al.}{2004}]{Ghidey:2004id}
-Ghidey, W., Lesaffre, E., and Eilers, P. (2004).
-\newblock Smooth random effects distribution in a linear mixed model.
-\newblock {\em Biometrics}, 60(4):945--953.
+\bibitem[{Ghidey et~al.(2004)Ghidey, Lesaffre, and Eilers}]{Ghidey:2004id}
+Ghidey, W., Lesaffre, E., and Eilers, P. (2004), \enquote{Smooth random effects
+  distribution in a linear mixed model,} \textit{Biometrics}, 60, 945--953.
 
-\bibitem[\protect\astroncite{Ghidey et~al.}{2010}]{Ghidey:2010de}
-Ghidey, W., Lesaffre, E., and Verbeke, G. (2010).
-\newblock A comparison of methods for estimating the random effects
-  distribution of a linear mixed model.
-\newblock {\em Statistical Methods in Medical Research}, 19(6):575--600.
+\bibitem[{Ghidey et~al.(2010)Ghidey, Lesaffre, and Verbeke}]{Ghidey:2010de}
+Ghidey, W., Lesaffre, E., and Verbeke, G. (2010), \enquote{A comparison of
+  methods for estimating the random effects distribution of a linear mixed
+  model,} \textit{Statistical Methods in Medical Research}, 19, 575--600.
 
-\bibitem[\protect\astroncite{Hilden-Minton}{1995}]{HildenMinton:1995wh}
-Hilden-Minton, J.~A. (1995).
-\newblock {\em Multilevel diagnostics for mixed and hierarchical linear
-  models}.
-\newblock PhD thesis, University of California Los Angeles.
+\bibitem[{Hilden-Minton(1995)}]{HildenMinton:1995wh}
+Hilden-Minton, J.~A. (1995), \enquote{Multilevel diagnostics for mixed and
+  hierarchical linear models,} Ph.D. thesis, University of California Los
+  Angeles.
 
-\bibitem[\protect\astroncite{Jensen and Ramirez}{1999}]{Jensen:1999iu}
-Jensen, D.~R. and Ramirez, D.~E. (1999).
-\newblock Recovered errors and normal diagnostics in regression.
-\newblock {\em Metrika}, 49(2):107--119.
+\bibitem[{Jensen and Ramirez(1999)}]{Jensen:1999iu}
+Jensen, D.~R. and Ramirez, D.~E. (1999), \enquote{Recovered errors and normal
+  diagnostics in regression,} \textit{Metrika}, 49, 107--119.
 
-\bibitem[\protect\astroncite{Jiang}{2001}]{Jiang:2001up}
-Jiang, J. (2001).
-\newblock Goodness-of-fit tests for mixed model diagnostics.
-\newblock {\em The Annals of Statistics}, 29(4):1137--1164.
+\bibitem[{Jiang(2001)}]{Jiang:2001up}
+Jiang, J. (2001), \enquote{Goodness-of-fit tests for mixed model diagnostics,}
+  \textit{The Annals of Statistics}, 29, 1137--1164.
 
-\bibitem[\protect\astroncite{Johnson and Wichern}{2007}]{Johnson:2007}
-Johnson, R.~A. and Wichern, D.~W. (2007).
-\newblock {\em Applied Multivariate Statistical Analysis}.
-\newblock Pearson, Upper Saddle River, 6th edition.
+\bibitem[{Johnson and Wichern(2007)}]{Johnson:2007}
+Johnson, R.~A. and Wichern, D.~W. (2007), \textit{Applied Multivariate
+  Statistical Analysis}, Upper Saddle River: Pearson, 6th ed.
 
-\bibitem[\protect\astroncite{Lange and Ryan}{1989}]{Lange:1989uu}
-Lange, N. and Ryan, L. (1989).
-\newblock Assessing normality in random effects models.
-\newblock {\em The Annals of Statistics}, 17(2):624--642.
+\bibitem[{Lange and Ryan(1989)}]{Lange:1989uu}
+Lange, N. and Ryan, L. (1989), \enquote{Assessing normality in random effects
+  models,} \textit{The Annals of Statistics}, 17, 624--642.
 
-\bibitem[\protect\astroncite{McDonald et~al.}{1979}]{McDonald:1979ca}
-McDonald, R.~P., Torii, Y., and Nishisato, S. (1979).
-\newblock Some results on proper eigenvalues and eigenvectors with applications
-  to scaling.
-\newblock {\em Psychometrika}, 44(2):211--227.
+\bibitem[{McDonald et~al.(1979)McDonald, Torii, and
+  Nishisato}]{McDonald:1979ca}
+McDonald, R.~P., Torii, Y., and Nishisato, S. (1979), \enquote{Some results on
+  proper eigenvalues and eigenvectors with applications to scaling,}
+  \textit{Psychometrika}, 44, 211--227.
 
-\bibitem[\protect\astroncite{Shen and Louis}{1999}]{Shen:1999gd}
-Shen, W. and Louis, T.~A. (1999).
-\newblock Empirical bayes estimation via the smoothing by roughening approach.
-\newblock {\em Journal of Computational and Graphical Statistics},
-  8(4):800--823.
+\bibitem[{Shen and Louis(1999)}]{Shen:1999gd}
+Shen, W. and Louis, T.~A. (1999), \enquote{Empirical Bayes Estimation via the
+  Smoothing by Roughening Approach,} \textit{Journal of Computational and
+  Graphical Statistics}, 8, 800--823.
 
-\bibitem[\protect\astroncite{Verbeke and Lesaffre}{1996}]{Verbeke:1996va}
-Verbeke, G. and Lesaffre, E. (1996).
-\newblock A linear mixed-effects model with heterogeneity in the random-effects
-  population.
-\newblock {\em Journal of the American Statistical Association},
-  91(433):217--221.
+\bibitem[{Verbeke and Lesaffre(1996)}]{Verbeke:1996va}
+Verbeke, G. and Lesaffre, E. (1996), \enquote{A linear mixed-effects model with
+  heterogeneity in the random-effects population,} \textit{Journal of the
+  American Statistical Association}, 91, 217--221.
 
-\bibitem[\protect\astroncite{Verbeke and Lesaffre}{1997}]{Verbeke:1997tf}
-Verbeke, G. and Lesaffre, E. (1997).
-\newblock {The effect of misspecifying the random-effects distribution in
-  linear mixed models for longitudinal data}.
-\newblock {\em Computational Statistics {\&} Data Analysis}, 23(4):541--556.
+\bibitem[{Verbeke and Lesaffre(1997)}]{Verbeke:1997tf}
+--- (1997), \enquote{{The effect of misspecifying the random-effects
+  distribution in linear mixed models for longitudinal data},}
+  \textit{Computational Statistics {\&} Data Analysis}, 23, 541--556.
 
-\bibitem[\protect\astroncite{Wilk and Gnanadesikan}{1968}]{Wilk:1968}
-Wilk, M.~B. and Gnanadesikan, R. (1968).
-\newblock Probability plotting methods for the analysis of data.
-\newblock {\em Biometrika}, 55(1):1--17.
+\bibitem[{Wilk and Gnanadesikan(1968)}]{Wilk:1968}
+Wilk, M.~B. and Gnanadesikan, R. (1968), \enquote{Probability Plotting Methods
+  for the Analysis of Data,} \textit{Biometrika}, 55, 1--17.
 
-\bibitem[\protect\astroncite{Zhang and Davidian}{2001}]{Zhang:2001wo}
-Zhang, D. and Davidian, M. (2001).
-\newblock Linear mixed models with flexible distributions of random effects for
-  longitudinal data.
-\newblock {\em Biometrics}, 57(3):795--802.
+\bibitem[{Zhang and Davidian(2001)}]{Zhang:2001wo}
+Zhang, D. and Davidian, M. (2001), \enquote{Linear Mixed Models with Flexible
+  Distributions of Random Effects for Longitudinal Data,} \textit{Biometrics},
+  57, 795--802.
 
 \end{thebibliography}
