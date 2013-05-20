@@ -48,6 +48,7 @@ counties.stat <- ddply(mn, .(county), summarize,
 
 ### Figure 1
 ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=radon), map = counties) + 
+  scale_fill_gradient("radon activity\n(log pCi/L)") + 
   expand_limits(x = counties$long, y = counties$lat) + 
   xlab("longitude") + ylab("latitude") + coord_map() + 
   theme(

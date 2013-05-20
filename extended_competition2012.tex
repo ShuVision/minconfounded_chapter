@@ -119,7 +119,7 @@ To illustrate the effect of confounding between different levels of residuals, w
   \log(y_{ij}) = \beta_0 + \beta_1 x_{1ij} + \beta_2 x_{2i} + b_{0i} + b_{1i} x_{1ij}  + \varepsilon_{ij}
 \end{equation}
 %
-where   $\log(y_{ij})$ denotes the  radon measurement (in log $pCi/L$, i.e log picoCurie per litre) for house~$j$ within county~$i$ ($1 \le j \le n_i, 1 \le i \le 85$),
+where   $\log(y_{ij})$ denotes the  radon measurement (in log $pCi/L$, i.e log picoCurie per liter) for house~$j$ within county~$i$ ($1 \le j \le n_i, 1 \le i \le 85$),
  $x_{1ij}$ is a binary variable describing the level at which the measurement was taken (0 for the basement and 1 for a higher level), and $x_{2i}$ denotes the average soil uranium content for  county~$i$. 
  We assume i.i.d. normal errors $\varepsilon_{ij} \sim \mathcal{N} (0,\ \sigma^2_{\varepsilon})$  and $\bm{b}_i \sim \mathcal{N}(\bm{0},\ \bm{D})$, where $\bm{D}$ allows for correlation between random effects within the same county $i$, $b_{0i}$ and $b_{1i}$. Further, we assume independence between random effects and error terms. 
 
@@ -128,10 +128,9 @@ Figure \ref{fig:map} shows a map of counties in Minnesota. The color shading rep
 %
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.45\textwidth]{figures/map.png}
-\caption{\label{fig:map} Map of the counties in Minnesota. The color shading represents average radon activity.}
+\includegraphics[width=0.5\textwidth]{figures/map.pdf}
+\caption{\label{fig:map} Map of the counties in Minnesota. The color shading represents average radon activity (in log $pCi/L$, i.e log picoCurie per liter).}
 \end{figure}
-\todo[inline]{make a better legend title}
 %
 \begin{figure}[htb]
 \centering
@@ -362,13 +361,14 @@ Let $\bm{b}$ denote a vector of $q$ random effects and $\widehat{\bm{b}}$ its pr
 \end{equation}
 where $\bm{B}$ is the covariance structure of $\bm b$, $\bm{B} = \var(\widehat{\bm{b}})$, and $\bm{A}$ is the conditional covariance structure of  $\widehat{\bm{b}}$ given $\bm{b}$,  i.e. $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$.
 \end{definition}
+\noindent
 Note that both $\bm{A}$ and $\bm{B}$ are  positive semidefinite matrices by definition. 
 
 
 The fraction of confounding measures the contribution of the error terms  to the variance of the random effects. $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while 0 indicates no confounding. Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects.
 
 
-In order to correct residuals for the impact of confounding, we propose using the linear transformation of the predicted random effects that substantially reduces the amount of confounding. To do this, we must determine the $s$-dimensional space in which confounding is substantially reduced and find the $\bm{W}$ that minimizes confounding within that space. To determine the dimension of the subspace spanned by the rotated residuals we propose the use of a  visual tool similar to the scree plots used for selecting the number of principal components. The construction of such plots depends on the linear transformation $\bm W$, so we first discuss the selection of $\bm{W}$ \hh{given  a fixed dimension $s$.}
+In order to correct residuals for the impact of confounding, we propose using the linear transformation of the predicted random effects that substantially reduces the amount of confounding. To do this, we must determine the $s$-dimensional space in which confounding is substantially reduced and find the $\bm{W}$ that minimizes confounding within that space. To determine the dimension of the subspace spanned by the rotated residuals we propose the use of a  visual tool similar to the scree plots used for selecting the number of principal components. The construction of such plots depends on the linear transformation $\bm W$, so we first discuss the selection of $\bm{W}$ given  a fixed dimension $s$.
 
 \paragraph{Selecting the optimal linear transformation.}
 For a given $s$-dimensional space, the linear combination $\bm{W} \in \mathbb{R}^{q \times s}$ that minimizes \eqref{eq:fc2} also minimizes
@@ -418,6 +418,7 @@ Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices. The transformat
 \item Find an orthonormal transformation that diagonalizes $\bm{A}^*$. Such a transformation is given by the eigenvectors of $\bm{A}^*$, which we denote $\bm{U}$.
 \end{enumerate}
 
+\noindent
 Based on the above three steps, the transformation that simultaneously diagonalizes $\bm{A}$ and $\bm{B}$ is $\bm{T_r \Lambda_r}^{-1/2} \bm{U}$.\\ 
 \end{algorithm}
 
@@ -439,8 +440,10 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 
 
 \paragraph{Selecting the dimension of the subspace.}
-Selection of the dimension of the subspace spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. Since our ultimate objective is distributional assessment, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function (e.g., the Anderson-Darling test for normality) associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the scree plot used to select the number of principal components. To illustrate the use of this plot we simulate two simple random intercept models with a group-level predictor:   model $M1$ has 40 groups of 30 observations and 10 groups of 5 observations;   model $M2$ also has 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). \todo[inline]{These two models are very similar. Go to a more extreme in the second model?}
- Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$. \al{Talk about the differences here and why I chose these examples. Also talk about the loss of 1 d.f. More discussion here.}
+Selection of the dimension of the subspace spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. Since our ultimate objective is distributional assessment, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function (e.g., the Anderson-Darling test for normality) associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the scree plot used to select the number of principal components. To illustrate the use of this plot we simulate two simple random intercept models with a group-level predictor:   model $M1$ has 40 groups of 30 observations and 10 groups of 5 observations;   model $M2$ also has 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). %\todo[inline]{These two models are very similar. Go to a more extreme in the second model?}
+ Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$. \al{For both models, there is no reduction in the fraction of confounding for a 1-dimensional reduction because this simply adjusts for that rank deficiency of the covariance matrix, which can be thought of in terms of adjusting for the effective degrees of freedom. Additionally, we see that the elbow in the plot for model $M2$ is less pronounced. This occurs because the groups sizes are more unbalanced so the difference between the large and small group sizes is reduced.}
+ 
+% \al{Talk about the differences here and why I chose these examples. Also talk about the loss of 1 d.f. More discussion here.}
 %
 \begin{figure}[htb]
 	\centering
@@ -611,25 +614,29 @@ Skewed	&	Normal			& 	19.7	&	21.2	&	21.3	&	22.1	&	22.7	&	21.1	&	22.3	\\
 %Next, we return to the motivating example and use rotated residuals to assess the distribution of the random effects using the rotated random effects. 
 Recall that in Section~\ref{sec:ex} we determined that the error terms were not normally distributed. Consequently, examination of Q-Q plots of the predicted random effects will likely lead to erroneous conclusions due to the high degree of shrinkage. 
 
-In order to construct Q-Q plots of the rotated random effects we first consider the choice of $s$. For model \eqref{eq:radon} the high degree of shrinkage leads to a large fraction of confounding for each random term: 0.72 for the random intercept and 0.70 for the random slope. In choosing $s$ we wish to substantially reduce the fraction of confounding, but restrict attention to $s > 30$ so as not to decrease the maximum possible power of a normality test too severely. Table~\eqref{tab:s} shows the fraction confounding for $s = 30, 40, 50, 60, 70, \text{ and } 80$. 
+In order to construct Q-Q plots of the rotated random effects we first consider the choice of $s$. For model \eqref{eq:radon} the high degree of shrinkage leads to a large fraction of confounding for each random term: 0.72 for the random intercept and 0.70 for the random slope. In choosing $s$ we wish to substantially reduce the fraction of confounding, but restrict attention to $s \geq 30$ so as not to decrease the maximum possible power of a normality test too severely. Figure~\eqref{fig:radon-dim} shows the fraction confounding for $s \geq 30$. 
 %
-\todo[inline]{We could show this in a plot if room isn't an issue. The below are just to show what the plots look like... There is really no elbow because of the sample sizes involved in the radon example, so I don't know if we want to discuss them again here. }
-\hh{It should be either the table or the graphic. I'd be fine with either, but it would strengthen the graphical component of the paper to have the plots here. } 
+%\todo[inline]{We could show this in a plot if room isn't an issue. The below are just to show what the plots look like... There is really no elbow because of the sample sizes involved in the radon example, so I don't know if we want to discuss them again here. }
+%\hh{It should be either the table or the graphic. I'd be fine with either, but it would strengthen the graphical component of the paper to have the plots here. } 
 
-\includegraphics[width=0.35\textwidth]{radon_elbow1.pdf}
-\includegraphics[width=0.35\textwidth]{radon_elbow2.pdf}
-
-\begin{table}[ht]
+\begin{figure}
 \centering
-\caption{\label{tab:s} The fraction of confounding for the rotated random effects at various settings of $s$ for model \eqref{eq:radon}. \hh{At which dimension does the normality test switch from rejection to acceptance?} \al{This happens right away, rank(B), for the slope and around 40 for the intercept.}}
-\begin{tabular}{rrrrrrr}
-  \hline
-subspace dimension  $s$         & 30 & 40 & 50 & 60 & 70 & 80 \\ \hline
-  Intercept & 0.56 & 0.60 & 0.63 & 0.66 & 0.69 & 0.72 \\ 
-  Slope     & 0.52 & 0.56 & 0.60 & 0.63 & 0.66 & 0.70 \\ 
-   \hline
-\end{tabular}
-\end{table}
+	\includegraphics[width=0.9\textwidth]{radon_elbows.pdf}
+	\caption{\label{fig:radon-dim} Plots of the fraction of confounding for each reduction in the dimension of subspace spanned by the rotated random intercept (left) and random slope (right) for the radon example. Filled points represent situations in which the AD test rejects normality of the varimax rotated random effects.}
+\end{figure}
+
+
+%\begin{table}[ht]
+%\centering
+%\caption{\label{tab:s} The fraction of confounding for the rotated random effects at various settings of $s$ for model \eqref{eq:radon}. \hh{At which dimension does the normality test switch from rejection to acceptance?} \al{This happens right away, rank(B), for the slope and around 40 for the intercept.}}
+%\begin{tabular}{rrrrrrr}
+%  \hline
+%subspace dimension  $s$         & 30 & 40 & 50 & 60 & 70 & 80 \\ \hline
+%  Intercept & 0.56 & 0.60 & 0.63 & 0.66 & 0.69 & 0.72 \\ 
+%  Slope     & 0.52 & 0.56 & 0.60 & 0.63 & 0.66 & 0.70 \\ 
+%   \hline
+%\end{tabular}
+%\end{table}
 %
 Based on  Table~\eqref{tab:s} we choose $s=30$ for the calculation of the rotated random effects. Figure~\ref{fig:rotate-radon} shows Q-Q plots of the marginal rotated random effects, which do not exhibit \hh{significant} deviations from the assumption of normality.
 

@@ -40,13 +40,30 @@ tr(fm, L.b0)  # 61.53067
 tr(fm, L.b1)  # 59.5131
 
 ### Reducing the trace
-reduced.tr <- data.frame(s = seq(1, 85, by = 1), b0 = NA, b1 = NA)
+reduced.tr <- data.frame(s = seq(30, 85, by = 1), b0 = NA, b1 = NA)
 
 for(i in seq( nrow(reduced.tr) )){
 	reduced.tr[i, "b0"] <- tr2(.mod = fm, .L = L.b0, s = reduced.tr[i, "s"])
 	reduced.tr[i, "b1"] <- tr2(.mod = fm, .L = L.b1, s = reduced.tr[i, "s"])
 }
 
+# adding results from the AD test of the rotated residuals
+reduced.tr.melt <- melt(reduced.tr, id.vars=1, variable.name="ranef")
+reduced.tr.melt$p.value <- NA
+for(i in 1:nrow(reduced.tr.melt)) {
+	if(reduced.tr.melt[i,"ranef"] == "b0"){
+		rot <- mcresid2(.mod = fm, .L = L.b0, s = reduced.tr.melt[i,"s"], .varimax=TRUE)
+	} else{
+		rot <- mcresid2(.mod = fm, .L = L.b1, s = reduced.tr.melt[i,"s"], .varimax=TRUE)
+	}
+	
+	ad.result <- ad.test(rot)
+	reduced.tr.melt$p.value[i] <- ad.result$p.value
+}
+
+reduced.tr.melt$ad.reject <- reduced.tr.melt$p.value < .1
+
+# Plotting the fraction of confounding vs. dimension reduction separately
 qplot(x = 85 - s, y = b0 / 85, data = reduced.tr, geom = c("point", "line")) + 
 	xlab("dimension reduction") + 
 	ylab("fraction of confounding") +
@@ -60,6 +77,17 @@ qplot(x = 85 - s, y = b1 / 85, data = reduced.tr, geom = c("point", "line")) +
 qplot(x = 85 - s, y = b0 / tr(fm, L.b0), data = reduced.tr, geom = c("point", "line"))
 qplot(x = 85 - s, y = b1 / tr(fm, L.b1), data = reduced.tr, geom = c("point", "line"))
 
+# Adding results of the tests
+levels(reduced.tr.melt$ranef) <- c("Random intercept", "Random slope")
+qplot(x = 85 - s, y = value / 85, data = reduced.tr.melt, geom = "line", facets = ~ ranef) + 
+	geom_point(aes(shape = ad.reject, colour = ad.reject)) + 
+	scale_colour_manual("AD test", labels = c("Fail to reject", "Reject"), values = c("black", "red")) + 
+	scale_shape_manual("AD test", labels = c("Fail to reject", "Reject"), values = c(1, 16)) + 
+	xlab("dimension reduction (s - 85)") + 
+	ylab("fraction of confounding") +
+	theme_bw() + 
+	theme(legend.position = "bottom")
+ggsave("radon_elbows.pdf", width = 8, height = 5)
 
 ### Reducing the fraction of confounding
 reduced.fc <- reduced.tr
