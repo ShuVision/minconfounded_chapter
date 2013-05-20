@@ -1,4 +1,4 @@
-\begin{thebibliography}{22}
+\begin{thebibliography}{25}
 \newcommand{\enquote}[1]{``#1''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -74,11 +74,24 @@ Johnson, R.~A. and Wichern, D.~W. (2007), \textit{Applied Multivariate
 Lange, N. and Ryan, L. (1989), \enquote{Assessing normality in random effects
   models,} \textit{The Annals of Statistics}, 17, 624--642.
 
+\bibitem[{Loy(2013)}]{HLMdiag}
+Loy, A. (2013), \textit{HLMdiag: Diagnostic tools for hierarchical (multilevel)
+  linear models}, {R} package version 0.2.2.
+
+\bibitem[{Loy and Hofmann({in press})}]{Loy:JSS}
+Loy, A. and Hofmann, H. ({in press}), \enquote{HLMdiag: A Suite of Diagnostics
+  for Hierarchical Linear Models in {R},} \textit{Journal of Statistical
+  Software}.
+
 \bibitem[{McDonald et~al.(1979)McDonald, Torii, and
   Nishisato}]{McDonald:1979ca}
 McDonald, R.~P., Torii, Y., and Nishisato, S. (1979), \enquote{Some results on
   proper eigenvalues and eigenvectors with applications to scaling,}
   \textit{Psychometrika}, 44, 211--227.
+
+\bibitem[{{R Core Team}(2013)}]{R}
+{R Core Team} (2013), \textit{R: A Language and Environment for Statistical
+  Computing}, R Foundation for Statistical Computing, Vienna, Austria.
 
 \bibitem[{Shen and Louis(1999)}]{Shen:1999gd}
 Shen, W. and Louis, T.~A. (1999), \enquote{Empirical Bayes Estimation via the

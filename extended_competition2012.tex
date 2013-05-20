@@ -638,6 +638,7 @@ In order to construct Q-Q plots of the rotated random effects we first consider 
 %\end{tabular}
 %\end{table}
 %
+\todo[inline]{Need to rework the below}
 Based on  Table~\eqref{tab:s} we choose $s=30$ for the calculation of the rotated random effects. Figure~\ref{fig:rotate-radon} shows Q-Q plots of the marginal rotated random effects, which do not exhibit \hh{significant} deviations from the assumption of normality.
 
 
@@ -665,7 +666,7 @@ Under either approach, a misspecified covariance structure may lead to erroneous
 %\todo[inline]{R and D have been introduced way back - rather than using the symbols, describe the matrices in words.}. 
 An alternative approach would be the use of robust covariance estimation techniques to protect against such misspecification; however, \hh{it is not clear how this impacts the diagnostic tools. We will leave this investigation for future study.} %we are unsure of its impact on these diagnostic tools, which is an are for future study.
 
-It is important to note that formal tests have been proposed  to detect mixture distributions in the random effects \citep{Verbeke:1996va} and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001up}; however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software. Our method, on the other hand, requires only byproducts of the model fitting procedure and the use of matrix decompositions for simultaneous diagonalization, which are \hh{ widely accessible in standard software.} \al{Add reference to R and such here.}
+It is important to note that formal tests have been proposed  to detect mixture distributions in the random effects \citep{Verbeke:1996va} and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001up}; however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software. Our method, on the other hand, requires only byproducts of the model fitting procedure and the use of matrix decompositions for simultaneous diagonalization, which are \hh{ widely accessible in standard software.} \al{To make these tools more accessible, we have included a function to calculate the rotated random effects in the \texttt{R} package \texttt{HLMdiag} \citep{R, HLMdiag, Loy:JSS}.}\todo{Should we keep JSS in?}
 %Following from this result, the pointwise confidence bands shown were not unique to this method, but follow from the development of the normal Q-Q plot (FIND REFERENCE), and were provided as an aid to interpretation, not as a formal test.
 
 %\todo[inline]{The paragraphs below here need to be reworked/rethought based on the rewritten paragraphs above.}
@@ -730,9 +731,9 @@ proving that the rotated errors are standardized, uncorrelated, and homoscedasti
 The following supplemental materials can be obtained as a single zip file online:
 
 \begin{description}
-\item[Simulation results: ] 
+\item[Simulation results:] The supplementary materials include the full simulation study discussed in Section~\ref{sec:simulation}. Additionally, the results of a simulation further support the small simulation study discussed in Section~\ref{sec:ex} are presented further showing the need for alternative procedures to assess the distribution of the random effects.
 
-\item[Code: ]
+\item[Code:] The \texttt{R} code and data used to generate results discussed in this paper are available in the file...
 \end{description}
 
 %----------------------------------------------------------------------------------
