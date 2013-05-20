@@ -4,8 +4,8 @@
 
 % for citations
 \RequirePackage{natbib} % natbib required for JASA
-\usepackage[colorlinks=true, citecolor=blue, linkcolor=blue]{hyperref}
-\newcommand{\citetapos}[1]{\citeauthor{#1}{\textcolor{blue}{'s}} }
+%\usepackage[colorlinks=true, citecolor=blue, linkcolor=blue]{hyperref}
+%\newcommand{\citetapos}[1]{\citeauthor{#1}{\textcolor{black}{'s}} }
 
 %\definecolor{Blue}{rgb}{0,0,0.5}
 
@@ -33,7 +33,7 @@
 % \usepackage[compact,small]{titlesec}
 % page formatting
 \usepackage[margin = 1in]{geometry}
-\usepackage[parfill]{parskip}
+%\usepackage[parfill]{parskip}
 
 % line spacing
 \usepackage{setspace}
@@ -98,7 +98,7 @@ Quantile-quantile (Q-Q) plots \citep{Wilk:1968} are our main graphical tool for 
 In hierarchical linear models the investigation of residual structures is complicated by the presence of  different levels. 
 The nested structure of the data is reflected in the residual structure, and just as there is dependence between different levels in the data, we can expect dependencies between different levels in the residual structure. 
 %\al{This dependence is most problematic when assessing the distribution of the random effects, and leads to erroneous conclusions from Q-Q plots and other standard tests.}
-Q-Q plots, in their weighted \citep{Dempster:1985tr, Lange:1989uu} or unweighted {form}, do not account for this, which leads to erroneous conclusions in evaluating normality when there is a relatively high degree of shrinkage. Such situations are commonly encountered in practice, but are often overlooked in the literature. For example, \cite{Eberly:2005ee} explored properties of \citetapos{Lange:1989uu} weighted Q-Q plots for a balanced longitudinal data set and found that, for a properly specified mean structure, the weighted Q-Q plots can target the random effect distribution. This cannot be said for unbalanced data. Data imbalances lead to higher degrees of shrinkage, and in situations with high degrees of shrinkage weighted Q-Q plots  cannot accurately target the random effect distribution, even if the mean structure is properly specified.
+Q-Q plots, in their weighted \citep{Dempster:1985tr, Lange:1989uu} or unweighted {form}, do not account for this, which leads to erroneous conclusions in evaluating normality when there is a relatively high degree of shrinkage. Such situations are commonly encountered in practice, but are often overlooked in the literature. For example, \cite{Eberly:2005ee} explored properties of Lange and Ryan's weighted Q-Q plots for a balanced longitudinal data set and found that, for a properly specified mean structure, the weighted Q-Q plots can target the random effect distribution. This cannot be said for unbalanced data. Data imbalances lead to higher degrees of shrinkage, and in situations with high degrees of shrinkage weighted Q-Q plots  cannot accurately target the random effect distribution, even if the mean structure is properly specified.
 
 
 % however, these plots, weighted or unweighted, do not account for the relationship between the predicted random effects and error terms and result in inflated type I error rates. 
@@ -107,6 +107,8 @@ Q-Q plots, in their weighted \citep{Dempster:1985tr, Lange:1989uu} or unweighted
 
 In this paper, we address the problem of distributional assessment due to confounding in residual structures. 
 \al{Section~\ref{sec:ex} illustrates} the inadequacy of existing methods based on the predicted random effects. We then introduce the concept of rotated residuals for the random effects and present a general method to obtain rotated residuals at all levels of the model \al{in Section~\ref{sec:methods}, which we evaluate with a simulation study in Section~\ref{sec:simulation}}. Finally, we demonstrate how this enables an appropriate graphical assessment  of distributional assumptions \al{in Section~\ref{sec:radon2}. We conclude with a discussion of how rotated residuals relate to other diagnostic procedures and suggest areas for future investigation.} 
+
+\todo[inline]{Talk more about the dimensionality here}
 
 %----------------------------------------------------------------------------------
 \section{Motivating example}\label{sec:ex}
@@ -131,6 +133,7 @@ Figure \ref{fig:map} shows a map of counties in Minnesota. The color shading rep
 \includegraphics[width=0.45\textwidth]{figures/map.png}
 \caption{\label{fig:map} Map of the counties in Minnesota. The color shading represents average radon activity.}
 \end{figure}
+\todo[inline]{make a better legend title}
 %
 \begin{figure}[htb]
 \centering
@@ -439,7 +442,7 @@ The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$
 
 \paragraph{Selecting the dimension of the subspace.}
 Selection of the dimension of the subspace spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. Since our ultimate objective is distributional assessment, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function (e.g., the Anderson-Darling test for normality) associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the scree plot used to select the number of principal components. To illustrate the use of this plot we simulate two simple random intercept models with a group-level predictor:   model $M1$ has 40 groups of 30 observations and 10 groups of 5 observations;   model $M2$ also has 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). \todo[inline]{These two models are very similar. Go to a more extreme in the second model?}
- Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$.
+ Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$. \al{Talk about the differences here and why I chose these examples. Also talk about the loss of 1 d.f. More discussion here.}
 %
 \begin{figure}[htb]
 	\centering
@@ -539,13 +542,7 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 \al{Table~\ref{tab:results-int} and Figure~\ref{fig:results-slope}} display the estimated type I error rates using the AD normality test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes, \al{respectively}, when $\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$. The CVM and KS tests performed similarly and are omitted for brevity (full simulation results can be found in the supplementary material). Both figures show that the type I error rate is stabilized close to the nominal level with the appropriate choice of $s$. For the random intercept most choices of $s$ perform reasonably well, with the type I error rate closest to the nominal level for all error distributions between 30 and 40. For the random slope, $s$ must be chosen to be 30 for type I error to be near the nominal level; however, $s$ may need to be even smaller to achieve the nominal rate. 
 
 
-%\begin{figure}
-%	\centering
-%	\includegraphics[width=\textwidth]{ad_intercept_results.pdf}
-%	\caption{\label{fig:results-int} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random intercepts (left) and varimax rotated random intercepts (right) by the distribution of the error terms and $s$. }
-%\end{figure}
-
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.9\textwidth]{ad_slope_results.pdf}
 	\caption{\label{fig:results-slope} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by the distribution of the error terms and $s$.}
@@ -616,13 +613,13 @@ Skewed	&	Normal			& 	19.7	&	21.2	&	21.3	&	22.1	&	22.7	&	21.1	&	22.3	\\
 %Next, we return to the motivating example and use rotated residuals to assess the distribution of the random effects using the rotated random effects. 
 Recall that in Section~\ref{sec:ex} we determined that the error terms were not normally distributed. Consequently, examination of Q-Q plots of the predicted random effects will likely lead to erroneous conclusions due to the high degree of shrinkage. 
 
-In order to construct Q-Q plots of the rotated random effects we first consider the choice of $s$. For model \eqref{eq:radon} the high degree of shrinkage leads to a large fraction of confounding for each random term: 0.72 for the random intercept and 0.70 for the random slope. In choosing $s$ we wish to reduce the fraction of confounding \al{as much as possible}, but we will restrict attention to $s > 30$ so as not to decrease the maximum possible power of a normality test too severely. Table~\eqref{tab:s} shows the fraction confounding for $s = 30, 40, 50, 60, 70, \text{ and } 80$. 
+In order to construct Q-Q plots of the rotated random effects we first consider the choice of $s$. For model \eqref{eq:radon} the high degree of shrinkage leads to a large fraction of confounding for each random term: 0.72 for the random intercept and 0.70 for the random slope. In choosing $s$ we wish to substantially reduce the fraction of confounding, but restrict attention to $s > 30$ so as not to decrease the maximum possible power of a normality test too severely. Table~\eqref{tab:s} shows the fraction confounding for $s = 30, 40, 50, 60, 70, \text{ and } 80$. 
 %
 \todo[inline]{We could show this in a plot if room isn't an issue. The below are just to show what the plots look like... There is really no elbow because of the sample sizes involved in the radon example, so I don't know if we want to discuss them again here. }
 \hh{It should be either the table or the graphic. I'd be fine with either, but it would strengthen the graphical component of the paper to have the plots here. } 
 
-\includegraphics[width=0.4\textwidth]{radon_elbow1.pdf}
-\includegraphics[width=0.4\textwidth]{radon_elbow2.pdf}
+\includegraphics[width=0.35\textwidth]{radon_elbow1.pdf}
+\includegraphics[width=0.35\textwidth]{radon_elbow2.pdf}
 
 \begin{table}[ht]
 \centering
@@ -651,23 +648,19 @@ Based on  Table~\eqref{tab:s} we choose $s=30$ for the calculation of the rotate
 	\caption{\label{fig:rotate-radon} Normal Q-Q plots with point-wise 95\% confidence bands of the marginals rotated random effects. The deviations from normality are much less pronounced than before resulting in the failure to reject the null hypothesis of normality.} %\hh{what do the normality tests say?} \al{The tests all say fail to reject.}}
 \end{figure}
 
-%\begin{itemize}
-%\item Show Q-Q plots for the rotated random effects
-%\item Discuss choice of $s$ in this example
-%\item Recap root of the problems with the raw random effects (errors not normally distributed; large degree of pooling/shrinkage)
-%\end{itemize}
 
 %----------------------------------------------------------------------------------
 \section{Discussion}\label{sec:discussion}
 %----------------------------------------------------------------------------------
 
-In this paper we have discussed two graphical approaches to assess the distributional assumptions made on the random effects in hierarchical linear models. The first approach used the lineup protocol to compare the predicted random effects produced in estimating observed model to those produced when estimating a properly specified model. This method only assumes a distributional specification for the random effects and does not directly compare the predicted random effects to their hypothesized distribution. Consequently, the conclusions that are drawn from this approach relate to evidence that the predicted random effects either are or are not \hh{consistent} with what is expected under a correctly specified random effects distribution. The second approach rotates the predicted random effects so as to compare them directly to the hypothesized distribution using a Q-Q plot. We have shown that the rotated random effects are standardized, uncorrelated, and homoscedastic, and that the rotation addressing the confounding present allowing for the random effects to be targeted separately from the error terms. While the loss in power due to the rotation may be troubling, we found the lack of diagnostic information in the predicted random effects to be the bigger concern. \al{XX The last sentence might not be needed if we keep the last paragraph as it is.}
+In this paper we have discussed two graphical approaches to assess the distributional assumptions made on the random effects in hierarchical linear models. The first approach used the lineup protocol to compare the predicted random effects produced in estimating observed model to those produced when estimating a properly specified model. This method only assumes a distributional specification for the random effects and does not directly compare the predicted random effects to their hypothesized distribution. Consequently, the conclusions that are drawn from this approach relate to evidence that the predicted random effects either are or are not \hh{consistent} with what is expected under a correctly specified random effects distribution. The second approach rotates the predicted random effects so as to compare them directly to the hypothesized distribution using a Q-Q plot. We have shown that the rotated random effects are standardized, uncorrelated, and homoscedastic, and that the rotation addressing the confounding present allowing for the random effects to be targeted separately from the error terms. 
+% While the loss in power due to the rotation may be troubling, we found the lack of diagnostic information in the predicted random effects to be the bigger concern. \al{XX The last sentence might not be needed if we keep the last paragraph as it is.}
 
 Under either approach, a misspecified covariance structure may lead to erroneous rejection of the null hypothesis. Therefore, in practice we recommend an assessment of the structure of \al{the within- and between-group covariance matrices} prior to distributional assessment.
 %\todo[inline]{R and D have been introduced way back - rather than using the symbols, describe the matrices in words.}. 
 An alternative approach would be the use of robust covariance estimation techniques to protect against such misspecification; however, \hh{it is not clear how this impacts the diagnostic tools. We will leave this investigation for future study.} %we are unsure of its impact on these diagnostic tools, which is an are for future study.
 
-It is important to note that formal tests have been proposed  to detect mixture distributions in the random effects \citep{Verbeke:1996va} and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001up}; however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software. Our method, on the other hand, requires only byproducts of the model fitting procedure and the use of matrix decompositions for simultaneous diagonalization, which are \hh{ widely accessible in standard software.}
+It is important to note that formal tests have been proposed  to detect mixture distributions in the random effects \citep{Verbeke:1996va} and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001up}; however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software. Our method, on the other hand, requires only byproducts of the model fitting procedure and the use of matrix decompositions for simultaneous diagonalization, which are \hh{ widely accessible in standard software.} \al{Add reference to R and such here.}
 %Following from this result, the pointwise confidence bands shown were not unique to this method, but follow from the development of the normal Q-Q plot (FIND REFERENCE), and were provided as an aid to interpretation, not as a formal test.
 
 %\todo[inline]{The paragraphs below here need to be reworked/rethought based on the rewritten paragraphs above.}
@@ -726,18 +719,16 @@ proving that the rotated errors are standardized, uncorrelated, and homoscedasti
 
 
 %----------------------------------------------------------------------------------
-\section{Supplementary Materials}
+\section*{Supplementary Materials}
 %----------------------------------------------------------------------------------
 
 The following supplemental materials can be obtained as a single zip file online:
 
 \begin{description}
-\item[Simulation results: ]
+\item[Simulation results: ] 
 
 \item[Code: ]
 \end{description}
-
-\todo[inline]{What is going on with the reference section?}
 
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
