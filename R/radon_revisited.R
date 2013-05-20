@@ -47,9 +47,16 @@ for(i in seq( nrow(reduced.tr) )){
 	reduced.tr[i, "b1"] <- tr2(.mod = fm, .L = L.b1, s = reduced.tr[i, "s"])
 }
 
-qplot(x = 85 - s, y = b0 / 85, data = reduced.tr, geom = c("point", "line"))
-qplot(x = 85 - s, y = b1 / 85, data = reduced.tr, geom = c("point", "line"))
-
+qplot(x = 85 - s, y = b0 / 85, data = reduced.tr, geom = c("point", "line")) + 
+	xlab("dimension reduction") + 
+	ylab("fraction of confounding") +
+	theme_bw()
+	
+qplot(x = 85 - s, y = b1 / 85, data = reduced.tr, geom = c("point", "line")) +
+	xlab("dimension reduction") + 
+	ylab("fraction of confounding") + 
+	theme_bw()
+	
 qplot(x = 85 - s, y = b0 / tr(fm, L.b0), data = reduced.tr, geom = c("point", "line"))
 qplot(x = 85 - s, y = b1 / tr(fm, L.b1), data = reduced.tr, geom = c("point", "line"))
 
@@ -109,6 +116,16 @@ ggplot(data.frame(b1.rot), aes(sample = b1.rot)) +
 	xlab("Normal Quantiles") + ylab("Sample Quantiles") + 
 	theme_bw()
 ggsave(filename = "/Users/adam/Documents/Thesis/Dissertation/eresids-chapter/minconfounded_chapter/figures/rotatedQQ-slope.pdf", width = 3, height = 3)
+
+b0.rot <- mcresid2(.mod = fm, .L = L.b0, s = 80)
+b1.rot <- mcresid2(.mod = fm, .L = L.b1, s = 85)
+
+b0.rot <- vector("list", length = 56)
+b0.rot <- lapply(30:85, mcresid2, .mod = fm, .L = L.b0)
+sapply(b0.rot, FUN = function(x) {
+	j <- ad.test(x)
+	return(j$p.value)
+})
 
 ad.test(b0.rot)
 ad.test(b1.rot)
