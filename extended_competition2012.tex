@@ -607,7 +607,7 @@ Skewed	&	Normal			& 	19.7	&	21.2	&	21.3	&	22.1	&	22.7	&	21.1	&	22.3	\\
 %Next, we return to the motivating example and use rotated residuals to assess the distribution of the random effects using the rotated random effects. 
 Recall that in Section~\ref{sec:ex} we determined that the error terms were not normally distributed. Consequently, examination of Q-Q plots of the predicted random effects will likely lead to erroneous conclusions due to the high degree of shrinkage. 
 
-In order to construct Q-Q plots of the rotated random effects we first consider the choice of $s$. For model \eqref{eq:radon} the high degree of shrinkage leads to a large fraction of confounding for each random term: 0.72 for the random intercept and 0.70 for the random slope. In choosing $s$ we wish to substantially reduce the fraction of confounding, but restrict attention to $s \geq 30$ so as not to decrease the maximum possible power of a normality test too severely. Figure~\eqref{fig:radon-dim} shows the fraction confounding for $s \geq 30$. 
+In order to construct Q-Q plots of the rotated random effects we first consider the choice of $s$. For model \eqref{eq:radon} the high degree of shrinkage leads to a large fraction of confounding for each random term: 0.72 for the random intercept and 0.70 for the random slope. In choosing $s$ we wish to substantially reduce the fraction of confounding, but restrict attention to $s \geq 30$ so as not to decrease the maximum possible power of a normality test too severely. Figure~\ref{fig:radon-dim} shows the fraction confounding for $s \geq 30$. 
 %
 %\todo[inline]{We could show this in a plot if room isn't an issue. The below are just to show what the plots look like... There is really no elbow because of the sample sizes involved in the radon example, so I don't know if we want to discuss them again here. }
 %\hh{It should be either the table or the graphic. I'd be fine with either, but it would strengthen the graphical component of the paper to have the plots here. } 
@@ -631,11 +631,8 @@ In order to construct Q-Q plots of the rotated random effects we first consider 
 %\end{tabular}
 %\end{table}
 %
-\todo[inline]{Need to rework the below}
-\al{We do not find elbows for either random effect in Figure~\eqref{fig:radon-dim} which makes the choice of the dimension more difficult; however, because of the large number of counties with few observations, the smoothness of the plots is not unexpected. As an additional aid to select the dimension, we considered the results of the AD test for each dimension. The solid points denote a rejection of the null hypothesis of normality.}
-
-we choose $s=30$ for the calculation of the rotated random effects. Figure~\ref{fig:rotate-radon} shows Q-Q plots of the marginal rotated random effects, which do not exhibit \hh{significant} deviations from the assumption of normality.
-
+\todo[inline]{This is a first attempt at the rework, I am still a little tongue tied here. I really like figure 10 and how it helps guide the decision and shows that the dimension is less critical, but that makes explaining the choice to show example Q-Q plots a bit blurry.}
+\al{We do not find elbows for either random effect in plots of the fraction of confounding against the reduction in dimensionality (Figure~\ref{fig:radon-dim}) making the choice of the dimension more difficult; however, because of the large number of counties with few observations, the smoothness of the plots is not unexpected. As an additional aid to select the dimension, we considered the results of the AD test at the 5\% significance level for each dimension. The solid points denote a rejection of the null hypothesis of normality. Considering the results of the AD test, we find the choice exact choice of the dimension of the subspace to be less critical as the results are stable until we reduce the dimensionality to the point where we know the AD test lacks power. To show an example of the Q-Q plots produced from the rotated random effects we will choose $s = 65$, which results in approximately a 30\% reduction of the fraction of confounding. Figure~\ref{fig:rotate-radon} shows Q-Q plots of the marginal rotated random effects. We see that the random intercept significantly deviates from the assumption of normality while the random slope does not.}
 
 
 \begin{figure}[htb]

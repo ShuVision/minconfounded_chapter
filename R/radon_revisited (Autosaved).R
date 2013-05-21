@@ -99,8 +99,8 @@ qplot(x = 85 - s, y = b1, data = reduced.fc, geom = c("point", "line"))
 
 
 ### Obtaining the rotated random effects for Q-Q plots
-b0.rot <- mcresid2(.mod = fm, .L = L.b0, s = 65)
-b1.rot <- mcresid2(.mod = fm, .L = L.b1, s = 65)
+b0.rot <- mcresid2(.mod = fm, .L = L.b0, s = 65, .varimax = TRUE)
+b1.rot <- mcresid2(.mod = fm, .L = L.b1, s = 65, .varimax = TRUE)
 
 ### constructing Q-Q plots
 sim_env <- function(x, conf = .95){
