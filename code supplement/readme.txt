@@ -19,15 +19,27 @@ full_rank_radon.csv			A subset of the above data set that contains only
 srrs2.csv					Data file used to construct the map of radon
 							in Minnesota.
 
-radon_intro.R				R script to generate figures 1-4.
+figures1_4.R				R script to generate figures 1-4.
 
-heatmap_cartoon.R			R script used to generate figure 6.
+figure_5.R					R script to generate figure 5.
 
-small_sim.R					R script used to perform the small simulation
-							study presented in the introduction.
+figure_6.R					R script to generate figure 6.
 
-simulate_method.R			R script used to perform the simulation study
-							for the rotated random effects.
+figure_7.R					R script to generate figure 7.
+
+figures8_9.R				R script to generate figures 8 and 9.
+
+figures10_11.R				R script to generate figures 10 and 11.
+
+small_sim.R					R script to perform the small simulation
+							study presented in section 2.
+
+simulate_method.R			R script to perform the simulation study
+							for the rotated random effects discussed in
+							section 4.
+
+calcFC.R					R script to summarize the fraction of confounding
+							for the simulation study.
 
 cpp_functions.R				A few C++ functions to help speed up matrix
 							algebra in R.
