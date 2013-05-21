@@ -76,7 +76,7 @@ Lange, N. and Ryan, L. (1989), \enquote{Assessing normality in random effects
 
 \bibitem[{Loy(2013)}]{HLMdiag}
 Loy, A. (2013), \textit{HLMdiag: Diagnostic tools for hierarchical (multilevel)
-  linear models}, {R} package version 0.2.2.
+  linear models}, {R} package version 0.2.3.
 
 \bibitem[{Loy and Hofmann({in press})}]{Loy:JSS}
 Loy, A. and Hofmann, H. ({in press}), \enquote{HLMdiag: A Suite of Diagnostics
