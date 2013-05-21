@@ -4,10 +4,10 @@
 
 ### Packages
 library(lme4)
+library(HLMdiag)
 
 ### Loading data
 radon <- read.csv("full_rank_radon.csv")
-
 
 ### Function used to simulate models
 sim.hlm <- function(.mod, nsim, e.dsn, b0.dsn, b1.dsn, sigma.err, sigma.b0, sigma.b1) {
@@ -150,40 +150,24 @@ L.b1  <- kronecker(Diagonal(ngrps), c(0, 1))
 
 for(v in seq(3L)) {
 
-cat(var.settings[v], "\n")
-
-b0.mcresid <- b0.mcresid.vmx <- b0.mcresid.alt <- b0.mcresid.alt2 <- b0.mcresid.alt.vmx <- b0.mcresid.alt2.vmx <- vector("list", length = 9L)
-b1.mcresid <- b1.mcresid.vmx <- b1.mcresid.alt <- b1.mcresid.alt2 <- b1.mcresid.alt.vmx <- b1.mcresid.alt2.vmx <- vector("list", length = 9L)
+b0.mcresid <- b0.mcresid.vmx <- vector("list", length = 9L)
+b1.mcresid <- b1.mcresid.vmx <- vector("list", length = 9L)
 
 for(i in seq(9L)) {
-	cat(REMLmodels[i], "\n")
-	models <- readRDS(paste("sim_models", var.settings[v], REMLmodels[i], sep = "/"))
+	b0.mcresid[[i]] <- lapply(models, rotate_ranef, s = s, .L = L.b0)
+	b0.mcresid.vmx[[i]] <- lapply(models, rotate_ranef, s = s, .L = L.b0, .varimax = TRUE)
 
-	b0.mcresid[[i]] <- lapply(models, mcresid2, s = s, .L = L.b0)
-	b0.mcresid.alt[[i]] <- lapply(models, mcresid2.alt, s = s, .L = L.b0)
-	b0.mcresid.alt2[[i]] <- lapply(models, mcresid2, s = s, .L = L.b0, .qr = TRUE)
-	
-	b0.mcresid.vmx[[i]] <- lapply(models, mcresid2, s = s, .L = L.b0, .varimax = TRUE)
-	b0.mcresid.alt.vmx[[i]] <- lapply(models, mcresid2.alt, s = s, .L = L.b0, .varimax = TRUE)
-	b0.mcresid.alt2.vmx[[i]] <- lapply(models, mcresid2, s = s, .L = L.b0, .qr = TRUE, .varimax = TRUE)
-
-
-	b1.mcresid[[i]] <- lapply(models, mcresid2, s = s, .L = L.b1)
-	b1.mcresid.alt[[i]] <- lapply(models, mcresid2.alt, s = s, .L = L.b1)
-	b1.mcresid.alt2[[i]] <- lapply(models, mcresid2, s = s, .L = L.b1, .qr = TRUE)
-	
-	b1.mcresid.vmx[[i]] <- lapply(models, mcresid2, s = s, .L = L.b1, .varimax = TRUE)
-	b1.mcresid.alt.vmx[[i]] <- lapply(models, mcresid2.alt, s = s, .L = L.b1, .varimax = TRUE)
-	b1.mcresid.alt2.vmx[[i]] <- lapply(models, mcresid2, s = s, .L = L.b1, .qr = TRUE, .varimax = TRUE)
+	b1.mcresid[[i]] <- lapply(models, rotate_ranef, s = s, .L = L.b1)
+	b1.mcresid.vmx[[i]] <- lapply(models, rotate_ranef, s = s, .L = L.b1, .varimax = TRUE)
 	
 	rm(models)
 }
 
 if(is.null(s)) {
-save(b0.mcresid, b0.mcresid.vmx, b0.mcresid.alt, b0.mcresid.alt2, b0.mcresid.alt.vmx, b0.mcresid.alt2.vmx, b1.mcresid, b1.mcresid.vmx, b1.mcresid.alt, b1.mcresid.alt2, b1.mcresid.alt.vmx, b1.mcresid.alt2.vmx, file = paste("residuals/srankB/minconf_level2_residuals_", var.settings[v], ".RData", sep = ""))
+save(b0.mcresid, b0.mcresid.vmx, b1.mcresid, b1.mcresid.vmx, file = paste("residuals/srankB/minconf_level2_residuals_", var.settings[v], ".RData", sep = ""))
 	
 } else{
-save(b0.mcresid, b0.mcresid.vmx, b0.mcresid.alt, b0.mcresid.alt2, b0.mcresid.alt.vmx, b0.mcresid.alt2.vmx, b1.mcresid, b1.mcresid.vmx, b1.mcresid.alt, b1.mcresid.alt2, b1.mcresid.alt.vmx, b1.mcresid.alt2.vmx, file = paste("residuals/s", s,"/minconf_level2_residuals_", var.settings[v], ".RData", sep = ""))
+save(b0.mcresid, b0.mcresid.vmx, b1.mcresid, b1.mcresid.vmx, file = paste("residuals/s", s,"/minconf_level2_residuals_", var.settings[v], ".RData", sep = ""))
 }
 
 }
@@ -206,6 +190,8 @@ dist.combos <- t(sapply(strsplit(REMLmodels, "_"),
 # Testing normality of the simulated residuals
 #-------------------------------------------------------------------------------
 
+source('normality_functions.R')
+
 ### CHANGE THESE INPUTS TO TEST DIFFERENT SIMULATION SETTINGS
 s <- 30                      ## EITHER NULL, 55, 50, 45, 40, 35, or 30
 var.setting <- "sige1_sigb2" ## EITHER "sige2_sigb1", "sige1_sigb1", or "sige1_sigb2"
@@ -220,24 +206,9 @@ load(paste("residuals/s", s,"/minconf_level2_residuals_", var.setting, ".RData",
 ### Random intercept
 b0.mcr          <- test.simulation.results(sims = b0.mcresid, settings = dist.combos)
 b0.mcr.vmx      <- test.simulation.results(sims = b0.mcresid.vmx, settings = dist.combos)
-# b0.mcr.alt      <- test.simulation.results(sims = b0.mcresid.alt, settings = dist.combos)
-# b0.mcr.alt.vmx  <- test.simulation.results(sims = b0.mcresid.alt.vmx, settings = dist.combos)
-# b0.mcr.alt2     <- test.simulation.results(sims = b0.mcresid.alt2, settings = dist.combos)
-# b0.mcr.alt2.vmx <- test.simulation.results(sims = b0.mcresid.alt2.vmx, settings = dist.combos)
-
-print.format(b0.mcr, ranef=TRUE)
-print.format(b0.mcr.vmx, ranef=TRUE)
 
 b0 <- merge(x = b0.mcr, y = b0.mcr.vmx, by = c("error", "ranef", "alpha"))
-print(xtable(print.format(b0, ranef=TRUE)[,-c(1:3)]), include.rownames = F)
-
-b0 <- merge(x = b0.mcr, y = b0.mcr.alt, by = c("error", "ranef", "alpha"))
-b0 <- merge(x = b0, y = b0.mcr.alt2, by = c("error", "ranef", "alpha"))
-xtable(print.format(b0, ranef = TRUE)[,-c(1:3)])
-
-b0.vmx <- merge(x = b0.mcr.vmx, y = b0.mcr.alt.vmx, by = c("error", "ranef", "alpha"))
-b0.vmx <- merge(x = b0.vmx, y = b0.mcr.alt2.vmx, by = c("error", "ranef", "alpha"))
-xtable(print.format(b0.vmx, ranef = TRUE)[,-c(1:3)])
+print.format(b0, ranef=TRUE)
 
 ### Random slope
 
@@ -253,19 +224,6 @@ load(paste("residuals/s", s,"/minconf_level2_residuals_", var.setting, ".RData",
 
 b1.mcr          <- test.simulation.results(sims = b1.mcresid, settings = dist.combos)
 b1.mcr.vmx      <- test.simulation.results(sims = b1.mcresid.vmx, settings = dist.combos)
-# b1.mcr.alt      <- test.simulation.results(sims = b1.mcresid.alt, settings = dist.combos)
-# b1.mcr.alt.vmx  <- test.simulation.results(sims = b1.mcresid.alt.vmx, settings = dist.combos)
-# b1.mcr.alt2     <- test.simulation.results(sims = b1.mcresid.alt2, settings = dist.combos)
-# b1.mcr.alt2.vmx <- test.simulation.results(sims = b1.mcresid.alt2.vmx, settings = dist.combos)
 
 b1 <- merge(x = b1.mcr, y = b1.mcr.vmx, by = c("error", "ranef", "alpha"))
-print(xtable(print.format(b1, ranef=TRUE)[,-c(1:3)]), include.rownames = F)
-
-
-b1 <- merge(x = b1.mcr, y = b1.mcr.alt, by = c("error", "ranef", "alpha"))
-b1 <- merge(x = b1, y = b1.mcr.alt2, by = c("error", "ranef", "alpha"))
-xtable(print.format(b1, ranef = TRUE)[,-c(1:3)])
-
-b1.vmx <- merge(x = b1.mcr.vmx, y = b1.mcr.alt.vmx, by = c("error", "ranef", "alpha"))
-b1.vmx <- merge(x = b1.vmx, y = b1.mcr.alt2.vmx, by = c("error", "ranef", "alpha"))
-xtable(print.format(b1.vmx, ranef = TRUE)[,-c(1:3)])
+print.format(b1, ranef=TRUE)

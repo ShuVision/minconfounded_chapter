@@ -21,7 +21,7 @@ srrs2.csv					Data file used to construct the map of radon
 
 radon_intro.R				R script to generate figures 1-4.
 
-heatmap_cartoon.R			R script used to generate figure 5.
+heatmap_cartoon.R			R script used to generate figure 6.
 
 small_sim.R					R script used to perform the small simulation
 							study presented in the introduction.
@@ -32,13 +32,11 @@ simulate_method.R			R script used to perform the simulation study
 cpp_functions.R				A few C++ functions to help speed up matrix
 							algebra in R.
 
-normality_functions.R		Functions used to test normality in the 
-							simulation studies.
+normality_functions.R		Functions used to test normality and print results
+							for the simulation studies.
 
-resid_functions.R			Functions to calculate the minimally confounded
-							residuals and other residuals for a hierarchical
-							linear model.
+resid_functions.R			Functions for "by hand" calculation of residuals
 
-utility_function.R			Helper functions for lme4 for the simulation studies
+utility_functions.R			Helper functions for lme4 for the simulation studies
 
 radon_revisited.R			R script used to generate table 4 and figure 11

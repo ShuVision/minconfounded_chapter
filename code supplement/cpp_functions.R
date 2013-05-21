@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Common functions useful for any simulation study with HLM residuals.
+# C++ functions to speed up some matrix computations
 # 
 # March 2013
 # Adam Loy

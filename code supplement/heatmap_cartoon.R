@@ -1,3 +1,6 @@
+#-------------------------------------------------------------------------------
+# Script to render Figure 6 heatmaps
+#-------------------------------------------------------------------------------
 
 library(lme4)
 library(ggplot2)
@@ -5,32 +8,20 @@ library(inline)
 library(RcppEigen)
 library(MASS)
 
-source('~/Documents/Thesis/Dissertation/eresids-chapter/simulations/functions/cpp_functions.R')
+source('cpp_functions.R')
+source('utility_functions.R')
 
-# First let's generate a data set.
 
-# Imagine we have a two level model, students nested within classrooms.
-
-# Let's say we have 20 classrooms
-
-nclass = 20
-
-# And thirty students per classroom
+nclass <- 20
 
 set.seed(123)
-nstud = c(rpois(15, 15), rpois(5, 5))
+nstud <- c(rpois(15, 15), rpois(5, 5))
 
-# Let's imagine that we have a classroom effect that varies randomly and is uncorrelated with the student level effect.
+class.effect <- rnorm(nclass)*2
 
-class.effect = rnorm(nclass)*2
+student.effect <- rnorm(sum(nstud))*3
 
-# Imagine also we have a unique outcome per student.
-
-# We have nclass*nstud number of students in total.
-
-student.effect = rnorm(sum(nstud))*3
-
-# Now we have all the data we need in order to generate our analysis.
+# Data we need in order to generate our analysis.
 data.set = data.frame(class.id = rep(1:nclass, time=nstud),
                   class.effect = rep(class.effect, times=nstud),
                   student.id = 1:(sum(nstud)),
@@ -40,20 +31,6 @@ data.set$outcomes = data.set$class.effect + data.set$student.effect
 head(data.set)
 fm <- lmer(outcomes ~ 1 + (1|class.id), data=data.set)
 
-BlockZ <- function(object) {
-  Z <- getME(object, "Z")
-  
-  grp.size <- table(object@flist)
-  ngrps <- length(grp.size)
-  nranef <- dim(ranef(object)[[1]])[2]
-  
-  base.ord <- seq(from = 1, by = ngrps, length.out = nranef)
-  ord <- base.ord + rep(0:(ngrps - 1), each = nranef)
-  
-  perm.mat <- t(as(ord, "pMatrix"))
-  
-  return(Z %*% perm.mat)
-}
 
 mcrotate <- function(A, B, s) {
   r <- rankMatrix(B)

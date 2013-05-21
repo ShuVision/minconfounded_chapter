@@ -62,37 +62,37 @@ e.dsn <- c("norm", "t", "exp")
 # Simulate data and refit the models - you need a sim_models folder
 #-------------------------------------------------------------------------------
 
-# ## Set seed and warning handler
-# set.seed(7231985)
-# options(warn = 2) # turns warnings into errors
-# 
-# ## Simulating
-# for(i in seq_along(e.dsn)) {
-# 	# Simulate
-# 	sim.fm <- sim.hlm( fm, nsim = 1000, e.dsn = e.dsn[i])
-#                    	   
-# 	# Excluding those simulations with convergence issues 
-# 	# and replacing them with new simulations
-# 
-# 	repeat{
-#   		sim.models <- lapply(sim.fm, function(x) try(refit(object = fm, newresp = x)))
-#   
-#   		conv.issues <- which(sapply(sim.models, function(x) class(x) == "try-error"))
-#   
-#   		if(length(conv.issues) == 0) break
-#   
-#   		# remove simulations with convergence issues
-#   		sim.fm <- sim.fm[,-conv.issues]
-#   
-#   		if(length(sim.fm) == 1000) break
-#   
-#   		# Additional simulations to achieve correct number of simulations
-#   		sim.fm <- cbind( sim.fm, sim.hlm(fm, nsim = length(conv.issues), 
-#   		                         e.dsn = e.dsn[i])
-# 	}
-# 	
-# 	saveRDS(sim.models, paste(e.dsn[i], "_models.RDS", sep = ""))
-# }
+## Set seed and warning handler
+set.seed(7231985)
+options(warn = 2) # turns warnings into errors
+
+## Simulating
+for(i in seq_along(e.dsn)) {
+	# Simulate
+	sim.fm <- sim.hlm( fm, nsim = 1000, e.dsn = e.dsn[i])
+                   	   
+	# Excluding those simulations with convergence issues 
+	# and replacing them with new simulations
+
+	repeat{
+  		sim.models <- lapply(sim.fm, function(x) try(refit(object = fm, newresp = x)))
+  
+  		conv.issues <- which(sapply(sim.models, function(x) class(x) == "try-error"))
+  
+  		if(length(conv.issues) == 0) break
+  
+  		# remove simulations with convergence issues
+  		sim.fm <- sim.fm[,-conv.issues]
+  
+  		if(length(sim.fm) == 1000) break
+  
+  		# Additional simulations to achieve correct number of simulations
+  		sim.fm <- cbind( sim.fm, sim.hlm(fm, nsim = length(conv.issues), 
+  		                         e.dsn = e.dsn[i])
+	}
+	
+	saveRDS(sim.models, paste(e.dsn[i], "_models.RDS", sep = ""))
+}
 
 
 #-------------------------------------------------------------------------------
@@ -102,9 +102,9 @@ e.dsn <- c("norm", "t", "exp")
 library(inline)
 library(RcppEigen)
 
-source("../../functions/cpp_functions.R")
-source("../../functions/resid_functions.R")
-source("../../functions/utility_functions.R")
+source("cpp_functions.R")
+source("resid_functions.R")
+source("utility_functions.R")
 
 ## Distributional settings
 e.dsn <- c("norm", "t", "exp")
@@ -126,7 +126,7 @@ for(i in seq_along(e.dsn)) {
 
 library(plyr)
 library(nortest)
-source("../../functions/normality_functions.R")
+source("normality_functions.R")
 
 summarize.small.sim <- function(sims, settings, column = NULL) {
     if(!is.null(column)) {

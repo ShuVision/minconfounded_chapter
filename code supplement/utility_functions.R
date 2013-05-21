@@ -5,7 +5,8 @@
 # Adam Loy
 #-------------------------------------------------------------------------------
 
-## Function to reorganize Z
+## Function to reorganize Z 
+## (This is not needed with the development version of lme4)
 BlockZ <- function(object) {
   Z <- getME(object, "Z")
   
