@@ -164,30 +164,24 @@ seems to be violated for the error terms and both random effects. But is this ca
 As there is little pooling at the observation level (level 1) we expect the distributional assessment of the error terms to be reliable, but  the high degree of pooling  for the random effects  casts doubt on the reliability of their Q-Q plots. Next, we assess the reliability of the Q-Q plot for the random slope by utilizing the lineup protocol \citep{buja:2009}:
 Figure~\ref{fig:lineup} shows a lineup of 20 Q-Q plots for the predicted random slope. The Q-Q plot of the observed random slopes is placed among 19 decoy plots of parametric bootstrap samples based on model~\eqref{eq:radon} satisfying the normal distribution assumptions. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
 If we can identify the real Q-Q plot in the lineup, this provides evidence that the distribution of the observed random slopes is not normal. However, 
-the observed Q-Q plot (panel $12+2^2$) is virtually indistinguishable from the field of null plots. This suggests that the predicted random slopes  from the data do not deviate significantly from model~\eqref{eq:radon}. 
-%A lineup of the random intercepts revealed the same finding and was omitted for brevity. 
+the observed Q-Q plot (panel $12+2^2$) is virtually indistinguishable from the field of null plots. This suggests that the predicted random slopes  from the data do not deviate significantly from model~\eqref{eq:radon}.  
 Note that in practice we must blind ourselves from the true plot for proper use of lineups. In order to not violate this, we did not show the Q-Q plot of random slopes earlier.
-%
-%application of the Anderson-Darling test results in the rejection of the null hypothesis of normality at the .05 significance level for the error terms and both random effects. As there is little pooling at the observation level we would expect the distributional assessment of the error terms to be reliable, but this is not the case with the random effects. 
-%
-%To further explore the distributional assumptions made on the random effects we create lineups \citep{buja:2009} of quantile plots were created by randomly inserting the true quantile plot for each term into a field of 19 plots generated under the null hypothesis of normality. A lineup for the random slopes is presented in Figure~\ref{fig:lineup}. The observed quantile plot (panel 16) is indistinguishable from the field of null plots, indicating that these predicted random slopes do not deviate from what would be expected under model~\eqref{eq:radon}, contradicting the results of the AD test. 
 
 What becomes apparent from the lineup, is that, astonishingly, {\it none} of the null plots conform to normality. To further investigate the apparent non-normal behavior of predicted random effects we conduct a small simulation study: 
 %
 We generated 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal ($\varepsilon_{ij}^* \overset{iid}{\sim}  \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
-For each simulated data set, we evaluated the assumption of normality for both the level-1 and -2 residuals using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
+For each simulated data set, we evaluated the assumption of normality for both the error terms and random effects using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
 Table~\ref{tab:edf} shows the proportions of these tests rejecting the null hypothesis of normality at the 5\% significance level. 
 
 The type I error rates are hugely inflated for both random effects, making an assessment of normality based on the empirical distribution impossible. 
 For example, 84.1\% of the AD tests of the random intercept rejected the null hypothesis of normality when the error terms were skewed.
- Use of standardized random effects and the weighted cumulative distribution function proposed by \cite{Lange:1989uu} reduce the type I errors to the nominal level when the level-1 residuals are normal, but the type I errors remain inflated for non-normal level-1 residuals. 
-%Similarly, when the random effects are not normal, simulations (not shown) revealed that the tests were  often unable to reject the null hypothesis of normality when the level-1 residuals were normal. 
-Similarly, tests of non-normal random effects often failed to reject if the level-1 residuals were normally distributed. 
+ Use of standardized random effects and the weighted cumulative distribution function proposed by \cite{Lange:1989uu} reduce the type I errors to the nominal level when the error terms are normal, but the type I errors remain inflated for non-normal error terms.  
+Similarly, tests of non-normal random effects often failed to reject if the error terms were normally distributed. 
 This inability to assess distributional assumptions correctly is a symptom typical of confounding between levels of residuals.
 %Based on the above results we find that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.
 
 %The inflated type I error rates for the random effects indicate that the empirical distribution of the random effects cannot be used to assess the assumption of normality. 
-In situations with a large amount of pooling, confounding also affects level-1 residuals, which in this particular example were the least affected and did not exhibit signs of deviation from normality.
+In situations with a large amount of pooling, confounding also affects the error terms, which in this particular example were the least affected and did not exhibit signs of deviation from normality.
 %In this example we are able to use the empirical distribution to assess normality of  level-1 residuals  as  pooling is minimal at this level. In situations with higher levels of pooling, this may not be the case.
 
 \begin{table}[t]
@@ -539,7 +533,7 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 	}
 \end{figure}
 
-\al{Table~\ref{tab:results-int} and Figure~\ref{fig:results-slope}} display the estimated type I error rates using the AD normality test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes, \al{respectively}, when $\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$. The CVM and KS tests performed similarly and are omitted for brevity (full simulation results can be found in the supplementary material). Both figures show that the type I error rate is stabilized close to the nominal level with the appropriate choice of $s$. For the random intercept most choices of $s$ perform reasonably well, with the type I error rate closest to the nominal level for all error distributions between 30 and 40. For the random slope, $s$ must be chosen to be 30 for type I error to be near the nominal level; however, $s$ may need to be even smaller to achieve the nominal rate. 
+Table~\ref{tab:results-int} and Figure~\ref{fig:results-slope} display the estimated type I error rates using the AD normality test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes, respectively, when $\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$. The CVM and KS tests performed similarly and are omitted for brevity (full simulation results can be found in the supplementary material). Both figures show that the type I error rate is stabilized close to the nominal level with the appropriate choice of $s$. For the random intercept most choices of $s$ perform reasonably well, with the type I error rate closest to the nominal level for all error distributions between 30 and 40. For the random slope, $s$ must be chosen to be 30 for type I error to be near the nominal level; however, $s$ may need to be even smaller to achieve the nominal rate. 
 
 
 \begin{figure}[h]
@@ -548,7 +542,7 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 	\caption{\label{fig:results-slope} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by the distribution of the error terms and $s$.}
 \end{figure}
 
-\al{Table~\ref{tab:results-int}  and Figure~\ref{fig:power-slope}} show the estimated power of the AD test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes, respectively, for the highly confounded variance structure. The estimated power to detect non-normal random effects distributions is amplified by the varimax rotation and larger choices of $s$. We also find that the estimated power is lower than would be expected from randomly sampled values from an exponential or $t_3$ distribution (what we will refer to as the ``gold standard''). 
+Table~\ref{tab:results-int} and Figure~\ref{fig:power-slope} show the estimated power of the AD test ($\alpha = 0.05$) on the rotated and varimax rotated random intercepts and random slopes, respectively, for the highly confounded variance structure. The estimated power to detect non-normal random effects distributions is amplified by the varimax rotation and larger choices of $s$. We also find that the estimated power is lower than would be expected from randomly sampled values from an exponential or $t_3$ distribution (what we will refer to as the ``gold standard''). 
 %\hh{the gold standard should show in your figures as well, so that we have a way of gauging the loss in power other than perfect power of 1, which is going to make any gain in power look small.} 
 %\al{I can do this, but the power for detecting the exponential at these sample sizes is very high, which makes things look small. The AD test has less power to detect the t distribution at these sample sizes.}
 For example, when $s=30$, simulations indicate the power of the AD test to detect a $t_3$ distribution to be approximately 0.4, whereas our simulations indicate nearly half the power, with the random slope generally having lower power than the random intercept. Interestingly,  there is higher power to detect a heavy tailed distribution than a skewed distribution.  Additional simulations (not discussed) using a model with a continuous variable defining the random slope showed results similar to the random intercept(Table~\ref{tab:results-int}).
@@ -638,7 +632,9 @@ In order to construct Q-Q plots of the rotated random effects we first consider 
 %\end{table}
 %
 \todo[inline]{Need to rework the below}
-Based on  Table~\eqref{tab:s} we choose $s=30$ for the calculation of the rotated random effects. Figure~\ref{fig:rotate-radon} shows Q-Q plots of the marginal rotated random effects, which do not exhibit \hh{significant} deviations from the assumption of normality.
+\al{We do not find elbows for either random effect in Figure~\eqref{fig:radon-dim} which makes the choice of the dimension more difficult; however, because of the large number of counties with few observations, the smoothness of the plots is not unexpected. As an additional aid to select the dimension, we considered the results of the AD test for each dimension. The solid points denote a rejection of the null hypothesis of normality.}
+
+we choose $s=30$ for the calculation of the rotated random effects. Figure~\ref{fig:rotate-radon} shows Q-Q plots of the marginal rotated random effects, which do not exhibit \hh{significant} deviations from the assumption of normality.
 
 
 
@@ -666,6 +662,7 @@ Under either approach, a misspecified covariance structure may lead to erroneous
 An alternative approach would be the use of robust covariance estimation techniques to protect against such misspecification; however, \hh{it is not clear how this impacts the diagnostic tools. We will leave this investigation for future study.} %we are unsure of its impact on these diagnostic tools, which is an are for future study.
 
 It is important to note that formal tests have been proposed  to detect mixture distributions in the random effects \citep{Verbeke:1996va} and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001up}; however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software. Our method, on the other hand, requires only byproducts of the model fitting procedure and the use of matrix decompositions for simultaneous diagonalization, which are \hh{ widely accessible in standard software.} \hh{All of the methods and graphics discussed in this paper are implemented as part of the }\al{ \texttt{R} \citep{R} package \texttt{HLMdiag} \citep{HLMdiag, Loy:JSS}.}
+\todo[inline]{This makes it sounds like all of the graphics are created by a function in HLMdiag, but I was planning just to have the rotated residuals there. Do I need to add code for the graphics?}
 %Following from this result, the pointwise confidence bands shown were not unique to this method, but follow from the development of the normal Q-Q plot (FIND REFERENCE), and were provided as an aid to interpretation, not as a formal test.
 
 %\todo[inline]{The paragraphs below here need to be reworked/rethought based on the rewritten paragraphs above.}

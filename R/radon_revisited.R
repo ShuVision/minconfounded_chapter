@@ -12,6 +12,7 @@ library(RcppEigen)
 library(inline)
 library(nortest)
 library(ggplot2)
+library(reshape2)
 
 setwd("~/Documents/Thesis/Dissertation/eresids-chapter/minconfounded_chapter")
 
@@ -52,16 +53,16 @@ reduced.tr.melt <- melt(reduced.tr, id.vars=1, variable.name="ranef")
 reduced.tr.melt$p.value <- NA
 for(i in 1:nrow(reduced.tr.melt)) {
 	if(reduced.tr.melt[i,"ranef"] == "b0"){
-		rot <- mcresid2(.mod = fm, .L = L.b0, s = reduced.tr.melt[i,"s"], .varimax=TRUE)
+		rot <- mcresid2(.mod = fm, .L = L.b0, s = reduced.tr.melt[i,"s"]) #, .varimax=TRUE)
 	} else{
-		rot <- mcresid2(.mod = fm, .L = L.b1, s = reduced.tr.melt[i,"s"], .varimax=TRUE)
+		rot <- mcresid2(.mod = fm, .L = L.b1, s = reduced.tr.melt[i,"s"]) #, .varimax=TRUE)
 	}
 	
 	ad.result <- ad.test(rot)
 	reduced.tr.melt$p.value[i] <- ad.result$p.value
 }
 
-reduced.tr.melt$ad.reject <- reduced.tr.melt$p.value < .1
+reduced.tr.melt$ad.reject <- reduced.tr.melt$p.value < .05
 
 # Plotting the fraction of confounding vs. dimension reduction separately
 qplot(x = 85 - s, y = b0 / 85, data = reduced.tr, geom = c("point", "line")) + 
