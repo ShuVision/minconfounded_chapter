@@ -151,7 +151,7 @@ colnames(Wt.int) <- colnames(Wt.vmx.int) <- unique( fm@frame$class.id )
 rownames(Wt.int) <- rownames(Wt.vmx.int) <- seq_len(nrow(Wt.int))
 
 # Pulling off variances of random ints
-rint.var <- diag(B.int) # we could order by this, but fc makes more sense
+rint.var <- diag(B) # we could order by this, but fc makes more sense
 
 reordered.Wt.int <- Wt.int[, order(fc.int, decreasing = TRUE)]
 reordered.Wt.vmx.int <- Wt.vmx.int[, order(fc.int, decreasing = TRUE)]
