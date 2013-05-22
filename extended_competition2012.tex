@@ -1,9 +1,10 @@
 \documentclass[12pt]{article} % JASA requires 12 pt font for manuscripts
 %\usepackage{JASA_manu}        % For JASA manuscript formatting
 \usepackage{times, asa, url}
+\RequirePackage{pdf14}
 
 % for citations
-\RequirePackage{natbib} % natbib required for JASA
+\RequirePackage{natbib} 
 %\usepackage[colorlinks=true, citecolor=blue, linkcolor=blue]{hyperref}
 %\newcommand{\citetapos}[1]{\citeauthor{#1}{\textcolor{black}{'s}} }
 
@@ -14,7 +15,6 @@
 %\usepackage{caption}
 \usepackage{subfig}
 \captionsetup[subfloat]{font=normalsize}
-%\usepackage{subcaption}
 \graphicspath{{figures/}}
 \newcommand{\hh}[1]{{\color{orange} #1}}
 \newcommand{\al}[1]{{\color{red} #1}}
@@ -60,6 +60,8 @@
 \DeclareMathOperator{\tr}{Trace}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator*{\argmin}{arg\, min}
+
+\pdfminorversion=4 % Instructed by JCGS submission
 
 \begin{document}
 

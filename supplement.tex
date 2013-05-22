@@ -1,5 +1,6 @@
 \documentclass[11pt]{article} % JASA requires 12 pt font for manuscripts
 %\usepackage{JASA_manu}        % For JASA manuscript formatting
+\RequirePackage{pdf14}
 
 % for citations
 \usepackage[authoryear]{natbib} % natbib required for JASA
@@ -36,7 +37,7 @@
 
 % line spacing
 \usepackage{setspace}
-%\doublespace
+\doublespacing
 
 % For math typsetting
 \usepackage{bm}
@@ -62,14 +63,15 @@
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator*{\argmin}{arg\, min}
 
+\pdfminorversion=4 % Instructed by JCGS submission
+
+\begin{document}
 \title{Supplement to ``Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models''}
 \author{
 	Adam Loy and Heike Hofmann\\
 	Department of Statistics,
 	Iowa State University
 }
-
-\begin{document}
 \maketitle
 %----------------------------------------------------------------------------------
 
@@ -199,7 +201,7 @@ All of the above approaches to checking the distributional assumptions rely on t
 One alternative that has been proposed to overcome this problem is the use of the parametric bootstrap to develop point-wise and simultaneous confidence bands for Q-Q plots. We evaluate the potential of this method using bootstrap tests of normality.
 
 
-\subsection{Simulation study}\label{supp:simstudy}
+\subsection{Simulation study}\label{supp:simstudy1}
 %--------------------------------------------------
 
 To evaluate the above proposals we carried out a simulation study under the same settings as in the paper, with the only difference being that the original $\bm{Z}$ was used for data generation. To evaluate the bootstrap tests of normality, a null distribution of 5000 simulated test statistics for each situation was used.
