@@ -1,0 +1,120 @@
+\begin{thebibliography}{25}
+\newcommand{\enquote}[1]{``#1''}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Atkinson(1985)}]{Atkinson:1985}
+Atkinson, A.~C. (1985), \textit{Plots, Transformations, and Regression: An
+  Introduction to Graphical Methods of Diagnostic Regression Analysis}, Oxford:
+  Clarendon Press.
+
+\bibitem[{Buja et~al.(2009)Buja, Cook, Hofmann, Lawrence, Lee, Swayne, and
+  Wickham}]{buja:2009}
+Buja, A., Cook, D., Hofmann, H., Lawrence, M., Lee, E.-K., Swayne, D.~F., and
+  Wickham, H. (2009), \enquote{Statistical Inference for Exploratory Data
+  Analysis and Model Diagnostics,} \textit{Royal Society Philosophical
+  Transactions A}, 367, 4361--4383.
+
+\bibitem[{Butler and Louis(1992)}]{Butler:1992tx}
+Butler, S. and Louis, T. (1992), \enquote{Random effects models with
+  non-parametric priors,} \textit{Statistics in Medicine}, 11, 1981--2000.
+
+\bibitem[{de~Leeuw(1982)}]{deLeeuw:1982to}
+de~Leeuw, J. (1982), \enquote{Generalized eigenvalue problems with positive
+  semi-definite matrices,} \textit{Psychometrika}, 47, 87--93.
+
+\bibitem[{Dempster and Ryan(1985)}]{Dempster:1985tr}
+Dempster, A.~P. and Ryan, L.~M. (1985), \enquote{Weighted Normal Plots,}
+  \textit{Journal of the American Statistical Association}, 80, 845--850.
+
+\bibitem[{Eberly and Thackeray(2005)}]{Eberly:2005ee}
+Eberly, L.~E. and Thackeray, L.~M. (2005), \enquote{On {L}ange and {R}yan's
+  plotting technique for diagnosing non-normality of random effects,}
+  \textit{Statistics {\&} Probability Letters}, 75, 77--85.
+
+\bibitem[{Fukunaga(1990)}]{Fukunaga:1990}
+Fukunaga, K. (1990), \textit{Introduction to Statistical Pattern Recognition},
+  San Diego: Academic Press, 2nd ed.
+
+\bibitem[{Gelman and Pardoe(2006)}]{Gelman:2006ue}
+Gelman, A. and Pardoe, I. (2006), \enquote{Bayesian Measures of Explained
+  Variance and Pooling in Multilevel (Hierarchical) Models,}
+  \textit{Technometrics}, 48, 241--251.
+
+\bibitem[{Gentle(2007)}]{Gentle:2007}
+Gentle, J.~E. (2007), \textit{Matrix Algebra: Theory, Computations, and
+  Applications in Statistics}, New York: Springer.
+
+\bibitem[{Ghidey et~al.(2004)Ghidey, Lesaffre, and Eilers}]{Ghidey:2004id}
+Ghidey, W., Lesaffre, E., and Eilers, P. (2004), \enquote{Smooth random effects
+  distribution in a linear mixed model,} \textit{Biometrics}, 60, 945--953.
+
+\bibitem[{Ghidey et~al.(2010)Ghidey, Lesaffre, and Verbeke}]{Ghidey:2010de}
+Ghidey, W., Lesaffre, E., and Verbeke, G. (2010), \enquote{A comparison of
+  methods for estimating the random effects distribution of a linear mixed
+  model,} \textit{Statistical Methods in Medical Research}, 19, 575--600.
+
+\bibitem[{Hilden-Minton(1995)}]{HildenMinton:1995wh}
+Hilden-Minton, J.~A. (1995), \enquote{Multilevel diagnostics for mixed and
+  hierarchical linear models,} Ph.D. thesis, University of California Los
+  Angeles.
+
+\bibitem[{Jensen and Ramirez(1999)}]{Jensen:1999iu}
+Jensen, D.~R. and Ramirez, D.~E. (1999), \enquote{Recovered errors and normal
+  diagnostics in regression,} \textit{Metrika}, 49, 107--119.
+
+\bibitem[{Jiang(2001)}]{Jiang:2001up}
+Jiang, J. (2001), \enquote{Goodness-of-fit tests for mixed model diagnostics,}
+  \textit{The Annals of Statistics}, 29, 1137--1164.
+
+\bibitem[{Johnson and Wichern(2007)}]{Johnson:2007}
+Johnson, R.~A. and Wichern, D.~W. (2007), \textit{Applied Multivariate
+  Statistical Analysis}, Upper Saddle River: Pearson, 6th ed.
+
+\bibitem[{Lange and Ryan(1989)}]{Lange:1989uu}
+Lange, N. and Ryan, L. (1989), \enquote{Assessing normality in random effects
+  models,} \textit{The Annals of Statistics}, 17, 624--642.
+
+\bibitem[{Loy(2013)}]{HLMdiag}
+Loy, A. (2013), \textit{HLMdiag: Diagnostic tools for hierarchical (multilevel)
+  linear models}, {R} package version 0.2.3.
+
+\bibitem[{Loy and Hofmann({in press})}]{Loy:JSS}
+Loy, A. and Hofmann, H. ({in press}), \enquote{HLMdiag: A Suite of Diagnostics
+  for Hierarchical Linear Models in {R},} \textit{Journal of Statistical
+  Software}.
+
+\bibitem[{McDonald et~al.(1979)McDonald, Torii, and
+  Nishisato}]{McDonald:1979ca}
+McDonald, R.~P., Torii, Y., and Nishisato, S. (1979), \enquote{Some results on
+  proper eigenvalues and eigenvectors with applications to scaling,}
+  \textit{Psychometrika}, 44, 211--227.
+
+\bibitem[{{R Core Team}(2013)}]{R}
+{R Core Team} (2013), \textit{R: A Language and Environment for Statistical
+  Computing}, R Foundation for Statistical Computing, Vienna, Austria.
+
+\bibitem[{Shen and Louis(1999)}]{Shen:1999gd}
+Shen, W. and Louis, T.~A. (1999), \enquote{Empirical Bayes Estimation via the
+  Smoothing by Roughening Approach,} \textit{Journal of Computational and
+  Graphical Statistics}, 8, 800--823.
+
+\bibitem[{Verbeke and Lesaffre(1996)}]{Verbeke:1996va}
+Verbeke, G. and Lesaffre, E. (1996), \enquote{A linear mixed-effects model with
+  heterogeneity in the random-effects population,} \textit{Journal of the
+  American Statistical Association}, 91, 217--221.
+
+\bibitem[{Verbeke and Lesaffre(1997)}]{Verbeke:1997tf}
+--- (1997), \enquote{{The effect of misspecifying the random-effects
+  distribution in linear mixed models for longitudinal data},}
+  \textit{Computational Statistics {\&} Data Analysis}, 23, 541--556.
+
+\bibitem[{Wilk and Gnanadesikan(1968)}]{Wilk:1968}
+Wilk, M.~B. and Gnanadesikan, R. (1968), \enquote{Probability Plotting Methods
+  for the Analysis of Data,} \textit{Biometrika}, 55, 1--17.
+
+\bibitem[{Zhang and Davidian(2001)}]{Zhang:2001wo}
+Zhang, D. and Davidian, M. (2001), \enquote{Linear Mixed Models with Flexible
+  Distributions of Random Effects for Longitudinal Data,} \textit{Biometrics},
+  57, 795--802.
+
+\end{thebibliography}
