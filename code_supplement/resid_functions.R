@@ -184,7 +184,7 @@ lev2.resid <- function(.model) {
 ## The marginal covariance is used to standardized rather than
 ## the usual matrix.
 lev2.langeryan.resid <- function(.model) {
-  y <- .model@y
+  y <- getME(.model, "y")
   X <- getME(.model, "X")
   Z <- BlockZ(.model)
   n <- nrow(X)
@@ -194,7 +194,7 @@ lev2.langeryan.resid <- function(.model) {
   # Constructing V = Cov(Y)
   sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)
   
-  ZDZt <- sig0^2 * crossprod( .model@A )
+  ZDZt <- sig0^2 * crossprod( getME(.model, "A") )
   R    <- Diagonal( n = n, x = sig0^2 )
   D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )
   V    <- Diagonal(n) + ZDZt
