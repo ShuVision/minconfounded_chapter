@@ -1,0 +1,560 @@
+bootMer
+library(lme4)
+library(HLMdiag)
+install.packages("HLMdiag")
+library(lme4)
+library(HLMdiag)
+library(HLMdiag)
+library(lme4)
+radon <- read.csv("full_rank_radon.csv")
+ls()
+dir()
+radon <- read.csv("full_rank_radon.csv")
+sigma.err <- c(1, 2, 1)
+sigma.b   <- c(1, 1, 2)
+(fm.ml <- lmer(log.radon ~ basement + house.uranium + uranium + (1 | county) + (0 + house.uranium | county), data = radon, REML = FALSE))
+head(radon)
+dim(radon)
+radon <- read.csv("radon_for_sims.csv.csv")
+dir()
+radon <- read.csv("radon_for_sims.csv")
+## Variance structures#
+sigma.err <- c(1, 2, 1)#
+sigma.b   <- c(1, 1, 2)#
+#
+## fitted model using ML#
+(fm.ml <- lmer(log.radon ~ basement + house.uranium + uranium + (1 | county) + (0 + house.uranium | county), data = radon, REML = FALSE))
+summary(fm.ml)
+ls()
+fm <- fm.ml
+fm@y
+?getME
+getME(fm, "Z")
+?getME
+getME(fm, "Zt")
+BlockZ <- function(object) {#
+  Z <- getME(object, "Z")#
+  grp.size <- table(object@flist)#
+  ngrps <- length(grp.size)#
+  nranef <- dim(ranef(object)[[1]])[2]#
+  base.ord <- seq(from = 1, by = ngrps, length.out = nranef)#
+  ord <- base.ord + rep(0:(ngrps - 1), each = nranef)#
+  perm.mat <- t(as(ord, "pMatrix"))#
+  return(Z %*% perm.mat)#
+}
+BlockZ(fm)
+Z <- BlockZ(fm)
+head(Z)
+.model <- fm
+y <- getME(.model, "y")
+X <- getME(.model, "X")
+Z <- BlockZ(.model)
+n <- nrow(X)
+nranef <- ncol(ranef(.model)[[1]])
+ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))
+nranef
+ngrps
+sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)
+sig0
+sigma(.model)
+sig0^2 * crossprod( .model@A )
+.model@A
+str(lmerMod)
+str(/model)
+str(.model)
+?getME
+ZDZt <- sig0^2 * crossprod( getME(.model, "A") )
+ZDZt
+head(ZDZt)
+R    <- Diagonal( n = n, x = sig0^2 )
+R
+D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )
+V    <- Diagonal(n) + ZDZt
+D
+R
+V
+head(V)
+VarCorr(.model)
+VarCorr(.model)^2
+?VarCorr
+as.data.frame(VarCorr(.model))
+0.14555358^2
+0.14555358^2 * sigma(.model)
+print(VarCorr(.model),comp=c("Variance"))
+V.chol <- chol( V )
+Vinv   <- chol2inv( V.chol )
+betahat <- solve(t(X) %*% Vinv %*% X) %*% t(X) %*% Vinv %*% y
+mr <- y - X %*% betahat
+bvec <- D %*% t(Z) %*% Vinv %*% mr
+bvec
+bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan
+bse.diag <- diag(bse)
+rvec <- bvec / sqrt(bse.diag)
+if(nranef > 1) {#
+  	rmat <- matrix(rvec, ncol = nranef, byrow = TRUE)#
+    return(rmat)#
+  } else {#
+  	return(rvec)#
+  }
+rmat
+73/72
+73/.6
+73.4/.6
+73.4/.605
+248.88 / (3848.88-248.88)
+load("/Users/loya/Documents/eresids-chapter/simulations/paper_sim_study/small_sim/small_sim_residuals.RData")
+ls()
+level2.resids
+class(level2.resids)
+60/12
+80/12
+16*12
+192/6
+6-/12
+60/12
+192/5
+6*60
+80/12
+60/12
+library(mnormt)
+?mnormt
+?rmt
+?mvtnorm
+library(mvtnorm)
+mu <- c(1,2)
+Sigma <- matrix(c(4,2,2,3))
+Sigma
+Sigma <- matrix(c(4,2,2,3), ncol=2)
+Sigma
+nu <- 3
+set.seed(271)
+try(rmvt(n, mean=mu, sigma=Sigma, df=nu))
+try(rmt(n, mean=mu, sigma=Sigma, df=nu))
+?rmt
+try(rmt(n=5, mean = mu, S = Sigma, df = nu)
+)
+jsim <- rmt(n=5, mean = mu, S = Sigma, df = nu)
+jsim <- rmt(n=100, mean = mu, S = Sigma, df = nu)
+cov(jsim)
+sqrt(cov(jsim))
+jsim <- rmt(n=1000, mean = mu, S = Sigma, df = nu)
+sqrt(cov(jsim))
+sqrt(cov(jsim))
+sqrt(cov(jsim))
+jsim <- rmt(n=10000, mean = mu, S = Sigma, df = nu)
+sqrt(cov(jsim))
+S * 3
+Sigma*3
+cov(jsim)
+cov(jsim)
+jsim <- rmt(n=10000, mean = mu, S = Sigma, df = nu)
+cov(jsim)
+library(nortest)
+library(MASS)
+library(plyr)
+lev2.langeryan.resid <- function(.model) {#
+  y <- .model@y#
+  X <- getME(.model, "X")#
+  Z <- BlockZ(.model)#
+  n <- nrow(X)#
+  nranef <- ncol(ranef(.model)[[1]])#
+  ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))#
+  # Constructing V = Cov(Y)#
+  sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)#
+  ZDZt <- sig0^2 * crossprod( .model@A )#
+  R    <- Diagonal( n = n, x = sig0^2 )#
+  D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )#
+  V    <- Diagonal(n) + ZDZt#
+  # Inverting V#
+  V.chol <- chol( V )#
+  Vinv   <- chol2inv( V.chol )#
+  betahat <- solve(t(X) %*% Vinv %*% X) %*% t(X) %*% Vinv %*% y#
+  mr <- y - X %*% betahat#
+  bvec <- D %*% t(Z) %*% Vinv %*% mr#
+  #bmat <- matrix(bvec, ncol = 2, byrow = TRUE)#
+#
+  bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan#
+  bse.diag <- diag(bse)#
+  rvec <- bvec / sqrt(bse.diag)#
+  if(nranef > 1) {#
+  	rmat <- matrix(rvec, ncol = nranef, byrow = TRUE)#
+    return(rmat)#
+  } else {#
+  	return(rvec)#
+  }#
+#
+}
+library(lme4)
+radon <- read.csv("original_radon.csv") # in code supplement
+fm <- lmer(log.radon ~ basement + uranium + (basement | county), data = radon, REML = FALSE)
+fm
+null_sims <- simulate(fm, nsim = 10, seed = )
+null_refit <- refit(fm, null_sims)
+?refit
+refit
+methods("refit")
+refit.merMod
+lme4:::refit.merMod
+null_sims
+dim(null_sims)
+null_refit <- refit(fm, newresp = null_sims)
+null_refit <- lapply(fm, refit, newresp = null_sims)
+null_sims <- simulate(fm, nsim = 10)
+null_refit <- lapply(fm, refit, newresp = null_sims)
+?simulate
+?refit
+set.seed(101)#
+Y <- matrix(rnorm(1000),ncol=10)#
+res <- list()#
+d <- data.frame(y=Y[,1],x=rnorm(100),f=rep(1:10,10))#
+## need to disregard convergence checks because we#
+## are doing a fake example#
+fit1 <- lmer(y~x+(1|f),data=d,#
+             control=lmerControl(check.conv.grad="ignore",#
+             check.conv.hess="ignore"))#
+res <- c(fit1,lapply(as.data.frame(Y[,-1]),#
+        refit,object=fit1))
+res
+Y
+set.seed(101)#
+Y <- matrix(rnorm(1000),ncol=10)#
+res <- list()#
+d <- data.frame(y=Y[,1],x=rnorm(100),f=rep(1:10,10))#
+## need to disregard convergence checks because we#
+## are doing a fake example#
+fit1 <- lmer(y~x+(1|f),data=d,#
+             control=lmerControl(check.conv.grad="ignore",#
+             check.conv.hess="ignore"))#
+res <- c(fit1,lapply(as.data.frame(Y),#
+        refit,object=fit1))
+res
+class(Y)
+class(null_sims)
+lapply(null_sims, refit, object = fm)
+null_refit <- lapply(null_sims, refit, object = fm)
+null_refit
+lev2.langeryan.resid <- function(.model) {#
+  y <- .model@y#
+  X <- getME(.model, "X")#
+  Z <- BlockZ(.model)#
+  n <- nrow(X)#
+  nranef <- ncol(ranef(.model)[[1]])#
+  ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))#
+  # Constructing V = Cov(Y)#
+  sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)#
+  ZDZt <- sig0^2 * crossprod( .model@A )#
+  R    <- Diagonal( n = n, x = sig0^2 )#
+  D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )#
+  V    <- Diagonal(n) + ZDZt#
+  # Inverting V#
+  V.chol <- chol( V )#
+  Vinv   <- chol2inv( V.chol )#
+  betahat <- solve(t(X) %*% Vinv %*% X) %*% t(X) %*% Vinv %*% y#
+  mr <- y - X %*% betahat#
+  bvec <- D %*% t(Z) %*% Vinv %*% mr#
+  #bmat <- matrix(bvec, ncol = 2, byrow = TRUE)#
+#
+  bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan#
+  bse.diag <- diag(bse)#
+  rvec <- bvec / sqrt(bse.diag)#
+  if(nranef > 1) {#
+  	rmat <- matrix(rvec, ncol = nranef, byrow = TRUE)#
+    return(rmat)#
+  } else {#
+  	return(rvec)#
+  }#
+#
+}
+lev2.langeryan.resid(null_refit[[1]])
+args(getME)
+.model <- null_refit[[1]]
+y <- getME(.model, "y")
+X <- getME(.model, "X")
+Z <- BlockZ(.model)
+n <- nrow(X)
+nranef <- ncol(ranef(.model)[[1]])
+ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))
+ngrps
+sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)
+sig0
+sigma(.model)
+ZDZt <- sig0^2 * crossprod( .model@A )
+ZDZt <- sig0^2 * crossprod( getME(.model, "A") )
+ZDZt
+R    <- Diagonal( n = n, x = sig0^2 )
+D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )
+V    <- Diagonal(n) + ZDZt
+V.chol <- chol( V )
+Vinv   <- chol2inv( V.chol )
+betahat <- solve(t(X) %*% Vinv %*% X) %*% t(X) %*% Vinv %*% y
+mr <- y - X %*% betahat
+bvec <- D %*% t(Z) %*% Vinv %*% mr
+bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan
+bse.diag <- diag(bse)
+rvec <- bvec / sqrt(bse.diag)
+revec
+rvec
+rmat <- matrix(rvec, ncol = nranef, byrow = TRUE)
+rmat
+### Function for Lange and Ryan's residuals#
+lev2.langeryan.resid <- function(.model) {#
+  y <- getME(.model, "y")#
+  X <- getME(.model, "X")#
+  Z <- BlockZ(.model)#
+  n <- nrow(X)#
+  nranef <- ncol(ranef(.model)[[1]])#
+  ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))#
+  # Constructing V = Cov(Y)#
+  sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)#
+  ZDZt <- sig0^2 * crossprod( getME(.model, "A") )#
+  R    <- Diagonal( n = n, x = sig0^2 )#
+  D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )#
+  V    <- Diagonal(n) + ZDZt#
+  # Inverting V#
+  V.chol <- chol( V )#
+  Vinv   <- chol2inv( V.chol )#
+  betahat <- solve(t(X) %*% Vinv %*% X) %*% t(X) %*% Vinv %*% y#
+  mr <- y - X %*% betahat#
+  bvec <- D %*% t(Z) %*% Vinv %*% mr#
+  #bmat <- matrix(bvec, ncol = 2, byrow = TRUE)#
+#
+  bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan#
+  bse.diag <- diag(bse)#
+  rvec <- bvec / sqrt(bse.diag)#
+  if(nranef > 1) {#
+  	rmat <- matrix(rvec, ncol = nranef, byrow = TRUE)#
+    return(rmat)#
+  } else {#
+  	return(rvec)#
+  }#
+#
+}
+null_lr_resids <- lapply(null_refit, lev2.langeryan.resid)
+null_lr_resids
+str(null_lr_resids)
+null_sims <- simulate(fm, nsim = 1000)
+null_refit <- lapply(null_sims, refit, object = fm)
+system.time(null_refit <- lapply(null_sims, refit, object = fm))
+system.time(null_lr_resids <- lapply(null_refit, lev2.langeryan.resid))
+sim.hlm <- function(.mod, nsim, e.dsn) {#
+  vc <- VarCorr( .mod )#
+  D  <- as.matrix( bdiag(vc) )#
+  sigma.err <- attr(vc, "sc")#
+	dims <- .mod@dims#
+	n <- dims[["n"]]#
+	m <- dims[["q"]] / nrow(D)#
+	## Simulating error terms#
+	if(e.dsn == "norm") {#
+		e  <- rnorm(n = nsim * n, mean = 0, sd = sigma.err)#
+	} #
+	if(e.dsn == "t") {#
+		e  <- (sigma.err / sqrt(3)) * rt(n = nsim * n, df = 3)#
+	}#
+	if(e.dsn == "exp") {#
+		e  <- sigma.err * ( rexp(n = nsim * n) - 1 )#
+	}#
+	e <- matrix(e, nc = nsim)#
+	## Simulating random intercept#
+	b.sim <- mvrnorm(n = nsim * m, mu = c(0, 0), Sigma = D)#
+	b0 <- matrix(b.sim[,1], nc = nsim)#
+	b1 <- matrix(b.sim[,2], nc = nsim)#
+	## Generating y#
+	b <- rbind(b0, b1)#
+	y <- getME(.mod, "X") %*% fixef(.mod) + getME(.mod, "Z") %*% b + e#
+	y.df <- as.data.frame( as.matrix( y) )#
+	colnames(y.df) <- paste("sim_", 1:ncol(y.df), sep = "")#
+	return( y.df )#
+}
+sim.hlm(.mod = fm, nsim = 1, e.dsn = "normal")
+sim.hlm(.mod = fm, nsim = 1, e.dsn = "norm")
+str(fm)
+sim.hlm <- function(.mod, nsim, e.dsn) {#
+  vc <- VarCorr( .mod )#
+  D  <- as.matrix( bdiag(vc) )#
+  sigma.err <- attr(vc, "sc")#
+	dims <- .mod@devcomp$dims#
+	n <- dims[["n"]]#
+	m <- dims[["q"]] / nrow(D)#
+	## Simulating error terms#
+	if(e.dsn == "norm") {#
+		e  <- rnorm(n = nsim * n, mean = 0, sd = sigma.err)#
+	} #
+	if(e.dsn == "t") {#
+		e  <- (sigma.err / sqrt(3)) * rt(n = nsim * n, df = 3)#
+	}#
+	if(e.dsn == "exp") {#
+		e  <- sigma.err * ( rexp(n = nsim * n) - 1 )#
+	}#
+	e <- matrix(e, nc = nsim)#
+	## Simulating random intercept#
+	b.sim <- mvrnorm(n = nsim * m, mu = c(0, 0), Sigma = D)#
+	b0 <- matrix(b.sim[,1], nc = nsim)#
+	b1 <- matrix(b.sim[,2], nc = nsim)#
+	## Generating y#
+	b <- rbind(b0, b1)#
+	y <- getME(.mod, "X") %*% fixef(.mod) + getME(.mod, "Z") %*% b + e#
+	y.df <- as.data.frame( as.matrix( y) )#
+	colnames(y.df) <- paste("sim_", 1:ncol(y.df), sep = "")#
+	return( y.df )#
+}
+sim.hlm(.mod = fm, nsim = 1, e.dsn = "norm")
+args(replicate)
+args(sim.hlm)
+normal_sims <- sim.hlm(fm, nsim = 1000, e.dsn = "norm")
+normal_sims
+dim(normal_sims)
+class(normal_sims)
+system.time(normal_refit <- lapply(normal_sims, refit, object = fm))
+system.time(normal_lr_resids <- lapply(normal_refit, lev2.langeryan.resid))
+heavy_sims <- sim.hlm(fm, nsim = 1000, e.dsn = "t")#
+heavy_refit <- lapply(normal_sims, refit, object = fm)#
+heavy_lr_resids <- lapply(normal_refit, lev2.langeryan.resid)
+set.seed(7231985)
+heavy_sims <- sim.hlm(fm, nsim = 1000, e.dsn = "t")
+heavy_refit <- lapply(heavy_refit, refit, object = fm)
+heavy_refit <- lapply(heavy_sims, refit, object = fm)
+heavy_lr_resids <- lapply(heavy_refit, lev2.langeryan.resid)
+skewed_sims <- sim.hlm(fm, nsim = 1000, e.dsn = "exp")
+skewed_refit <- lapply(skewed_sims, refit, object = fm)
+skewed_lr_resids <- lapply(skewed_refit, lev2.langeryan.resid)
+langeryan.test <- function(test.stats, settings, null.dsn) {#
+	p.values <- lapply(test.stats, FUN = function(x, null.dsn) {#
+		sapply(x, mc.pvalue, dsn = null.dsn)#
+	},  null.dsn = null.dsn)#
+	a10 <- sapply(p.values, FUN = function(pvs, alpha) sum(pvs <= alpha, na.rm = TRUE) / sum(!is.na(pvs)), alpha = .1)#
+    a10 <- data.frame(settings, alpha = rep(.10, length(a10)), KS = a10)#
+    a05 <- sapply(p.values, FUN = function(pvs, alpha) sum(pvs <= alpha, na.rm = TRUE) / sum(!is.na(pvs)), alpha = .05)#
+    a05 <- data.frame(settings, alpha = rep(.05, length(a05)), KS = a05)#
+    RVAL <- rbind(a10, a05)#
+	RVAL <- arrange(RVAL, error, ranef, alpha)#
+	return(RVAL)#
+#
+}
+test.statistic.langeryan
+test.statistic.langeryan <- function(.model, column) {#
+	r <- lev2.langeryan.resid(.model)[,column]#
+	w <- lev2.marginal.var(.model)[,column]#
+	stat <- try(lillie.test.stat(x = r, weights = w))#
+	stat <- ifelse(class(stat) == "try-error", NA, stat)#
+	return(stat)#
+}
+test.statistic.langeryan <- function(.model, column) {#
+	r <- lev2.langeryan.resid(.model)[,column]#
+	w <- lev2.marginal.var(.model)[,column]#
+	stat <- try(lillie.test.stat(x = r, weights = w))#
+	stat <- ifelse(class(stat) == "try-error", NA, stat)#
+	return(stat)#
+}
+normal_lr_stats  <- sapply(null.models, test.statistic.langeryan, column = 1)
+normal_lr_stats  <- sapply(normal_refit, test.statistic.langeryan, column = 1)
+## Function calculating the marginal variance of the random effects#
+lev2.marginal.var <- function(.model) {#
+  y <- .model@y#
+  X <- getME(.model, "X")#
+  Z <- BlockZ(.model)#
+  n <- nrow(X)#
+  ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))#
+  # Constructing V = Cov(Y)#
+  sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)#
+  ZDZt <- sig0^2 * crossprod( .model@A )#
+  R    <- Diagonal( n = n, x = sig0^2 )#
+  D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )#
+  V    <- Diagonal(n) + ZDZt#
+  # Inverting V#
+  V.chol <- chol( V )#
+  Vinv   <- chol2inv( V.chol )#
+#
+  bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan#
+  bse.diag <- diag(bse)#
+#
+  semat <- matrix(sqrt(bse.diag), ncol = 2, byrow = TRUE)#
+#
+  return(semat)#
+}
+normal_lr_stats  <- sapply(normal_refit, test.statistic.langeryan, column = 1)
+lev2.marginal.var <- function(.model) {#
+  y <- getME(.model, "y")#
+  X <- getME(.model, "X")#
+  Z <- BlockZ(.model)#
+  n <- nrow(X)#
+  ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))#
+  # Constructing V = Cov(Y)#
+  sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)#
+  ZDZt <- sig0^2 * crossprod( getME(.model, "A") )#
+  R    <- Diagonal( n = n, x = sig0^2 )#
+  D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )#
+  V    <- Diagonal(n) + ZDZt#
+  # Inverting V#
+  V.chol <- chol( V )#
+  Vinv   <- chol2inv( V.chol )#
+#
+  bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan#
+  bse.diag <- diag(bse)#
+#
+  semat <- matrix(sqrt(bse.diag), ncol = 2, byrow = TRUE)#
+#
+  return(semat)#
+}
+normal_lr_stats  <- sapply(normal_refit, test.statistic.langeryan, column = 1)
+# weighted empirical CDF#
+wecdf <- function(x, weights) {#
+    stopifnot(length(x) == length(weights))#
+    sw <- sum(weights)#
+    if (length(x) < 1) #
+        stop("'x' must have 1 or more non-missing values")#
+    stopifnot(all(weights >= 0))#
+    ox <- order(x)#
+    x  <- x[ox]#
+    w  <- weights[ox]#
+    vals <- sort(unique(x))#
+    xmatch <- factor(match(x, vals), levels = seq_along(vals))#
+    wmatch <- tapply(w, xmatch, sum)#
+    wmatch[is.na(wmatch)] <- 0#
+    rval <- approxfun(vals, cumsum(wmatch) / sw, method = "constant", #
+        yleft = 0, yright = 1, f = 0, ties = "ordered")#
+    class(rval) <- c("ecdf", "stepfun", class(rval))#
+    attr(rval, "call") <- sys.call()#
+    return(rval)#
+}   #
+#
+# Lilliefor's (K-S) test statistic#
+lillie.test.stat <- function(x, weights = NULL) {#
+	if(is.null(weights)) {#
+		x <- sort(x[complete.cases(x)])#
+    	n <- length(x)#
+    	if (n < 5) #
+        	stop("sample size must be greater than 4")#
+    	p <- pnorm((x - mean(x))/sd(x))#
+    	Dplus <- max(seq(1:n)/n - p)#
+    	Dminus <- max(p - (seq(1:n) - 1)/n)#
+    	K <- max(Dplus, Dminus)#
+	} else{#
+		x <- x[complete.cases(x)]#
+    	w <- weights[complete.cases(x)]#
+    	ox <- order(x)#
+    	x <- x[ox]#
+    	w <- w[ox]#
+    	n <- length(x)#
+    	if (n < 5) #
+        	stop("sample size must be greater than 4")#
+    	edf <- wecdf(x, w)#
+    	ep <- edf(x)#
+    	p <- pnorm((x - mean(x))/sd(x))  #
+    	Dplus <- max(ep - p)#
+    	Dminus <- max(p - ep)#
+    	K <- max(Dplus, Dminus)#
+	}#
+    return(K)#
+}
+normal_lr_stats  <- sapply(normal_refit, test.statistic.langeryan, column = 1)
+normal_lr_stats
+b0.null.test.stats <- sapply(null_refit, test.statistic.langeryan, column = 1)#
+b1.null.test.stats <- sapply(null_refit, test.statistic.langeryan, column = 2)
+b1.null.test.stats
+b0.null.test.stats
+is.na(b0.null.test.stats)
+sum(is.na(b0.null.test.stats))
+b0_heavy_lr_stats  <- sapply(heavy_refit, test.statistic.langeryan, column = 1)
+b1_heavy_lr_stats  <- sapply(heavy_refit, test.statistic.langeryan, column = 1)
+b0_skewed_lr_stats  <- sapply(skewed_refit, test.statistic.langeryan, column = 1)
+b1_skewed_lr_stats  <- sapply(skewed_refit, test.statistic.langeryan, column = 1)
