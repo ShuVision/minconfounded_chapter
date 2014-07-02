@@ -308,7 +308,7 @@ Using this specification, the predicted error terms and random effects are given
 \end{align}
 %
 where $\bm{P} = \bm{V}\inv( \bm{I} - \bm{X} (\bm{X}\trans \bm{V}\inv \bm{X})\inv \bm{X}\trans \bm{V}\inv)$. This  set of equations %\eqref{eq:resid1} and \eqref{eq:resid2} 
-reveals the inherent dependence between the residuals.
+reveals the inherent dependence between the residuals. \al{XXX AE wants us to be more explicit here... how about -- This  set of equations reveals that the predicted error terms depend on the random effects and that the predicted random effects depend on the error terms. Since each residual quantity depends on the other, the predicted error terms and random effects are said to be confounded  \citep{HildenMinton:1995wh}.}
 Additionally, it is easily seen that both \eqref{eq:resid1} and \eqref{eq:resid2} lead to the analysis of correlated and potentially heteroscedastic disturbances as $\var(\widehat{\bm{\varepsilon}}) = \bm{RPR}$ and $\var(\widehat{\bm{b}}) = \bm{DZ}\trans \bm{PZD}$.
 The use of standardized residuals can correct the latter issue, but does not address the fact that the residuals are interrelated. While problems may be expected at both levels of the model based on \eqref{eq:resid1} and \eqref{eq:resid2}, we have found that the interpretation of Q-Q plots of the standardized predicted error terms
 %
