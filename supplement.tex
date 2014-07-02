@@ -90,7 +90,7 @@ Recall that the stacked representation of the hierarchical linear model is given
 	\bm{\varepsilon} & \overset{\text{iid}}{\sim} \mathcal{N}(\bm{0}, \ \bm{R}), \qquad \bm{b} \overset{\text{iid}}{\sim} \mathcal{N}(\bm{0},\ \bm{D}) \nonumber
 \end{align}
 %
-where $\bm{y}$ is a vector of responses, $\bm{X}$ and $\bm{Z}$ are design matrices for the fixed and random effects, respectively, $\bm{\beta}$ is a vector of fixed effects, $\bm{b}$ is a vector of random effects, $\bm{\varepsilon}$ is a vector of error terms, and $\bm{R}$ and $\bm{D}$ are positive definite covariance matrices. Further, we assume that $\cov(\bm{\varepsilon},\ \bm{b}) = \bm{0}$. The above assumptions imply that, marginally, $\bm{y} \sim \mathcal{N}(\bm{X\beta},\ \bm{V})$ where $\bm{V} = \bm{ZDZ}\trans$.
+where $\bm{y}$ is a vector of responses, $\bm{X}$ and $\bm{Z}$ are design matrices for the fixed and random effects, respectively, $\bm{\beta}$ is a vector of fixed effects, $\bm{b}$ is a vector of random effects, $\bm{\varepsilon}$ is a vector of error terms, and $\bm{R}$ and $\bm{D}$ are positive definite covariance matrices. Further, we assume that $\cov(\bm{\varepsilon},\ \bm{b}) = \bm{0}$. The above assumptions imply that, marginally, $\bm{y} \sim \mathcal{N}(\bm{X\beta},\ \bm{V})$ where $\bm{V} = \bm{ZDZ}\trans + \bm{R}$.
 
 \subsection{Residuals}
 
