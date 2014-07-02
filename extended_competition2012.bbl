@@ -78,10 +78,10 @@ Lange, N. and Ryan, L. (1989), \enquote{Assessing normality in random effects
 Loy, A. (2013), \textit{HLMdiag: Diagnostic tools for hierarchical (multilevel)
   linear models}, {R} package version 0.2.3.
 
-\bibitem[{Loy and Hofmann({in press})}]{Loy:JSS}
-Loy, A. and Hofmann, H. ({in press}), \enquote{HLMdiag: A Suite of Diagnostics
-  for Hierarchical Linear Models in {R},} \textit{Journal of Statistical
-  Software}.
+\bibitem[{Loy and Hofmann(2014)}]{Loy:JSS}
+Loy, A. and Hofmann, H. (2014), \enquote{HLMdiag: A Suite of Diagnostics for
+  Hierarchical Linear Models in {R},} \textit{Journal of Statistical Software},
+  56, 1--28.
 
 \bibitem[{McDonald et~al.(1979)McDonald, Torii, and
   Nishisato}]{McDonald:1979ca}
