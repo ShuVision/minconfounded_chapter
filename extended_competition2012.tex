@@ -18,6 +18,7 @@
 \graphicspath{{figures/}}
 \newcommand{\hh}[1]{{\color{orange} #1}}
 \newcommand{\al}[1]{{\color{red} #1}}
+\newcommand{\aside}[1]{{\color{green} #1}}
 
 % color in tables
 \usepackage{color}
@@ -323,52 +324,13 @@ is unaffected by this interrelationship \al{in the situations that we have consi
 %----------------------------------------------------------------------------------
 \subsection{Rotating the random effects}\label{sec:rotate}
 %----------------------------------------------------------------------------------
+\al{
 
-To combat  confounding between different  levels of residuals, we derive a reduced set of rotated residuals that are standardized, uncorrelated, and homoscedastic. We focus our discussion (and notation) on a two-level model with a single random effect in this section for ease of explanation, and describe how to extend this method at the end of this section.
+%In order to correct residuals for the impact of confounding, we propose using a linear transformation, $\bm{W}^{\prime} \widehat{\bm{b}}$, of the predicted random effects that substantially reduces the amount of confounding. This approach enables the construction of Q-Q plots which are arguably the most familiar graphical depictions for distributional assessment. Additionally, the rotation of the random effects yield residuals that are standardized, uncorrelated, and homoscedastic.
 
+To begin, we will consider a two-level random intercept model, a special case of model \eqref{eq:hlm}. When assessing the plausibility of normality of the random intercept it is tempting to simply construct a Q-Q plot of the predicted random effects; however, we know that this approach is flawed. To address the issue of confounding, we propose the construction of Q-Q plots of an $s$-dimensional rotation of the random intercept of the form $\bm{W}^{\prime} \widehat{\bm{b}}$ that  substantially reduces the amount of confounding. The rotated random intercepts are easily plotted and are standardized, uncorrelated, and homoscedastic residual quantities. While we focus our discussion (and notation) on a two-level model with a single random effect for ease of explanation, we describe how to extend this method at the end of this section.
 
-First, we define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}. 
-
-%\begin{definition}[Fraction of confounding]\label{def:fc1}
-%For the $i$th element of the target residual vector, $\widehat{\bm{e}}$, the fraction of confounding is given by
-%%
-%\begin{equation}\label{eq:fc}
-%	\text{FC}(\widehat{\bm{e}}_i) 
-%	= \frac{\bm{v_i}\trans \var(\widehat{\bm{e}} | \bm{e}) \bm{v_i}}
-%		{\bm{v_i}\trans \var(\widehat{\bm{e}}) \bm{v_i}}
-%	= \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
-%		{\bm{v_i}\trans \bm{B} \bm{v_i}}
-%\end{equation}
-%
-%where $\bm{v_i}$ is the $i$th column of the identity matrix.
-%%\todo[inline]{write this as a minimization problem}
-%%This rotation is given by $\bm{M} = \bm{T_r \Lambda_r}^{-1/2} \bm{U}$ where $\bm{T_r \Lambda_r}^{-1/2}$ is the inverse square root of $\bm{B}$ found through the spectral decomposition of $\bm{B}$ and $\bm{U}$ are the eigenvectors of $(\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{A} (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans)\trans$.
-%\end{definition}
-
-%Definition~\ref{def:fc1} describes the confounding for each element in the target residual vector individually. An overall measure of the amount of confounding is given below.\\
-
-%\begin{definition}\label{defc:fc2}
-%For the target residual vector, $\widehat{\bm{e}}$, the fraction of confounding is given by
-%%
-%\begin{equation}\label{eq:fc2}
-%FC(\widehat{\bm{e}}) = \mathrm{tr}( \var(\widehat{\bm{e}} | \bm{e} ) ) / \mathrm{tr}( \var(\widehat{\bm{e}}) ).
-%\end{equation}
-%\end{definition}
-
-%\begin{definition}[Fraction of confounding] \hh{define $\bm{b}$ and $\widehat{\bm{b}}$ as well}
-%Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$ and $\bm{B} = \var(\widehat{\bm{b}})$, %which are positive semidefinite matrices by definition. \hh{that doesn't belong in a definition.}
-%\al{Also, let $\bm{W}$ be a linear transformation from the original $q$-dimensional space to an $s$-dimensional space ($s \leq q$).} \hh{Where does q come from? } The fraction of confounding in $\widehat{\bm{b}}$ \al{in this $s$-dimensional space} is given by
-%%
-%\begin{equation}\label{eq:fc2}
-%\text{FC}(s; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right)
-%%\dfrac{1}{\ell} \displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
-%%		{\bm{v_i}\trans \bm{B} \bm{v_i}}.
-%\end{equation}
-%\hh{If FC only depends on s, you imply that for different Ws that have the same rank, you get the same FC. that's not true - so FC needs to be dependent on W. }
-%%where $\ell$ is the length of vector $\widehat{\bm{b}}$.
-%\end{definition}
-
-
+First, we must define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}. 
 \begin{definition}[Fraction of confounding] 
 Let $\bm{b}$ denote a vector of $q$ random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
 \begin{equation}\label{eq:fc2}
@@ -379,16 +341,18 @@ Let $\bm{b}$ denote a vector of $q$ random effects and $\widehat{\bm{b}}$ its pr
 where $\bm{B}$ is the covariance structure of $\bm b$, $\bm{B} = \var(\widehat{\bm{b}})$, and $\bm{A}$ is the conditional covariance structure of  $\widehat{\bm{b}}$ given $\bm{b}$,  i.e. $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$.
 \end{definition}
 \noindent
-Note that both $\bm{A}$ and $\bm{B}$ are  positive semidefinite matrices by definition. 
+Note that both $\bm{A}$ and $\bm{B}$ are  positive semidefinite matrices. It is not obvious that $\tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right)$ is well defined, but the discussion that follows will clarify this point. XXX This was recommended by reviewer \#2 but it seems forced...
 
 
 The fraction of confounding measures the contribution of the error terms  to the variance of the random effects. $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while 0 indicates no confounding. Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects.
 
 
-In order to correct residuals for the impact of confounding, we propose using the linear transformation of the predicted random effects that substantially reduces the amount of confounding. To do this, we must determine the $s$-dimensional space in which confounding is substantially reduced and find the $\bm{W}$ that minimizes confounding within that space. To determine the dimension of the subspace spanned by the rotated residuals we propose the use of a  visual tool similar to the scree plots used for selecting the number of principal components. The construction of such plots depends on the linear transformation $\bm W$, so we first discuss the selection of $\bm{W}$ given  a fixed dimension $s$.
+%As outlined above, the confounded nature of the predicted random effects renders graphical explorations of these residuals inadequate for the assessment of distributional assumptions. 
+%
+%In order to graphically assess the distributional assumption made on the random effects we propose a reduced set ($s$-dimensional rotation) of rotated random effects, $\bm{W}^{\prime} \widehat{\bm{b}}$, by minimizing the amount of confounding present.  
 
-\paragraph{Selecting the optimal linear transformation.}
-For a given $s$-dimensional space, the linear combination $\bm{W} \in \mathbb{R}^{q \times s}$ that minimizes \eqref{eq:fc2} also minimizes
+
+For any given dimension, the linear combination $\bm{W} \in \mathbb{R}^{q \times s}$ that minimizes \eqref{eq:fc2} also minimizes
 %
 \begin{equation}\label{eq:minimize}
 J_1(s) = \tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right)
@@ -404,7 +368,17 @@ Mathematically, this problem is solved using the generalized eigenvalue decompos
 %
 where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}. 
 %thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. 
-Computationally, we solve this problem by simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ \citep{McDonald:1979ca, deLeeuw:1982to}. Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ requires $\bm{W}$ to be $\bm{B}$-orthogonal, so the optimal $\bm{W}$ is found to be
+\cite{deLeeuw:1982to} shows that simultaneous diagnoaliztion of $\bm{A}$ and $\bm{B}$ solves this generalized eigenvalue problem if the null space of $\bm{B}$ is a subspace of the null space of $\bm{A}$, for which a sufficient condition is that $\bm{B} - \bm{A}$ be nonnegative definite. In our problem 
+\[
+	\bm{A} =  \var(\widehat{\bm{b}} | \bm{b} ) = \bm{RPZDZ}^\prime \bm{PR}
+\]
+and
+\[
+	\bm{B} = \var(\widehat{\bm{b}}) =  \bm{RPR} =  \bm{RPVPR}  = \bm{RPRPR} + \bm{RPZDZ}^\prime\bm{PR},
+\]
+so $\bm{B}-\bm{A} =  \bm{RPRPR}$ is nonnegative definite.
+
+Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ requires $\bm{W}$ to be $\bm{B}$-orthogonal, so the optimal $\bm{W}$ is found to be
 %
 \begin{equation}\label{eq:optimw}
 	\bm{W}^*(s) = \argmin_{ 
@@ -415,45 +389,10 @@ Computationally, we solve this problem by simultaneous diagonalization of $\bm{A
 %	\end{cases}
 %\end{scriptsize}
 	} 
-\tr\left( \bm{W\trans A W} \right) 
+\tr\left( \bm{W\trans A W} \right).
 \end{equation}
 %
-Below, we outline the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ for reference.\\
-%and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\
-
-\begin{algorithm}[Simultaneous diagonalization]
-Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices. The transformation that simultaneously diagonalizes both matrices can be found through the following procedure:
-\begin{enumerate}
-\item Find a transformation that whitens $\bm{B}$. Such a transformation is given by $\bm{T_r \Lambda_r}^{-1/2}$, where $\bm{T}_r$ and $\bm{\Lambda}_r$ are the first $r$  eigenvectors and eigenvalues of $\bm{B}$, where $r = \rank(\bm{B})$. 
-
-\item Transform $\bm{A}$ and $\bm{B}$ to
-\begin{align}
-\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{A T_r \Lambda_r}^{-1/2} &= \bm{A}^* \label{eq:astar} \\
-\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{B T_r \Lambda_r}^{-1/2} &= \bm{I}
-\end{align}
-
-\item Find an orthonormal transformation that diagonalizes $\bm{A}^*$. Such a transformation is given by the eigenvectors of $\bm{A}^*$, which we denote $\bm{U}$.
-\end{enumerate}
-
-\noindent
-Based on the above three steps, the transformation that simultaneously diagonalizes $\bm{A}$ and $\bm{B}$ is $\bm{T_r \Lambda_r}^{-1/2} \bm{U}$.\\ 
-\end{algorithm}
-
-The above procedure can be used to find the general solution to \eqref{eq:geigen}. To find the more specific transformation defined by \eqref{eq:optimw}, we focus on the $s$ eigenvectors associated with $s$ the smallest eigenvalues of $\bm{A}^*$, $\bm{U}_s$, making
-%
-\begin{equation}\label{eq:w}
-\bm{W}^* = \bm{T_r \Lambda_r}^{-1/2} \bm{U}_s
-\end{equation}
-%
-The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$, which are standardized, uncorrelated, and homoscedastic (see the appendix for a proof).
-
-%\todo[inline]{Address that the order of the data will influence the resulting residuals.}
-%Since $\bm{B}$ is only positive semidefinite, it is important to note that the order of the groups in the data change the resulting residuals. In this case, the transformation in \eqref{eq:astar} eliminates a group
-
-
-%Having considered the computational aspects of the problem we must next consider the more practical aspects. 
-
-%\al{Having considered the optimal linear transformation for a given $s$-dimensional subspace, we return to the problem of selecting the dimension which substantially reduces the fraction of confounding.}
+The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$, which are standardized, uncorrelated, and homoscedastic (see the appendix for a proof). In the interest of space we have relegated a detailed overview of the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ to the appendix (XXX supplementary materials?) as it will be familiar to many as the standard canonical transformation used in multivariate regression (XXX this was pointed out by the AE, is this OK to add?).
 
 
 \paragraph{Selecting the dimension of the subspace.}
@@ -500,6 +439,188 @@ Other orthogonal rotations could be used, but the varimax rotation is familiar t
 
 \paragraph{Extension to multiple random effects.}
 Up to this point our discussion has ignored that a model may (and often will) contain numerous random effects. In this case, the assumptions made on each random effect should be checked; thus, we propose assessing each random effect separately. To this end we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th marginal random effect. For example, in a model with a random intercept and random slope, if $\bm{Z}$ is organized as a block diagonal matrix---that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum \citep[page 47]{Gentle:2007}---then $\bm{L}_0 = \bm{I}_{m} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_1 = \bm{I}_{m} \bigotimes ( 0,\ 1)$ produces the random slopes. The methodology presented in this section can be generalized to models with numerous random effects by substituting $\bm{L}_k\trans \widehat{\bm{b}}$ for $\widehat{\bm{b}}$.
+
+}
+
+%\aside{XXX I have started to restructure this subsection above, but will keep the original text below until I am done.}
+%
+%To combat  confounding between different  levels of residuals, we derive a reduced set of rotated residuals that are standardized, uncorrelated, and homoscedastic. We focus our discussion (and notation) on a two-level model with a single random effect in this section for ease of explanation, and describe how to extend this method at the end of this section.
+%
+%
+%First, we define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}. 
+%
+%
+%%\begin{definition}[Fraction of confounding]\label{def:fc1}
+%%For the $i$th element of the target residual vector, $\widehat{\bm{e}}$, the fraction of confounding is given by
+%%%
+%%\begin{equation}\label{eq:fc}
+%%	\text{FC}(\widehat{\bm{e}}_i) 
+%%	= \frac{\bm{v_i}\trans \var(\widehat{\bm{e}} | \bm{e}) \bm{v_i}}
+%%		{\bm{v_i}\trans \var(\widehat{\bm{e}}) \bm{v_i}}
+%%	= \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
+%%		{\bm{v_i}\trans \bm{B} \bm{v_i}}
+%%\end{equation}
+%%
+%%where $\bm{v_i}$ is the $i$th column of the identity matrix.
+%%%\todo[inline]{write this as a minimization problem}
+%%%This rotation is given by $\bm{M} = \bm{T_r \Lambda_r}^{-1/2} \bm{U}$ where $\bm{T_r \Lambda_r}^{-1/2}$ is the inverse square root of $\bm{B}$ found through the spectral decomposition of $\bm{B}$ and $\bm{U}$ are the eigenvectors of $(\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{A} (\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans)\trans$.
+%%\end{definition}
+%
+%%Definition~\ref{def:fc1} describes the confounding for each element in the target residual vector individually. An overall measure of the amount of confounding is given below.\\
+%
+%%\begin{definition}\label{defc:fc2}
+%%For the target residual vector, $\widehat{\bm{e}}$, the fraction of confounding is given by
+%%%
+%%\begin{equation}\label{eq:fc2}
+%%FC(\widehat{\bm{e}}) = \mathrm{tr}( \var(\widehat{\bm{e}} | \bm{e} ) ) / \mathrm{tr}( \var(\widehat{\bm{e}}) ).
+%%\end{equation}
+%%\end{definition}
+%
+%%\begin{definition}[Fraction of confounding] \hh{define $\bm{b}$ and $\widehat{\bm{b}}$ as well}
+%%Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$ and $\bm{B} = \var(\widehat{\bm{b}})$, %which are positive semidefinite matrices by definition. \hh{that doesn't belong in a definition.}
+%%\al{Also, let $\bm{W}$ be a linear transformation from the original $q$-dimensional space to an $s$-dimensional space ($s \leq q$).} \hh{Where does q come from? } The fraction of confounding in $\widehat{\bm{b}}$ \al{in this $s$-dimensional space} is given by
+%%%
+%%\begin{equation}\label{eq:fc2}
+%%\text{FC}(s; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right)
+%%%\dfrac{1}{\ell} \displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
+%%%		{\bm{v_i}\trans \bm{B} \bm{v_i}}.
+%%\end{equation}
+%%\hh{If FC only depends on s, you imply that for different Ws that have the same rank, you get the same FC. that's not true - so FC needs to be dependent on W. }
+%%%where $\ell$ is the length of vector $\widehat{\bm{b}}$.
+%%\end{definition}
+%
+%
+%\begin{definition}[Fraction of confounding] 
+%Let $\bm{b}$ denote a vector of $q$ random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
+%\begin{equation}\label{eq:fc2}
+%\text{FC}(\bm{W}; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right),
+%%\dfrac{1}{\ell} \displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
+%%		{\bm{v_i}\trans \bm{B} \bm{v_i}}.
+%\end{equation}
+%where $\bm{B}$ is the covariance structure of $\bm b$, $\bm{B} = \var(\widehat{\bm{b}})$, and $\bm{A}$ is the conditional covariance structure of  $\widehat{\bm{b}}$ given $\bm{b}$,  i.e. $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$.
+%\end{definition}
+%\noindent
+%Note that both $\bm{A}$ and $\bm{B}$ are  positive semidefinite matrices by definition. 
+%
+%
+%The fraction of confounding measures the contribution of the error terms  to the variance of the random effects. $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while 0 indicates no confounding. Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects.
+%
+%
+%In order to correct residuals for the impact of confounding, we propose using the linear transformation of the predicted random effects that substantially reduces the amount of confounding. To do this, we must determine the $s$-dimensional space in which confounding is substantially reduced and find the $\bm{W}$ that minimizes confounding within that space. To determine the dimension of the subspace spanned by the rotated residuals we propose the use of a  visual tool similar to the scree plots used for selecting the number of principal components. The construction of such plots depends on the linear transformation $\bm W$, so we first discuss the selection of $\bm{W}$ given  a fixed dimension $s$.
+%
+%\paragraph{Selecting the optimal linear transformation.}
+%For a given $s$-dimensional space, the linear combination $\bm{W} \in \mathbb{R}^{q \times s}$ that minimizes \eqref{eq:fc2} also minimizes
+%%
+%\begin{equation}\label{eq:minimize}
+%J_1(s) = \tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right)
+%%\displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{W} \bm{A} \bm{W}\trans \bm{v_i}}
+%%		{\bm{v_i}\trans \bm{W} \bm{B} \bm{W}\trans \bm{v_i}}
+%\end{equation}
+%%
+%Mathematically, this problem is solved using the generalized eigenvalue decomposition
+%%
+%\begin{equation}\label{eq:geigen}
+%	\bm{Aw}_k = \gamma_k \bm{Bw}_k
+%\end{equation}
+%%
+%where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}. 
+%%thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. 
+%Computationally, we solve this problem by simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ \citep{McDonald:1979ca, deLeeuw:1982to}. Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ requires $\bm{W}$ to be $\bm{B}$-orthogonal, so the optimal $\bm{W}$ is found to be
+%%
+%\begin{equation}\label{eq:optimw}
+%	\bm{W}^*(s) = \argmin_{ 
+%%\begin{scriptsize}
+%%	\begin{cases}
+%      \bm{W} \in \mathbb{R}^{q \times s}, \ \ 
+%      \bm{W\trans B W} = \bm{I}
+%%	\end{cases}
+%%\end{scriptsize}
+%	} 
+%\tr\left( \bm{W\trans A W} \right) 
+%\end{equation}
+%%
+%Below, we outline the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ for reference.\\
+%%and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\
+%
+%\begin{algorithm}[Simultaneous diagonalization]
+%Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices. The transformation that simultaneously diagonalizes both matrices can be found through the following procedure:
+%\begin{enumerate}
+%\item Find a transformation that whitens $\bm{B}$. Such a transformation is given by $\bm{T_r \Lambda_r}^{-1/2}$, where $\bm{T}_r$ and $\bm{\Lambda}_r$ are the first $r$  eigenvectors and eigenvalues of $\bm{B}$, where $r = \rank(\bm{B})$. 
+%
+%\item Transform $\bm{A}$ and $\bm{B}$ to
+%\begin{align}
+%\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{A T_r \Lambda_r}^{-1/2} &= \bm{A}^* \label{eq:astar} \\
+%\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{B T_r \Lambda_r}^{-1/2} &= \bm{I}
+%\end{align}
+%
+%\item Find an orthonormal transformation that diagonalizes $\bm{A}^*$. Such a transformation is given by the eigenvectors of $\bm{A}^*$, which we denote $\bm{U}$.
+%\end{enumerate}
+%
+%\noindent
+%Based on the above three steps, the transformation that simultaneously diagonalizes $\bm{A}$ and $\bm{B}$ is $\bm{T_r \Lambda_r}^{-1/2} \bm{U}$.\\ 
+%\end{algorithm}
+%
+%The above procedure can be used to find the general solution to \eqref{eq:geigen}. To find the more specific transformation defined by \eqref{eq:optimw}, we focus on the $s$ eigenvectors associated with $s$ the smallest eigenvalues of $\bm{A}^*$, $\bm{U}_s$, making
+%%
+%\begin{equation}\label{eq:w}
+%\bm{W}^* = \bm{T_r \Lambda_r}^{-1/2} \bm{U}_s
+%\end{equation}
+%%
+%The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$, which are standardized, uncorrelated, and homoscedastic (see the appendix for a proof).
+%
+%%\todo[inline]{Address that the order of the data will influence the resulting residuals.}
+%%Since $\bm{B}$ is only positive semidefinite, it is important to note that the order of the groups in the data change the resulting residuals. In this case, the transformation in \eqref{eq:astar} eliminates a group
+%
+%
+%%Having considered the computational aspects of the problem we must next consider the more practical aspects. 
+%
+%%\al{Having considered the optimal linear transformation for a given $s$-dimensional subspace, we return to the problem of selecting the dimension which substantially reduces the fraction of confounding.}
+%
+%
+%\paragraph{Selecting the dimension of the subspace.}
+%Selection of the dimension of the subspace spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. Since our ultimate objective is distributional assessment, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function (e.g., the Anderson-Darling test for normality) associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the scree plot used to select the number of principal components. To illustrate the use of this plot we simulate two simple random intercept models with a group-level predictor:   model $M1$ has 40 groups of 30 observations and 10 groups of 5 observations;   model $M2$ also has 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). %\todo[inline]{These two models are very similar. Go to a more extreme in the second model?}
+% Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. For both models, there is no decrease in the fraction of confounding for a one-dimensional reduction because a {one-dimensional reduction} simply adjusts for that rank deficiency of the covariance matrix, which can be thought of in terms of adjusting for the effective degrees of freedom. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$. { Additionally, we see that the elbow in the plot for model $M2$ is less pronounced. This occurs because the groups sizes are more unbalanced so the difference between the large and small group sizes is reduced.}
+% 
+%% \al{Talk about the differences here and why I chose these examples. Also talk about the loss of 1 d.f. More discussion here.}
+%%
+%\begin{figure}[htb]
+%	\centering
+%	 \subfloat[Model $M1$]{
+%		\includegraphics[width=0.4\linewidth]{elbow1.pdf}
+%		}
+%	  \subfloat[Model $M2$]{
+%		\includegraphics[width=0.4\linewidth]{elbow2.pdf}
+%		}	
+%	\caption{\label{fig:elbow} Plots of the fraction of confounding for each reduction in the dimension of subspace spanned by the rotated random intercepts from two simulation models. Model $M1$ has 50 groups: 40 groups of size 30, and 10 groups of size 5. Model $M2$ has 50 groups with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). Based on these plots we  choose $s = 39$, corresponding to a dimension reduction of 11.}
+%\end{figure}
+%
+%
+%%%First, we must consider the selection of the dimension of the subspace spanned by the rotated residuals, $s$---that is, the length of the resulting transformed residual vector. 
+%%For the level-1 residuals \cite{HildenMinton:1995wh} suggests using $s = \rank(\bm{B})$;
+%%%One choice is $s = \rank(\bm{B})$, which aligns with the suggestion given by \cite{HildenMinton:1995wh} for the level-1 residuals. 
+%%%This selection has the advantage that it works in all situations, but the disadvantage that the fraction of confounding will \al{often} not be \al{significantly} reduced. 
+%%An alternative approach is to select $s$ based on the desired reduction in the fraction of confounding. \hh{You need to sell this point a bit more - what is the theoretical advantage of going down on the number of residuals? -- if the approach is to get FC down as much as possible, but have s at least 30, it is always going to end up at 30. What I still don't understand is that the minimization is not taking care of the percent of confounding to a higher degree, because that's really what it was supposed to do. }
+%%%A starting point for this approach can be determined for a given reduction in the fraction of confounding by considering the relative contributions of the ordered diagonal elements of $\bm{B}\ginv\bm{A}$ to \eqref{eq:fc2}. 
+%%We consider this approach in the simulation study presented in Section~\ref{sec:simulation} and present the results in Figure~\ref{fig:fc}. Note that in some situations it will not be possible to reduce the fraction of confounding much as the number of groups limits this reduction.
+%
+%\paragraph{Correcting for supernormality.}
+%The transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution, if the underlying distribution is not normal. This issue is often referred to as supernormality \citep{Atkinson:1985}. One approach to address supernormality in this context is to reduce the number of elements in the linear combinations, which should reduce the extent of the problem. To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we rotate the factor loadings in factor analysis. Using this approach, the rotated residuals are obtained by $\bm{Q}\trans \bm{W}^{*\prime} \widehat{\bm{b}}$. One rotation that will produce rotated residuals comprised of a small number of raw residuals is the raw varimax rotation \citep{Johnson:2007}. Figure~\ref{fig:cartoon} displays heat maps of $\bm{W}^{*\prime}$ (left) and $\bm{Q}\trans\bm{W}^{*\prime}$ (right) for a simulated random intercept model with 20 groups, and demonstrates that the raw varimax rotation reduces the number of groups loading highly on each rotated residual. %\hh{what amount of confounding is there on the left and then on the right?} \al{The amount of confounding is the same between the right and the left. The only different between the two is that we applied the varimax transform to the plot on the right. Regardless, $FC \approx .25$. I used this small simulated model because I thought it showed what the varimax can do for us.} 
+%Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu}, who used the raw varimax rotation to produce recovered errors for distributional assessment in the ordinary regression model.
+%
+%\begin{figure}[t]
+%	\centering
+%	\subfloat[$\bm{W}^{*\prime}$]{
+%		\includegraphics[width=0.4\textwidth]{cropped_cartoon_heatmap_raw.pdf}
+%	}
+%	\qquad
+%	\subfloat[$\bm{Q}\trans\bm{W}^{*\prime}$]{
+%		\includegraphics[width=0.4\textwidth]{cropped_cartoon_heatmap_varimax.pdf}
+%	}
+%	\caption{\label{fig:cartoon} Heat map of $\bm{W}^{*\prime}$ and $\bm{Q}\trans\bm{W}^{*\prime}$ for a simulated random intercept model with 20 groups. Applying the raw varimax rotation, $\bm{Q}$, reduces the number of groups loading on a given rotated residual.}
+%\end{figure}
+%
+%\paragraph{Extension to multiple random effects.}
+%Up to this point our discussion has ignored that a model may (and often will) contain numerous random effects. In this case, the assumptions made on each random effect should be checked; thus, we propose assessing each random effect separately. To this end we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th marginal random effect. For example, in a model with a random intercept and random slope, if $\bm{Z}$ is organized as a block diagonal matrix---that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum \citep[page 47]{Gentle:2007}---then $\bm{L}_0 = \bm{I}_{m} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_1 = \bm{I}_{m} \bigotimes ( 0,\ 1)$ produces the random slopes. The methodology presented in this section can be generalized to models with numerous random effects by substituting $\bm{L}_k\trans \widehat{\bm{b}}$ for $\widehat{\bm{b}}$.
 
 
 %----------------------------------------------------------------------------------
@@ -728,6 +849,32 @@ While we do think that the loss in power is troubling,
 \section{Appendix: Additional technical details}
 %----------------------------------------------------------------------------------
 
+\subsection{Simultaneous diagonalization}
+
+Below, we outline the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ for reference.
+%and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\
+
+\begin{algorithm}[Simultaneous diagonalization]
+Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices such that the null space of $\bm{B}$ is a subspace of the null space of $\bm{A}$. The transformation that simultaneously diagonalizes both matrices can be found through the following procedure:
+\begin{enumerate}
+\item Find a transformation that whitens $\bm{B}$. Such a transformation is given by $\bm{T_r \Lambda_r}^{-1/2}$, where $\bm{T}_r$ and $\bm{\Lambda}_r$ are the first $r$  eigenvectors and eigenvalues of $\bm{B}$, where $r = \rank(\bm{B})$. 
+
+\item Transform $\bm{A}$ and $\bm{B}$ to
+\begin{align}
+\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{A T_r \Lambda_r}^{-1/2} &= \bm{A}^* \label{eq:astar} \\
+\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{B T_r \Lambda_r}^{-1/2} &= \bm{I}
+\end{align}
+
+\item Find an orthonormal transformation that diagonalizes $\bm{A}^*$. Such a transformation is given by the eigenvectors of $\bm{A}^*$, which we denote $\bm{U}$.
+\end{enumerate}
+
+\noindent
+Based on the above three steps, the transformation that simultaneously diagonalizes $\bm{A}$ and $\bm{B}$ is $\bm{T_r \Lambda_r}^{-1/2} \bm{U}$.\\ 
+\end{algorithm}
+
+
+\subsection{Rotated random effects are standardized, uncorrelated, and homoscedastic}
+
 We present the proof of the claim that the rotated residuals, $\bm{W}^{*\prime} \widehat{\bm{b}}$, are standardized, uncorrelated, and homoscedastic. Following the developments presented in Section~\ref{sec:rotate}, we present this discussion for the random effects assuming that there is only a random intercept. Generalization to the situation with multiple random effects follows as previously discussed.
 
 \begin{proof}
@@ -753,7 +900,7 @@ The following supplemental materials can be obtained online:
 
 \item[\texttt{R} script for figures and simulations:] The \texttt{R} code and data used to generate results discussed in this paper are available in the file \texttt{code\_supplement.zip}. 
 
-\item[\texttt{R} package \texttt{HLMdiag}:] We have included the function to calculate the rotated random effects in the \texttt{R} package \texttt{HLMdiag}, which is available from the Comprehensive R Archive Network (CRAN, \url{http://cran.r-project.org/}).
+\item[\texttt{R} package \texttt{HLMdiag}:] We have included the function to calculate the rotated random effects in the \texttt{R} package \texttt{HLMdiag}. \al{ The stable version of \texttt{HLMdiag} is available from the Comprehensive R Archive Network (CRAN, \url{http://cran.r-project.org/}) and the developmental version is available of github (\url{https://github.com/aloy/HLMdiag}).}
 \end{description}
 
 %----------------------------------------------------------------------------------
