@@ -75,7 +75,7 @@
 \maketitle
 %----------------------------------------------------------------------------------
 
-The materials in this document supplement the information presented in ``Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models''. Section~\ref{supp:evals} presents a simulation study evaluating the performance of existing proposals for residual analysis for hierarchical linear models. Section~\ref{supp:simstudy} presents the complete results for all simulation settings considered in the paper. 
+The materials in this document supplement the information presented in ``Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models''. Section~\ref{supp:evals} presents a \al{review of existing proposals for residual analysis for hierarchical linear models and a} simulation study evaluating the performance. Section~\ref{supp:simstudy} presents the complete results for all simulation settings considered in the paper: \al{Section~\ref{supp:simestimated} presents the results of the simulation study where the covariance matrices, $\bm{D}$ and $\bm{R}$, were estimated and Section~\ref{supp:simfixed} presents the results of the simulation study where the covariance matrices were known.}
 
 
 \section{Evaluations of existing proposals}\label{supp:evals}
@@ -216,11 +216,16 @@ Based on the simulation results it is clear that none of the residual-based diag
 \section{Full results from the simulation study}\label{supp:simstudy}
 %--------------------------------------------------
 
-In the paper we described a simulation study and only presented results for the the Anderson-Darling test under one variance structure ($\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$). In this section we present the results from the full simulation study. Tables~\ref{tab:simb0sB}--\ref{tab:simb030} present the results for the rotated random intercept and Tables~\ref{tab:simb1sB}--\ref{tab:simb130} present the results for the rotated random slope. We use a gray background to highlight the simulation settings under which the tests should fail to reject the null hypothesis of normality.
-
-Additionally, we have run simulations where the covariance matrices, $\bm{R}$ and $\bm{D}$ are fixed. The results of this simulation study are presented in tables...
+\subsection{Estimated covariance matrices}\label{supp:simestimated}
+%--------------------------------------------------
+In the paper we described a simulation study and only presented results for the the Anderson-Darling test under one variance structure ($\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$). In this section we present the results from the full simulation study where the covariance matrices were estimated. Tables~\ref{tab:simb0sB}--\ref{tab:simb030} present the results for the rotated random intercept and Tables~\ref{tab:simb1sB}--\ref{tab:simb130} present the results for the rotated random slope. We use a gray background to highlight the simulation settings under which the tests should fail to reject the null hypothesis of normality.
 
 \include{rotation_simulation_results}
+
+\subsection{Known covariance matrices}\label{supp:simfixed}
+%--------------------------------------------------
+\al{In this section we present the results of a simulations where the covariance matrices, $\bm{R}$ and $\bm{D}$ were fixed/known. Tables~\ref{tab:fixedsimb0sB}--\ref{tab:fixedsimb030} present the results for the rotated random intercept and Tables~\ref{tab:fixedsimb1sB}--\ref{tab:fixedsimb130} present the results for the rotated random slope. We use a gray background to highlight the simulation settings under which the tests should fail to reject the null hypothesis of normality.}
+
 \include{fixed_covariance_sim_results}
 
 
