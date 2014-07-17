@@ -196,7 +196,7 @@ If we can identify the real Q-Q plot in the lineup, this provides evidence that 
 the observed Q-Q plot (panel $12+2^2$) is virtually indistinguishable from the field of null plots. This suggests that the predicted random slopes  from the data do not deviate significantly from model~\eqref{eq:radon}.  
 Note that in practice we must blind ourselves from the true plot for proper use of lineups. In order to not violate this, we did not show the Q-Q plot of random slopes earlier.
 
-What becomes apparent from the lineup, is that, astonishingly, {\it none} of the null plots conform to normality. \al{XXX AE takes issue with this statement because panels 1, 2, 17, 18, and 19 are close to normality. Looking at the plots again I would be wary of 2 and 19, on the fence with 1 and 17, and might not be suspicious based on 18...} To further investigate the apparent non-normal behavior of predicted random effects we conduct a small simulation study: 
+What becomes apparent from the lineup is that {\it most} of the null plots do not conform to normality. To further investigate the apparent non-normal behavior of predicted random effects we conducted a small simulation study: 
 %
 We generated 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming normal random effects and level-1 residuals generated as normal ($\varepsilon_{ij}^* \overset{iid}{\sim}  \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
 For each simulated data set, we evaluated the assumption of normality for both the error terms and random effects using the Anderson-Darling (AD), Cram{\'e}r von Mises (CVM) and  Kolmogorov-Smirnov (KS) tests for normality.  
@@ -204,7 +204,7 @@ Table~\ref{tab:edf} shows the percentage of these tests rejecting the null hypot
 
 The type I error rates are hugely inflated for both random effects, making an assessment of normality based on the empirical distribution impossible. 
 For example, 84.1\% of the AD tests of the random intercept rejected the null hypothesis of normality when the error terms were skewed.
- Use of standardized random effects and the weighted cumulative distribution function proposed by \cite{Lange:1989uu} reduce the type I errors to the nominal level when the error terms are normal, but the type I errors remain inflated for non-normal error terms. \al{XXX The AE suggested adding simulation results here. When we originally wrote the paper we included the first section in the supplemental material to help make this argument. Would a citation/comment pointing to the supplement be sufficient? If so, this would help us avoid length issues...}  
+ Use of standardized random effects and the weighted cumulative distribution function proposed by \cite{Lange:1989uu} reduce the type I errors to the nominal level when the error terms are normal, but the type I errors remain inflated for non-normal error terms \al{(this is based on the results of a larger simulation study which we include in Section 1.5 of the supplement)}.  
 Similarly, tests of non-normal random effects often failed to reject if the error terms were normally distributed. 
 This inability to assess distributional assumptions correctly is a symptom typical of confounding between levels of residuals.
 %Based on the above results we find that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.
@@ -312,8 +312,8 @@ Using this specification, the predicted error terms and random effects are given
 \widehat{\bm{b}} &= \bm{DZ}\trans \bm{Py} = \bm{DZ}\trans \bm{PZb} + \bm{DZ}\trans \bm{P \varepsilon} \label{eq:resid2}
 \end{align}
 %
-where $\bm{P} = \bm{V}\inv( \bm{I} - \bm{X} (\bm{X}\trans \bm{V}\inv \bm{X})\inv \bm{X}\trans \bm{V}\inv)$ \al{and $\bm{V} = \bm{ZDZ}\trans + \bm{R}$}. This  set of equations %\eqref{eq:resid1} and \eqref{eq:resid2} 
-reveals the inherent dependence between the residuals. \al{XXX AE wants us to be more explicit here... how about -- This  set of equations reveals that the predicted error terms depend on the random effects and that the predicted random effects depend on the error terms. Since each residual quantity depends on the other, the predicted error terms and random effects are said to be confounded  \citep{HildenMinton:1995wh}.}
+where $\bm{P} = \bm{V}\inv( \bm{I} - \bm{X} (\bm{X}\trans \bm{V}\inv \bm{X})\inv \bm{X}\trans \bm{V}\inv)$ \al{and $\bm{V} = \bm{ZDZ}\trans + \bm{R}$}. 
+\al{Equations \eqref{eq:resid1} and \eqref{eq:resid2} reveal that the distributions of the predicted random effects and error terms are interrelated---i.e., the distribution of  the predicted random effects depends on the distribution of the error terms and the distribution of the error terms depends on the distribution of the predicted random effects. Since each residual quantity depends on the other, the predicted error terms and random effects are said to be confounded  \citep{HildenMinton:1995wh}.}
 Additionally, it is easily seen that both \eqref{eq:resid1} and \eqref{eq:resid2} lead to the analysis of correlated and potentially heteroscedastic disturbances as $\var(\widehat{\bm{\varepsilon}}) = \bm{RPR}$ and $\var(\widehat{\bm{b}}) = \bm{DZ}\trans \bm{PZD}$.
 The use of standardized residuals can correct the latter issue, but does not address the fact that the residuals are interrelated. While problems may be expected at both levels of the model based on \eqref{eq:resid1} and \eqref{eq:resid2}, we have found that the interpretation of Q-Q plots of the standardized predicted error terms
 %
