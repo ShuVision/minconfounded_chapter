@@ -633,12 +633,12 @@ We conducted a simulation study to assess the specificity and sensitivity of tes
 %----------------------------------------------------------------------------------
 
 We want to examine situations in which we correctly and incorrectly reject the null hypothesis of normality---that is, power and type I error, respectively. We compute the percentage of Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and Kolmogorov-Smirnov (KS) tests that rejected the null hypothesis of normality.
- These test statistics each measure the discrepancy between the empirical distribution of the rotated random effects and assumed distribution of the random effects, which sheds light on the behavior of Q-Q plots constructed from the rotated residuals. 
+ These test statistics each measure the discrepancy between the empirical distribution of the rotated random effects and assumed distribution of the random effects \al{XXX think carefully about this sentence...}, which sheds light on the behavior of Q-Q plots constructed from the rotated residuals. 
 
 
 The design matrices from model \eqref{eq:radon} were used as templates for realistic data generation;  for simplicity of the simulation design, only the 60 counties with full rank $\bm{Z}$ matrices were included. 
 Normal, heavy-tailed, and skewed distributions are used to generate the simulated errors and random effects. We use a rescaled $t$ distribution with 3 degrees of freedom to generate heavy tailed residuals, and a centered and rescaled exponential distribution with a rate parameter of 1 to generate skewed residuals. For simplicity we require the distributions of the random slope and intercept to the be same and assume independence between the random effects. The nine distributional settings considered in the simulation study are summarized in Table~\ref{tab:simdsns}.
-
+%
 \begin{table}[htdp]
 \centering
 \caption{\label{tab:simdsns} A summary of the nine distributional settings considered in the simulation study.}
@@ -651,8 +651,8 @@ Error terms, $F_1$  & $\mathcal{N}(0, \ \sigma^2_{\varepsilon})$       & &&\\
 \hline
 \end{tabular} 
 \end{table}
-
-Additionally, the the fixed effects coefficients were set to the maximum likelihood estimates.
+%
+The fixed effects coefficients were set to the maximum likelihood estimates.
 
 To investigate the effect that pooling has on the rotated random effects we considered  three variance structures to represent different degrees of confounding for the random effects:\\
 %
@@ -663,7 +663,9 @@ To investigate the effect that pooling has on the rotated random effects we cons
 \end{tabular}
 %
 
-Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$ (which is 58 and 59 for the random intercept and slope, respectively) as well as $s =$ 55, 50, 45, 40, 35, and 30.
+Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$ (which is 58 and 59 for the random intercept and slope, respectively) as well as $s =$ 55, 50, 45, 40, 35, and 30. 
+
+\al{We ran the above simulation both in the case where $\bm{D}$ and $\bm{R}$ are known and were $\bm{D}$ and $\bm{R}$ are estimated. The results were quite similar between these two simulation studies, so we present the results the simulation study where  $\bm{D}$ and $\bm{R}$ were estimated, as this reflects what is done in practice. Full simulation results are available in the supplement.}
 
 
 \subsection{Results}\label{sec:sim-results}
