@@ -57,41 +57,40 @@ The impact of distributional misspecification is felt in the prediction of unobs
 
 \item p6 / l5: observed Q-Q plot (panel $12 + 2^2$) -- why $2^2$? Anyway, this panel does seem to stand out vs. the rest, with a few exceptions.
 
-\alnote{More resistance on the way we obscure the true plot in a lineup. I think we have responses to this in the first two papers we submitted.}
+\textbf{Response:} Here we use $12 + 2^2$ to inform the reader which panel was created using the observed random slopes. We use this notation in an effort to allow readers who explore figure 4 first to do so without knowing which panel is constructed using the observed random effect. The expression simply hides the answer until after referring to the plot, or solving this simple expression. We believe that this technique is important to the presentation of these lineup plots, so no change was made.
 
 \item p6 / l -2 \& fig 4: ``none of the null plots conform ...'' Well, all are + skewed, but some panels (1, 2, 17, 18, 19) seem quite close, at least with this representation. There seems to be an implicit, but unstated criterion here that none of the points can be outside the (undefined, but probably pointwise) envelope used in this figure.
 
-\alnote{I supposed we did abuse the pointwise envelopes a bit with that statement. We could rein back that statement a little---15 out of 20 plots, or 15 our of 19 nulls, still comprises a lot of evidence of something fishy. }
+\textbf{Response:} We did overstate this and have softened our language to state that most null plots do not conform to normality. One of the previous lineups we had used in a presentation we gave on this topic had no null plots conforming to normality, which explains this small mistake.
 
 \item p 7 / Table 1 \& discussion: The table provides a caution against using these standard tests for random effects, but it might be well to give some comparative results for alternatives (Lange-Ryan) designed to overcome these problems.
 
-\alnote{We could add results for Lange and Ryan's proposal. This would allow us to point out that it doesn't fix the problem that we are interested in resolving.\\[1em] 
-I will review what simulations I ran, and see if I already have that situation completed for the example displayed in Table 1, or if I need to run something else.}
+\textbf{Response:} We decided to include those results in Section 1.5 of the supplemental materials as we are aware that our paper is a approaching the 25 page limit. We did add a reference to the supplementary materials so that a reader knows where to find such results.
 
 \item p8 / l -4 : ``equations reveals the inherent dependence'' -- need to be a bit more explicit here
 
-\alnote{We can just extend this sentence. I thought the statement was obvious enough, but that is a trap of being familiar with you're own research!}
+\textbf{Response:} We have added additional clarification here.
 
 \item p 11/ Algorithm 1: This is the standard canonical transformation used widely in multivariate regression, MANOVA, canonical correlation, and need not take up space by being stated as an algorithm.
 
-\alnote{I suppose that I am not very familiar with the finer details of MANOVA since it did not occur to me that this was the `standard canonical transformation'. I would be fine saving space if I could find a reference to help the reader. }
+\textbf{Response:} Thank you for this suggestion. We have moved this procedure to the appendix.
 
 \item p 11 / l -1: eigenvalues of $A^*$, $U_s$, i.e., minimizing (8), \sout{making} taking
 
-\alnote{Small edit.}
+\textbf{Response:} 
 
 \item p 14 / Fig 6 caption: ``calculated where Q for a simulated random ...'' --- something wrong
 here.
 
-\alnote{Yes, something certainly is wrong with that sentence. I will reread and fix that.}
+\textbf{Response:} We have fixed this issue.
 
 \item Figs 7-9: The symbols in the legend include $\lambda$ (which doesn't appear in Fig 7). Perhaps this is a font error?
 
-\alnote{I don't see what the AE is referring to here when I look at the submission on my screen. This leads me to believe it is an error on the journal's side of things and not ours.}
+\textbf{Response:} We were unable to find a $\lambda$ in the legend of Figure 7,  so we did not make a change here. We hope that this was a one time error, but if it appears again please tell us specifically where it appears.
 
 \item Supplementary materials: Perhaps mention HLMdiag here
 
-\alnote{We mention HLMdiag in the list of supplementary materials already. Does the AE want us to include something in the actual supplement? I am unclear what is being asked for here.}
+\textbf{Response:} In our first submission we had mentioned HLMdiag in the supplement, but it appeared at the top of page 24, while the other two items appear on page 23. We have added a link to the development version of the package on github, but made no substantial changes here since we had already included a reference.
 
 \end{enumerate}
 
@@ -118,7 +117,7 @@ Consider an extreme case, with 50 groups with 1000 observations each and 50 grou
 
 \item It would be desirable to address the issue of the consequences of violating normality on inference in the model -- not just testing normality for its own sake. Under what circumstances would it be crucial to verify normality and when would its violation be relatively innocuous.
 
-\alnote{We will do this -- the AE also made a similar comment.}
+\textbf{Response:} We hope that we clarified the consequences by pointing to some existing literature and summarizing the findings more clearly. The main consequence of misspecification of the random effects distribution is that it can invalidate prediction intervals for quantities involving the random effects (such as mixed effects in small area estimation which was discussed by Jiang, 2001) and inference for the variance components in the covariance matrix of the random effects (which was discussed, along with an adjustment by Verbeke and Lesaffre 1997).
 
 \item The theory in this paper is based on the linear model 
 $$Y = X \beta + Z b + \varepsilon,\ b \sim N(0,D)\  \bot \  \varepsilon \sim N(0,R)$$
@@ -127,11 +126,12 @@ The implementation of diagnostics in this paper is based on the lme4 package who
 The lme function in the nlme package is much more general. On the R side, the lme4
 package only allows $R = \sigma^2 I$ while the nlme package allows very rich R-side modeling including ARMA models, spatial correlation and heteroskedastic models, etc. Also, lme allows a great deal of flexibility in the G(D)-side model (non-parametric smoothing splines, heteroscedastic models, etc). Tantalizingly, the methods developed in this paper appear to be fully applicable to these lme models. It's a pity that the diagnostics are not extended to lme since whitening would work even for non-independent observations within clusters. Normality diagnostics for the random effects generating smoothing splines would be particularly interesting where they could serve as a diagnostic for the appropriateness of the spline basis. Thus implementing the methods for lme as well as lmer would extend their applicability considerably.
 
-\alnote{I think this reviewer really wants us to do this. The implementation of methods that I have written based on lme4 should be easily extended to lme, we just chose lme4 since it was the `up and coming' package. I will work to implement what we have done for models fit using lme before we resubmit.}
+\textbf{Response:} We absolutely agree that implementing the methods for lme in addition to lmer extends their applicability. We had not implemented many of the methods provided in HLMdiag for lme objects at the time of our first submission. Since then, we have extended most of the diagnostic functions in HLMdiag to work with lmd object, including \verb=rotate_ranef=. We still have a few more functions to write that do not relate to the rotated random effects before we push this version to CRAN, but it is available on github.
 
 \item The paper is quite well written except that, I think, it would need extensive restructuring to introduce concepts logically in a way that requires much less second guessing. There are too many places where the purpose of concept becomes obvious a page or two later. For example, the idea and the purpose of considering W'b should be discussed before introducing Definition 1.
 
-\alnote{This is going to take some careful thought and time, and maybe some fresh eyes (I don't know where we can get these). I think we can focus on this once we address the other concerns.}
+\textbf{Response:} We have greatly restructured Section 3.2 in an effort to make the discussion clearer and more rigorous. We hope that this addresses the reviewer's comment.
+
 
 \item Definition 1 and equation (6) require some statement of the conditions required. The
 discussion preceding equation (6) is unclear. If the s-dimensional space is `given' then $J_1 (s)$ is a constant, i.e. any two matrices W that span the same column space will yield
@@ -152,7 +152,7 @@ identical values for $J_1 (s)$ . What is meant is `for any given dimension'.
 \begin{enumerate}
 \item p. 8 l. 52: V has not been previously defined.
 
-\alnote{That is a good catch by the reviews. I will have to define V.}
+\textbf{Response:} We defined $\mathbf{V}$.
 
 \item p. 9, l. 15: This might not be true with a small cluster size.
 
@@ -161,20 +161,21 @@ identical values for $J_1 (s)$ . What is meant is `for any given dimension'.
 \item p. 9, l. 38ff: The exposition would benefit greatly from some motivation at this point.
 Introducing the random vector $W^\prime \widehat{b}$ whose properties are the subject of the concept of fraction of confounding, would make the Definition 1 much easier to understand.
 
-\alnote{This will take some time.}
+\textbf{Response:} We have greatly restructured Section 3.2 in an effort to make the discussion clearer and more rigorous. We hope that this addresses the reviewer's comment.
 
 \item p.9,l.52: the  fact that $Trace((W^\prime BW)^-W^\prime AW)$ is well defined is not trivial but it would follow from subsequent discussions. I think this should be mentioned.
 
 \alnote{Do we just add a sentence similar to what the reviewer said?}
 
 \item p. 10 l. 4: `by definition' is misused here.
-\alnote{OK}
+
+\textbf{Response:} We deleted ``by definition'' to fix this issue.
 
 \item p. 10 l. 34: The development here is not rigorous. Depending on the value of s and on the
 rank of B, $(W^\prime BW )^{-1}$ might not exist. I don't think that the development makes it clear
 why this all does work. The key fact is that $span(A) \subseteq span(B)$ (indeed B-A is non-negative definite) which makes everything work, following de Leeuw (1982), even though A, B, $W^\prime AW$ and $W^\prime BW$ might be singular.
 
-\alnote{I did forget to put in this important point, though I was very aware of it from de Leeuw's work.}
+\textbf{Response:} We have rewritten Section 3.2 to be more rigorous and made sure to explicitly discuss this issue.
 
 \item p. 11 l. 16: Here too, the fact that $span(A) \subseteq span(B)$ makes things work but that is not clear in the description of the algorithm.
 
