@@ -1,6 +1,10 @@
-\begin{thebibliography}{25}
+\begin{thebibliography}{30}
 \newcommand{\enquote}[1]{``#1''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Anderson and Darling(1954)}]{adtest:1954}
+Anderson, T.~W. and Darling, D.~A. (1954), \enquote{A Test of Goodness of Fit,}
+  \textit{Journal of the American Statistical Association}, 49, 765--769.
 
 \bibitem[{Atkinson(1985)}]{Atkinson:1985}
 Atkinson, A.~C. (1985), \textit{Plots, Transformations, and Regression: An
@@ -17,6 +21,10 @@ Buja, A., Cook, D., Hofmann, H., Lawrence, M., Lee, E.-K., Swayne, D.~F., and
 \bibitem[{Butler and Louis(1992)}]{Butler:1992tx}
 Butler, S. and Louis, T. (1992), \enquote{Random effects models with
   non-parametric priors,} \textit{Statistics in Medicine}, 11, 1981--2000.
+
+\bibitem[{Cram\'{e}r(1928)}]{cramer:1928}
+Cram\'{e}r, H. (1928), \enquote{On the composition of elementary errors,}
+  \textit{Scandinavian Actuarial Journal}.
 
 \bibitem[{de~Leeuw(1982)}]{deLeeuw:1982to}
 de~Leeuw, J. (1982), \enquote{Generalized eigenvalue problems with positive
@@ -70,6 +78,11 @@ Jiang, J. (2001), \enquote{Goodness-of-fit tests for mixed model diagnostics,}
 Johnson, R.~A. and Wichern, D.~W. (2007), \textit{Applied Multivariate
   Statistical Analysis}, Upper Saddle River: Pearson, 6th ed.
 
+\bibitem[{Kolmogorov(1933)}]{kolmogorov:1933}
+Kolmogorov, A.~N. (1933), \enquote{Sulla Determinazione Empirica di una Legge
+  di Distribuzione,} \textit{Giornale dell'Istituto Italiano degli Attuari}, 4,
+  83--91.
+
 \bibitem[{Lange and Ryan(1989)}]{Lange:1989uu}
 Lange, N. and Ryan, L. (1989), \enquote{Assessing normality in random effects
   models,} \textit{The Annals of Statistics}, 17, 624--642.
@@ -83,12 +96,6 @@ Loy, A. and Hofmann, H. (2014), \enquote{HLMdiag: A Suite of Diagnostics for
   Hierarchical Linear Models in {R},} \textit{Journal of Statistical Software},
   56, 1--28.
 
-\bibitem[{McDonald et~al.(1979)McDonald, Torii, and
-  Nishisato}]{McDonald:1979ca}
-McDonald, R.~P., Torii, Y., and Nishisato, S. (1979), \enquote{Some results on
-  proper eigenvalues and eigenvectors with applications to scaling,}
-  \textit{Psychometrika}, 44, 211--227.
-
 \bibitem[{{R Core Team}(2013)}]{R}
 {R Core Team} (2013), \textit{R: A Language and Environment for Statistical
   Computing}, R Foundation for Statistical Computing, Vienna, Austria.
@@ -97,6 +104,16 @@ McDonald, R.~P., Torii, Y., and Nishisato, S. (1979), \enquote{Some results on
 Shen, W. and Louis, T.~A. (1999), \enquote{Empirical Bayes Estimation via the
   Smoothing by Roughening Approach,} \textit{Journal of Computational and
   Graphical Statistics}, 8, 800--823.
+
+\bibitem[{Smirnov(1948)}]{smirnov:1948}
+Smirnov, N. (1948), \enquote{Table for Estimating the Goodness of Fit of
+  Empirical Distributions,} \textit{The Annals of Mathematical Statistics}, 19,
+  279--281.
+
+\bibitem[{Stephens(1974)}]{stephens:1974}
+Stephens, M.~A. (1974), \enquote{EDF Statistics for Goodness of Fit and Some
+  Comparisons,} \textit{Journal of the American Statistical Association}, 69,
+  730--737.
 
 \bibitem[{Verbeke and Lesaffre(1996)}]{Verbeke:1996va}
 Verbeke, G. and Lesaffre, E. (1996), \enquote{A linear mixed-effects model with
@@ -107,6 +124,10 @@ Verbeke, G. and Lesaffre, E. (1996), \enquote{A linear mixed-effects model with
 --- (1997), \enquote{{The effect of misspecifying the random-effects
   distribution in linear mixed models for longitudinal data},}
   \textit{Computational Statistics {\&} Data Analysis}, 23, 541--556.
+
+\bibitem[{{von Mises}(1928)}]{mises:1928}
+{von Mises}, R.~E. (1928), \textit{Wahrscheinlichkeit, Statistik und Wahrheit},
+  Julius Springer.
 
 \bibitem[{Wilk and Gnanadesikan(1968)}]{Wilk:1968}
 Wilk, M.~B. and Gnanadesikan, R. (1968), \enquote{Probability Plotting Methods
