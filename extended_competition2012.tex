@@ -309,13 +309,13 @@ In the remainder of this paper we investigate the root of concern that leads to 
 \section{Assessing the distribution of the random effects}\label{sec:methods}
 %----------------------------------------------------------------------------------
 
-In this section we develop the rotated random effects and discuss computational and practical issues associated with their use. Before this discussion we present the model and notation used throughout the paper. Additionally, we review the problem of confounding which can be seen in the formulas for the residuals.
+%In this section we develop the rotated random effects and discuss computational and practical issues associated with their use. Before this discussion we present the model and notation used throughout the paper. Additionally, we review the problem of confounding which can be seen in the formulas for the residuals.
 
 %----------------------------------------------------------------------------------
 \subsection{Model notation and residuals}\label{sec:resid}
 %\subsection{Hierarchical linear models and residuals}\label{sec:resid}
 %----------------------------------------------------------------------------------
-
+\noindent
 The general stacked representation of the hierarchical linear model is given by
 %
 \begin{eqnarray}\label{eq:hlm}
@@ -336,7 +336,7 @@ Using this specification, the predicted error terms and random effects are given
 \end{align}
 %
 where $\bm{P} = \bm{V}\inv( \bm{I} - \bm{X} (\bm{X}\trans \bm{V}\inv \bm{X})\inv \bm{X}\trans \bm{V}\inv)$ \al{and $\bm{V} = \bm{ZDZ}\trans + \bm{R}$}. 
-\al{Equations \eqref{eq:resid1} and \eqref{eq:resid2} reveal that the distributions of the predicted random effects and error terms are interrelated---i.e., the distribution of  the predicted random effects depends on the distribution of the error terms and the distribution of the error terms depends on the distribution of the predicted random effects. Since each residual quantity depends on the other, the predicted error terms and random effects are said to be confounded  \citep{HildenMinton:1995wh}.}
+\al{Equations \eqref{eq:resid1} and \eqref{eq:resid2} reveal that the distributions of the predicted random effects and error terms are interrelated---i.e.~the distribution of  the predicted random effects depends on the distribution of the error terms and vice versa. As each residual quantity depends on the other, the predicted error terms and random effects are said to be confounded  \citep{HildenMinton:1995wh}.}
 Additionally, it is easily seen that both \eqref{eq:resid1} and \eqref{eq:resid2} lead to the analysis of correlated and potentially heteroscedastic disturbances as $\var(\widehat{\bm{\varepsilon}}) = \bm{RPR}$ and $\var(\widehat{\bm{b}}) = \bm{DZ}\trans \bm{PZD}$.
 The use of standardized residuals can correct the latter issue, but does not address the fact that the residuals are interrelated. While problems may be expected at both levels of the model based on \eqref{eq:resid1} and \eqref{eq:resid2}, we have found that the interpretation of Q-Q plots of the standardized predicted error terms
 %
@@ -344,20 +344,29 @@ The use of standardized residuals can correct the latter issue, but does not add
 \bm{z}_{\varepsilon} =  \text{diag} \left(\bm{RPR} \right)^{-1/2} \widehat{\bm{\varepsilon}}
 \]
 %
-is unaffected by this interrelationship \al{in the situations that we have considered (see section 1 of the supplement for simulation results). XXX Reviewer 2 thinks that this may not hold for small cluster sizes, so I am trying to soften the language just a bit. We didn't exhaust all possibilities in our simulation, but the results we have support this statement} This is not the case with the standardized random effects.  When the degree of pooling is high---as it is in the above radon example, and often is in practice---interpretation of the predicted random effects cannot be separated from the distribution of the error terms. Detailed simulation results documenting the utility of  these residuals are available in the supplementary material. \al{XXX With the comment above, this sentence now seems out of place...}
+is unaffected by this interrelationship \al{in the situations that we have considered (see section 1 of the supplement for simulation results). %XXX Reviewer 2 thinks that this may not hold for small cluster sizes, so I am trying to soften the language just a bit. We didn't exhaust all possibilities in our simulation, but the results we have support this statement
+} This is not the case with the standardized random effects.  When the degree of pooling is high---as it is in the above radon example, and often is in practice---interpretation of the predicted random effects cannot be separated from the distribution of the error terms. 
+%Detailed simulation results documenting the utility of  these residuals are available in the supplementary material. \al{XXX With the comment above, this sentence now seems out of place...}
 
 
 
 %----------------------------------------------------------------------------------
 \subsection{Rotating the random effects}\label{sec:rotate}
 %----------------------------------------------------------------------------------
+\noindent
+\hh{In section~\ref{sec:ex} we have seen that confounding between the different levels of a hierarchical linear model as specified in~\eqref{eq:hlm} leads to erroneous conclusions with respect to the distributions of error terms and random effects. In order to reduce confounding between the levels, we propose an assessment of the residual structure based on an $s$-dimensional rotation of the random intercept of the form $\bm{W}^{\prime} \widehat{\bm{b}}$. This rotation is chosen such that it substantially reduces the amount of confounding. The resulting rotated random intercepts are standardized, uncorrelated, and homoscedastic residual quantities, which makes them easily assessable with standard tools. In our discussion (and notation) we focus on a two-level model with a single random effect for ease of explanation. However, this approach is not restricted to a two-level model; an extension of the method is given at the end of the section.
+}
+%\al{
+%
+%%In order to correct residuals for the impact of confounding, we propose using a linear transformation, $\bm{W}^{\prime} \widehat{\bm{b}}$, of the predicted random effects that substantially reduces the amount of confounding. This approach enables the construction of Q-Q plots which are arguably the most familiar graphical depictions for distributional assessment. Additionally, the rotation of the random effects yield residuals that are standardized, uncorrelated, and homoscedastic.
+%
+%To begin, we will consider a two-level random intercept model, a special case of model \eqref{eq:hlm}. When assessing the plausibility of normality of the random intercept it is tempting to simply construct a Q-Q plot of the predicted random effects; however, we know that this approach is flawed. To address the issue of confounding, we propose the construction of Q-Q plots of an $s$-dimensional rotation of the random intercept of the form $\bm{W}^{\prime} \widehat{\bm{b}}$ that  substantially reduces the amount of confounding. The rotated random intercepts are easily plotted and are standardized, uncorrelated, and homoscedastic residual quantities. While we focus our discussion (and notation) on a two-level model with a single random effect for ease of explanation, we describe how to extend this method at the end of this section.
+%}
+%\al{
+%First, we must define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}. 
+
+\hh{As a measure of confounding between the levels of a hierarchical model of the form (2), we introduce FC, the {\it fraction of confounding}:}
 \al{
-
-%In order to correct residuals for the impact of confounding, we propose using a linear transformation, $\bm{W}^{\prime} \widehat{\bm{b}}$, of the predicted random effects that substantially reduces the amount of confounding. This approach enables the construction of Q-Q plots which are arguably the most familiar graphical depictions for distributional assessment. Additionally, the rotation of the random effects yield residuals that are standardized, uncorrelated, and homoscedastic.
-
-To begin, we will consider a two-level random intercept model, a special case of model \eqref{eq:hlm}. When assessing the plausibility of normality of the random intercept it is tempting to simply construct a Q-Q plot of the predicted random effects; however, we know that this approach is flawed. To address the issue of confounding, we propose the construction of Q-Q plots of an $s$-dimensional rotation of the random intercept of the form $\bm{W}^{\prime} \widehat{\bm{b}}$ that  substantially reduces the amount of confounding. The rotated random intercepts are easily plotted and are standardized, uncorrelated, and homoscedastic residual quantities. While we focus our discussion (and notation) on a two-level model with a single random effect for ease of explanation, we describe how to extend this method at the end of this section.
-
-First, we must define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}. 
 \begin{definition}[Fraction of confounding] 
 Let $\bm{b}$ denote a vector of $q$ random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
 \begin{equation}\label{eq:fc2}
@@ -368,18 +377,19 @@ Let $\bm{b}$ denote a vector of $q$ random effects and $\widehat{\bm{b}}$ its pr
 where $\bm{B}$ is the covariance structure of $\bm b$, $\bm{B} = \var(\widehat{\bm{b}})$, and $\bm{A}$ is the conditional covariance structure of  $\widehat{\bm{b}}$ given $\bm{b}$,  i.e. $\bm{A} = \var(\widehat{\bm{b}} | \bm{b} )$.
 \end{definition}
 \noindent
-Note that both $\bm{A}$ and $\bm{B}$ are  positive semidefinite matrices. It is not obvious that $\tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right)$ is well defined, but the discussion that follows will clarify this point. XXX This was recommended by reviewer \#2 but it seems forced...
+Note that both $\bm{A}$ and $\bm{B}$ are  positive semidefinite matrices. While it is not immediately obvious that FC % $\tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right)$ 
+is well defined,  the following discussion will clarify this point. %XXX This was recommended by reviewer \#2 but it seems forced...
 
+Generally, $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while a value of FC = 0 indicates that no confounding is present. 
 
-The fraction of confounding measures the contribution of the error terms  to the variance of the random effects. $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while 0 indicates no confounding. Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects.
-
+Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects \hh{as proposed by  \cite{HildenMinton:1995wh}. XXX is that correct?}
 
 %As outlined above, the confounded nature of the predicted random effects renders graphical explorations of these residuals inadequate for the assessment of distributional assumptions. 
 %
 %In order to graphically assess the distributional assumption made on the random effects we propose a reduced set ($s$-dimensional rotation) of rotated random effects, $\bm{W}^{\prime} \widehat{\bm{b}}$, by minimizing the amount of confounding present.  
 
 
-For any given dimension, the linear combination $\bm{W} \in \mathbb{R}^{q \times s}$ that minimizes \eqref{eq:fc2} also minimizes
+For any given dimension $s$, the linear combination $\bm{W} \in \mathbb{R}^{q \times s}$ that minimizes \eqref{eq:fc2} also minimizes
 %
 \begin{equation}\label{eq:minimize}
 J_1(s) = \tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\right) \right)
@@ -395,7 +405,7 @@ Mathematically, this problem is solved using the generalized eigenvalue decompos
 %
 where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}. 
 %thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. 
-\cite{deLeeuw:1982to} shows that simultaneous diagnoaliztion of $\bm{A}$ and $\bm{B}$ solves this generalized eigenvalue problem if the null space of $\bm{B}$ is a subspace of the null space of $\bm{A}$, for which a sufficient condition is that $\bm{B} - \bm{A}$ be nonnegative definite. In our problem 
+\cite{deLeeuw:1982to} shows that simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ solves this generalized eigenvalue problem if the null space of $\bm{B}$ is a subspace of the null space of $\bm{A}$, for which a sufficient condition is that $\bm{B} - \bm{A}$ be nonnegative definite. In our problem 
 \[
 	\bm{A} =  \var(\widehat{\bm{b}} | \bm{b} ) = \bm{RPZDZ}^\prime \bm{PR}
 \]
