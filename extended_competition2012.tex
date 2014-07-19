@@ -405,7 +405,8 @@ Mathematically, this problem is solved using the generalized eigenvalue decompos
 %
 where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}. 
 %thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. 
-\cite{deLeeuw:1982to} shows that simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ solves this generalized eigenvalue problem if the null space of $\bm{B}$ is a subspace of the null space of $\bm{A}$, for which a sufficient condition is that $\bm{B} - \bm{A}$ be nonnegative definite. In our problem 
+\hh{Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ \citep{deLeeuw:1982to} can be used to solve this problem, given that the kernel of $\bm{B}$ is a subspace of the kernel of $\bm{A}$.
+Equivalent to that, we have to show that the difference $\bm{B} - \bm{A}$ is nonnegative definite:
 \[
 	\bm{A} =  \var(\widehat{\bm{b}} | \bm{b} ) = \bm{RPZDZ}^\prime \bm{PR}
 \]
@@ -414,6 +415,18 @@ and
 	\bm{B} = \var(\widehat{\bm{b}}) =  \bm{RPR} =  \bm{RPVPR}  = \bm{RPRPR} + \bm{RPZDZ}^\prime\bm{PR},
 \]
 so $\bm{B}-\bm{A} =  \bm{RPRPR}$ is nonnegative definite.
+}
+
+%
+%\cite{deLeeuw:1982to} shows that simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ solves this generalized eigenvalue problem if the null space of $\bm{B}$ is a subspace of the null space of $\bm{A}$, for which a sufficient condition is that $\bm{B} - \bm{A}$ be nonnegative definite. In our problem 
+%\[
+%	\bm{A} =  \var(\widehat{\bm{b}} | \bm{b} ) = \bm{RPZDZ}^\prime \bm{PR}
+%\]
+%and
+%\[
+%	\bm{B} = \var(\widehat{\bm{b}}) =  \bm{RPR} =  \bm{RPVPR}  = \bm{RPRPR} + \bm{RPZDZ}^\prime\bm{PR},
+%\]
+%so $\bm{B}-\bm{A} =  \bm{RPRPR}$ is nonnegative definite.
 
 Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ requires $\bm{W}$ to be $\bm{B}$-orthogonal, so the optimal $\bm{W}$ is found to be
 %
@@ -429,11 +442,13 @@ Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ requires $\bm{W}$ to be $\
 \tr\left( \bm{W\trans A W} \right).
 \end{equation}
 %
-The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$, which are standardized, uncorrelated, and homoscedastic (see the appendix for a proof). In the interest of space we have relegated a detailed overview of the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ to the appendix (XXX supplementary materials?) as it will be familiar to many as the standard canonical transformation used in multivariate regression (XXX this was pointed out by the AE, is this OK to add?).
+The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$, which are standardized, uncorrelated, and homoscedastic (see the appendix for a proof \hh{and a detailed overview of simultaneous diagonalization}). % In the interest of space we have relegated a detailed overview of the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ to the appendix (XXX supplementary materials?) 
+Simultaneous diagonalization will be familiar to many as the standard canonical transformation used in multivariate regression. % (XXX this was pointed out by the AE, is this OK to add?).
 
 
-\paragraph{Selecting the dimension of the subspace.}
-Selection of the dimension of the subspace spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. Since our ultimate objective is distributional assessment, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function (e.g., the Anderson-Darling test for normality) associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the scree plot used to select the number of principal components. To illustrate the use of this plot we simulate two simple random intercept models with a group-level predictor:   model $M1$ has 40 groups of 30 observations and 10 groups of 5 observations;   model $M2$ also has 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). %\todo[inline]{These two models are very similar. Go to a more extreme in the second model?}
+\paragraph{Selection of the dimension of the subspace}
+ spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. As our ultimate objective is an assessment of the distribution, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function % (e.g., the Anderson-Darling test for normality) 
+ associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the concept of a scree plot used to select the number of principal components. To illustrate the use of this plot we simulate two simple random intercept models with a group-level predictor:   model $M1$ has 40 groups of 30 observations and 10 groups of 5 observations;   model $M2$ also has 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). %\todo[inline]{These two models are very similar. Go to a more extreme in the second model?}
  Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. For both models, there is no decrease in the fraction of confounding for a one-dimensional reduction because a {one-dimensional reduction} simply adjusts for that rank deficiency of the covariance matrix, which can be thought of in terms of adjusting for the effective degrees of freedom. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$. { Additionally, we see that the elbow in the plot for model $M2$ is less pronounced. This occurs because the groups sizes are more unbalanced so the difference between the large and small group sizes is reduced.}
  
 % \al{Talk about the differences here and why I chose these examples. Also talk about the loss of 1 d.f. More discussion here.}
