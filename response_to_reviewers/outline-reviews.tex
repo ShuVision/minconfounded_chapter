@@ -31,6 +31,8 @@
 \item There's a general problem here with the assessment of normality from QQ plots and from standard hypothesis tests (AD, CVM, KS). Even for the classical LM, the latter are overly sensitive to minor departures from strict normality which does not generally compromise scientific inference, while standard QQ plots tend to be sensitive mainly to differences in the tails, and it is harder to distinguish between a general pattern of departure and one compromised by a few aberrant points. One simple way to correct this last is to plot a detrended version of the QQ plot, plotting the difference between the data quantile and the standard normal quantile on the ordinate, which has the effect
 of making the reference line horizontal and magnifying the vertical scale, making the pattern of departure more visible. As well, there is no discussion of the visual criteria for rejecting normality based on the QQ plots, and the simulation studies make use only of the AD tests without further comment.
 
+\textbf{Response:}
+
 \alnote{It sounds like the AE wants the detrended QQ plots used, or at least discussed, in the paper. We can certainly do this, but it brings up the question of where to the MTurk study. Also, this comment has made me think that perhaps we need to add more to the MTurk study to look into the type of departure along with the type of QQ plot. Since we focused on a $t$ distribution we focused on the tails of the distribution. Adding other differences in distributional shape to the study would help it seem more complete in its comparison of the QQ plot designs. }
 
 \alnote{How can we discuss the visual criteria for rejection? I was assuming that the reader had enough experience with QQ plots, but wanted to point out that experience was not enough.}
@@ -39,12 +41,8 @@ of making the reference line horizontal and magnifying the vertical scale, makin
 
 \item More generally in connection with scientific inference---tests and confidence intervals for the random effects themselves---there needs to be some discussion or results related to the impact of non-normality on these tests, for which normality may be necessary theoretically but perhaps of lesser practical importance. In connection with the simulation study, including cases with $\sigma^2_{b_0} = 0, \ \sigma^2_{b_0} = 0$ might be one way to address this in the current study; or else cite some literature on this question. This is similar to the point raised by Reviewer 2 regarding consequences of violation of normality.
 
-\alnote{We can address this comment in two ways: (1) by running a simulation study; (2) citing literature. Some relevant citations are:\\[1em]
+\textbf{Response:} We hope that we clarified the consequences by pointing to some existing literature and summarizing the findings more clearly. The main consequence of misspecification of the random effects distribution is that it can invalidate prediction intervals for quantities involving the random effects (such as mixed effects in small area estimation which was discussed by Jiang, 2001) and inference for the variance components in the covariance matrix of the random effects (which was discussed, along with an adjustment, by Verbeke and Lesaffre, 1997).
 
- Jiang, J. (2001). Goodness-of-fit tests for mixed model diagnostics. The Annals of Statistics, 29(4), 1137--1164. doi:10.1214/aos/1013699997.  Especially the discussion in paragraph 2 of section 1.\\[1em]
- 
-The impact of distributional misspecification is felt in the prediction of unobserved units, specifically in the construction of prediction intervals. There are nonparametric approaches to this problem (c.f., Jiang and Zhang, 2002), but we don't need to focus on these at all.
-}
 
 \item In the discussion (or earlier), you need to provide some more insight about why reduced-rank rotated effects are a reasonable thing to do.
 
@@ -55,9 +53,13 @@ The impact of distributional misspecification is felt in the prediction of unobs
 \begin{enumerate}
 \item p3 / l3: define ``shrinkage''
 
+\textbf{Response:} We have added a brief definition.
+
 \item p6 / l5: observed Q-Q plot (panel $12 + 2^2$) -- why $2^2$? Anyway, this panel does seem to stand out vs. the rest, with a few exceptions.
 
-\textbf{Response:} Here we use $12 + 2^2$ to inform the reader which panel was created using the observed random slopes. We use this notation in an effort to allow readers who explore figure 4 first to do so without knowing which panel is constructed using the observed random effect. The expression simply hides the answer until after referring to the plot, or solving this simple expression. We believe that this technique is important to the presentation of these lineup plots, so no change was made.
+\textbf{Response:} We used $12 + 2^2$ to inform the reader which panel was created using the observed random slopes. We use this notation in an effort to allow readers who explore figure 4 first to do so without knowing which panel is constructed using the observed random effect. The expression simply hides the answer until after referring to the plot, or solving this simple expression. We believe that this technique is important to the presentation of these lineup plots, so no change was made.
+
+Upon further reflection, we realized the potential problem with the expression $12+2^2$, since panels 12 and 4 both deviate further from unity than the true panel, 16. We have changed the expression to $3^2+7$ to avoid any unintentional bias that may have imposed on the reader.
 
 \item p6 / l -2 \& fig 4: ``none of the null plots conform ...'' Well, all are + skewed, but some panels (1, 2, 17, 18, 19) seem quite close, at least with this representation. There seems to be an implicit, but unstated criterion here that none of the points can be outside the (undefined, but probably pointwise) envelope used in this figure.
 
@@ -73,11 +75,11 @@ The impact of distributional misspecification is felt in the prediction of unobs
 
 \item p 11/ Algorithm 1: This is the standard canonical transformation used widely in multivariate regression, MANOVA, canonical correlation, and need not take up space by being stated as an algorithm.
 
-\textbf{Response:} Thank you for this suggestion. We have moved this procedure to the appendix.
+\textbf{Response:} Thank you for this suggestion. We have moved this procedure to the appendix so it does not take up additional space. It could also be moved to the supplemental materials.
 
 \item p 11 / l -1: eigenvalues of $A^*$, $U_s$, i.e., minimizing (8), \sout{making} taking
 
-\textbf{Response:} 
+\textbf{Response:} We rewrote much of this section, so this is no longer an issue.
 
 \item p 14 / Fig 6 caption: ``calculated where Q for a simulated random ...'' --- something wrong
 here.
@@ -113,11 +115,11 @@ Consider an extreme case, with 50 groups with 1000 observations each and 50 grou
 \begin{enumerate}
 \item It should briefly contextualize the role of distributional tests among other types of diagnostics based on residuals.
 
-\alnote{Is this asking for a brief lit review of these tests?}
+\textbf{Response:} We have added a brief discussion of tests for normality.
 
 \item It would be desirable to address the issue of the consequences of violating normality on inference in the model -- not just testing normality for its own sake. Under what circumstances would it be crucial to verify normality and when would its violation be relatively innocuous.
 
-\textbf{Response:} We hope that we clarified the consequences by pointing to some existing literature and summarizing the findings more clearly. The main consequence of misspecification of the random effects distribution is that it can invalidate prediction intervals for quantities involving the random effects (such as mixed effects in small area estimation which was discussed by Jiang, 2001) and inference for the variance components in the covariance matrix of the random effects (which was discussed, along with an adjustment by Verbeke and Lesaffre 1997).
+\textbf{Response:} We hope that we clarified the consequences by pointing to some existing literature and summarizing the findings more clearly. The main consequence of misspecification of the random effects distribution is that it can invalidate prediction intervals for quantities involving the random effects (such as mixed effects in small area estimation which was discussed by Jiang, 2001) and inference for the variance components in the covariance matrix of the random effects (which was discussed, along with an adjustment, by Verbeke and Lesaffre, 1997).
 
 \item The theory in this paper is based on the linear model 
 $$Y = X \beta + Z b + \varepsilon,\ b \sim N(0,D)\  \bot \  \varepsilon \sim N(0,R)$$
@@ -126,7 +128,7 @@ The implementation of diagnostics in this paper is based on the lme4 package who
 The lme function in the nlme package is much more general. On the R side, the lme4
 package only allows $R = \sigma^2 I$ while the nlme package allows very rich R-side modeling including ARMA models, spatial correlation and heteroskedastic models, etc. Also, lme allows a great deal of flexibility in the G(D)-side model (non-parametric smoothing splines, heteroscedastic models, etc). Tantalizingly, the methods developed in this paper appear to be fully applicable to these lme models. It's a pity that the diagnostics are not extended to lme since whitening would work even for non-independent observations within clusters. Normality diagnostics for the random effects generating smoothing splines would be particularly interesting where they could serve as a diagnostic for the appropriateness of the spline basis. Thus implementing the methods for lme as well as lmer would extend their applicability considerably.
 
-\textbf{Response:} We absolutely agree that implementing the methods for lme in addition to lmer extends their applicability. We had not implemented many of the methods provided in HLMdiag for lme objects at the time of our first submission. Since then, we have extended most of the diagnostic functions in HLMdiag to work with lmd object, including \verb=rotate_ranef=. We still have a few more functions to write that do not relate to the rotated random effects before we push this version to CRAN, but it is available on github.
+\textbf{Response:} We absolutely agree that implementing the methods for lme in addition to lmer extends their applicability. We had not implemented many of the methods provided in HLMdiag for lme objects at the time of our first submission. Since then, we have extended most of the diagnostic functions in HLMdiag to work with lme objects, including \verb=rotate_ranef=. We still have a few more functions to write that do not relate to the rotated random effects before we push this version to CRAN, but it is available on github.
 
 \item The paper is quite well written except that, I think, it would need extensive restructuring to introduce concepts logically in a way that requires much less second guessing. There are too many places where the purpose of concept becomes obvious a page or two later. For example, the idea and the purpose of considering W'b should be discussed before introducing Definition 1.
 
@@ -137,13 +139,16 @@ package only allows $R = \sigma^2 I$ while the nlme package allows very rich R-s
 discussion preceding equation (6) is unclear. If the s-dimensional space is `given' then $J_1 (s)$ is a constant, i.e. any two matrices W that span the same column space will yield
 identical values for $J_1 (s)$ . What is meant is `for any given dimension'.
 
+\textbf{Response:} We have made the suggested change.
+
 \item There are many ways of defining a fraction of confounding using different symmetric functions of the relative eigenvalues of $WAW^\prime$ to $WBW^\prime$. There should be a discussion of the decision to use the trace and the possibility of extending the notion using different symmetric functions.
 
 \alnote{Something for the discussion section?}
 
 \item The approach takes D and R as known although, generally, there might be very little information on some aspects of D. What are the consequences of using this approach given that D and R are estimated?
 
-\alnote{I was hoping that we wouldn't be asked this question. In the current paper we acknowledge that we are estimating the covariance matrices, but we leave the rest (and potential use of robust estimates) for future work. One way we could address this is to actually run the simulations using fixed R and D, then we would have something to compare the case where we estimate the matrices (which is what we currently present). }
+\textbf{Response:} Our original simulation study did not assume that D and R were fixed, but we have since run a simulation study where this was the case. The results between the studies are quite similar, so we decided to retain the original simulation study in the paper and add the additional simulation results to the supplement. Additionally, we added a statement explaining this choice at the bottom of page 16.
+
 
 \end{enumerate}
 
@@ -156,7 +161,7 @@ identical values for $J_1 (s)$ . What is meant is `for any given dimension'.
 
 \item p. 9, l. 15: This might not be true with a small cluster size.
 
-\alnote{I think the issue is that I was too general here. I investigated numerous situations and did not find problems when I used standardized predicted error terms. Of course it was not an exhaustive study so adding in some caveat should make this clear.}
+\textbf{Response:} We reworded this sentence so that it indicates that this is the case in situations that we have considered, which have included some small cluster sizes but was not an exhaustive search.
 
 \item p. 9, l. 38ff: The exposition would benefit greatly from some motivation at this point.
 Introducing the random vector $W^\prime \widehat{b}$ whose properties are the subject of the concept of fraction of confounding, would make the Definition 1 much easier to understand.
@@ -165,7 +170,7 @@ Introducing the random vector $W^\prime \widehat{b}$ whose properties are the su
 
 \item p.9,l.52: the  fact that $Trace((W^\prime BW)^-W^\prime AW)$ is well defined is not trivial but it would follow from subsequent discussions. I think this should be mentioned.
 
-\alnote{Do we just add a sentence similar to what the reviewer said?}
+\textbf{Response:} We have added such a statement.
 
 \item p. 10 l. 4: `by definition' is misused here.
 
@@ -178,6 +183,8 @@ why this all does work. The key fact is that $span(A) \subseteq span(B)$ (indeed
 \textbf{Response:} We have rewritten Section 3.2 to be more rigorous and made sure to explicitly discuss this issue.
 
 \item p. 11 l. 16: Here too, the fact that $span(A) \subseteq span(B)$ makes things work but that is not clear in the description of the algorithm.
+
+\textbf{Response:} We have since moved this to the appendix, but did add a clarification to resolve this issue.
 
 \item p. 15 l.14: It might be helpful for many readers to explain why this is reasonable: i.e. that the predictor variables can be transformed affinely to make this true. However, this also suggests that these methods would work best if X is transformed to achieve a nearly diagonal D matrix. Perhaps this should be discussed.
 
