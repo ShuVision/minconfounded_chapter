@@ -1,122 +1,3 @@
-bootMer
-library(lme4)
-library(HLMdiag)
-install.packages("HLMdiag")
-library(lme4)
-library(HLMdiag)
-library(HLMdiag)
-library(lme4)
-radon <- read.csv("full_rank_radon.csv")
-ls()
-dir()
-radon <- read.csv("full_rank_radon.csv")
-sigma.err <- c(1, 2, 1)
-sigma.b   <- c(1, 1, 2)
-(fm.ml <- lmer(log.radon ~ basement + house.uranium + uranium + (1 | county) + (0 + house.uranium | county), data = radon, REML = FALSE))
-head(radon)
-dim(radon)
-radon <- read.csv("radon_for_sims.csv.csv")
-dir()
-radon <- read.csv("radon_for_sims.csv")
-## Variance structures#
-sigma.err <- c(1, 2, 1)#
-sigma.b   <- c(1, 1, 2)#
-#
-## fitted model using ML#
-(fm.ml <- lmer(log.radon ~ basement + house.uranium + uranium + (1 | county) + (0 + house.uranium | county), data = radon, REML = FALSE))
-summary(fm.ml)
-ls()
-fm <- fm.ml
-fm@y
-?getME
-getME(fm, "Z")
-?getME
-getME(fm, "Zt")
-BlockZ <- function(object) {#
-  Z <- getME(object, "Z")#
-  grp.size <- table(object@flist)#
-  ngrps <- length(grp.size)#
-  nranef <- dim(ranef(object)[[1]])[2]#
-  base.ord <- seq(from = 1, by = ngrps, length.out = nranef)#
-  ord <- base.ord + rep(0:(ngrps - 1), each = nranef)#
-  perm.mat <- t(as(ord, "pMatrix"))#
-  return(Z %*% perm.mat)#
-}
-BlockZ(fm)
-Z <- BlockZ(fm)
-head(Z)
-.model <- fm
-y <- getME(.model, "y")
-X <- getME(.model, "X")
-Z <- BlockZ(.model)
-n <- nrow(X)
-nranef <- ncol(ranef(.model)[[1]])
-ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))
-nranef
-ngrps
-sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)
-sig0
-sigma(.model)
-sig0^2 * crossprod( .model@A )
-.model@A
-str(lmerMod)
-str(/model)
-str(.model)
-?getME
-ZDZt <- sig0^2 * crossprod( getME(.model, "A") )
-ZDZt
-head(ZDZt)
-R    <- Diagonal( n = n, x = sig0^2 )
-R
-D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )
-V    <- Diagonal(n) + ZDZt
-D
-R
-V
-head(V)
-VarCorr(.model)
-VarCorr(.model)^2
-?VarCorr
-as.data.frame(VarCorr(.model))
-0.14555358^2
-0.14555358^2 * sigma(.model)
-print(VarCorr(.model),comp=c("Variance"))
-V.chol <- chol( V )
-Vinv   <- chol2inv( V.chol )
-betahat <- solve(t(X) %*% Vinv %*% X) %*% t(X) %*% Vinv %*% y
-mr <- y - X %*% betahat
-bvec <- D %*% t(Z) %*% Vinv %*% mr
-bvec
-bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan
-bse.diag <- diag(bse)
-rvec <- bvec / sqrt(bse.diag)
-if(nranef > 1) {#
-  	rmat <- matrix(rvec, ncol = nranef, byrow = TRUE)#
-    return(rmat)#
-  } else {#
-  	return(rvec)#
-  }
-rmat
-73/72
-73/.6
-73.4/.6
-73.4/.605
-248.88 / (3848.88-248.88)
-load("/Users/loya/Documents/eresids-chapter/simulations/paper_sim_study/small_sim/small_sim_residuals.RData")
-ls()
-level2.resids
-class(level2.resids)
-60/12
-80/12
-16*12
-192/6
-6-/12
-60/12
-192/5
-6*60
-80/12
-60/12
-library(mnormt)
 ?mnormt
 ?rmt
 ?mvtnorm
@@ -139,13 +20,10 @@ cov(jsim)
 sqrt(cov(jsim))
 jsim <- rmt(n=1000, mean = mu, S = Sigma, df = nu)
 sqrt(cov(jsim))
-sqrt(cov(jsim))
-sqrt(cov(jsim))
 jsim <- rmt(n=10000, mean = mu, S = Sigma, df = nu)
 sqrt(cov(jsim))
 S * 3
 Sigma*3
-cov(jsim)
 cov(jsim)
 jsim <- rmt(n=10000, mean = mu, S = Sigma, df = nu)
 cov(jsim)
@@ -438,13 +316,6 @@ test.statistic.langeryan <- function(.model, column) {#
 	stat <- ifelse(class(stat) == "try-error", NA, stat)#
 	return(stat)#
 }
-test.statistic.langeryan <- function(.model, column) {#
-	r <- lev2.langeryan.resid(.model)[,column]#
-	w <- lev2.marginal.var(.model)[,column]#
-	stat <- try(lillie.test.stat(x = r, weights = w))#
-	stat <- ifelse(class(stat) == "try-error", NA, stat)#
-	return(stat)#
-}
 normal_lr_stats  <- sapply(null.models, test.statistic.langeryan, column = 1)
 normal_lr_stats  <- sapply(normal_refit, test.statistic.langeryan, column = 1)
 ## Function calculating the marginal variance of the random effects#
@@ -558,3 +429,371 @@ b0_heavy_lr_stats  <- sapply(heavy_refit, test.statistic.langeryan, column = 1)
 b1_heavy_lr_stats  <- sapply(heavy_refit, test.statistic.langeryan, column = 1)
 b0_skewed_lr_stats  <- sapply(skewed_refit, test.statistic.langeryan, column = 1)
 b1_skewed_lr_stats  <- sapply(skewed_refit, test.statistic.langeryan, column = 1)
+## Load packages#
+library(ggplot2)   # for plotting#
+library(grid)      # for plotting#
+library(maps)      # for MN map#
+library(nullabor)  # for lineup#
+library(HLMdiag)   # for Q-Q plots#
+library(plyr)      # for data manipulation#
+library(reshape2)  # for data manipulation#
+library(stringr)   # for string manipulation
+radon.data <- read.csv("original_radon.csv")
+srrs2 <- read.table ("srrs2.dat", header=T, sep=",")
+## Restrict attention to Minnesota#
+mn <- subset(srrs2, state=="MN")
+## clean names of counties: #
+## lower case and remove all white space at the end of names#
+mn$county <- tolower(as.character(mn$county))#
+mn$county <- gsub(" +$", "", as.character(mn$county))#
+#
+counties <- map_data("county")#
+#
+## restrict to minnesota#
+counties <- subset(counties, region=="minnesota")#
+counties$region <- counties$subregion # no point in keeping the regions#
+#
+## county level summary of radon data#
+library(plyr)#
+mn <- cbind(mn, uranium = radon.data$uranium)#
+counties.stat <- ddply(mn, .(county), summarize, #
+					 n=sum(complete.cases(activity)),#
+                     radon=mean(activity, na.rm=T),#
+                    sdradon=sd(activity, na.rm=T),#
+                    uranium=unique(uranium))#
+#
+### Figure 1#
+ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=radon), map = counties) + #
+  scale_fill_gradient("radon activity\n(log pCi/L)") + #
+  expand_limits(x = counties$long, y = counties$lat) + #
+  xlab("longitude") + ylab("latitude") + coord_map() + #
+  theme(#
+  	axis.text.x = element_blank(), #
+  	axis.text.y = element_blank(),#
+  	axis.title.x = element_blank(), #
+  	axis.title.y = element_blank(),#
+  	axis.ticks = element_line(colour=rgb(0,0,0,alpha=0)),#
+  	panel.background =  element_blank(),#
+  	panel.grid.major =  element_blank(),#
+  	panel.grid.minor =  element_blank())
+install.packages("maps")
+## clean names of counties: #
+## lower case and remove all white space at the end of names#
+mn$county <- tolower(as.character(mn$county))#
+mn$county <- gsub(" +$", "", as.character(mn$county))#
+#
+counties <- map_data("county")#
+#
+## restrict to minnesota#
+counties <- subset(counties, region=="minnesota")#
+counties$region <- counties$subregion # no point in keeping the regions#
+#
+## county level summary of radon data#
+library(plyr)#
+mn <- cbind(mn, uranium = radon.data$uranium)#
+counties.stat <- ddply(mn, .(county), summarize, #
+					 n=sum(complete.cases(activity)),#
+                     radon=mean(activity, na.rm=T),#
+                    sdradon=sd(activity, na.rm=T),#
+                    uranium=unique(uranium))#
+#
+### Figure 1#
+ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=radon), map = counties) + #
+  scale_fill_gradient("radon activity\n(log pCi/L)") + #
+  expand_limits(x = counties$long, y = counties$lat) + #
+  xlab("longitude") + ylab("latitude") + coord_map() + #
+  theme(#
+  	axis.text.x = element_blank(), #
+  	axis.text.y = element_blank(),#
+  	axis.title.x = element_blank(), #
+  	axis.title.y = element_blank(),#
+  	axis.ticks = element_line(colour=rgb(0,0,0,alpha=0)),#
+  	panel.background =  element_blank(),#
+  	panel.grid.major =  element_blank(),#
+  	panel.grid.minor =  element_blank())
+install.packages("mapproj")
+## clean names of counties: #
+## lower case and remove all white space at the end of names#
+mn$county <- tolower(as.character(mn$county))#
+mn$county <- gsub(" +$", "", as.character(mn$county))#
+#
+counties <- map_data("county")#
+#
+## restrict to minnesota#
+counties <- subset(counties, region=="minnesota")#
+counties$region <- counties$subregion # no point in keeping the regions#
+#
+## county level summary of radon data#
+library(plyr)#
+mn <- cbind(mn, uranium = radon.data$uranium)#
+counties.stat <- ddply(mn, .(county), summarize, #
+					 n=sum(complete.cases(activity)),#
+                     radon=mean(activity, na.rm=T),#
+                    sdradon=sd(activity, na.rm=T),#
+                    uranium=unique(uranium))#
+#
+### Figure 1#
+ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=radon), map = counties) + #
+  scale_fill_gradient("radon activity\n(log pCi/L)") + #
+  expand_limits(x = counties$long, y = counties$lat) + #
+  xlab("longitude") + ylab("latitude") + coord_map() + #
+  theme(#
+  	axis.text.x = element_blank(), #
+  	axis.text.y = element_blank(),#
+  	axis.title.x = element_blank(), #
+  	axis.title.y = element_blank(),#
+  	axis.ticks = element_line(colour=rgb(0,0,0,alpha=0)),#
+  	panel.background =  element_blank(),#
+  	panel.grid.major =  element_blank(),#
+  	panel.grid.minor =  element_blank())
+## Restrict attention to two counties#
+twocounties <- subset(mn, county %in% c("hennepin", "winona"))#
+twocounties$basement <- twocounties$floor==0#
+tc.stat <- ddply(twocounties, .(county, basement), summarise, n=length(activity), sd=sd(activity)/length(activity), activity=mean(activity))#
+#
+## Figure 2#
+qplot(factor(basement), activity, data=twocounties, facets=~county) + #
+  geom_errorbar(aes(ymin=activity-qt(p=.975, df = n-1, lower.tail = F)*sd, ymax=activity+qt(p=.975, df = n-1, lower.tail = F)*sd), data=tc.stat, width=0.5, size=0.75, colour="steelblue")+#
+  geom_point(data=tc.stat, size=3.5, colour="steelblue") + theme_bw()+theme(aspect.ratio=1) + ylab("radon") + xlab("basement")
+fm <- lmer(log.radon ~ basement + uranium + (basement | county), data = radon.data, REML = FALSE)
+e <- resid(fm)
+b <- ranef(fm)[[1]]
+# Envelope for normal deviates#
+sim_env <- function(x, conf = .95){#
+  n <- length(x)#
+  P <- ppoints(x)#
+  z <- qnorm(P)#
+  a <- as.numeric(HLMdiag:::qqlineInfo(x)[1])#
+  b <- as.numeric(HLMdiag:::qqlineInfo(x)[2])#
+  zz <- qnorm(1 - (1 - conf)/2)#
+  SE <- (b/dnorm(z)) * sqrt(P * (1 - P)/n)#
+  fit.value <- a + b * z#
+  upper <- fit.value + zz * SE#
+  lower <- fit.value - zz * SE#
+  return(data.frame(lower, upper))#
+}#
+#
+# Q-Q plot for the error terms#
+e.env <- sim_env(e)#
+e.qq <- qqnorm(e, plot.it = FALSE)#
+e.qq <- lapply(e.qq, sort)#
+#
+ggplot(data.frame(e), aes(sample = e)) + #
+	geom_abline(intercept = HLMdiag:::qqlineInfo(e)[1], #
+              slope = HLMdiag:::qqlineInfo(e)[2], colour = I("grey60")) + #
+	stat_qq() + #
+	geom_ribbon(aes(x = e.qq$x, ymin = e.env$lower, ymax = e.env$upper), alpha = .2) + #
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") + #
+	ylim(-4,4) + #
+	theme_bw()
+# Q-Q plot for the random intercept#
+b0.env <- sim_env(b[,1])#
+b0.qq <- qqnorm(b[,1], plot.it = FALSE)#
+b0.qq <- lapply(b0.qq, sort)#
+#
+ggplot(data.frame(b[,1]), aes(sample = b[,1])) + #
+	geom_abline(intercept = HLMdiag:::qqlineInfo(b[,1])[1], #
+              slope = HLMdiag:::qqlineInfo(b[,1])[2], colour = I("grey60")) + #
+	stat_qq() + #
+	geom_ribbon(aes(x = b0.qq$x, ymin = b0.env$lower, ymax = b0.env$upper), alpha = .2) + #
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") + #
+	ylim(-.2, .2) + #
+	theme_bw()
+set.seed(987654321)
+sim.y   <- simulate(fm, nsim = 19)                        ## A 919 x 19 matrix of responses
+sim.mod <- apply(sim.y, 2, refit, object = fm)            ## a list of models
+### We are really interested in a lineup for the random slopes for our paper#
+# Simulated random slopes#
+sim.b1 <- llply(sim.mod, function(x) ranef(x)[[1]][,2])   ## a list of random slopes#
+sim.b1 <- melt( do.call("rbind", sim.b1) )[,-2]           ## changing to a data frame#
+names(sim.b1) <- c("sample", "basement")                  ## setting colnames for faceting#
+sim.b1        <- arrange(sim.b1, sample)                  ## ordering by simulation
+b1 <- transform(b, band = sim_env(basement), x = sort(qqnorm(basement, plot.it=FALSE)$x))
+sim.b1$.n <- as.numeric( str_extract(sim.b1$sample, "\\d+") )#
+sim.b1 <- ddply(sim.b1, .(.n), transform, band = sim_env(basement), x = sort(qqnorm(basement, plot.it=FALSE)$x))#
+#
+### Figure 4#
+set.seed(123456)#
+qplot(sample = basement, data = b1, stat = "qq") %+%#
+	lineup(true = b1, sample = sim.b1) + #
+	facet_wrap(~ .sample, ncol = 5) + #
+	geom_ribbon(aes(x = x, ymin = band.lower, ymax = band.upper), alpha = .25) + #
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") +  #
+	theme_bw() + #
+	theme(panel.margin = unit(0, "lines"))
+decrypt("zv5D IaOa rZ LNErOrNZ uq")
+sim.b1
+head(sim.b1)
+library(nortests)
+library(nortest)
+jj <- split(simb.b1, f = sim.b1$sample)
+jj <- split(sim.b1, f = sim.b1$sample)
+jjj <- lapply(jj, FUN = function(x) ad.test(x$basement))
+jjj
+jjj <- lapply(jj, FUN = function(x) ad.test(x$basement)$p.value)
+jjj
+jjj <- ldply(jj, FUN = function(x) ad.test(x$basement)$p.value)
+jjj
+jjj <- aapply(jj, FUN = function(x) ad.test(x$basement)$p.value)
+jjj <- sapply(jj, FUN = function(x) ad.test(x$basement)$p.value)
+jjj
+sum(jjj < .05)
+sum(jjj < .1)
+jjj <- sapply(jj, FUN = function(x) lillie.test(x$basement)$p.value)
+jjj
+sum(jjj < .1)
+sum(jjj < .05)
+jjj <- sapply(jj, FUN = function(x) cvm.test(x$basement)$p.value)
+jjj
+sum(jjj < .1)
+sum(jjj < .05)
+library(nlme)
+?nlme
+?lme
+fm1 <- lme(distance ~ age, data = Orthodont) # random is ~ age
+class(fm1)
+### Preliminaries#
+library(lme4)#
+library(MASS)#
+library(RcppEigen)#
+library(inline)#
+library(nortest)#
+#
+# Readingin the data#
+radon <- read.csv("original_radon.csv")
+fm <- lmer(log.radon ~ basement + uranium + (basement | county), data = radon)
+ngrps <- summary(fm)@ngrps#
+L.b0  <- kronecker(Diagonal(ngrps), c(1, 0))#
+L.b1  <- kronecker(Diagonal(ngrps), c(0, 1))
+b0.rot <- rotate_ranef(.mod = fm, .L = L.b0, s = 65, .varimax = TRUE)
+?HLMdiag
+library(HLMdiag)
+b0.rot <- rotate_ranef(.mod = fm, .L = L.b0, s = 65, .varimax = TRUE)
+b1.rot <- rotate_ranef(.mod = fm, .L = L.b1, s = 65, .varimax = TRUE)
+summary(fm1)
+str(summary(fm))
+ngrps <- summary(fm)$ngrps#
+L.b0  <- kronecker(Diagonal(ngrps), c(1, 0))#
+L.b1  <- kronecker(Diagonal(ngrps), c(0, 1))
+b0.rot <- rotate_ranef(.mod = fm, .L = L.b0, s = 65, .varimax = TRUE)
+b1.rot <- rotate_ranef(.mod = fm, .L = L.b1, s = 65, .varimax = TRUE)
+b0.rot
+b1.rot
+?lme
+library(nlme)
+?lme
+fm <- lme(log.radon ~ basement + uranium, random = basement | county, data = radon)
+head(radon)
+fm <- lme(log.radon ~ basement + uranium, random = ~ basement | county, data = radon)
+fm
+fm2 <- lme(log.radon ~ basement + uranium, random = ~ basement | county, data = radon)
+fm2
+b0.rot2 <- rotate_ranef(.mod = fm2, .L = L.b0, s = 65, .varimax = TRUE)
+rotate_ranef.lme <- function(.mod, .L, s = NULL, .varimax = FALSE, ...) {#
+  design.info <- extract.lmeDesign(.mod)#
+  y <- design.info$y#
+  X <- design.info$X#
+  Z <- Matrix( design.info$Z )#
+  D <- Matrix( design.info$Vr )#
+  V  <- .extractV.lme( .mod )#
+  V.chol <- chol( V )#
+  Vinv  <- chol2inv( V.chol ) #
+  XVXinv <- solve( t(X) %*% Vinv %*% X )#
+  VinvX  <- Vinv %*% X#
+  M      <- VinvX %*% XVXinv %*% t(VinvX)#
+  P      <- .Call("cxxmatsub", BB = as.matrix(Vinv), CC = as.matrix(M), #
+                  PACKAGE = "HLMdiag")#
+  betahat <- solve(t(X) %*% Vinv %*% X) %*% t(X) %*% Vinv %*% y#
+  mr <- y - X %*% betahat#
+  bvec <- D %*% t(Z) %*% Vinv %*% mr#
+  pzdl <- P %*% Z %*% D %*% .L#
+  A <- crossprod( pzdl )#
+  B <- t(.L) %*% D %*% t(Z) %*% P %*% Z %*% D %*% .L ## diagnostic se#
+  W <- try( mcrotate(A, B, s) )#
+  if( class(W) == "try-error") {W <- NA} else {W <- as.matrix(W)}#
+  if( .varimax == TRUE) {#
+    W <- try( varimax(W, normalize = FALSE)$loadings )#
+    if( class(W) == "try-error" ) W <- NA #
+  }#
+  return( as.numeric( t(W) %*% as.numeric( t(.L) %*% bvec ) ) )#
+}
+b0.rot2 <- rotate_ranef(.mod = fm2, .L = L.b0, s = 65, .varimax = TRUE)
+library(RLRsim)
+install.packages("RLRsim")
+library(RLRsim)
+b0.rot2 <- rotate_ranef(.mod = fm2, .L = L.b0, s = 65, .varimax = TRUE)
+extract.lmeDesign
+?RLRsim
+design.info <- extract.lmeDesign(fm2)
+design.info
+? extract.lmeDesign
+undebug(extract.lmeDesign)
+extract.lmeDesign
+? extract.lmeDesign
+d <- extract.lmeDesign(lme(distance ~ age + Sex, data = Orthodont, random = ~ 1))
+?browser
+d <- silent(extract.lmeDesign(lme(distance ~ age + Sex, data = Orthodont, random = ~ 1)))
+?silent
+?invisible
+d <- invisible(extract.lmeDesign(lme(distance ~ age + Sex, data = Orthodont, random = ~ 1)))
+d
+extract.lmeDesign
+extract.lmeDesign <- function (m) #
+{#
+    start.level = 1#
+    data <- if (any(!complete.cases(m$data))) {#
+        warning("Removing incomplete cases from supplied data.")#
+        m$data[complete.cases(m$data), ]#
+    }#
+    else m$data#
+    grps <- nlme::getGroups(m)#
+    n <- length(grps)#
+    X <- list()#
+    grp.dims <- m$dims$ncol#
+    Zt <- model.matrix(m$modelStruct$reStruct, data)#
+    cov <- as.matrix(m$modelStruct$reStruct)#
+    i.col <- 1#
+    n.levels <- length(m$groups)#
+    Z <- matrix(0, n, 0)#
+    if (start.level <= n.levels) {#
+        for (i in 1:(n.levels - start.level + 1)) {#
+            if (length(levels(m$groups[[n.levels - i + 1]])) != #
+                1) {#
+                X[[1]] <- model.matrix(~m$groups[[n.levels - #
+                  i + 1]] - 1, contrasts.arg = c("contr.treatment", #
+                  "contr.treatment"))#
+            }#
+            else X[[1]] <- matrix(1, n, 1)#
+            X[[2]] <- as.matrix(Zt[, i.col:(i.col + grp.dims[i] - #
+                1)])#
+            i.col <- i.col + grp.dims[i]#
+            Z <- cbind(mgcv::tensor.prod.model.matrix(X), Z)#
+        }#
+        Vr <- matrix(0, ncol(Z), ncol(Z))#
+        start <- 1#
+        for (i in 1:(n.levels - start.level + 1)) {#
+            k <- n.levels - i + 1#
+            for (j in 1:m$dims$ngrps[i]) {#
+                stop <- start + ncol(cov[[k]]) - 1#
+                Vr[ncol(Z) + 1 - (stop:start), ncol(Z) + 1 - #
+                  (stop:start)] <- cov[[k]]#
+                start <- stop + 1#
+            }#
+        }#
+    }#
+    X <- if (class(m$call$fixed) == "name" && !is.null(m$data$X)) {#
+        m$data$X#
+    }#
+    else {#
+        model.matrix(formula(eval(m$call$fixed)), data)#
+    }#
+    y <- as.vector(matrix(m$residuals, ncol = NCOL(m$residuals))[, #
+        NCOL(m$residuals)] + matrix(m$fitted, ncol = NCOL(m$fitted))[, #
+        NCOL(m$fitted)])#
+    return(list(Vr = Vr, X = X, Z = Z, sigmasq = m$sigma^2, lambda = unique(diag(Vr)), #
+        y = y, k = n.levels))#
+}
+d <- extract.lmeDesign(lme(distance ~ age + Sex, data = Orthodont, random = ~ 1))
+d
+d2 <- extract.lmeDesign(lme(distance ~ age + Sex, data = Orthodont, random = ~ 1))
+b0.rot2 <- rotate_ranef(.mod = fm2, .L = L.b0, s = 65, .varimax = TRUE)
