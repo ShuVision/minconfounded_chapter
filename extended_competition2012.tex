@@ -406,7 +406,7 @@ Mathematically, this problem is solved using the generalized eigenvalue decompos
 %
 where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}. 
 %thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. 
-\hh{Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ \citep{deLeeuw:1982to} can be used to solve this problem, given that the kernel of $\bm{B}$ is a subspace of the kernel of $\bm{A}$.
+\hh{Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ can be used to solve this problem, given that the kernel of $\bm{B}$ is a subspace of the kernel of $\bm{A}$ \citep{deLeeuw:1982to}.
 Equivalent to that, we have to show that the difference $\bm{B} - \bm{A}$ is nonnegative definite:
 \[
 	\bm{A} =  \var(\widehat{\bm{b}} | \bm{b} ) = \bm{RPZDZ}^\prime \bm{PR}
@@ -919,7 +919,7 @@ Below, we outline the procedure used to simultaneously diagonalize $\bm{A}$ and 
 %and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\
 
 \begin{algorithm}[Simultaneous diagonalization]
-Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices such that the null space of $\bm{B}$ is a subspace of the null space of $\bm{A}$. The transformation that simultaneously diagonalizes both matrices can be found through the following procedure:
+Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices such that the kernel of B is a subspace of the kernel of A. The transformation that simultaneously diagonalizes both matrices can be found through the following procedure:
 \begin{enumerate}
 \item Find a transformation that whitens $\bm{B}$. Such a transformation is given by $\bm{T_r \Lambda_r}^{-1/2}$, where $\bm{T}_r$ and $\bm{\Lambda}_r$ are the first $r$  eigenvectors and eigenvalues of $\bm{B}$, where $r = \rank(\bm{B})$. 
 
