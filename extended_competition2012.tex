@@ -104,7 +104,6 @@ Inference for the fixed effects in linear mixed models is fairly robust against 
 }
 %One approach to address this sensitivity is to avoid the assumptions made on the random effects distributions using semiparametric or nonparametric methods \citep{Shen:1999gd, Zhang:2001wo, Ghidey:2004id}, or using a finite mixture of normal distributions for the random effects \citep{Verbeke:1996va}. 
 We refer the reader to \cite{Ghidey:2010de} for a recent review comparing these methods. 
-
 \hh{Semiparametric and nonparametric methods come at a cost: computational complexity is increased, and most of these methods are not widely implemented yet in standard statistical software, thus making them less accessible to the intended audience. }
 
 \hh{However, the situation is not quite as dire as it might seem: it turns out that a lot of tests for normality are overly sensitive in assessing deviations of random effects from normality (see discussion in section~\ref{sec:sim-results} and simulation results in the appendix). By addressing the issue of over-sensitivity in evaluating normality, we are able to extend the applicability of normal model methods in a wide range of situations.}
@@ -119,9 +118,9 @@ We refer the reader to \cite{Ghidey:2010de} for a recent review comparing these 
 %
 Several methods to assess the distribution of random effects  have been proposed. Formal tests have been proposed to to detect mixture distributions \citep{Verbeke:1996va} in the random effects and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001dx}.
 % however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software.
-\hh{The approach on which we focus in this paper is of a graphical nature:}
+\al{In contrast,} \hh{the approach on which we focus in this paper is of a graphical nature.}
 
-Quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool for  visually evaluating a specific distributional assumption. In a Q-Q plot we plot the empirical distribution against the expected quantiles from the assumed distribution. \hh{The line of identity therefore represents the theoretical distribution, points show quantiles of the empirical distributions. Deviations from the theoretical distribution then manifest themselves as vertical differences between points and the line of identity. This difference features in a series of distributional tests. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample size of $n$, and $F$ the hypothesized/true distribution. The absolute difference between the two distribution functions in each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is then the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises test \citep[CVM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
+Quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool for  visually evaluating a specific distributional assumption. In a Q-Q plot we plot the empirical distribution against the expected quantiles from the assumed distribution. \hh{The line of identity therefore represents the theoretical distribution and points show quantiles of the empirical distributions. Deviations from the theoretical distribution then manifest themselves as vertical differences between points and the line of identity. This difference is featured in a series of distributional tests. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample size of $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is then the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises test \citep[CVM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
 
 The KS test uses the maximal  difference, which is shown as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling up-regulates the tail effect again due to its additional weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
 \begin{table}
@@ -137,6 +136,7 @@ Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)
 We will be making use of these three tests and the Q-Q plots in our assessment of normality of random effects.
 }
 %For hierarchical linear models adjustments for Q-Q plots have been proposed for evaluation of the random effects distribution that include the use of weighted Q-Q plots \citep{Dempster:1985tr, Lange:1989uu, Eberly:2005ee} and confidence bands found from the parametric bootstrap \citep{Schutzenmeister:2012gw}; however, 
+
 In hierarchical linear models the investigation of residual structures is complicated by the presence of  different levels. 
 The nested structure of the data is reflected in the residual structure, and just as there is dependence between different levels in the data, we can expect dependencies between different levels in the residual structure. 
 %\al{This dependence is most problematic when assessing the distribution of the random effects, and leads to erroneous conclusions from Q-Q plots and other standard tests.}
@@ -169,11 +169,11 @@ To illustrate the effect of confounding between different levels of residuals, w
 %
 where   $\log(y_{ij})$ denotes the  radon measurement (in log $pCi/L$, i.e log picoCurie per liter) for house~$j$ within county~$i$ ($1 \le j \le n_i, 1 \le i \le 85$).
  $x_{1ij}$ is a binary variable describing the level at which the measurement was taken (0 for the basement and 1 for a higher level), and $x_{2i}$ denotes the average soil uranium content for  county~$i$. 
- We assume i.i.d.~normal errors $\varepsilon_{ij} \sim \mathcal{N} (0,\ \sigma^2_{\varepsilon})$  and $\bm{b}_i \sim \mathcal{N}(\bm{0},\ \bm{D})$, where $\bm{D}$ allows for correlation between random effects within the same county $i$.%, $b_{0i}$ and $b_{1i}$. 
+ We assume i.i.d.~normal errors $\varepsilon_{ij} \sim \mathcal{N} (0,\ \sigma^2_{\varepsilon})$  and $\bm{b}_i \sim \mathcal{N}(\bm{0},\ \bm{D})$, where $\bm{D}$ allows for correlation between random effects within the same county $i$. %, $b_{0i}$ and $b_{1i}$. 
  Further, we assume independence between random effects and error terms. 
 
 
-Figure \ref{fig:map} shows a map of counties in Minnesota. The color shading represents average radon activity in a county. For two counties no data is available. Generally, more southern locations exhibit higher  levels of radon activity. Figure \ref{fig:tc} focuses on the counties of Hennepin (home to Minneapolis) and Winona (home to the city of the same name), plotting radon level by floor level. Radon levels are usually the highest at the basement level of a house. 
+Figure \ref{fig:map} shows a map of counties in Minnesota. The color shading represents average radon activity in a county. For two counties no data are available. Generally, more southern locations exhibit higher  levels of radon activity. Figure \ref{fig:tc} focuses on the counties of Hennepin (home to Minneapolis) and Winona (home to the city of the same name), plotting radon level by floor level. Radon levels are usually the highest at the basement level of a house. 
 %
 \begin{figure}[htb]
 \centering
@@ -212,7 +212,7 @@ The within-county sample sizes, $n_i$, are extremely unbalanced, ranging from on
 In this example, Q-Q plots (Figure~\ref{fig:qqplots1}) for the residuals show that normality 
 seems to be violated for the error terms and random intercepts. But is this cause for concern?
 As there is little pooling at the observation level (level 1) we expect the distributional assessment of the error terms to be reliable, but  the high degree of pooling  for the random effects  casts doubt on the reliability of their Q-Q plots. The lineup protocol  \citep{buja:2009} allows us to assess the reliability of the Q-Q plots:
-Figure~\ref{fig:lineup} shows a lineup of 20 Q-Q plots for the predicted random slope. The Q-Q plot of the observed random slopes is placed among 19 decoy plots of parametric bootstrap samples based on model~\eqref{eq:radon} satisfying the normal distribution assumptions. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
+Figure~\ref{fig:lineup} shows a lineup of 20 Q-Q plots for the predicted random slope. The Q-Q plot of the observed random slopes is placed among 19 decoy plots created from parametric bootstrap samples based on model~\eqref{eq:radon} satisfying the normal distribution assumptions. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
 If we can identify the real Q-Q plot in the lineup, this provides evidence that the distribution of the observed random slopes is not normal. However, 
 the observed Q-Q plot (panel $3^2+7$) is virtually indistinguishable from the field of null plots. This suggests that the predicted random slopes  from the data do not deviate significantly from model~\eqref{eq:radon}.  
 Note that in practice we must blind ourselves from the true plot for proper use of lineups. In order to not violate this, we did not show the Q-Q plot of random slopes earlier.
@@ -220,11 +220,11 @@ Note that in practice we must blind ourselves from the true plot for proper use 
 What becomes apparent from the lineup is that {\it most} of the null plots in the lineup do not conform to normality. To further investigate the apparent non-normal behavior of predicted random effects we conducted a small simulation study: 
 %
 We generated 1000 parametric bootstrap samples of model~\eqref{eq:radon} assuming \hh{a normal distribution for all random effects, but  varying distributions for  level-1 residuals: } level-1 residuals were generated as normal ($\varepsilon_{ij}^* \overset{iid}{\sim}  \mathcal{N}(\bm{0},\ \sigma^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\sigma_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
-After fitting model~(\ref{eq:radon}) to each of the simulated data set, we evaluated the assumption of normality for both the error terms and 
+After fitting model~(\ref{eq:radon}) to each simulated data set, we evaluated the assumption of normality for both the error terms and 
 the random effects using the Anderson-Darling, Cram{\'e}r-von-Mises, and  Kolmogorov-Smirnov tests for normality.  All tests were expected to reject normality at a nominal 5\% rate, however, all type I error rates are hugely inflated for both random effects, which suggests, that  an assessment of normality based on the empirical distribution is not possible. 
 %
 Table~\ref{tab:edf} shows the percentage of these tests rejecting the null hypothesis of normality at the 5\% significance level.
-Even when levelI residual are normally distributed, normality for random effects is rejected almost half the time (KS-test). For heavy-tailed or skewed level-I residuals, the distribution of random effects is affected even worse. 
+Even when level-1 residuals are normally distributed, normality for random effects is rejected almost half the time (KS-test). For heavy-tailed or skewed level-1 residuals, the distribution of random effects is affected even worse. 
 %
 %The type I error rates are hugely inflated for both random effects, which suggests, that  an assessment of normality based on the empirical distribution is not possible. 
 For example, 84.1\% of the AD tests rejected normality of the random intercept distribution when the level-1 residuals were skewed.
