@@ -11,7 +11,7 @@
 \usepackage{ulem}
 
 % title formatting
-\usepackage[compact,small]{titlesec}
+%\usepackage[compact,small]{titlesec}
 
 
 \usepackage[usenames,dvipsnames]{xcolor}
@@ -25,19 +25,18 @@
 \section*{AE Comments/Suggestions}
 %----------------------------------------------------------------------------------
 
-\subsubsection*{General Comments}
+\subsection*{General Comments}
 
 \begin{enumerate}
 \item There's a general problem here with the assessment of normality from QQ plots and from standard hypothesis tests (AD, CVM, KS). Even for the classical LM, the latter are overly sensitive to minor departures from strict normality which does not generally compromise scientific inference, while standard QQ plots tend to be sensitive mainly to differences in the tails, and it is harder to distinguish between a general pattern of departure and one compromised by a few aberrant points. One simple way to correct this last is to plot a detrended version of the QQ plot, plotting the difference between the data quantile and the standard normal quantile on the ordinate, which has the effect
 of making the reference line horizontal and magnifying the vertical scale, making the pattern of departure more visible. As well, there is no discussion of the visual criteria for rejecting normality based on the QQ plots, and the simulation studies make use only of the AD tests without further comment.
 
-\textbf{Response:}
+\textbf{Response:} We are aware of the perceptual challenges of using Q-Q plots for distributional assessment, and have added additional discussion of the assessment of normality based on Q-Q plots and their relationship to formal tests of normality as a way to help clarify their use. 
 
-\alnote{It sounds like the AE wants the detrended QQ plots used, or at least discussed, in the paper. We can certainly do this, but it brings up the question of where to the MTurk study. Also, this comment has made me think that perhaps we need to add more to the MTurk study to look into the type of departure along with the type of QQ plot. Since we focused on a $t$ distribution we focused on the tails of the distribution. Adding other differences in distributional shape to the study would help it seem more complete in its comparison of the QQ plot designs. }
+Additionally, we have looked into the use of detrended Q-Q plots, however, our initial study of their utility found that Q-Q plots with point-wise bands out performed their detrended counterparts. Based on our initial results, we decided to present ``traditional'' Q-Q plots in this paper, but plan to follow-up our results in a different study, which seems outside the scope of this paper.
 
-\alnote{How can we discuss the visual criteria for rejection? I was assuming that the reader had enough experience with QQ plots, but wanted to point out that experience was not enough.}
+Finally, we do mention in Section~4.2 that the CVM and KS tests performed similarly to the AD test and point the reader to the supplemental materials for full simulation results. 
 
-\alnote{We do comment on the use of CVM and KS tests in the simulation study, including their omission from the formal discussion (p. 16 l. 19), so perhaps the AE overlooked this.}
 
 \item More generally in connection with scientific inference---tests and confidence intervals for the random effects themselves---there needs to be some discussion or results related to the impact of non-normality on these tests, for which normality may be necessary theoretically but perhaps of lesser practical importance. In connection with the simulation study, including cases with $\sigma^2_{b_0} = 0, \ \sigma^2_{b_0} = 0$ might be one way to address this in the current study; or else cite some literature on this question. This is similar to the point raised by Reviewer 2 regarding consequences of violation of normality.
 
@@ -48,7 +47,7 @@ of making the reference line horizontal and magnifying the vertical scale, makin
 
 \end{enumerate}
 
-\subsubsection*{Specific Comments}
+\subsection*{Specific Comments}
 
 \begin{enumerate}
 \item p3 / l3: define ``shrinkage''
@@ -104,7 +103,8 @@ The discussion is of procedures to test the normality of random effects.  But th
 
 Consider an extreme case, with 50 groups with 1000 observations each and 50 groups with 1 observation each.  For the groups with 1000 observations, the estimated random effect will be approximately equal to the true random effect.  For the groups with 1 observation, the estimated random effect will be approximately 0.  Thus, if the underlying distribution of random effects is normal, the distribution of estimated random effects will look like mixture of a normal with a spike at 0 containing 50\% of the mass.
 
-\alnote{This was not very constructive. The paper acknowledges the difference in distributions, which is why we are arguing to do something different. We don't work with the mixture distributions, but we are still altering the process from what is done all over the literature...}
+\textbf{Response:} We agree with the reviewer that the distribution of the predicted random effects and actual (unobserved) random effects differ, and we do not claim that they are in fact the same. The approach taken in our paper is to use the predicted random effects to assess the distributional assumptions made on the random effects, which, for the reason pointed out by the reviewer, is not trivial. We support this fact with the small simulation study in Section~2. The remainder of the paper discusses how we can frame an assessment of the distributional assumptions in a familiar graphical setting using the rotated random effects.
+
 
 %----------------------------------------------------------------------------------
 \section*{Review 2}
@@ -188,7 +188,7 @@ why this all does work. The key fact is that $span(A) \subseteq span(B)$ (indeed
 
 \item p. 15 l.14: It might be helpful for many readers to explain why this is reasonable: i.e. that the predictor variables can be transformed affinely to make this true. However, this also suggests that these methods would work best if X is transformed to achieve a nearly diagonal D matrix. Perhaps this should be discussed.
 
-\alnote{Oh my, do we need to investigate our method with a transformed X?}
+\alnote{We haven't addressed this yet, but I don't feel like we need to. The assumptions we made for the simulation were practical for simulation, not implementation of the method...}
 
 \end{enumerate}
 

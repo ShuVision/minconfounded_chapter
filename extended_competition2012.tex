@@ -69,7 +69,7 @@
 
 \title{Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models}
 \author{{Adam Loy and Heike Hofmann}
-\thanks{Adam Loy is an Assistant Professor in the Department of Mathematics, Lawrence University, Appleton, WI, 54911 (e-mail: adam.m.loy@lawrence.edu) and Heike Hofmann is a Professor in the Department of Statistics and Statistical Laboratory, Iowa State University, Ames, IA 50011-1210.}}
+\thanks{Adam Loy is an Assistant Professor in the Department of Mathematics, Lawrence University, Appleton, WI, 54911 (e-mail: adam.m.loy@lawrence.edu); and Heike Hofmann is a Professor in the Department of Statistics and Statistical Laboratory, Iowa State University, Ames, IA 50011-1210.}}
 
 \maketitle
 
@@ -698,7 +698,7 @@ We want to examine situations in which we correctly and incorrectly reject the n
 
 
 The design matrices from model \eqref{eq:radon} were used as templates for realistic data generation;  for simplicity of the simulation design, only the 60 counties with full rank $\bm{Z}$ matrices were included. 
-Normal, heavy-tailed, and skewed distributions are used to generate the simulated errors and random effects. We use a rescaled $t$ distribution with 3 degrees of freedom to generate heavy tailed residuals, and a centered and rescaled exponential distribution with a rate parameter of 1 to generate skewed residuals. For simplicity we require the distributions of the random slope and intercept to the be same and assume independence between the random effects. The nine distributional settings considered in the simulation study are summarized in Table~\ref{tab:simdsns}.
+Normal, heavy-tailed, and skewed distributions were used to generate the simulated errors and random effects. We used a rescaled $t$ distribution with 3 degrees of freedom to generate heavy tailed residuals, and a centered and rescaled exponential distribution with a rate parameter of 1 to generate skewed residuals. For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. The nine distributional settings considered in the simulation study are summarized in Table~\ref{tab:simdsns}.
 %
 \begin{table}[htdp]
 \centering
@@ -863,7 +863,7 @@ We see that the random intercept significantly deviates from the assumption of n
 \section{Discussion}\label{sec:discussion}
 %----------------------------------------------------------------------------------
 
-In this paper we have discussed two graphical approaches to assess the distributional assumptions made on the random effects in hierarchical linear models. The first approach used the lineup protocol to compare the predicted random effects produced in estimating the observed model to those produced when estimating a properly specified model. This method only assumes a distributional specification for the random effects and does not directly compare the predicted random effects to their hypothesized distribution. Consequently, the conclusions that are drawn from this approach relate to evidence that the predicted random effects either are or are not {consistent} with what is expected under a correctly specified random effects distribution. The second approach rotates the predicted random effects so as to compare them directly to the hypothesized distribution using a Q-Q plot. We have shown that the rotated random effects are standardized, uncorrelated, and homoscedastic, and that the rotation addresses the confounding present allowing for the random effects to be targeted separately from the error terms. 
+In this paper we have discussed two graphical approaches to assess the distributional assumptions made on the random effects in hierarchical linear models. The first approach used the lineup protocol to compare the predicted random effects produced in estimating the observed model to those produced when estimating a properly specified model. This method only assumes a distributional specification for the random effects and does not directly compare the predicted random effects to their distribution. Consequently, the conclusions that are drawn from this approach relate to evidence that the predicted random effects either are or are not {consistent} with what is expected under a correctly specified random effects distribution. The second approach rotates the predicted random effects so as to compare them directly to the hypothesized distribution using a Q-Q plot. We have shown that the rotated random effects are standardized, uncorrelated, and homoscedastic, and that the rotation addresses the confounding present allowing for the random effects to be targeted separately from the error terms. 
 % While the loss in power due to the rotation may be troubling, we found the lack of diagnostic information in the predicted random effects to be the bigger concern. \al{XX The last sentence might not be needed if we keep the last paragraph as it is.}
 
 Under either approach, a misspecified covariance structure may lead to erroneous rejection of the null hypothesis. Therefore, in practice we recommend an assessment of the structure of {the within- and between-group covariance matrices} prior to distributional assessment.
@@ -880,6 +880,8 @@ The varimax rotation reduces the impact of this supernormality effect. %, but ot
 While we do think that the loss in power is troubling,
 %We believe the loss of power is less troubling than
  the inflated type I error rates resulting from high levels of confounding is of a much bigger concern. Unlike before,  any detection of a distributional deviation can now be trusted even in situations with high amounts of  confounding between the levels of residuals.
+ 
+ Finally,
   
 %  This indicates that the predicted random effects do contain useful diagnostic information even when models are highly confounded, but not in their ``raw'' state.
  
