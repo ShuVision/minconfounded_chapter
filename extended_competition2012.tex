@@ -205,7 +205,7 @@ The within-county sample sizes, $n_i$, are extremely unbalanced, ranging from on
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{test.jpeg}%lineup-rslope.pdf}
-	\caption{\label{fig:lineup} Lineup of normal Q-Q plots for the random slope term in model~\eqref{eq:radon}. The 19 null plots are obtained by simulation from the model. Can you identify the observed Q-Q plot?  \hh{XXX is this one of the plots we showed to people? If so, we could add how many people identified/did not identify the right plot }}
+	\caption{\label{fig:lineup} Lineup of normal Q-Q plots for the random slope term in model~\eqref{eq:radon}. The 19 null plots are obtained by simulation from the model. Can you identify the observed Q-Q plot?  In a human subject study 15 out of 23 participants identified plot \#$3^2+3$ as the least normal, plot \#9+7 shows the actual data, which none of the participants identified as the least normal. }
 \end{figure}
 
 
@@ -214,7 +214,7 @@ seems to be violated for the error terms and random intercepts. But is this caus
 As there is little pooling at the observation level (level 1) we expect the distributional assessment of the error terms to be reliable, but  the high degree of pooling  for the random effects  casts doubt on the reliability of their Q-Q plots. The lineup protocol  \citep{buja:2009} allows us to assess the reliability of the Q-Q plots:
 Figure~\ref{fig:lineup} shows a lineup of 20 Q-Q plots for the predicted random slope. The Q-Q plot of the observed random slopes is placed among 19 decoy plots of parametric bootstrap samples based on model~\eqref{eq:radon} satisfying the normal distribution assumptions. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
 If we can identify the real Q-Q plot in the lineup, this provides evidence that the distribution of the observed random slopes is not normal. However, 
-the observed Q-Q plot (panel $3^2+7$) \hh{XXX there was some confusion by the reviewers about 12 + 4 - I think, the reviewer thought that 12 was the right answer} is virtually indistinguishable from the field of null plots. This suggests that the predicted random slopes  from the data do not deviate significantly from model~\eqref{eq:radon}.  
+the observed Q-Q plot (panel $3^2+7$) is virtually indistinguishable from the field of null plots. This suggests that the predicted random slopes  from the data do not deviate significantly from model~\eqref{eq:radon}.  
 Note that in practice we must blind ourselves from the true plot for proper use of lineups. In order to not violate this, we did not show the Q-Q plot of random slopes earlier.
 
 What becomes apparent from the lineup is that {\it most} of the null plots in the lineup do not conform to normality. To further investigate the apparent non-normal behavior of predicted random effects we conducted a small simulation study: 
@@ -229,7 +229,7 @@ Even when levelI residual are normally distributed, normality for random effects
 %The type I error rates are hugely inflated for both random effects, which suggests, that  an assessment of normality based on the empirical distribution is not possible. 
 For example, 84.1\% of the AD tests rejected normality of the random intercept distribution when the level-1 residuals were skewed.
  Use of standardized random effects and the weighted cumulative distribution function proposed by \cite{Lange:1989uu} reduce the type I errors to the nominal level when the error terms are normal, but the type I errors remain inflated for non-normal error terms \al{(this is based on the results of a larger simulation study which we include in Section 1.5 of the supplement)}.  
-Similarly, tests of non-normal random effects often failed to reject if the error terms were normally distributed. \hh{XXX this doesn't show up in the table - should we include the assessment for the level-1 residuals? - if the tables are merged into one table, there'd be enough space for it.}
+Similarly, tests of non-normal random effects often failed to reject if the error terms were normally distributed. %\hh{XXX this doesn't show up in the table - should we include the assessment for the level-1 residuals? - if the tables are merged into one table, there'd be enough space for it.}
 This inability to assess distributional assumptions correctly is a symptom typical of confounding between levels of residuals.
 %Based on the above results we find that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.
 
@@ -355,7 +355,7 @@ is unaffected by this interrelationship \al{in the situations that we have consi
 \subsection{Rotating the random effects}\label{sec:rotate}
 %----------------------------------------------------------------------------------
 \noindent
-\hh{In section~\ref{sec:ex} we have seen that confounding between the different levels of a hierarchical linear model as specified in~\eqref{eq:hlm} leads to erroneous conclusions with respect to the distributions of error terms and random effects. In order to reduce confounding between the levels, we propose an assessment of the residual structure based on an $s$-dimensional rotation of the random intercept of the form $\bm{W}^{\prime} \widehat{\bm{b}}$. This rotation is chosen such that it substantially reduces the amount of confounding. The resulting rotated random intercepts are standardized, uncorrelated, and homoscedastic residual quantities, which makes them easily assessable with standard tools. In our discussion (and notation) we focus on a two-level model with a single random effect for ease of explanation. However, this approach is not restricted to a two-level model; an extension of the method is given at the end of the section.
+\hh{In section~\ref{sec:ex} we have seen that confounding between the different levels of a hierarchical linear model as specified in~\eqref{eq:hlm} leads to erroneous conclusions with respect to the distributions of error terms and random effects. In order to reduce confounding between the levels, we propose an assessment of the residual structure based on an $s$-dimensional rotation of the form $\bm{W}^{\prime} \widehat{\bm{b}}$. This rotation is chosen such that it substantially reduces the amount of confounding. The resulting rotated random intercepts are standardized, uncorrelated, and homoscedastic residual quantities, which makes them easily assessable with standard tools. In our discussion (and notation) we focus on a two-level model with a single random effect for ease of explanation. However, this approach is not restricted to a two-level model; an extension of the method is given at the end of the section.
 }
 %\al{
 %
@@ -383,7 +383,7 @@ is well defined,  the following discussion will clarify this point. %XXX This wa
 
 Generally, $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while a value of FC = 0 indicates that no confounding is present. 
 
-Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects \hh{as proposed by  \cite{HildenMinton:1995wh}. XXX is that correct?}
+Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects as proposed by  \cite{HildenMinton:1995wh}.
 
 %As outlined above, the confounded nature of the predicted random effects renders graphical explorations of these residuals inadequate for the assessment of distributional assumptions. 
 %
@@ -449,7 +449,8 @@ Simultaneous diagonalization will be familiar to many as the standard canonical 
 
 \paragraph{Selection of the dimension of the subspace}
  spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. As our ultimate objective is an assessment of the distribution, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function % (e.g., the Anderson-Darling test for normality) 
- associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the concept of a scree plot used to select the number of principal components. \hh{A name for this scree-like plot would be good ... talus is a synonym to scree ... talus plot? - or elbow plot?} To illustrate the use of this plot we simulate two simple random intercept models with a group-level predictor:   model $M1$ has 40 groups of 30 observations and 10 groups of 5 observations;   model $M2$ also has 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). %\todo[inline]{These two models are very similar. Go to a more extreme in the second model?}
+ associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the concept of a scree plot used to select the number of principal components. %\hh{A name for this scree-like plot would be good ... talus is a synonym to scree ... talus plot? - or elbow plot?} 
+ To illustrate the use of this plot we simulate two simple random intercept models with a group-level predictor:   model $M1$ has 40 groups of 30 observations and 10 groups of 5 observations;   model $M2$ also has 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). %\todo[inline]{These two models are very similar. Go to a more extreme in the second model?}
  Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. For neither model the fraction of confounding for a one-dimensional reduction decreases because this {one-dimensional reduction} simply adjusts for the rank deficiency of the covariance matrix, which can be thought of in terms of adjusting for the effective degrees of freedom. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$. { Additionally, we see that the elbow in the plot for model $M2$ is less pronounced. This occurs because the groups sizes are less balanced so the difference between the large and small group sizes is reduced.}
  
 % \al{Talk about the differences here and why I chose these examples. Also talk about the loss of 1 d.f. More discussion here.}
