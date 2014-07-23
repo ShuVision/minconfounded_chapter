@@ -383,7 +383,8 @@ is well defined,  the following discussion will clarify this point. %XXX This wa
 
 Generally, $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while a value of FC = 0 indicates that no confounding is present. 
 
-Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects as proposed by  \cite{HildenMinton:1995wh}.
+Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects as proposed by  \cite{HildenMinton:1995wh}. As noted by a reviewer, there are many ways of defining a fraction of confounding using different symmetric functions of the relative eigenvalues of $\bm{WAW}\trans$ to $\bm{WBW}\trans$. We chose the trace of the ratio to generalize the results in \cite{HildenMinton:1995wh}, but other symmetric functions could be investigated. For example, the ratio of the traces could be examined, however, there is no closed form solution to analog of the optimization problem we discuss below \citep[cf.,][]{Jia:2009ux}. 
+
 
 %As outlined above, the confounded nature of the predicted random effects renders graphical explorations of these residuals inadequate for the assessment of distributional assumptions. 
 %
@@ -880,8 +881,7 @@ The varimax rotation reduces the impact of this supernormality effect. %, but ot
 While we do think that the loss in power is troubling,
 %We believe the loss of power is less troubling than
  the inflated type I error rates resulting from high levels of confounding is of a much bigger concern. Unlike before,  any detection of a distributional deviation can now be trusted even in situations with high amounts of  confounding between the levels of residuals.
- 
- Finally,
+
   
 %  This indicates that the predicted random effects do contain useful diagnostic information even when models are highly confounded, but not in their ``raw'' state.
  

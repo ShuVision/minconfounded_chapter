@@ -1,4 +1,4 @@
-\begin{thebibliography}{30}
+\begin{thebibliography}{31}
 \newcommand{\enquote}[1]{``#1''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -69,6 +69,10 @@ Hilden-Minton, J.~A. (1995), \enquote{Multilevel diagnostics for mixed and
 \bibitem[{Jensen and Ramirez(1999)}]{Jensen:1999iu}
 Jensen, D.~R. and Ramirez, D.~E. (1999), \enquote{Recovered errors and normal
   diagnostics in regression,} \textit{Metrika}, 49, 107--119.
+
+\bibitem[{Jia et~al.(2009)Jia, Nie, and Zhang}]{Jia:2009ux}
+Jia, Y., Nie, F., and Zhang, C. (2009), \enquote{Trace ratio problem
+  revisited,} \textit{Neural Networks, IEEE Transactions on}, 20, 729--735.
 
 \bibitem[{Jiang(2001)}]{Jiang:2001dx}
 Jiang, J. (2001), \enquote{Goodness-of-fit tests for mixed model diagnostics,}
