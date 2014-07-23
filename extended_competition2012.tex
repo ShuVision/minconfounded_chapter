@@ -90,23 +90,23 @@ There are a wide range of application areas---from the biological and physical s
 Whether it is quality control in a manufacturing process that involves the monitoring of a set of components over  time  or students' performances in different schools across the country, analysts have to account for  the correlation between observations in the same group.  Hierarchical linear models, or multilevel models, allow us to do exactly that---but they also require us to make distributional assumptions on both the error terms and the random effects. These assumptions must hold to ensure the validity of the model and all of its resulting conclusions. 
 Inference for the fixed effects in linear mixed models is fairly robust against model mis-specification \citep{Butler:1992tx, Verbeke:1997tf}. This is different for random effects \citep{Verbeke:1996va, Verbeke:1997tf}. 
 %\hh{XXX why are empirical Bayes estimates relevant? do you need to pull back so much?} \al{XXX The empirical Bayes estimates are relevant because, under normality, the empirical Bayes estimates are the empirical BLUP, and the literature often discuses the EB estimates rather than the EBLUPS}  \hh{- how about: This is different for random effects, which are sensitive to distributional mis-specifications.} 
-\al{ \citet{Verbeke:1996va} have shown that the empirical Bayes estimates of the random effects can be severely distorted if the true distribution is not normal; thus, any distributional assumptions must be checked carefully when the random effects are central to the inferential goals.}
+ \citet{Verbeke:1996va} have shown that the empirical Bayes estimates of the random effects can be severely distorted if the true distribution is not normal; thus, any distributional assumptions must be checked carefully when the random effects are central to the inferential goals.
 %\hh{for empirical Bayes estimates of random effects.} are sensitive to distributional mis-specifications \al{ \citep{Verbeke:1996va} }  
 %and  therefore have to be checked carefully, especially when they are central to the inferential goals. %such as in the construction of a prediction interval for an unobserved group.
-\al{  For example, in small area estimation the areas are often modeled as random effects and their distribution is critical in the calculation of prediction intervals when the  within-group sample sizes are small \citep[see][for a cogent discussion of this issue]{Jiang:2001dx}. } 
+For example, in small area estimation the areas are often modeled as random effects and their distribution is critical in the calculation of prediction intervals when the  within-group sample sizes are small \citep[see][for a cogent discussion of this issue]{Jiang:2001dx}. 
 
 %\hh{XXX how big is the effect of mis-specification? - didn't we have a table with some simulations or were we just talking about making one? } \al{XXX We don't have any simulation results for this right now, and I haven't found any studies in the small area estimation literature yet... but I have found a few citations where they state the need for diagnostics. What is seemingly complicated about a simulation here is the relative lack of agreement on how to create prediction intervals.}
 %Another situation where the estimated random effects are of interest is in the analysis of education data. In such a situation, school are typically modeled as random effects, and confidence or prediction intervals are used for comparison to the average school, depending on the question of interest. }
 
 %\hh{XXX Do we really have two approaches? - there are ways to deal with non-normality, but they are expensive. Our approach doesn't provide a solution to non-normality, but it extends the applicability of normal methods by fixing hypersensitivity of standard distributional assessments.  }
 
-\hh{Extensions to the standard modeling framework have been suggested to address sensitivity to distributional mis-specifications, such as semiparametric, nonparametric methods \citep{Shen:1999gd, Zhang:2001wo, Ghidey:2004id} or  finite mixtures of normal distributions for the random effects \citep{Verbeke:1996va}. 
-}
+Extensions to the standard modeling framework have been suggested to address sensitivity to distributional mis-specifications, such as semiparametric, nonparametric methods \citep{Shen:1999gd, Zhang:2001wo, Ghidey:2004id} or  finite mixtures of normal distributions for the random effects \citep{Verbeke:1996va}. 
+
 %One approach to address this sensitivity is to avoid the assumptions made on the random effects distributions using semiparametric or nonparametric methods \citep{Shen:1999gd, Zhang:2001wo, Ghidey:2004id}, or using a finite mixture of normal distributions for the random effects \citep{Verbeke:1996va}. 
 We refer the reader to \cite{Ghidey:2010de} for a recent review comparing these methods. 
-\hh{Semiparametric and nonparametric methods come at a cost: computational complexity is increased, and most of these methods are not widely implemented yet in standard statistical software, thus making them less accessible to the intended audience. }
+Semiparametric and nonparametric methods come at a cost: computational complexity is increased, and most of these methods are not widely implemented yet in standard statistical software, thus making them less accessible to the intended audience. 
 
-\hh{However, the situation is not quite as dire as it might seem: it turns out that a lot of tests for normality are overly sensitive in assessing deviations of random effects from normality (see discussion in section~\ref{sec:sim-results} and simulation results in the appendix). By addressing the issue of over-sensitivity in evaluating normality, we are able to extend the applicability of normal model methods in a wide range of situations.}
+However, the situation is not quite as dire as it might seem: it turns out that a lot of tests for normality are overly sensitive in assessing deviations of random effects from normality (see discussion in section~\ref{sec:sim-results} and simulation results in the appendix). By addressing the issue of over-sensitivity in evaluating normality, we are able to extend the applicability of normal model methods in a wide range of situations.
 
 %The cost of increased robustness  is increased computational complexity. These methods also have not been widely implemented in statistical software, making them less accessible. %Another approach is to check %this assumption using
 %\hh{distributional assumptions with}
@@ -118,9 +118,9 @@ We refer the reader to \cite{Ghidey:2010de} for a recent review comparing these 
 %
 Several methods to assess the distribution of random effects  have been proposed. Formal tests have been proposed to to detect mixture distributions \citep{Verbeke:1996va} in the random effects and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001dx}.
 % however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software.
-\al{In contrast,} \hh{the approach on which we focus in this paper is of a graphical nature.}
+In contrast, the approach on which we focus in this paper is of a graphical nature.
 
-Quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool for  visually evaluating a specific distributional assumption. In a Q-Q plot we plot the empirical distribution against the expected quantiles from the assumed distribution. \hh{The line of identity therefore represents the theoretical distribution and points show quantiles of the empirical distributions. Deviations from the theoretical distribution then manifest themselves as vertical differences between points and the line of identity. This difference is featured in a series of distributional tests. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample size of $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is then the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises test \citep[CVM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
+Quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool for  visually evaluating a specific distributional assumption. In a Q-Q plot we plot the empirical distribution against the expected quantiles from the assumed distribution. The line of identity therefore represents the theoretical distribution and points show quantiles of the empirical distributions. Deviations from the theoretical distribution then manifest themselves as vertical differences between points and the line of identity. This difference is featured in a series of distributional tests. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample size of $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is then the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises test \citep[CVM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
 
 The KS test uses the maximal  difference, which is shown as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling up-regulates the tail effect again due to its additional weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
 \begin{table}
@@ -134,14 +134,14 @@ Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)
 \end{table}
 %
 We will be making use of these three tests and the Q-Q plots in our assessment of normality of random effects.
-}
+
 %For hierarchical linear models adjustments for Q-Q plots have been proposed for evaluation of the random effects distribution that include the use of weighted Q-Q plots \citep{Dempster:1985tr, Lange:1989uu, Eberly:2005ee} and confidence bands found from the parametric bootstrap \citep{Schutzenmeister:2012gw}; however, 
 
 In hierarchical linear models the investigation of residual structures is complicated by the presence of  different levels. 
 The nested structure of the data is reflected in the residual structure, and just as there is dependence between different levels in the data, we can expect dependencies between different levels in the residual structure. 
 %\al{This dependence is most problematic when assessing the distribution of the random effects, and leads to erroneous conclusions from Q-Q plots and other standard tests.}
-Q-Q plots, in their weighted \citep{Dempster:1985tr, Lange:1989uu} or unweighted {form},  \hh{show univariate distributions, so they are sensitive to distributional deviations due to hidden dependencies}, which might lead to erroneous conclusions in evaluating normality, in particular, when the dependency between levels is high due to an unbalanced design. % there is a relatively high degree of shrinkage,  \al{AE wants us to define shrinkage}. 
-\hh{Data imbalances lead to higher degrees of shrinkage, i.e.~in the prediction of the random effects the mean structure is considered to a higher degree in a trade-off to prevent overfitting of the raw data.} 
+Q-Q plots, in their weighted \citep{Dempster:1985tr, Lange:1989uu} or unweighted {form},  show univariate distributions, so they are sensitive to distributional deviations due to hidden dependencies, which might lead to erroneous conclusions in evaluating normality, in particular, when the dependency between levels is high due to an unbalanced design. % there is a relatively high degree of shrinkage,  \al{AE wants us to define shrinkage}. 
+Data imbalances lead to higher degrees of shrinkage, i.e.~in the prediction of the random effects the mean structure is considered to a higher degree in a trade-off to prevent overfitting of the raw data.
 Data imbalances commonly occur in practice, but are often overlooked in the literature. For example, \cite{Eberly:2005ee} explored properties of Lange and Ryan's weighted Q-Q plots for a balanced longitudinal data set and found that, for a properly specified mean structure,  weighted Q-Q plots are effective in  assessing the distribution of the random effects. The same cannot be said for unbalanced data (with properly specified mean structure). %\hh{XXX unbalanced data doesn't san that the  mean structure is not  properly specified} \al{XXX Correct, but Eberly and Thackeray considered the case with a properly specified mean structure. The results of the simulation study presented in the supplemental materials show that their results do not apply to the situation with data imbalances, which is the case that I am trying to make here: that the current tools fail in certain situations with imbalanced data}. 
 
 
@@ -219,7 +219,7 @@ Note that in practice we must blind ourselves from the true plot for proper use 
 
 What becomes apparent from the lineup is that {\it most} of the null plots in the lineup do not conform to normality. To further investigate the apparent non-normal behavior of predicted random effects we conducted a small simulation study: 
 %
-We generated 1000 parametric bootstrap samples from model~\eqref{eq:radon} assuming \hh{a normal distribution for all random effects, but  varying distributions for  level-1 residuals: } level-1 residuals were generated as normal ($\varepsilon_{ij}^* \overset{iid}{\sim}  \mathcal{N}(\bm{0},\ \widehat{\sigma}^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\widehat{\sigma}_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \widehat{\sigma}_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
+We generated 1000 parametric bootstrap samples from model~\eqref{eq:radon} assuming a normal distribution for all random effects, but  varying distributions for  level-1 residuals:  level-1 residuals were generated as normal ($\varepsilon_{ij}^* \overset{iid}{\sim}  \mathcal{N}(\bm{0},\ \widehat{\sigma}^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\widehat{\sigma}_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \widehat{\sigma}_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
 After fitting model~(\ref{eq:radon}) to each simulated data set, we evaluated the assumption of normality for both the error terms and 
 the random effects using the Anderson-Darling, Cram{\'e}r-von-Mises, and  Kolmogorov-Smirnov tests for normality.  All tests were expected to reject normality at a nominal 5\% rate, however, all type I error rates are hugely inflated for both random effects, which suggests, that  an assessment of normality based on the empirical distribution is not possible. 
 %
@@ -228,7 +228,7 @@ Even when level-1 residuals are normally distributed, normality for random effec
 %
 %The type I error rates are hugely inflated for both random effects, which suggests, that  an assessment of normality based on the empirical distribution is not possible. 
 For example, 84.1\% of the AD tests rejected normality of the random intercept distribution when the level-1 residuals were skewed.
- Use of standardized random effects and the weighted cumulative distribution function proposed by \cite{Lange:1989uu} reduce the type I errors to the nominal level when the error terms are normal, but the type I errors remain inflated for non-normal error terms \al{(this is based on the results of a larger simulation study which we include in Section 1.5 of the supplement)}.  
+ Use of standardized random effects and the weighted cumulative distribution function proposed by \cite{Lange:1989uu} reduce the type I errors to the nominal level when the error terms are normal, but the type I errors remain inflated for non-normal error terms (this is based on the results of a larger simulation study which we include in Section 1.5 of the supplement).  
 Similarly, tests of non-normal random effects often failed to reject if the error terms were normally distributed. %\hh{XXX this doesn't show up in the table - should we include the assessment for the level-1 residuals? - if the tables are merged into one table, there'd be enough space for it.}
 This inability to assess distributional assumptions correctly is a symptom typical of confounding between levels of residuals.
 %Based on the above results we find that distributional assessment of the predicted random effects is confounded by the distribution of the level-1 residuals.
@@ -336,8 +336,8 @@ Using this specification, the predicted error terms and random effects are given
 \widehat{\bm{b}} &= \bm{DZ}\trans \bm{Py} = \bm{DZ}\trans \bm{PZb} + \bm{DZ}\trans \bm{P \varepsilon} \label{eq:resid2}
 \end{align}
 %
-where $\bm{P} = \bm{V}\inv( \bm{I} - \bm{X} (\bm{X}\trans \bm{V}\inv \bm{X})\inv \bm{X}\trans \bm{V}\inv)$ \al{and $\bm{V} = \bm{ZDZ}\trans + \bm{R}$}. 
-\al{Equations \eqref{eq:resid1} and \eqref{eq:resid2} reveal that the distributions of the predicted random effects and error terms are interrelated---i.e.,~the distribution of  the predicted random effects depends on the distribution of the error terms and vice versa. As each residual quantity depends on the other, the predicted error terms and random effects are said to be confounded  \citep{HildenMinton:1995wh}.}
+where $\bm{P} = \bm{V}\inv( \bm{I} - \bm{X} (\bm{X}\trans \bm{V}\inv \bm{X})\inv \bm{X}\trans \bm{V}\inv)$ and $\bm{V} = \bm{ZDZ}\trans + \bm{R}$. 
+Equations \eqref{eq:resid1} and \eqref{eq:resid2} reveal that the distributions of the predicted random effects and error terms are interrelated---i.e.,~the distribution of  the predicted random effects depends on the distribution of the error terms and vice versa. As each residual quantity depends on the other, the predicted error terms and random effects are said to be confounded  \citep{HildenMinton:1995wh}.
 Additionally, it is easily seen that both \eqref{eq:resid1} and \eqref{eq:resid2} lead to the analysis of correlated and potentially heteroscedastic disturbances as $\var(\widehat{\bm{\varepsilon}}) = \bm{RPR}$ and $\var(\widehat{\bm{b}}) = \bm{DZ}\trans \bm{PZD}$.
 The use of standardized residuals can correct the latter issue, but does not address the fact that the residuals are interrelated. While problems may be expected at both levels of the model based on \eqref{eq:resid1} and \eqref{eq:resid2}, we have found that the interpretation of Q-Q plots of the standardized predicted error terms
 %
@@ -345,8 +345,8 @@ The use of standardized residuals can correct the latter issue, but does not add
 \bm{z}_{\varepsilon} =  \text{diag} \left(\bm{RPR} \right)^{-1/2} \widehat{\bm{\varepsilon}}
 \]
 %
-is unaffected by this interrelationship \al{in the situations that we have considered (see section 1 of the supplement for simulation results). %XXX Reviewer 2 thinks that this may not hold for small cluster sizes, so I am trying to soften the language just a bit. We didn't exhaust all possibilities in our simulation, but the results we have support this statement
-} This is not the case with the standardized random effects.  When the degree of pooling is high---as it is in the above radon example, and often is in practice---interpretation of the predicted random effects cannot be separated from the distribution of the error terms. 
+is unaffected by this interrelationship in the situations that we have considered (see section 1 of the supplement for simulation results). %XXX Reviewer 2 thinks that this may not hold for small cluster sizes, so I am trying to soften the language just a bit. We didn't exhaust all possibilities in our simulation, but the results we have support this statement
+ This is not the case with the standardized random effects.  When the degree of pooling is high---as it is in the above radon example, and often is in practice---interpretation of the predicted random effects cannot be separated from the distribution of the error terms. 
 %Detailed simulation results documenting the utility of  these residuals are available in the supplementary material. \al{XXX With the comment above, this sentence now seems out of place...}
 
 
@@ -355,8 +355,8 @@ is unaffected by this interrelationship \al{in the situations that we have consi
 \subsection{Rotating the random effects}\label{sec:rotate}
 %----------------------------------------------------------------------------------
 \noindent
-\hh{In section~\ref{sec:ex} we have seen that confounding between the different levels of a hierarchical linear model as specified in~\eqref{eq:hlm} leads to erroneous conclusions with respect to the distributions of error terms and random effects. In order to reduce confounding between the levels, we propose an assessment of the residual structure based on an $s$-dimensional rotation of the form $\bm{W}^{\prime} \widehat{\bm{b}}$. This rotation is chosen such that it substantially reduces the amount of confounding. The resulting rotated random effects are standardized, uncorrelated, and homoscedastic residual quantities, which makes them easily assessable with standard tools. In our discussion (and notation) we focus on a two-level model with a single random effect for ease of explanation. However, this approach is not restricted to a two-level model with a single random effect; an extension of the method is given at the end of the section.
-}
+In section~\ref{sec:ex} we have seen that confounding between the different levels of a hierarchical linear model as specified in~\eqref{eq:hlm} leads to erroneous conclusions with respect to the distributions of error terms and random effects. In order to reduce confounding between the levels, we propose an assessment of the residual structure based on an $s$-dimensional rotation of the form $\bm{W}^{\prime} \widehat{\bm{b}}$. This rotation is chosen such that it substantially reduces the amount of confounding. The resulting rotated random effects are standardized, uncorrelated, and homoscedastic residual quantities, which makes them easily assessable with standard tools. In our discussion (and notation) we focus on a two-level model with a single random effect for ease of explanation. However, this approach is not restricted to a two-level model with a single random effect; an extension of the method is given at the end of the section.
+
 %\al{
 %
 %%In order to correct residuals for the impact of confounding, we propose using a linear transformation, $\bm{W}^{\prime} \widehat{\bm{b}}$, of the predicted random effects that substantially reduces the amount of confounding. This approach enables the construction of Q-Q plots which are arguably the most familiar graphical depictions for distributional assessment. Additionally, the rotation of the random effects yield residuals that are standardized, uncorrelated, and homoscedastic.
@@ -366,8 +366,7 @@ is unaffected by this interrelationship \al{in the situations that we have consi
 %\al{
 %First, we must define the \emph{fraction of confounding} for the random effects, which is minimized in the result below. This definition generalizes the fraction of confounding proposed by \cite{HildenMinton:1995wh}. 
 
-\hh{As a measure of confounding between the levels of a hierarchical model of the form (2), we introduce FC, the {\it fraction of confounding}:}
-\al{
+As a measure of confounding between the levels of a hierarchical model of the form (2), we introduce FC, the {\it fraction of confounding}:
 \begin{definition}[Fraction of confounding] 
 Let $\bm{b}$ denote a vector of $q$ random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
 \begin{equation}\label{eq:fc2}
@@ -407,7 +406,7 @@ Mathematically, this problem is solved using the generalized eigenvalue decompos
 %
 where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}. 
 %thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. 
-\hh{Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ can be used to solve this problem, given that the kernel of $\bm{B}$ is a subspace of the kernel of $\bm{A}$ \citep{deLeeuw:1982to}.
+Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ can be used to solve this problem, given that the kernel of $\bm{B}$ is a subspace of the kernel of $\bm{A}$ \citep{deLeeuw:1982to}.
 Equivalent to that, we have to show that the difference $\bm{B} - \bm{A}$ is nonnegative definite:
 \[
 	\bm{A} =  \var(\widehat{\bm{b}} | \bm{b} ) = \bm{RPZDZ}^\prime \bm{PR}
@@ -417,7 +416,6 @@ and
 	\bm{B} = \var(\widehat{\bm{b}}) =  \bm{RPR} =  \bm{RPVPR}  = \bm{RPRPR} + \bm{RPZDZ}^\prime\bm{PR},
 \]
 so $\bm{B}-\bm{A} =  \bm{RPRPR}$ is nonnegative definite.
-}
 
 %
 %\cite{deLeeuw:1982to} shows that simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ solves this generalized eigenvalue problem if the null space of $\bm{B}$ is a subspace of the null space of $\bm{A}$, for which a sufficient condition is that $\bm{B} - \bm{A}$ be nonnegative definite. In our problem 
@@ -444,7 +442,7 @@ Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ requires $\bm{W}$ to be $\
 \tr\left( \bm{W\trans A W} \right).
 \end{equation}
 %
-The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$, which are standardized, uncorrelated, and homoscedastic (see the appendix for a proof \hh{and a detailed overview of simultaneous diagonalization}). % In the interest of space we have relegated a detailed overview of the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ to the appendix (XXX supplementary materials?) 
+The rotated random effects are then given by $\bm{W}^{*\prime} \widehat{\bm{b}}$, which are standardized, uncorrelated, and homoscedastic (see the appendix for a proof and a detailed overview of simultaneous diagonalization). % In the interest of space we have relegated a detailed overview of the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ to the appendix (XXX supplementary materials?) 
 Simultaneous diagonalization will be familiar to many as the standard canonical transformation used in multivariate regression. % (XXX this was pointed out by the AE, is this OK to add?).
 
 
@@ -479,11 +477,11 @@ Simultaneous diagonalization will be familiar to many as the standard canonical 
 \paragraph{Correcting for supernormality.}
 The transformation of the random effects results in a vector where each component is a linear combination of elements of $\widehat{\bm{b}}$. Consequently, the rotated residuals will appear more normal than the underlying distribution, if the underlying distribution is not normal. This issue is often referred to as supernormality \citep{Atkinson:1985}. One approach to address supernormality in this context is to reduce the number of elements in the linear combinations.
 %, which should reduce the extent of the problem. 
-\hh{Similar to factor loadings in factor analysis, let us therefore use an orthogonal rotation of $\bm{W}^*$, denoted as $\bm{Q}$. }
+Similar to factor loadings in factor analysis, let us therefore use an orthogonal rotation of $\bm{W}^*$, denoted as $\bm{Q}$.
 %To do this, we suggest using an orthogonal rotation of $\bm{W}^*$, which we denote $\bm{Q}$, just as we rotate the factor loadings in factor analysis. 
 %Using this approach, t
 The rotated residuals are then obtained as $\bm{Q}\trans \bm{W}^{*\prime} \widehat{\bm{b}}$. 
-\hh{Different choices for  $\bm{Q}$ will produce different optimal properties in the residuals: }
+Different choices for  $\bm{Q}$ will produce different optimal properties in the residuals:
 One rotation that will produce rotated residuals comprised of a small number of raw residuals is the raw varimax rotation \citep{Johnson:2007}. Figure~\ref{fig:cartoon} displays heat maps of $\bm{W}^{*\prime}$ (left) and $\bm{Q}\trans\bm{W}^{*\prime}$ (right) for a simulated random intercept model with 20 groups, and demonstrates that the raw varimax rotation reduces the number of groups loading highly on each rotated residual. %\hh{what amount of confounding is there on the left and then on the right?} \al{The amount of confounding is the same between the right and the left. The only different between the two is that we applied the varimax transform to the plot on the right. Regardless, $FC \approx .25$. I used this small simulated model because I thought it showed what the varimax can do for us.} 
 Other orthogonal rotations could be used, but the varimax rotation is familiar to a wide range of analysts and is widely implemented in statistical software packages. A similar approach was used by \cite{Jensen:1999iu}, who used the raw varimax rotation to produce recovered errors for distributional assessment in the ordinary regression model.
 
@@ -502,7 +500,7 @@ Other orthogonal rotations could be used, but the varimax rotation is familiar t
 \paragraph{Extension to multiple random effects.}
 Up to this point our discussion has ignored that a model may (and often will) contain numerous random effects. In this case, the assumptions made on each random effect should be checked; thus, we propose assessing each random effect separately. To this end we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th marginal random effect. For example, in a model with a random intercept and random slope, if $\bm{Z}$ is organized as a block diagonal matrix---that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum \citep[page 47]{Gentle:2007}---then $\bm{L}_0 = \bm{I}_{m} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_1 = \bm{I}_{m} \bigotimes ( 0,\ 1)$ produces the random slopes. The methodology presented in this section can be generalized to models with numerous random effects by substituting $\bm{L}_k\trans \widehat{\bm{b}}$ for $\widehat{\bm{b}}$.
 
-}
+
 
 %\aside{XXX I have started to restructure this subsection above, but will keep the original text below until I am done.}
 %
@@ -727,7 +725,7 @@ To investigate the effect that pooling has on the rotated random effects we cons
 
 Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$ (which is 58 and 59 for the random intercept and slope, respectively) as well as $s =$ 55, 50, 45, 40, 35, and 30. 
 
-\al{We ran the above simulation both in the case where $\bm{D}$ and $\bm{R}$ were known and where $\bm{D}$ and $\bm{R}$ were estimated. The results were quite similar between these two simulation studies, so we present the results from the simulation study for estimated  $\bm{D}$ and $\bm{R}$, as this reflects more closely what is done in practice. Full simulation results are available in the supplement.}
+We ran the above simulation both in the case where $\bm{D}$ and $\bm{R}$ were known and where $\bm{D}$ and $\bm{R}$ were estimated. The results were quite similar between these two simulation studies, so we present the results from the simulation study for estimated  $\bm{D}$ and $\bm{R}$, as this reflects more closely what is done in practice. Full simulation results are available in the supplement.
 
 
 \subsection{Results}\label{sec:sim-results}
@@ -966,7 +964,7 @@ The following supplemental materials can be obtained online:
 
 \item[\texttt{R} script for figures and simulations:] The \texttt{R} code and data used to generate results discussed in this paper are available in the file \texttt{code\_supplement.zip}. 
 
-\item[\texttt{R} package \texttt{HLMdiag}:] We have included the function to calculate the rotated random effects in the \texttt{R} package \texttt{HLMdiag}. \al{ The stable version of \texttt{HLMdiag} is available from the Comprehensive R Archive Network (CRAN, \url{http://cran.r-project.org/}) and the developmental version is available of github (\url{https://github.com/aloy/HLMdiag}).}
+\item[\texttt{R} package \texttt{HLMdiag}:] We have included the function to calculate the rotated random effects in the \texttt{R} package \texttt{HLMdiag}. The stable version of \texttt{HLMdiag} is available from the Comprehensive R Archive Network (CRAN, \url{http://cran.r-project.org/}) and the developmental version is available of github (\url{https://github.com/aloy/HLMdiag}).
 \end{description}
 
 %----------------------------------------------------------------------------------
