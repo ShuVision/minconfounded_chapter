@@ -6,7 +6,7 @@
 # April 2013
 #-------------------------------------------------------------------------------
 
-library(lme4)
+library(lme4.0)
 library(HLMdiag)
 library(plyr)
 library(inline)

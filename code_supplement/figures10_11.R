@@ -6,7 +6,7 @@
 #-------------------------------------------------------------------------------
 
 ### Preliminaries
-library(lme4)
+library(lme4.0)
 library(MASS)
 library(RcppEigen)
 library(inline)
@@ -21,7 +21,7 @@ source('utility_functions.R')
 
 
 tr2 <- function(.mod, .L, s = NULL){
-	       y <- .mod@y
+	       y <- getME(.mod, "y")
            X <- getME(.mod, "X")
            Z <- BlockZ(.mod)
            
@@ -33,8 +33,8 @@ tr2 <- function(.mod, .L, s = NULL){
            Di <- bdiag( VarCorr(.mod) ) / (unname(attr(vc, "sc")))^2
            D  <- kronecker( Diagonal(ngrps), Di )
            
-           Aslot <- .mod@A # ZDZ'
-           zdzt <- crossprod( .mod@A )
+           Aslot <- getME(.mod, "A") # ZDZ'
+           zdzt <- crossprod( getME(.mod, "A") )
            V  <- Diagonal( n ) + zdzt
            V.chol <- chol( V )
            Vinv  <- chol2inv( V.chol ) 
@@ -65,7 +65,7 @@ tr2 <- function(.mod, .L, s = NULL){
 ### Fitted model
 fm <- lmer(log.radon ~ basement + uranium + (basement | county), data = radon)
 
-ngrps <- summary(fm)@ngrps
+ngrps <- summary(fm)$ngrps
 L.b0  <- kronecker(Diagonal(ngrps), c(1, 0))
 L.b1  <- kronecker(Diagonal(ngrps), c(0, 1))
 
@@ -88,9 +88,9 @@ reduced.tr.melt <- melt(reduced.tr, id.vars=1, variable.name="ranef")
 reduced.tr.melt$p.value <- NA
 for(i in 1:nrow(reduced.tr.melt)) {
 	if(reduced.tr.melt[i,"ranef"] == "b0"){
-		rot <- mcresid2(.mod = fm, .L = L.b0, s = reduced.tr.melt[i,"s"], .varimax=TRUE)
+		rot <- rotate_ranef(.mod = fm, .L = L.b0, s = reduced.tr.melt[i,"s"], .varimax=TRUE)
 	} else{
-		rot <- mcresid2(.mod = fm, .L = L.b1, s = reduced.tr.melt[i,"s"], .varimax=TRUE)
+		rot <- rotate_ranef(.mod = fm, .L = L.b1, s = reduced.tr.melt[i,"s"], .varimax=TRUE)
 	}
 	
 	ad.result <- ad.test(rot)

@@ -87,21 +87,21 @@ ggfluctuation <- function (table, type = "size", floor = 0, ceiling = max(table$
 }
 
 ### Extract necessary components of the fitted model
-y <- fm@y
+y <- getME(fm, "y")
 X <- getME(fm, "X")
 Z <- BlockZ(fm) 
 
 n <- nrow(X)
 p <- ncol(X)
-ngrps <- unname( summary(fm)@ngrps )
+ngrps <- unname( summary(fm)$ngrps )
 	           
 vc <- VarCorr(fm)
 # Di <- Diagonal(x = c(vc[[1]], vc[[2]])) / (unname(attr(vc, "sc")))^2
 Di <- bdiag(vc) / sigma(fm)^2
 D  <- kronecker( Diagonal(ngrps), Di )
 
-Aslot <- fm@A # ZDZ'
-zdzt <- crossprod( fm@A )
+Aslot <- getME(fm, "A") # ZDZ'
+zdzt <- crossprod( getME(fm, "A")  )
 V  <- Diagonal( n ) + zdzt
 V.chol <- chol( V )
 Vinv  <- chol2inv( V.chol ) 

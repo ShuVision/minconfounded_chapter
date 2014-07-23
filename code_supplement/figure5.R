@@ -1,7 +1,7 @@
 ### Simulation for plot to select the s-dimensional space
 
 ### Preliminaries
-library(lme4)
+library(lme4.0)
 library(ggplot2)
 library(inline)
 library(RcppEigen)

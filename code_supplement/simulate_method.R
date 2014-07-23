@@ -3,7 +3,7 @@
 #-------------------------------------------------------------------------------
 
 ### Packages
-library(lme4)
+library(lme4.0)
 library(HLMdiag)
 
 ### Loading data
