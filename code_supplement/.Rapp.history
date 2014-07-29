@@ -1,292 +1,3 @@
-?mnormt
-?rmt
-?mvtnorm
-library(mvtnorm)
-mu <- c(1,2)
-Sigma <- matrix(c(4,2,2,3))
-Sigma
-Sigma <- matrix(c(4,2,2,3), ncol=2)
-Sigma
-nu <- 3
-set.seed(271)
-try(rmvt(n, mean=mu, sigma=Sigma, df=nu))
-try(rmt(n, mean=mu, sigma=Sigma, df=nu))
-?rmt
-try(rmt(n=5, mean = mu, S = Sigma, df = nu)
-)
-jsim <- rmt(n=5, mean = mu, S = Sigma, df = nu)
-jsim <- rmt(n=100, mean = mu, S = Sigma, df = nu)
-cov(jsim)
-sqrt(cov(jsim))
-jsim <- rmt(n=1000, mean = mu, S = Sigma, df = nu)
-sqrt(cov(jsim))
-jsim <- rmt(n=10000, mean = mu, S = Sigma, df = nu)
-sqrt(cov(jsim))
-S * 3
-Sigma*3
-cov(jsim)
-jsim <- rmt(n=10000, mean = mu, S = Sigma, df = nu)
-cov(jsim)
-library(nortest)
-library(MASS)
-library(plyr)
-lev2.langeryan.resid <- function(.model) {#
-  y <- .model@y#
-  X <- getME(.model, "X")#
-  Z <- BlockZ(.model)#
-  n <- nrow(X)#
-  nranef <- ncol(ranef(.model)[[1]])#
-  ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))#
-  # Constructing V = Cov(Y)#
-  sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)#
-  ZDZt <- sig0^2 * crossprod( .model@A )#
-  R    <- Diagonal( n = n, x = sig0^2 )#
-  D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )#
-  V    <- Diagonal(n) + ZDZt#
-  # Inverting V#
-  V.chol <- chol( V )#
-  Vinv   <- chol2inv( V.chol )#
-  betahat <- solve(t(X) %*% Vinv %*% X) %*% t(X) %*% Vinv %*% y#
-  mr <- y - X %*% betahat#
-  bvec <- D %*% t(Z) %*% Vinv %*% mr#
-  #bmat <- matrix(bvec, ncol = 2, byrow = TRUE)#
-#
-  bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan#
-  bse.diag <- diag(bse)#
-  rvec <- bvec / sqrt(bse.diag)#
-  if(nranef > 1) {#
-  	rmat <- matrix(rvec, ncol = nranef, byrow = TRUE)#
-    return(rmat)#
-  } else {#
-  	return(rvec)#
-  }#
-#
-}
-library(lme4)
-radon <- read.csv("original_radon.csv") # in code supplement
-fm <- lmer(log.radon ~ basement + uranium + (basement | county), data = radon, REML = FALSE)
-fm
-null_sims <- simulate(fm, nsim = 10, seed = )
-null_refit <- refit(fm, null_sims)
-?refit
-refit
-methods("refit")
-refit.merMod
-lme4:::refit.merMod
-null_sims
-dim(null_sims)
-null_refit <- refit(fm, newresp = null_sims)
-null_refit <- lapply(fm, refit, newresp = null_sims)
-null_sims <- simulate(fm, nsim = 10)
-null_refit <- lapply(fm, refit, newresp = null_sims)
-?simulate
-?refit
-set.seed(101)#
-Y <- matrix(rnorm(1000),ncol=10)#
-res <- list()#
-d <- data.frame(y=Y[,1],x=rnorm(100),f=rep(1:10,10))#
-## need to disregard convergence checks because we#
-## are doing a fake example#
-fit1 <- lmer(y~x+(1|f),data=d,#
-             control=lmerControl(check.conv.grad="ignore",#
-             check.conv.hess="ignore"))#
-res <- c(fit1,lapply(as.data.frame(Y[,-1]),#
-        refit,object=fit1))
-res
-Y
-set.seed(101)#
-Y <- matrix(rnorm(1000),ncol=10)#
-res <- list()#
-d <- data.frame(y=Y[,1],x=rnorm(100),f=rep(1:10,10))#
-## need to disregard convergence checks because we#
-## are doing a fake example#
-fit1 <- lmer(y~x+(1|f),data=d,#
-             control=lmerControl(check.conv.grad="ignore",#
-             check.conv.hess="ignore"))#
-res <- c(fit1,lapply(as.data.frame(Y),#
-        refit,object=fit1))
-res
-class(Y)
-class(null_sims)
-lapply(null_sims, refit, object = fm)
-null_refit <- lapply(null_sims, refit, object = fm)
-null_refit
-lev2.langeryan.resid <- function(.model) {#
-  y <- .model@y#
-  X <- getME(.model, "X")#
-  Z <- BlockZ(.model)#
-  n <- nrow(X)#
-  nranef <- ncol(ranef(.model)[[1]])#
-  ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))#
-  # Constructing V = Cov(Y)#
-  sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)#
-  ZDZt <- sig0^2 * crossprod( .model@A )#
-  R    <- Diagonal( n = n, x = sig0^2 )#
-  D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )#
-  V    <- Diagonal(n) + ZDZt#
-  # Inverting V#
-  V.chol <- chol( V )#
-  Vinv   <- chol2inv( V.chol )#
-  betahat <- solve(t(X) %*% Vinv %*% X) %*% t(X) %*% Vinv %*% y#
-  mr <- y - X %*% betahat#
-  bvec <- D %*% t(Z) %*% Vinv %*% mr#
-  #bmat <- matrix(bvec, ncol = 2, byrow = TRUE)#
-#
-  bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan#
-  bse.diag <- diag(bse)#
-  rvec <- bvec / sqrt(bse.diag)#
-  if(nranef > 1) {#
-  	rmat <- matrix(rvec, ncol = nranef, byrow = TRUE)#
-    return(rmat)#
-  } else {#
-  	return(rvec)#
-  }#
-#
-}
-lev2.langeryan.resid(null_refit[[1]])
-args(getME)
-.model <- null_refit[[1]]
-y <- getME(.model, "y")
-X <- getME(.model, "X")
-Z <- BlockZ(.model)
-n <- nrow(X)
-nranef <- ncol(ranef(.model)[[1]])
-ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))
-ngrps
-sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)
-sig0
-sigma(.model)
-ZDZt <- sig0^2 * crossprod( .model@A )
-ZDZt <- sig0^2 * crossprod( getME(.model, "A") )
-ZDZt
-R    <- Diagonal( n = n, x = sig0^2 )
-D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )
-V    <- Diagonal(n) + ZDZt
-V.chol <- chol( V )
-Vinv   <- chol2inv( V.chol )
-betahat <- solve(t(X) %*% Vinv %*% X) %*% t(X) %*% Vinv %*% y
-mr <- y - X %*% betahat
-bvec <- D %*% t(Z) %*% Vinv %*% mr
-bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan
-bse.diag <- diag(bse)
-rvec <- bvec / sqrt(bse.diag)
-revec
-rvec
-rmat <- matrix(rvec, ncol = nranef, byrow = TRUE)
-rmat
-### Function for Lange and Ryan's residuals#
-lev2.langeryan.resid <- function(.model) {#
-  y <- getME(.model, "y")#
-  X <- getME(.model, "X")#
-  Z <- BlockZ(.model)#
-  n <- nrow(X)#
-  nranef <- ncol(ranef(.model)[[1]])#
-  ngrps <- unname(sapply(.model@flist, function(x) length(levels(x))))#
-  # Constructing V = Cov(Y)#
-  sig0 <- attr(VarCorr(.model), "sc") # sigma(.model)#
-  ZDZt <- sig0^2 * crossprod( getME(.model, "A") )#
-  R    <- Diagonal( n = n, x = sig0^2 )#
-  D    <- kronecker( Diagonal(ngrps), bdiag(VarCorr(.model)) )#
-  V    <- Diagonal(n) + ZDZt#
-  # Inverting V#
-  V.chol <- chol( V )#
-  Vinv   <- chol2inv( V.chol )#
-  betahat <- solve(t(X) %*% Vinv %*% X) %*% t(X) %*% Vinv %*% y#
-  mr <- y - X %*% betahat#
-  bvec <- D %*% t(Z) %*% Vinv %*% mr#
-  #bmat <- matrix(bvec, ncol = 2, byrow = TRUE)#
-#
-  bse <- crossprod( chol(Vinv) %*% Z %*% D ) # Marginal COV. used by Lange and Ryan#
-  bse.diag <- diag(bse)#
-  rvec <- bvec / sqrt(bse.diag)#
-  if(nranef > 1) {#
-  	rmat <- matrix(rvec, ncol = nranef, byrow = TRUE)#
-    return(rmat)#
-  } else {#
-  	return(rvec)#
-  }#
-#
-}
-null_lr_resids <- lapply(null_refit, lev2.langeryan.resid)
-null_lr_resids
-str(null_lr_resids)
-null_sims <- simulate(fm, nsim = 1000)
-null_refit <- lapply(null_sims, refit, object = fm)
-system.time(null_refit <- lapply(null_sims, refit, object = fm))
-system.time(null_lr_resids <- lapply(null_refit, lev2.langeryan.resid))
-sim.hlm <- function(.mod, nsim, e.dsn) {#
-  vc <- VarCorr( .mod )#
-  D  <- as.matrix( bdiag(vc) )#
-  sigma.err <- attr(vc, "sc")#
-	dims <- .mod@dims#
-	n <- dims[["n"]]#
-	m <- dims[["q"]] / nrow(D)#
-	## Simulating error terms#
-	if(e.dsn == "norm") {#
-		e  <- rnorm(n = nsim * n, mean = 0, sd = sigma.err)#
-	} #
-	if(e.dsn == "t") {#
-		e  <- (sigma.err / sqrt(3)) * rt(n = nsim * n, df = 3)#
-	}#
-	if(e.dsn == "exp") {#
-		e  <- sigma.err * ( rexp(n = nsim * n) - 1 )#
-	}#
-	e <- matrix(e, nc = nsim)#
-	## Simulating random intercept#
-	b.sim <- mvrnorm(n = nsim * m, mu = c(0, 0), Sigma = D)#
-	b0 <- matrix(b.sim[,1], nc = nsim)#
-	b1 <- matrix(b.sim[,2], nc = nsim)#
-	## Generating y#
-	b <- rbind(b0, b1)#
-	y <- getME(.mod, "X") %*% fixef(.mod) + getME(.mod, "Z") %*% b + e#
-	y.df <- as.data.frame( as.matrix( y) )#
-	colnames(y.df) <- paste("sim_", 1:ncol(y.df), sep = "")#
-	return( y.df )#
-}
-sim.hlm(.mod = fm, nsim = 1, e.dsn = "normal")
-sim.hlm(.mod = fm, nsim = 1, e.dsn = "norm")
-str(fm)
-sim.hlm <- function(.mod, nsim, e.dsn) {#
-  vc <- VarCorr( .mod )#
-  D  <- as.matrix( bdiag(vc) )#
-  sigma.err <- attr(vc, "sc")#
-	dims <- .mod@devcomp$dims#
-	n <- dims[["n"]]#
-	m <- dims[["q"]] / nrow(D)#
-	## Simulating error terms#
-	if(e.dsn == "norm") {#
-		e  <- rnorm(n = nsim * n, mean = 0, sd = sigma.err)#
-	} #
-	if(e.dsn == "t") {#
-		e  <- (sigma.err / sqrt(3)) * rt(n = nsim * n, df = 3)#
-	}#
-	if(e.dsn == "exp") {#
-		e  <- sigma.err * ( rexp(n = nsim * n) - 1 )#
-	}#
-	e <- matrix(e, nc = nsim)#
-	## Simulating random intercept#
-	b.sim <- mvrnorm(n = nsim * m, mu = c(0, 0), Sigma = D)#
-	b0 <- matrix(b.sim[,1], nc = nsim)#
-	b1 <- matrix(b.sim[,2], nc = nsim)#
-	## Generating y#
-	b <- rbind(b0, b1)#
-	y <- getME(.mod, "X") %*% fixef(.mod) + getME(.mod, "Z") %*% b + e#
-	y.df <- as.data.frame( as.matrix( y) )#
-	colnames(y.df) <- paste("sim_", 1:ncol(y.df), sep = "")#
-	return( y.df )#
-}
-sim.hlm(.mod = fm, nsim = 1, e.dsn = "norm")
-args(replicate)
-args(sim.hlm)
-normal_sims <- sim.hlm(fm, nsim = 1000, e.dsn = "norm")
-normal_sims
-dim(normal_sims)
-class(normal_sims)
-system.time(normal_refit <- lapply(normal_sims, refit, object = fm))
-system.time(normal_lr_resids <- lapply(normal_refit, lev2.langeryan.resid))
-heavy_sims <- sim.hlm(fm, nsim = 1000, e.dsn = "t")#
-heavy_refit <- lapply(normal_sims, refit, object = fm)#
-heavy_lr_resids <- lapply(normal_refit, lev2.langeryan.resid)
 set.seed(7231985)
 heavy_sims <- sim.hlm(fm, nsim = 1000, e.dsn = "t")
 heavy_refit <- lapply(heavy_refit, refit, object = fm)
@@ -797,3 +508,673 @@ d <- extract.lmeDesign(lme(distance ~ age + Sex, data = Orthodont, random = ~ 1)
 d
 d2 <- extract.lmeDesign(lme(distance ~ age + Sex, data = Orthodont, random = ~ 1))
 b0.rot2 <- rotate_ranef(.mod = fm2, .L = L.b0, s = 65, .varimax = TRUE)
+## Load packages#
+library(ggplot2)   # for plotting#
+library(grid)      # for plotting#
+library(maps)      # for MN map#
+library(nullabor)  # for lineup#
+library(HLMdiag)   # for Q-Q plots#
+library(plyr)      # for data manipulation#
+library(reshape2)  # for data manipulation#
+library(stringr)   # for string manipulation
+## Read in the data#
+radon.data <- read.csv("original_radon.csv")#
+srrs2 <- read.table ("srrs2.dat", header=T, sep=",")#
+#
+## Restrict attention to Minnesota#
+mn <- subset(srrs2, state=="MN")
+#-------------------------------------------------------------------------------#
+### Figures 1 and 2#
+#-------------------------------------------------------------------------------#
+## clean names of counties: #
+## lower case and remove all white space at the end of names#
+mn$county <- tolower(as.character(mn$county))#
+mn$county <- gsub(" +$", "", as.character(mn$county))#
+#
+counties <- map_data("county")#
+#
+## restrict to minnesota#
+counties <- subset(counties, region=="minnesota")#
+counties$region <- counties$subregion # no point in keeping the regions#
+#
+## county level summary of radon data#
+library(plyr)#
+mn <- cbind(mn, uranium = radon.data$uranium)#
+counties.stat <- ddply(mn, .(county), summarize, #
+					 n=sum(complete.cases(activity)),#
+                     radon=mean(activity, na.rm=T),#
+                    sdradon=sd(activity, na.rm=T),#
+                    uranium=unique(uranium))
+### Figure 1#
+ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=radon), map = counties) + #
+  scale_fill_gradient("radon activity\n(log pCi/L)") + #
+  expand_limits(x = counties$long, y = counties$lat) + #
+  xlab("longitude") + ylab("latitude") + coord_map() + #
+  theme(#
+  	axis.text.x = element_blank(), #
+  	axis.text.y = element_blank(),#
+  	axis.title.x = element_blank(), #
+  	axis.title.y = element_blank(),#
+  	axis.ticks = element_line(colour=rgb(0,0,0,alpha=0)),#
+  	panel.background =  element_blank(),#
+  	panel.grid.major =  element_blank(),#
+  	panel.grid.minor =  element_blank())
+## Restrict attention to two counties#
+twocounties <- subset(mn, county %in% c("hennepin", "winona"))#
+twocounties$basement <- twocounties$floor==0#
+tc.stat <- ddply(twocounties, .(county, basement), summarise, n=length(activity), sd=sd(activity)/length(activity), activity=mean(activity))#
+#
+## Figure 2#
+qplot(factor(basement), activity, data=twocounties, facets=~county) + #
+  geom_errorbar(aes(ymin=activity-qt(p=.975, df = n-1, lower.tail = F)*sd, ymax=activity+qt(p=.975, df = n-1, lower.tail = F)*sd), data=tc.stat, width=0.5, size=0.75, colour="steelblue")+#
+  geom_point(data=tc.stat, size=3.5, colour="steelblue") + theme_bw()+theme(aspect.ratio=1) + ylab("radon") + xlab("basement")
+### Fitting a model with random intercept for county and #
+### random slope for basement.#
+fm <- lmer(log.radon ~ basement + uranium + (basement | county), data = radon.data, REML = FALSE)#
+#
+# Level-1 residuals (i.e., the error terms)#
+e <- resid(fm)#
+#
+# Random effects (i.e., the level-2 residuals)#
+b <- ranef(fm)[[1]]#
+#
+# Envelope for normal deviates#
+sim_env <- function(x, conf = .95){#
+  n <- length(x)#
+  P <- ppoints(x)#
+  z <- qnorm(P)#
+  a <- as.numeric(HLMdiag:::qqlineInfo(x)[1])#
+  b <- as.numeric(HLMdiag:::qqlineInfo(x)[2])#
+  zz <- qnorm(1 - (1 - conf)/2)#
+  SE <- (b/dnorm(z)) * sqrt(P * (1 - P)/n)#
+  fit.value <- a + b * z#
+  upper <- fit.value + zz * SE#
+  lower <- fit.value - zz * SE#
+  return(data.frame(lower, upper))#
+}
+# Q-Q plot for the error terms#
+e.env <- sim_env(e)#
+e.qq <- qqnorm(e, plot.it = FALSE)#
+e.qq <- lapply(e.qq, sort)#
+#
+ggplot(data.frame(e), aes(sample = e)) + #
+	geom_abline(intercept = HLMdiag:::qqlineInfo(e)[1], #
+              slope = HLMdiag:::qqlineInfo(e)[2], colour = I("grey60")) + #
+	stat_qq() + #
+	geom_ribbon(aes(x = e.qq$x, ymin = e.env$lower, ymax = e.env$upper), alpha = .2) + #
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") + #
+	ylim(-4,4) + #
+	theme_bw()
+# Q-Q plot for the random intercept#
+b0.env <- sim_env(b[,1])#
+b0.qq <- qqnorm(b[,1], plot.it = FALSE)#
+b0.qq <- lapply(b0.qq, sort)#
+#
+ggplot(data.frame(b[,1]), aes(sample = b[,1])) + #
+	geom_abline(intercept = HLMdiag:::qqlineInfo(b[,1])[1], #
+              slope = HLMdiag:::qqlineInfo(b[,1])[2], colour = I("grey60")) + #
+	stat_qq() + #
+	geom_ribbon(aes(x = b0.qq$x, ymin = b0.env$lower, ymax = b0.env$upper), alpha = .2) + #
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") + #
+	ylim(-.2, .2) + #
+	theme_bw()
+#-------------------------------------------------------------------------------#
+### Figure 4#
+#-------------------------------------------------------------------------------#
+set.seed(987654321)#
+sim.y   <- simulate(fm, nsim = 19)                        ## A 919 x 19 matrix of responses#
+sim.mod <- apply(sim.y, 2, refit, object = fm)            ## a list of models#
+#
+### We are really interested in a lineup for the random slopes for our paper#
+# Simulated random slopes#
+sim.b1 <- llply(sim.mod, function(x) ranef(x)[[1]][,2])   ## a list of random slopes#
+sim.b1 <- melt( do.call("rbind", sim.b1) )[,-2]           ## changing to a data frame#
+names(sim.b1) <- c("sample", "basement")                  ## setting colnames for faceting#
+sim.b1        <- arrange(sim.b1, sample)                  ## ordering by simulation#
+#
+### Creating a the lineup#
+b1 <- transform(b, band = sim_env(basement), x = sort(qqnorm(basement, plot.it=FALSE)$x))#
+#
+# some tweaks for nullabor#
+sim.b1$.n <- as.numeric( str_extract(sim.b1$sample, "\\d+") )#
+sim.b1 <- ddply(sim.b1, .(.n), transform, band = sim_env(basement), x = sort(qqnorm(basement, plot.it=FALSE)$x))#
+#
+### Figure 4#
+set.seed(123456)#
+qplot(sample = basement, data = b1, stat = "qq") %+%#
+	lineup(true = b1, sample = sim.b1) + #
+	facet_wrap(~ .sample, ncol = 5) + #
+	geom_ribbon(aes(x = x, ymin = band.lower, ymax = band.upper), alpha = .25) + #
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") +  #
+	theme_bw() + #
+	theme(panel.margin = unit(0, "lines"))
+source('cpp_functions.R')#
+source('utility_functions.R')
+source('cpp_functions.R')#
+source('utility_functions.R')
+dir()
+library(inline)
+library(RcppEigen)
+library(MASS)
+source('cpp_functions.R')
+source('utility_functions.R')
+tr2 <- function(.mod, .L, s = NULL){#
+	       y <- .mod@y#
+           X <- getME(.mod, "X")#
+           Z <- BlockZ(.mod)#
+           n <- nrow(X)#
+           p <- ncol(X)#
+           ngrps <- unname( summary(.mod)@ngrps )#
+           vc <- VarCorr(.mod)#
+           Di <- bdiag( VarCorr(.mod) ) / (unname(attr(vc, "sc")))^2#
+           D  <- kronecker( Diagonal(ngrps), Di )#
+           Aslot <- .mod@A # ZDZ'#
+           zdzt <- crossprod( .mod@A )#
+           V  <- Diagonal( n ) + zdzt#
+           V.chol <- chol( V )#
+           Vinv  <- chol2inv( V.chol ) #
+           XVXinv <- solve( t(X) %*% Vinv %*% X )#
+           VinvX  <- Vinv %*% X#
+           M      <- VinvX %*% XVXinv %*% t(VinvX)#
+           P      <- cxxmatsub(as.matrix(Vinv), as.matrix(M))#
+           pzdl <- P %*% Z %*% D %*% .L#
+           A <- crossprod( pzdl )#
+           B <- t(.L) %*% D %*% t(Z) %*% P %*% Z %*% D %*% .L ## diagnostic se#
+           W <- try( HLMdiag:::mcrotate(A, B, s) )#
+           if( class(W) == "try-error") {W <- NA} else {W <- as.matrix(W)}#
+           if(is.matrix(W)){#
+           		A <- as.matrix(A)#
+           		B <- as.matrix(B)#
+           		return( sum( diag( solve( t(W) %*% B %*% W ) %*% ( t(W) %*% A %*% W ) ) ) )#
+           } else{#
+           	 return(NA)#
+           }           #
+         }#
+### Simulating data#
+set.seed(6132013)#
+m  <- 50       ## no. of groups#
+ni <- 30       ## no. obs. per group#
+N  <- ni * m   ## total no. of obs.#
+#
+sig.e <- 3#
+sig.b <- 1#
+#
+b <- rnorm(m, 0, sig.b)#
+e <- rnorm(N, 0, sig.e)#
+#
+grp.var <- rnorm(m)#
+#
+sim.df <- data.frame(group = rep(1:m, times = ni), grp.var = rep(grp.var, times = ni), b = rep(b, times = ni), e)#
+#
+# Introducing some small groups#
+n.small.grps <- 10#
+which.groups <- sample.int(m, size = n.small.grps)#
+size <- 5#
+#
+for(i in which.groups) {#
+	index <- which(sim.df$group == i)#
+	#eliminate <- sample(index, size = length(index) - size)#
+	eliminate <- sample(index, size = length(index) - rpois(1, size))#
+	sim.df <- sim.df[-eliminate,]#
+}#
+#
+sim.df$y <- with(sim.df, 1 + .3 * grp.var + b + e)#
+#
+mod <- lmer(y ~ grp.var + (1 | group), data = sim.df)
+### plotting#
+### Reducing the trace#
+reduced.tr <- data.frame(s = seq(1, m, by = 1), b0 = NA)#
+#
+for(i in seq( nrow(reduced.tr) )){#
+	reduced.tr[i, "b0"] <- tr2(.mod = mod, .L = Diagonal(m), s = reduced.tr[i, "s"])#
+}#
+#
+qplot(x = m-s, y = b0/m, data = reduced.tr[-m,], geom = c("point", "line")) + #
+	xlab("dimension reduction") + #
+	ylab("fraction of confounding") + #
+	theme_bw() + #
+	ylim(c(0, .31))
+detach(package:lme4)
+detach(package:HLMdiag)
+detach(package:lme4)
+library(lme4.0)
+install.packages("lme4.0")
+install.packages("lme4.0", type="source")
+library(devtools)
+install.packages("lme4.0", #
+                 repos=c("http://lme4.r-forge.r-project.org/repos",#
+                         getOption("repos")[["CRAN"]]))
+library(lme4.0)
+library(lme4)
+library(lme4)#
+library(ggplot2)#
+library(inline)#
+library(RcppEigen)#
+library(MASS)
+source('cpp_functions.R')
+source('utility_functions.R')
+nclass <- 20#
+#
+set.seed(123)#
+nstud <- c(rpois(15, 15), rpois(5, 5))#
+#
+class.effect <- rnorm(nclass)*2#
+#
+student.effect <- rnorm(sum(nstud))*3#
+#
+# Data we need in order to generate our analysis.#
+data.set = data.frame(class.id = rep(1:nclass, time=nstud),#
+                  class.effect = rep(class.effect, times=nstud),#
+                  student.id = 1:(sum(nstud)),#
+                  student.effect = student.effect)#
+data.set$outcomes = data.set$class.effect + data.set$student.effect#
+#
+head(data.set)#
+fm <- lmer(outcomes ~ 1 + (1|class.id), data=data.set)
+mcrotate <- function(A, B, s) {#
+  r <- rankMatrix(B)#
+  B.svd <- svd(B)#
+  Cr.diag <- B.svd$d[1:r]#
+  Tr <- B.svd$u[, 1:r]#
+  A.star <- Diagonal( x = 1 / sqrt(Cr.diag) ) %*% t(Tr) %*% #
+    A %*% #
+    Tr %*% Diagonal( x = 1 / sqrt(Cr.diag) )#
+  A.star.svd <- svd( A.star )#
+  index <- seq(r, length.out = s, by = -1)#
+  index <- sort(index[index >= 0])#
+  W <- Tr %*% Diagonal( x = 1 / sqrt( Cr.diag ) ) %*% A.star.svd$u[,index]#
+  return(W)#
+}
+ggfluctuation <- function (table, type = "size", floor = 0, ceiling = max(table$freq, #
+    na.rm = TRUE)) #
+{#
+    .Deprecated()#
+    if (is.table(table)) #
+        table <- as.data.frame(t(table))#
+    oldnames <- names(table)#
+    names(table) <- c("x", "y", "result")#
+    table <- transform(table, x = as.factor(x), y = as.factor(y), #
+        freq = result)#
+    if (type == "size") {#
+        table <- transform(table, freq = sqrt(pmin(freq, ceiling)/ceiling), #
+            border = ifelse(is.na(freq), "grey90", ifelse(freq > #
+                ceiling, "grey30", "grey50")))#
+        table[is.na(table$freq), "freq"] <- 1#
+        table <- subset(table, freq * ceiling >= floor)#
+    }#
+    if (type == "size") {#
+        nx <- length(levels(table$x))#
+        ny <- length(levels(table$y))#
+        p <- ggplot(table, aes_string(x = "x", y = "y", height = "freq", #
+            width = "freq", fill = "border")) + geom_tile(colour = "white") + #
+            scale_fill_identity() + theme(aspect.ratio = ny/nx)#
+    }#
+    else {#
+        p <- ggplot(table, aes_string(x = "x", y = "y", fill = "freq")) + #
+            geom_tile(colour = "white") + scale_fill_gradient2(expression(w[ij])#
+, low = "red", mid="white", high = "blue")#
+    }#
+    p$xlabel <- oldnames[1]#
+    p$ylabel <- oldnames[2]#
+    p#
+}
+y <- fm@y
+y <- getME(fm, "y")
+X <- getME(fm, "X")
+Z <- BlockZ(fm)
+n <- nrow(X)#
+p <- ncol(X)#
+ngrps <- unname( summary(fm)@ngrps )
+str(summary(fm))
+ngrps <- unname( summary(fm)$ngrps )
+ngrps
+vc <- VarCorr(fm)#
+# Di <- Diagonal(x = c(vc[[1]], vc[[2]])) / (unname(attr(vc, "sc")))^2#
+Di <- bdiag(vc) / sigma(fm)^2#
+D  <- kronecker( Diagonal(ngrps), Di )
+Aslot <- fm@A # ZDZ'#
+zdzt <- crossprod( fm@A )#
+V  <- Diagonal( n ) + zdzt#
+V.chol <- chol( V )#
+Vinv  <- chol2inv( V.chol )
+Aslot <- getME(fm, "A") # ZDZ'
+zdzt <- crossprod( getME(fm, "A")  )
+V  <- Diagonal( n ) + zdzt#
+V.chol <- chol( V )#
+Vinv  <- chol2inv( V.chol )
+XVXinv <- solve( t(X) %*% Vinv %*% X )#
+VinvX  <- Vinv %*% X#
+M      <- VinvX %*% XVXinv %*% t(VinvX)#
+P      <- cxxmatsub(as.matrix(Vinv), as.matrix(M))
+### Rotating the random intercept#
+A <-  crossprod( P %*% Z %*% D )#
+B <- D %*% t(Z) %*% P %*% Z %*% D#
+s <- rankMatrix(B)
+fc.int   <- diag(ginv(as.matrix(B)) %*% A)#
+#
+W.int <- as.matrix( mcrotate(A = A, B = B, s = s) )#
+W.vmx.int <- varimax( W.int, normalize = FALSE )$loadings#
+#
+Wt.int <- as.matrix( zapsmall( t(W.int) ) )#
+Wt.vmx.int <- as.matrix( zapsmall( t(W.vmx.int) ) )#
+#
+# colnames(Wt.int) <- colnames(Wt.vmx.int) <- unique( radon$county.name )#
+colnames(Wt.int) <- colnames(Wt.vmx.int) <- unique( fm@frame$class.id )#
+rownames(Wt.int) <- rownames(Wt.vmx.int) <- seq_len(nrow(Wt.int))#
+#
+# Pulling off variances of random ints#
+rint.var <- diag(B) # we could order by this, but fc makes more sense#
+#
+reordered.Wt.int <- Wt.int[, order(fc.int, decreasing = TRUE)]#
+reordered.Wt.vmx.int <- Wt.vmx.int[, order(fc.int, decreasing = TRUE)]#
+#
+reordered.Wt.int.tform <- sign(reordered.Wt.int) * sqrt(abs(reordered.Wt.int))#
+reordered.Wt.vmx.int.tform <- sign(reordered.Wt.vmx.int) * sqrt(abs(reordered.Wt.vmx.int))
+ggfluctuation(as.table(reordered.Wt.int), type = "colour") + #
+  theme(axis.text.x = element_text(angle = 90, hjust=1, vjust=.5, size=6, colour="black"),#
+    axis.text.y = element_text(size=6, colour="black")) + #
+  xlab("Group") + ylab("Index of Rotated Residuals") + #
+  coord_equal() + #
+  theme(panel.margin = unit(0, "lines"))
+ggfluctuation(as.table(reordered.Wt.vmx.int), type = "colour") + #
+  theme(axis.text.x = element_text(angle = 90, hjust=1, vjust=.5, size=6, colour="black"),#
+    axis.text.y = element_text(size=6, colour="black")) + #
+  xlab("Group") + ylab("Index of Rotated Residuals") + #
+  coord_equal() + #
+  theme(panel.margin = unit(0, "lines"))
+#-------------------------------------------------------------------------------#
+# Script the graphics revisiting the radon data#
+##
+# Adam Loy#
+# April 2013#
+#-------------------------------------------------------------------------------#
+#
+### Preliminaries#
+library(lme4)#
+library(MASS)#
+library(RcppEigen)#
+library(inline)#
+library(nortest)#
+#
+# Readingin the data#
+radon <- read.csv("original_radon.csv")#
+#
+### Loading self-written functions#
+source('cpp_functions.R')#
+source('utility_functions.R')#
+tr2 <- function(.mod, .L, s = NULL){#
+	       y <- getME(.mod, "y")#
+           X <- getME(.mod, "X")#
+           Z <- BlockZ(.mod)#
+           n <- nrow(X)#
+           p <- ncol(X)#
+           ngrps <- unname( summary(.mod)$ngrps )#
+           vc <- VarCorr(.mod)#
+           Di <- bdiag( VarCorr(.mod) ) / (unname(attr(vc, "sc")))^2#
+           D  <- kronecker( Diagonal(ngrps), Di )#
+           Aslot <- getME(.mod, "A") # ZDZ'#
+           zdzt <- crossprod( getME(.mod, "A") )#
+           V  <- Diagonal( n ) + zdzt#
+           V.chol <- chol( V )#
+           Vinv  <- chol2inv( V.chol ) #
+           XVXinv <- solve( t(X) %*% Vinv %*% X )#
+           VinvX  <- Vinv %*% X#
+           M      <- VinvX %*% XVXinv %*% t(VinvX)#
+           P      <- cxxmatsub(as.matrix(Vinv), as.matrix(M))#
+           pzdl <- P %*% Z %*% D %*% .L#
+           A <- crossprod( pzdl )#
+           B <- t(.L) %*% D %*% t(Z) %*% P %*% Z %*% D %*% .L ## diagnostic se#
+           W <- try( HLMdiag:::mcrotate(A, B, s) )#
+           if( class(W) == "try-error") {W <- NA} else {W <- as.matrix(W)}#
+           if(is.matrix(W)){#
+           		A <- as.matrix(A)#
+           		B <- as.matrix(B)#
+           		return( sum( diag( solve( t(W) %*% B %*% W ) %*% ( t(W) %*% A %*% W ) ) ) )#
+           } else{#
+           	 return(NA)#
+           }           #
+         }
+### Fitted model#
+fm <- lmer(log.radon ~ basement + uranium + (basement | county), data = radon)#
+#
+ngrps <- summary(fm)$ngrps#
+L.b0  <- kronecker(Diagonal(ngrps), c(1, 0))#
+L.b1  <- kronecker(Diagonal(ngrps), c(0, 1))#
+### Initial fraction of confounding#
+tr2(fm, L.b0) / 85 # 0.72#
+tr2(fm, L.b1) / 85  # 0.70
+### Reducing the trace#
+reduced.tr <- data.frame(s = seq(30, 85, by = 1), b0 = NA, b1 = NA)#
+#
+for(i in seq( nrow(reduced.tr) )){#
+	reduced.tr[i, "b0"] <- tr2(.mod = fm, .L = L.b0, s = reduced.tr[i, "s"])#
+	reduced.tr[i, "b1"] <- tr2(.mod = fm, .L = L.b1, s = reduced.tr[i, "s"])#
+}
+# adding results from the AD test of the rotated residuals#
+reduced.tr.melt <- melt(reduced.tr, id.vars=1, variable.name="ranef")#
+reduced.tr.melt$p.value <- NA#
+for(i in 1:nrow(reduced.tr.melt)) {#
+	if(reduced.tr.melt[i,"ranef"] == "b0"){#
+		rot <- mcresid2(.mod = fm, .L = L.b0, s = reduced.tr.melt[i,"s"], .varimax=TRUE)#
+	} else{#
+		rot <- mcresid2(.mod = fm, .L = L.b1, s = reduced.tr.melt[i,"s"], .varimax=TRUE)#
+	}#
+	ad.result <- ad.test(rot)#
+	reduced.tr.melt$p.value[i] <- ad.result$p.value#
+}
+mcresid2
+mcresid
+ls()
+source('utility_functions.R')
+source('cpp_functions.R')
+library(HLMdiag)
+?rotate_ranef
+reduced.tr.melt <- melt(reduced.tr, id.vars=1, variable.name="ranef")#
+reduced.tr.melt$p.value <- NA#
+for(i in 1:nrow(reduced.tr.melt)) {#
+	if(reduced.tr.melt[i,"ranef"] == "b0"){#
+		rot <- rotate_ranef(.mod = fm, .L = L.b0, s = reduced.tr.melt[i,"s"], .varimax=TRUE)#
+	} else{#
+		rot <- rotate_ranef(.mod = fm, .L = L.b1, s = reduced.tr.melt[i,"s"], .varimax=TRUE)#
+	}#
+	ad.result <- ad.test(rot)#
+	reduced.tr.melt$p.value[i] <- ad.result$p.value#
+}
+reduced.tr.melt$ad.reject <- reduced.tr.melt$p.value < .05
+levels(reduced.tr.melt$ranef) <- c("Random intercept", "Random slope")
+qplot(x = 85 - s, y = value / 85, data = reduced.tr.melt, geom = "line", facets = ~ ranef) +
+geom_point(aes(shape = ad.reject, colour = ad.reject)) +
+scale_colour_manual("AD test", labels = c("Fail to reject", "Reject"), values = c("black", "red")) +
+scale_shape_manual("AD test", labels = c("Fail to reject", "Reject"), values = c(1, 16)) +
+xlab("dimension reduction (s - 85)") + #
+	ylab("fraction of confounding") +#
+	theme_bw() + #
+	theme(legend.position = "bottom")
+b0.rot <- rotate_ranef(.mod = fm, .L = L.b0, s = 65, .varimax = TRUE)
+b1.rot <- rotate_ranef(.mod = fm, .L = L.b1, s = 65, .varimax = TRUE)
+### constructing Q-Q plots#
+sim_env <- function(x, conf = .95){#
+  n <- length(x)#
+  P <- ppoints(x)#
+  z <- qnorm(P)#
+  a <- as.numeric(HLMdiag:::qqlineInfo(x)[1])#
+  b <- as.numeric(HLMdiag:::qqlineInfo(x)[2])#
+  zz <- qnorm(1 - (1 - conf)/2)#
+  SE <- (b/dnorm(z)) * sqrt(P * (1 - P)/n)#
+  fit.value <- a + b * z#
+  upper <- fit.value + zz * SE#
+  lower <- fit.value - zz * SE#
+  return(data.frame(lower, upper))#
+}#
+env.b0 <- sim_env(b0.rot)#
+b0.qq <- qqnorm(b0.rot, plot.it = FALSE)#
+b0.qq <- lapply(b0.qq, sort)#
+#
+env.b1 <- sim_env(b1.rot)#
+b1.qq <- qqnorm(b1.rot, plot.it = FALSE)#
+b1.qq <- lapply(b1.qq, sort)#
+ggplot(data.frame(b0.rot), aes(sample = b0.rot)) + #
+	geom_abline(intercept = HLMdiag:::qqlineInfo(b0.rot)[1], #
+              slope = HLMdiag:::qqlineInfo(b0.rot)[2], colour = I("grey60")) + #
+	stat_qq() + #
+	geom_ribbon(aes(x = b0.qq$x, ymin = env.b0$lower, ymax = env.b0$upper), alpha = .2) + #
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") + #
+	theme_bw()
+ggplot(data.frame(b1.rot), aes(sample = b1.rot)) + #
+	geom_abline(intercept = HLMdiag:::qqlineInfo(b1.rot)[1], #
+              slope = HLMdiag:::qqlineInfo(b1.rot)[2], colour = I("grey60")) + #
+	stat_qq() + #
+	geom_ribbon(aes(x = b1.qq$x, ymin = env.b1$lower, ymax = env.b1$upper), alpha = .2) + #
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") + #
+	theme_bw()
+ad.test
+fm
+ngrps <- summary(fm)$ngrps#
+L.b0  <- kronecker(Diagonal(ngrps), c(1, 0))#
+L.b1  <- kronecker(Diagonal(ngrps), c(0, 1))#
+### Initial fraction of confounding#
+tr2(fm, L.b0) / 85 # 0.72#
+tr2(fm, L.b1) / 85  # 0.70
+L.b0
+L.b1
+L.b0
+reduced.tr <- data.frame(s = seq(30, 85, by = 1), b0 = NA, b1 = NA)#
+#
+for(i in seq( nrow(reduced.tr) )){#
+	reduced.tr[i, "b0"] <- tr2(.mod = fm, .L = L.b0, s = reduced.tr[i, "s"])#
+	reduced.tr[i, "b1"] <- tr2(.mod = fm, .L = L.b1, s = reduced.tr[i, "s"])#
+}#
+#
+# adding results from the AD test of the rotated residuals#
+reduced.tr.melt <- melt(reduced.tr, id.vars=1, variable.name="ranef")#
+reduced.tr.melt$p.value <- NA#
+for(i in 1:nrow(reduced.tr.melt)) {#
+	if(reduced.tr.melt[i,"ranef"] == "b0"){#
+		rot <- rotate_ranef(.mod = fm, .L = L.b0, s = reduced.tr.melt[i,"s"], .varimax=TRUE)#
+	} else{#
+		rot <- rotate_ranef(.mod = fm, .L = L.b1, s = reduced.tr.melt[i,"s"], .varimax=TRUE)#
+	}#
+	ad.result <- ad.test(rot)#
+	reduced.tr.melt$p.value[i] <- ad.result$p.value#
+}
+reduced.tr.melt
+fm
+ranef(fm)
+ranef(fm)[[1]]
+ranef(fm)[[1]][,1]
+qqnorm(ranef(fm)[[1]][,1])
+rotate_ranef(.mod=fm, .L=L.b0, s=84)
+qqnorm(rotate_ranef(.mod=fm, .L=L.b0, s=84))
+qqnorm(rotate_ranef(.mod=fm, .L=L.b0, s=80))
+reduced.tr.melt
+ad.test(rotate_ranef(.mod=fm, .L=L.b0, s=80))
+ad.test(rotate_ranef(.mod=fm, .L=L.b0, s=80))
+ad.test(rotate_ranef(.mod=fm, .L=L.b0, s=80))
+reduced.tr.melt[i,"s"]
+ad.test(rotate_ranef(.mod=fm, .L=L.b1, s=85))
+ad.test(rotate_ranef(.mod=fm, .L=L.b0, s=85))
+reduced.tr.melt <- melt(reduced.tr, id.vars=1, variable.name="ranef")#
+reduced.tr.melt$p.value <- NA
+reduced.tr.melt
+reduced.tr
+tr2(fm, L.b0) / 85 # 0.72
+reduced.tr
+reduced.tr.melt <- melt(reduced.tr, id.vars=1, variable.name="ranef")
+reduced.tr.melt$p.value <- NA
+reduced.tr.melt
+ad.test(rotate_ranef(.mod=fm, .L=L.b0, s=85, .varimax=T))
+ad.test(rotate_ranef(.mod=fm, .L=L.b0, s=85, .varimax=T))
+ad.test(rotate_ranef(.mod=fm, .L=L.b0, s=85, .varimax=T))
+ad.test(rotate_ranef(.mod=fm, .L=L.b0, s=85, .varimax=F))
+reduced.tr.melt <- melt(reduced.tr, id.vars=1, variable.name="ranef")#
+reduced.tr.melt$p.value <- NA#
+for(i in 1:nrow(reduced.tr.melt)) {#
+	if(reduced.tr.melt[i,"ranef"] == "b0"){#
+		rot <- rotate_ranef(.mod = fm, .L = L.b0, s = reduced.tr.melt[i,"s"], .varimax=F)#
+	} else{#
+		rot <- rotate_ranef(.mod = fm, .L = L.b1, s = reduced.tr.melt[i,"s"], .varimax=F)#
+	}#
+	ad.result <- ad.test(rot)#
+	reduced.tr.melt$p.value[i] <- ad.result$p.value#
+}
+reduced.tr.melt$ad.reject <- reduced.tr.melt$p.value < .05#
+#
+### Figure 10#
+levels(reduced.tr.melt$ranef) <- c("Random intercept", "Random slope")#
+qplot(x = 85 - s, y = value / 85, data = reduced.tr.melt, geom = "line", facets = ~ ranef) + #
+	geom_point(aes(shape = ad.reject, colour = ad.reject)) + #
+	scale_colour_manual("AD test", labels = c("Fail to reject", "Reject"), values = c("black", "red")) + #
+	scale_shape_manual("AD test", labels = c("Fail to reject", "Reject"), values = c(1, 16)) + #
+	xlab("dimension reduction (s - 85)") + #
+	ylab("fraction of confounding") +#
+	theme_bw() + #
+	theme(legend.position = "bottom")
+### Obtaining the rotated random effects for Q-Q plots#
+b0.rot <- rotate_ranef(.mod = fm, .L = L.b0, s = 65, .varimax = TRUE)#
+b1.rot <- rotate_ranef(.mod = fm, .L = L.b1, s = 65, .varimax = TRUE)
+### constructing Q-Q plots#
+sim_env <- function(x, conf = .95){#
+  n <- length(x)#
+  P <- ppoints(x)#
+  z <- qnorm(P)#
+  a <- as.numeric(HLMdiag:::qqlineInfo(x)[1])#
+  b <- as.numeric(HLMdiag:::qqlineInfo(x)[2])#
+  zz <- qnorm(1 - (1 - conf)/2)#
+  SE <- (b/dnorm(z)) * sqrt(P * (1 - P)/n)#
+  fit.value <- a + b * z#
+  upper <- fit.value + zz * SE#
+  lower <- fit.value - zz * SE#
+  return(data.frame(lower, upper))#
+}#
+env.b0 <- sim_env(b0.rot)#
+b0.qq <- qqnorm(b0.rot, plot.it = FALSE)#
+b0.qq <- lapply(b0.qq, sort)#
+#
+env.b1 <- sim_env(b1.rot)#
+b1.qq <- qqnorm(b1.rot, plot.it = FALSE)#
+b1.qq <- lapply(b1.qq, sort)#
+ggplot(data.frame(b0.rot), aes(sample = b0.rot)) + #
+	geom_abline(intercept = HLMdiag:::qqlineInfo(b0.rot)[1], #
+              slope = HLMdiag:::qqlineInfo(b0.rot)[2], colour = I("grey60")) + #
+	stat_qq() + #
+	geom_ribbon(aes(x = b0.qq$x, ymin = env.b0$lower, ymax = env.b0$upper), alpha = .2) + #
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") + #
+	theme_bw()
+ggplot(data.frame(b1.rot), aes(sample = b1.rot)) + #
+	geom_abline(intercept = HLMdiag:::qqlineInfo(b1.rot)[1], #
+              slope = HLMdiag:::qqlineInfo(b1.rot)[2], colour = I("grey60")) + #
+	stat_qq() + #
+	geom_ribbon(aes(x = b1.qq$x, ymin = env.b1$lower, ymax = env.b1$upper), alpha = .2) + #
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") + #
+	theme_bw()
+b0.rot <- rotate_ranef(.mod = fm, .L = L.b0, s = 65, .varimax = F)#
+b1.rot <- rotate_ranef(.mod = fm, .L = L.b1, s = 65, .varimax = TRUE)#
+#
+### constructing Q-Q plots#
+sim_env <- function(x, conf = .95){#
+  n <- length(x)#
+  P <- ppoints(x)#
+  z <- qnorm(P)#
+  a <- as.numeric(HLMdiag:::qqlineInfo(x)[1])#
+  b <- as.numeric(HLMdiag:::qqlineInfo(x)[2])#
+  zz <- qnorm(1 - (1 - conf)/2)#
+  SE <- (b/dnorm(z)) * sqrt(P * (1 - P)/n)#
+  fit.value <- a + b * z#
+  upper <- fit.value + zz * SE#
+  lower <- fit.value - zz * SE#
+  return(data.frame(lower, upper))#
+}#
+env.b0 <- sim_env(b0.rot)#
+b0.qq <- qqnorm(b0.rot, plot.it = FALSE)#
+b0.qq <- lapply(b0.qq, sort)#
+#
+env.b1 <- sim_env(b1.rot)#
+b1.qq <- qqnorm(b1.rot, plot.it = FALSE)#
+b1.qq <- lapply(b1.qq, sort)#
+ggplot(data.frame(b0.rot), aes(sample = b0.rot)) + #
+	geom_abline(intercept = HLMdiag:::qqlineInfo(b0.rot)[1], #
+              slope = HLMdiag:::qqlineInfo(b0.rot)[2], colour = I("grey60")) + #
+	stat_qq() + #
+	geom_ribbon(aes(x = b0.qq$x, ymin = env.b0$lower, ymax = env.b0$upper), alpha = .2) + #
+	xlab("Normal Quantiles") + ylab("Sample Quantiles") + #
+	theme_bw()

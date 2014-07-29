@@ -1,0 +1,250 @@
+\documentclass[11pt]{article} % JASA requires 12 pt font for manuscripts
+%\usepackage{JASA_manu}        % For JASA manuscript formatting
+\RequirePackage{pdf14}
+
+% for citations
+\usepackage[authoryear]{natbib} % natbib required for JASA
+\usepackage[colorlinks=true, citecolor=blue, linkcolor=blue]{hyperref}
+\newcommand{\citetapos}[1]{\citeauthor{#1}{\textcolor{blue}{'s}} }
+
+%\definecolor{Blue}{rgb}{0,0,0.5}
+
+\usepackage{amsthm}
+
+% for figures
+\usepackage{graphicx}
+\usepackage[font=small]{caption}
+\usepackage{subfig}
+\captionsetup[subfloat]{font=normalsize}
+%\usepackage{subcaption}
+\graphicspath{{figures/}}
+\newcommand{\hh}[1]{{\color{orange} #1}}
+\newcommand{\al}[1]{{\color{red} #1}}
+
+% color in tables
+\usepackage{rotating}
+\usepackage{color}
+\usepackage{colorbl}
+
+% help with editing and coauthoring
+\usepackage{todonotes}
+
+% title formatting
+\usepackage[compact,small]{titlesec}
+% page formatting
+\usepackage[margin = 1in]{geometry}
+%\usepackage[parfill]{parskip}
+
+% line spacing
+\usepackage{setspace}
+\doublespacing
+
+% For math typsetting
+\usepackage{bm}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{multirow}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{algorithm}[theorem]{Algorithm}
+
+% A few commands to make typing less tedious
+\newcommand{\inv}{\ensuremath{^{-1}}}
+\newcommand{\ginv}{\ensuremath{^{-}}}
+\newcommand{\trans}{\ensuremath{^\prime}}
+\newcommand{\E}{\ensuremath{\mathrm{E}}}
+\newcommand{\var}{\ensuremath{\mathrm{Var}}}
+\newcommand{\cov}{\ensuremath{\mathrm{Cov}}}
+\DeclareMathOperator{\tr}{Trace}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator*{\argmin}{arg\, min}
+
+\pdfminorversion=4 % Instructed by JCGS submission
+
+\begin{document}
+\title{Supplement to ``Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models''}
+\author{
+	Adam Loy and Heike Hofmann\\
+	Department of Mathematics,
+	Lawrence University\\
+	Department of Statistics,
+	Iowa State University
+}
+\date{}
+\maketitle
+%----------------------------------------------------------------------------------
+
+The materials in this document supplement the information presented in ``Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models''. Section~\ref{supp:evals} presents a review of existing proposals for residual analysis for hierarchical linear models and a simulation study evaluating the performance of each. Section~\ref{supp:simstudy} presents the complete results for all simulation settings considered in the paper: Section~\ref{supp:simestimated} presents the results of the simulation study where the covariance matrices, $\bm{D}$ and $\bm{R}$, were estimated and Section~\ref{supp:simfixed} presents the results of the simulation study where the covariance matrices were known.
+
+
+\section{Evaluations of existing proposals}\label{supp:evals}
+%--------------------------------------------------
+
+\subsection{Model notation}
+%--------------------------
+Recall that the stacked representation of the hierarchical linear model is given by 
+%
+\begin{align}\label{eq:hlm}
+	\underset{(n \times 1)}{\bm{y}} &= \underset{(n \times p)}{\bm{X}} \ \underset{(p \times 1)}{\bm{\beta}} + \underset{(n \times q)}{\bm{Z}} \ \underset{(q \times 1)}{\bm{b}} + \underset{(n \times 1)}{\bm{\varepsilon}},\\
+	\bm{\varepsilon} & \overset{\text{iid}}{\sim} \mathcal{N}(\bm{0}, \ \bm{R}), \qquad \bm{b} \overset{\text{iid}}{\sim} \mathcal{N}(\bm{0},\ \bm{D}) \nonumber
+\end{align}
+%
+where $\bm{y}$ is a vector of responses, $\bm{X}$ and $\bm{Z}$ are design matrices for the fixed and random effects, respectively, $\bm{\beta}$ is a vector of fixed effects, $\bm{b}$ is a vector of random effects, $\bm{\varepsilon}$ is a vector of error terms, and $\bm{R}$ and $\bm{D}$ are positive definite covariance matrices. Further, we assume that $\cov(\bm{\varepsilon},\ \bm{b}) = \bm{0}$. The above assumptions imply that, marginally, $\bm{y} \sim \mathcal{N}(\bm{X\beta},\ \bm{V})$ where $\bm{V} = \bm{ZDZ}\trans + \bm{R}$.
+
+\subsection{Residuals}
+
+In this section we consider residuals that are commonly used to check the distributional assumptions in a hierarchical linear model. For more general discussions of residual analysis for hierarchical linear models we refer the reader to \cite{Haslett:2007vv} and \cite{Nobre:2007ej}.
+
+\paragraph{Marginal residuals.} 
+%-----------------------------
+The marginal distribution of $\bm{y}$ leads to the marginal residuals which are defined as
+%
+\begin{equation}\label{eq:marginalresid}
+\widehat{\bm{\zeta}}  = \bm{y} - \bm{X} \widehat{\bm{\beta}} =  \bm{V P y}
+\end{equation}
+%
+where $ \bm{P} = \bm{V\inv} - \bm{V\inv X} \left( \bm{X\trans V\inv X} \right) \bm{X \trans V\inv}$, and reveal how the observations deviate from the global trend. The use of these residuals for distributional assessment provides an omnibus assessment of goodness-of-fit as the marginal residuals are a linear combination of the other residual quantities; however, this assessment requires the empirical distribution of the marginal residuals to resemble true distribution. Asymptotically, the variance of the marginal residuals is $\var(\widehat{\zeta}) = \bm{V}$ leading to correlated residuals. To obtain asymptotically uncorrelated residuals the marginal residuals can be scaled by the Cholesky root of $\bm{V}$ \citep{Houseman:2004gq}, $\bm{C}$, yielding
+%
+\begin{equation}\label{eq:choleskyresid}
+\bm{z}_{\zeta}  = \bm{C}\inv \widehat{\bm{\zeta}}
+\end{equation}
+%
+
+
+\paragraph{Level-1 residuals.}
+%-----------------------------
+The distribution of $\bm{y}$ conditional on the random effects, $\bm{b}$, is given by
+%
+\begin{equation}\label{eq:marginalmodel}
+	\bm{y} | \bm{b} \sim \mathcal{N}( \bm{X\beta} + \bm{Zb},\ \bm{R} ),
+\end{equation}
+%
+and leads to the level-1 residuals, commonly referred to as the error terms, which are defined as
+%
+\begin{equation}\label{eq:lev1resid}
+	\widehat{\bm{\varepsilon}} = \bm{y} - \bm{X \widehat{\beta}} + \bm{Z \widehat{b}} = \bm{R P y}
+\end{equation}
+%
+and reveal the deviations of the observations from the conditional model. The variance of the level-1 residuals is given by $\var(\widehat{\bm{\varepsilon}}) = \bm{ R P R }$, so studentized level-1 residuals can be obtained by 
+%
+\begin{equation}\label{eq:lev1-std}
+\bm{z}_{\varepsilon} =  \text{diag} \left(\bm{RPR} \right)^{-1/2} \widehat{\bm{\varepsilon}}
+\end{equation}
+%
+which have been recommended for distributional assessment \citep{Nobre:2007ej}. An alternative approach is recommended by \citet[Section 4.3]{Pinhiero:2000vf} uses the Pearson residuals, which are obtained by dividing the predicted residuals by the estimated within-group standard deviation, $\widehat{\sigma}_\varepsilon$. 
+
+
+
+\paragraph{Level-2 residuals.}
+%-----------------------------
+The final type of residual we consider is the the best linear unbiased predictor (BLUP) of the random effects (i.e., predicted random effects), providing insight into the differences between the marginal (global) and conditional models. By definition, the BLUP of $\bm{b}$ is
+%
+\begin{equation}\label{eq:lev2resid}
+\widehat{\bm{b}} = \bm{D Z\trans V\inv} \left( \bm{y} - \bm{X \widehat{\beta}} \right) = \bm{D Z\trans P y}
+\end{equation}
+%
+which has variance $\var(\widehat{\bm{b}}) = \bm{DZ\trans P ZD}$. 
+%Rewriting $\var(\widehat{\bm{b}})$ as
+%%
+%\begin{equation}
+%\bm{DZ\trans P ZD} = \bm{DZ\trans} \bm{V\inv} \left( \bm{V} - \bm{ X} \left( \bm{X\trans V\inv X} \right) \bm{X \trans} \right) \bm{V\inv} \bm{ZD}
+%\end{equation}
+%%
+%leads to two 
+For distributional assessment of the BLUPs it makes sense to examine each random effect individually, though \cite{Lange:1989uu} suggest the examination of linear combinations of standardized BLUPs. Rewritting the definition of $\var(\widehat{\bm{b}})$
+%
+\begin{equation}
+\bm{DZ\trans P ZD} = \bm{DZ\trans} \bm{V\inv} \left( \bm{V} - \bm{ X} \left( \bm{X\trans V\inv X} \right) \bm{X \trans} \right) \bm{V\inv} \bm{ZD}
+\end{equation}
+%
+leads to two similar standardizations of the BLUPs. The first utilizes the fact that when the number of groups is large $\bm{ X} \left( \bm{X\trans V\inv X} \right)$ will be small \citep{Goldstein:2011}, so for a large number of groups standardized BLUPs can be calculated by
+%
+\begin{equation}\label{eq:lev2-std1}
+\bm{z}_{b} = \text{diag} \left(\bm{DZ\trans V\inv ZD}\right)^{-1/2} \widehat{\bm{b}}
+\end{equation}
+%
+This formulation is the same used by \cite{Lange:1989uu} (discussed below).
+%, who suggest creating weighted Q-Q plots \citep{Dempster:1985tr} to assess the distributional assumptions. Note that standardized linear combinations of the BLUPs follow in the usual way. 
+The second standardization applies for all sample sizes and is given by
+%
+\begin{equation}\label{eq:lev2-std2}
+\bm{z}_{b} = \text{diag} \left(\bm{DZ\trans P ZD}\right)^{-1/2} \widehat{\bm{b}}
+\end{equation}
+%
+
+
+\subsection{Weighted Q-Q plots}
+%------------------------------
+
+As an alternative to Q-Q plots constructed from the BLUPs \cite{Lange:1989uu} propose using weighted Q-Q plots of standardized linear combinations of the BLUPs, $\bm{L\trans}\widehat{\bm{b}}$,
+%
+\begin{equation}
+z_{b} = \text{diag} \left(\bm{L\trans DZ\trans V\inv ZDL}\right)^{-1/2} \bm{L\trans}\widehat{\bm{b}}
+\end{equation}
+%
+The specific form of $\bm{L}$ chosen highlights different departures from distributional assumptions---for example, $\bm{L}$s can be chosen to extract the random slope and the random intercept terms individually. When the random effects may be correlated, \citeauthor{Lange:1989uu} suggest examining a range of additional linear combinations in-between the two marginal random effects either through manual specification of $\bm{L}$ or projection pursuit.
+After choosing $\bm{L}$ a weighted Q-Q plot is constructed by comparing the weighted empirical cumulative distribution function
+%
+\begin{equation}
+F_m^*(x) = \sum_{i=1}^{m} I(x - z_{b_i} \geq 0) w_i \bigg/ \sum_{i=1}^{m} w_i, 
+\end{equation}
+%
+to $\Phi\inv \left ( F_m^*(z_{b_i}) \right)$. Here, $w_i$ is the $i$th element of $\bm{L\trans DZ\trans V\inv ZDL}$.
+For balanced group sizes this simplifies to the unweighted Q-Q plot of $\bm{z}_b$.
+%
+
+\subsection{Simulation-based approaches}
+%---------------------------------------
+
+All of the above approaches to checking the distributional assumptions rely on the use of interrelated residuals, which has been reported to be problematic \citep{HildenMinton:1995wh, Verbeke:1996va}.  
+One alternative that has been proposed to overcome this problem is the use of the parametric bootstrap to develop point-wise and simultaneous confidence bands for Q-Q plots. We evaluate the potential of this method using bootstrap tests of normality.
+
+
+\subsection{Simulation study}\label{supp:simstudy1}
+%--------------------------------------------------
+
+To evaluate the above proposals we carried out a simulation study under the same settings as in the paper, with the only difference being that the original $\bm{Z}$ was used for data generation. To evaluate the bootstrap tests of normality, a null distribution of 5000 simulated test statistics for each situation was used.
+
+Tables~\ref{tab:eval1}--\ref{tab:evalmarginal} present the results of using standard normality tests to assess the distributional assumptions of the residuals from a hierarchical model. The gray background on the table indicates which simulation settings estimate type I error, with the other rows estimating power. Tables~\ref{tab:boot1}--\ref{tab:bootmarginal} present the results of the bootstrap tests for normality. Table~\ref{tab:langeryan} presents the results of using a weighted CDF to evaluate the normality of the random effects, in this case the null distribution was obtained using the parametric bootstrap.
+
+The simulation study reveals that none of the residual-based diagnostics for assessing distributional assumptions are appropriate in all situations. The error terms can be targeted either by the use of studentized residuals or a parametric bootstrap; however, the assessment of this assumption is less critical. The random effects, on which predictive inference relies, cannot be targeted by the current methods when the residual variance is larger than the variance component associated with the random effects---that is, situations with higher degrees of shrinkage.  Such situations are often encountered in practice. Additionally, use of the parametric bootstrap---to construct simulation envelopes for Q-Q plots, for example---does not appear to remedy this situation based on the performance of the bootstrap tests. Finally, we can see that \citeauthor{Lange:1989uu}'s weighted Q-Q plots cannot target the random effects distribution when the residual variance is large, as the distribution of the error terms overly influences tests for the random slope, resulting in inflated type I error rates for both random effects.
+
+\include{eval_simulation_results}
+
+
+\section{Full results from the simulation study}\label{supp:simstudy}
+%--------------------------------------------------
+
+\subsection{Estimated covariance matrices}\label{supp:simestimated}
+%--------------------------------------------------
+In the paper we described a simulation study and only presented results for the the Anderson-Darling test under one variance structure ($\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$). In this section we present the results from the full simulation study where the covariance matrices were estimated. Tables~\ref{tab:simb0sB}--\ref{tab:simb030} present the results for the rotated random intercept and Tables~\ref{tab:simb1sB}--\ref{tab:simb130} present the results for the rotated random slope. We use a gray background to highlight the simulation settings under which the tests should fail to reject the null hypothesis of normality.
+
+\include{rotation_simulation_results}
+
+\subsection{Known covariance matrices}\label{supp:simfixed}
+%--------------------------------------------------
+In this section we present the results of a simulations where the covariance matrices, $\bm{R}$ and $\bm{D}$ were fixed/known. Tables~\ref{tab:fixedsimb0sB}--\ref{tab:fixedsimb030} present the results for the rotated random intercept and Tables~\ref{tab:fixedsimb1sB}--\ref{tab:fixedsimb130} present the results for the rotated random slope. We use a gray background to highlight the simulation settings under which the tests should fail to reject the null hypothesis of normality.
+
+\include{fixed_covariance_sim_results}
+
+
+%\section{Alternative rotation}\label{supp:simstudy-alt}
+%
+%In this section we present results of the tests of normality if we use an alternative $\bm{W}$.
+%
+%\include{alt_rotation_simulation_results}
+
+
+%----------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------
+\bibliographystyle{asa}
+\bibliography{lcresid_bib}
+%----------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------
+
+
+\end{document}
