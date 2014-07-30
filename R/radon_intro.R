@@ -40,7 +40,7 @@ ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=uranium), map = 
   expand_limits(x = counties$long, y = counties$lat) + xlab("longitude") + ylab("latitude") + coord_map() + theme_bw()
 
 # county level sample size
-ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=radon), map = counties) + 
+ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=radon), size=0.125, colour="white", map = counties) + 
   expand_limits(x = counties$long, y = counties$lat) + 
   xlab("longitude") + ylab("latitude") + coord_map() + 
   theme(
@@ -51,7 +51,9 @@ ggplot(counties.stat, aes(map_id = county)) + geom_map(aes(fill=radon), map = co
   	axis.ticks = element_line(colour=rgb(0,0,0,alpha=0)),
   	panel.background =  element_blank(),
   	panel.grid.major =  element_blank(),
-  	panel.grid.minor =  element_blank())
+  	panel.grid.minor =  element_blank(),
+  	plot.margin=unit(c(-20,0,-20,0),"mm")) +
+  scale_fill_gradient("radon activity\n(log pCi/L)", low="#eeeeee", high="#132B43")
 
 ggsave(filename=file.choose(new=T), width = 4, height = 4, units = "in")
 
