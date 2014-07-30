@@ -68,7 +68,7 @@ ggplot(data = subset(propreject, ranef != "norm" & random.effect == "b1" &
 	theme(legend.position="bottom", legend.key.width = unit(3, "line"))   +
 	scale_shape_manual(values=c(1, 17, 15), guide=FALSE)  +
 	geom_text(aes(x=x,y=y,label=label), size=4, data=
-		data.frame(x=c(55,55,52.5,55,55,52.5), 
+		data.frame(x=c(55,55,52.5,52.5,55,52.5), 
 				   y=c(0.09,0.04,0.22, 0.22, 0.06, 0.32), 
 				   label = c("Skewed", "Normal error", "Heavy tailed error",
 				   			 "Skewed error", "Normal error", "Heavy tailed"), 
