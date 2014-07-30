@@ -46,7 +46,7 @@ scale_shape_manual("Random Effects", values=c(1, 17, 15), labels = c("Exponentia
 scale_colour_brewer("Variance structure", palette="Set2", guide=FALSE) +
 theme_bw() + 
 theme(legend.position="bottom", legend.key.width = unit(3, "line")) +
-geom_text(aes(x=x, y=y, label=label), data=data.frame(
+geom_text(aes(x=x, y=y, label=label), size=4, data=data.frame(
 x=c(52,52,52,
 54,54,54), 
 y=c(0.42,0.2,0,
@@ -61,6 +61,6 @@ label=c("list(sigma[epsilon]^2==4,sigma[b]^2==1)",
 		"list(sigma[epsilon]^2==4,sigma[b]^2==1)",
 		"list(sigma[epsilon]^2==1,sigma[b]^2==1)",
 		"list(sigma[epsilon]^2==1,sigma[b]^2==4)")), 
-parse=TRUE)
+parse=TRUE) 
 
-ggsave("fc_by_s.pdf", width = 6.5, height=3.75, units="in")
+ggsave("fc_by_s.pdf", width = 8, height=5, units="in")
