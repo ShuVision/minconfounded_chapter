@@ -122,7 +122,7 @@ In contrast, the approach on which we focus in this paper is of a graphical natu
 
 Quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool for  visually evaluating a specific distributional assumption. In a Q-Q plot we plot the empirical distribution against the expected quantiles from the assumed distribution. The line of identity therefore represents the theoretical distribution and points show quantiles of the empirical distributions. Deviations from the theoretical distribution then manifest themselves as vertical differences between points and the line of identity. This difference is featured in a series of distributional tests. More formally, let $F_n$ be the empirical distribution function (ECDF) based on a sample size of $n$, and $F$ be the hypothesized/true distribution. The absolute difference between the two distribution functions for each sample point, $\left| F_n(x_i) - F(x_i) \right|$, is then the main contributor for the test statistics of the Kolmogorov-Smirnov \cite[KS-test,][]{kolmogorov:1933, smirnov:1948}, the Anderson-Darling \citep[AD-test,][]{adtest:1954}, and the Cram\'{e}r-von-Mises test \citep[CVM-test,][]{cramer:1928, mises:1928}, as shown in table~\ref{tab:tests}.
 
-The KS test uses the maximal  difference, which is shown as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upgrades the tail effect again due to its additional weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
+The KS test uses the maximal  difference, which is shown as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling up-regulates the tail effect again due to its additional weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
 \begin{table}
 \begin{tabular}{lrl}\hline
 Test && Statistic\\\hline\hline
@@ -205,7 +205,7 @@ The within-county sample sizes, $n_i$, are extremely unbalanced, ranging from on
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{test.jpeg}%lineup-rslope.pdf}
-	\caption{\label{fig:lineup} Lineup of normal Q-Q plots for the random slope term in model~\eqref{eq:radon}. The 19 null plots are obtained by simulation from the model. Can you identify the observed Q-Q plot?  In a human subject study 15 out of 23 participants identified plot \#$3^2+3$ as the least normal, plot \#$3^2+7$ shows the actual data, which none of the participants identified as the least normal. }
+	\caption{\label{fig:lineup} Lineup of normal Q-Q plots for the random slope term in model~\eqref{eq:radon}. The 19 null plots are obtained by simulation from the model. Can you identify the observed Q-Q plot?  In a human subject study 15 out of 23 participants identified panel \#$3^2+3$ as the least normal, panel \#$3^2+7$ shows the actual data, which none of the participants identified as the least normal. }
 \end{figure}
 
 
@@ -214,7 +214,7 @@ seems to be violated for the error terms and random intercepts. But is this caus
 As there is little pooling at the observation level (level 1) we expect the distributional assessment of the error terms to be reliable, but  the high degree of pooling  for the random effects  casts doubt on the reliability of their Q-Q plots. The lineup protocol  \citep{buja:2009} allows us to assess the reliability of the Q-Q plots:
 Figure~\ref{fig:lineup} shows a lineup of 20 Q-Q plots for the predicted random slope. The Q-Q plot of the observed random slopes is placed among 19 decoy plots created from parametric bootstrap samples based on model~\eqref{eq:radon} satisfying the normal distribution assumptions. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
 If we can identify the real Q-Q plot in the lineup, this provides evidence that the distribution of the observed random slopes is not normal. However, 
-the observed Q-Q plot (panel $3^2+7$) is virtually indistinguishable from the field of null plots. This suggests that the predicted random slopes  from the data do not deviate significantly from model~\eqref{eq:radon}.  
+the observed Q-Q plot (panel \#$3^2+7$) is virtually indistinguishable from the field of null plots. This suggests that the predicted random slopes  from the data do not deviate significantly from model~\eqref{eq:radon}.  
 Note that in practice we must blind ourselves from the true plot for proper use of lineups. In order to not violate this, we did not show the Q-Q plot of random slopes earlier.
 
 What becomes apparent from the lineup is that {\it most} of the null plots in the lineup do not conform to normality. To further investigate the apparent non-normal behavior of predicted random effects we conducted a small simulation study: 
