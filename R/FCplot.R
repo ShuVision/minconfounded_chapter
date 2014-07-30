@@ -34,13 +34,33 @@ levels(fc.melted$variable) <- c("intercept", "slope")
 fc.melted$s <- NA
 fc.melted$s[fc.melted$variable == "intercept"] <- fc.melted$s_int[fc.melted$variable == "intercept"]
 fc.melted$s[fc.melted$variable == "slope"] <- fc.melted$s_slope[fc.melted$variable == "slope"]
+names(fc.melted)[9] <- "var.struct"
 
-
-qplot(x = s, y = fc, data = fc.melted, geom = c("point"), group = `Var. structure`,  colour = `Var. structure`, facets = ~ variable,  linetype = `Var. structure`, size=I(2.5), shape=b_dsn) + 
-xlim(30, 60) + #geom_smooth(se = FALSE, size=1.5) +
-scale_color_brewer("Variance structure", palette="Set2", labels = c(expression(paste(sigma[epsilon]^2==4, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==4)))) + 
-scale_linetype_discrete("Variance structure", labels = c(expression(paste(sigma[epsilon]^2==4, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==1)), expression(paste(sigma[epsilon]^2==1, ", ", sigma[b]^2==4)))) + 
-xlab("s") + ylab("fraction of confounding") + theme_bw() + 
-theme(legend.position="bottom", legend.key.width = unit(3, "line")) + geom_line(aes(group=interaction(e_dsn, b_dsn, `Var. structure`))) + scale_shape_manual("Random Effects", values=c(1, 17, 15), labels = c("Exponential", "Normal", expression(t[3])))
+ggplot(aes(x = s, y = fc, colour=var.struct), data=fc.melted) +
+facet_grid(.~ variable) + xlim(30,60) +
+xlab("s") + ylab("fraction of confounding") + 
+geom_line(aes(group=interaction(e_dsn, b_dsn, var.struct), linetype=b_dsn)) + 
+scale_linetype_discrete("Random Effects", labels = c("Exponential", "Normal", expression(t[3]))) + 
+geom_point(aes(shape=b_dsn), size=2.5) + 
+scale_shape_manual("Random Effects", values=c(1, 17, 15), labels = c("Exponential", "Normal", expression(t[3]))) +
+scale_colour_brewer("Variance structure", palette="Set2", guide=FALSE) +
+theme_bw() + 
+theme(legend.position="bottom", legend.key.width = unit(3, "line")) +
+geom_text(aes(x=x, y=y, label=label), data=data.frame(
+x=c(52,52,52,
+54,54,54), 
+y=c(0.42,0.2,0,
+0.48,0.28,0.10), 
+var.struct=c("2.1", "1.1", "1.2",
+			 "2.1", "1.1", "1.2"), 
+variable=c("intercept","intercept", "intercept",
+"slope","slope","slope"), 
+label=c("list(sigma[epsilon]^2==4,sigma[b]^2==1)",
+		"list(sigma[epsilon]^2==1,sigma[b]^2==1)",
+		"list(sigma[epsilon]^2==1,sigma[b]^2==4)",
+		"list(sigma[epsilon]^2==4,sigma[b]^2==1)",
+		"list(sigma[epsilon]^2==1,sigma[b]^2==1)",
+		"list(sigma[epsilon]^2==1,sigma[b]^2==4)")), 
+parse=TRUE)
 
 ggsave("fc_by_s.pdf", width = 6.5, height=3.75, units="in")
