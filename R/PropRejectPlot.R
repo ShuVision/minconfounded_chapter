@@ -52,18 +52,31 @@ qplot(x = s, y = prop.reject, data = subset(propreject, subset = ranef != "norm"
 	scale_linetype_discrete("Random effects\ndistribution", labels = c("Skewed", "Heavy tailed"))
 
 # Summarizing results of AD tests for random slopes
-ggplot(data = subset(propreject, subset = ranef != "norm" & random.effect == "b1" & nortest == "AD" & var.settings == "sige2_sigb1" & alpha == 0.05 & rotation != "EBLUP"),
-aes(x=s,y = prop.reject, colour=error, linetype=ranef, shape=error, group= interaction(error, ranef))) +
-geom_point(size=3) +geom_smooth(method="lm", size=1, se=F) +
+ggplot(data = subset(propreject, ranef != "norm" & random.effect == "b1" & 
+								 nortest == "AD" & var.settings == "sige2_sigb1" & 
+								 alpha == 0.05 & rotation != "EBLUP"),
+		aes(x=s,y = prop.reject, colour=error)) +
+	geom_point(aes(shape=error), size=3) +
+	geom_smooth(aes(linetype=ranef,  group= interaction(error, ranef)), method="lm", size=1, se=F) +
 	facet_wrap(~rotation) +
 	xlab("subspace dimension s") + 
 	ylab("proportion of tests rejected") + 
-	theme_bw() + 
-	scale_color_brewer("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed"), palette="Set2") + 
-	scale_linetype_discrete("Random effects\ndistribution", labels = c("Skewed", "Heavy tailed")) + theme_bw() +
-	scale_shape_manual("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed"), values=c(1, 17, 15)) + theme(legend.position="bottom", legend.key.width = unit(3, "line"))   + ylim(c(0,0.4))
+	theme_bw() +  ylim(c(0,0.4)) + 
+	scale_color_brewer("Error distribution", labels = c("Skewed", "Normal", "Heavy tailed"), palette="Set2", guide=FALSE) + 
+	scale_linetype_discrete("Random effects\ndistribution", labels = c("Skewed", "Heavy tailed")) + 
+	theme_bw() +
+	theme(legend.position="bottom", legend.key.width = unit(3, "line"))   +
+	scale_shape_manual(values=c(1, 17, 15), guide=FALSE)  +
+	geom_text(aes(x=x,y=y,label=label), size=4, data=
+		data.frame(x=c(55,55,52.5,55,55,52.5), 
+				   y=c(0.09,0.04,0.22, 0.22, 0.06, 0.32), 
+				   label = c("Skewed", "Normal error", "Heavy tailed error",
+				   			 "Skewed error", "Normal error", "Heavy tailed"), 
+				   rotation=c("Rotated", "Rotated", "Rotated", 
+				   			  "Varimax Rotated", "Varimax Rotated", "Varimax Rotated"),
+				   error=c("exp","norm","t", "exp","norm","t")))
 	
-ggsave("ad_slope_power.pdf", width=8, height=5.5)
+ggsave("ad_slope_power.pdf", width=8, height=5.25)
 #-------------------------------------------------------------------------------
 # Adding power for the AD test
 #-------------------------------------------------------------------------------
