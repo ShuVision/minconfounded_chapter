@@ -27,6 +27,7 @@ counties <- subset(counties, region=="minnesota")
 counties$region <- counties$subregion # no point in keeping the regions
 qplot(data=counties, x=long, y=lat, group=group, geom="polygon")
 
+radon.data <- read.csv("data/original_radon.csv")
 # county level summary of radon data
 library(plyr)
 mn <- cbind(mn, uranium = radon.data$uranium)
