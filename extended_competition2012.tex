@@ -100,13 +100,11 @@ For example, in small area estimation the areas are often modeled as random effe
 
 %\hh{XXX Do we really have two approaches? - there are ways to deal with non-normality, but they are expensive. Our approach doesn't provide a solution to non-normality, but it extends the applicability of normal methods by fixing hypersensitivity of standard distributional assessments.  }
 
-Extensions to the standard modeling framework have been suggested to address sensitivity to distributional mis-specifications, such as semiparametric, nonparametric methods \citep{Shen:1999gd, Zhang:2001wo, Ghidey:2004id} or  finite mixtures of normal distributions for the random effects \citep{Verbeke:1996va}. 
-
-%One approach to address this sensitivity is to avoid the assumptions made on the random effects distributions using semiparametric or nonparametric methods \citep{Shen:1999gd, Zhang:2001wo, Ghidey:2004id}, or using a finite mixture of normal distributions for the random effects \citep{Verbeke:1996va}. 
+Extensions to the standard modeling framework have been suggested to address sensitivity to distributional mis-specifications, such as semiparametric/nonparametric methods \citep{Shen:1999gd, Zhang:2001wo, Ghidey:2004id} or  finite mixtures of normal distributions for the random effects \citep{Verbeke:1996va}. 
 We refer the reader to \cite{Ghidey:2010de} for a recent review comparing these methods. 
 Semiparametric and nonparametric methods come at a cost: computational complexity is increased, and most of these methods are not widely implemented yet in standard statistical software, thus making them less accessible to the intended audience. 
 
-However, the situation is not quite as dire as it might seem: it turns out that a lot of tests for normality are overly sensitive in assessing deviations of random effects from normality (see discussion in section~\ref{sec:sim-results} and simulation results in the appendix). By addressing the issue of over-sensitivity in evaluating normality, we are able to extend the applicability of normal model methods in a wide range of situations.
+However, the situation is not quite as dire as it might seem: it turns out that a lot of tests for normality are overly sensitive in assessing deviations of random effects from normality (see discussion in section~\ref{sec:sim-results} and simulation results in the supplement). By addressing the issue of over-sensitivity in evaluating normality, we are able to extend the applicability of normal model methods in a wide range of situations.
 
 %The cost of increased robustness  is increased computational complexity. These methods also have not been widely implemented in statistical software, making them less accessible. %Another approach is to check %this assumption using
 %\hh{distributional assumptions with}
@@ -141,7 +139,7 @@ In hierarchical linear models the investigation of residual structures is compli
 The nested structure of the data is reflected in the residual structure, and just as there is dependence between different levels in the data, we can expect dependencies between different levels in the residual structure. 
 %\al{This dependence is most problematic when assessing the distribution of the random effects, and leads to erroneous conclusions from Q-Q plots and other standard tests.}
 Q-Q plots, in their weighted \citep{Dempster:1985tr, Lange:1989uu} or unweighted {form},  show univariate distributions, so they are sensitive to distributional deviations due to hidden dependencies, which might lead to erroneous conclusions in evaluating normality, in particular, when the dependency between levels is high due to an unbalanced design. % there is a relatively high degree of shrinkage,  \al{AE wants us to define shrinkage}. 
-Data imbalances lead to higher degrees of shrinkage, i.e.~in the prediction of the random effects the mean structure is considered to a higher degree in a trade-off to prevent overfitting of the raw data.
+Data imbalances lead to higher degrees of shrinkage---i.e.~in the prediction of the random effects the mean structure is considered to a higher degree in a trade-off to prevent overfitting of the raw data.
 Data imbalances commonly occur in practice, but are often overlooked in the literature. For example, \cite{Eberly:2005ee} explored properties of Lange and Ryan's weighted Q-Q plots for a balanced longitudinal data set and found that, for a properly specified mean structure,  weighted Q-Q plots are effective in  assessing the distribution of the random effects. The same cannot be said for unbalanced data (with properly specified mean structure). %\hh{XXX unbalanced data doesn't san that the  mean structure is not  properly specified} \al{XXX Correct, but Eberly and Thackeray considered the case with a properly specified mean structure. The results of the simulation study presented in the supplemental materials show that their results do not apply to the situation with data imbalances, which is the case that I am trying to make here: that the current tools fail in certain situations with imbalanced data}. 
 
 
@@ -178,7 +176,7 @@ Figure \ref{fig:map} shows a map of counties in Minnesota. The color shading rep
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.5\textwidth]{figures/map.pdf}
-\caption{\label{fig:map} Map of the counties in Minnesota. The color shading represents average radon activity (in log $pCi/L$, i.e log picoCurie per liter).}
+\caption{\label{fig:map} Map of the counties in Minnesota. The color shading represents average radon activity (in log $pCi/L$, i.e. log picoCurie per liter).}
 \end{figure}
 %
 \begin{figure}[hbt]
@@ -215,13 +213,13 @@ As there is little pooling at the observation level (level 1) we expect the dist
 Figure~\ref{fig:lineup} shows a lineup of 20 Q-Q plots for the predicted random slope. The Q-Q plot of the observed random slopes is placed among 19 decoy plots created from parametric bootstrap samples based on model~\eqref{eq:radon} satisfying the normal distribution assumptions. The simulation parameters were set to the maximum likelihood estimates of model~\eqref{eq:radon}. 
 If we can identify the real Q-Q plot in the lineup, this provides evidence that the distribution of the observed random slopes is not normal. However, 
 the observed Q-Q plot (panel \#$(3^2+7)$) is virtually indistinguishable from the field of null plots. This suggests that the predicted random slopes  from the data do not deviate significantly from model~\eqref{eq:radon}.  Note that an alternative display of the residuals did produce similar results (see appendix~\ref{sec:detrended}).
-Note that in practice we must blind ourselves from the true plot for proper use of lineups. In order to not violate this, we did not show the Q-Q plot of random slopes earlier.
+In practice we must blind ourselves from the true plot for proper use of lineups. In order to not violate this, we did not show the Q-Q plot of random slopes earlier.
 
 What becomes apparent from the lineup is that {\it most} of the null plots in the lineup do not conform to normality. To further investigate the apparent non-normal behavior of predicted random effects we conducted a small simulation study: 
 %
 We generated 1000 parametric bootstrap samples from model~\eqref{eq:radon} assuming a normal distribution for all random effects, but  varying distributions for  level-1 residuals:  level-1 residuals were generated as normal ($\varepsilon_{ij}^* \overset{iid}{\sim}  \mathcal{N}(\bm{0},\ \widehat{\sigma}^2_\varepsilon)$), heavy tailed ($\varepsilon_{ij}^* \overset{iid}{\sim} (\widehat{\sigma}_{\varepsilon} / \sqrt{3})\, t_3$), and skewed ($\varepsilon_{ij}^* \overset{iid}{\sim} \widehat{\sigma}_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$).
 After fitting model~(\ref{eq:radon}) to each simulated data set, we evaluated the assumption of normality for both the error terms and 
-the random effects using the Anderson-Darling, Cram{\'e}r-von-Mises, and  Kolmogorov-Smirnov tests for normality.  All tests were expected to reject normality at a nominal 5\% rate, however, all type I error rates are hugely inflated for both random effects, which suggests, that  an assessment of normality based on the empirical distribution is not possible. 
+the random effects using the AD, CVM, and  KS tests for normality.  All tests were expected to reject normality at a nominal 5\% rate, however, all type I error rates are hugely inflated for both random effects, which suggests that  an assessment of normality based on the empirical distribution is not possible. 
 %
 Table~\ref{tab:edf} shows the percentage of these tests rejecting the null hypothesis of normality at the 5\% significance level.
 Even when level-1 residuals are normally distributed, normality for random effects is rejected almost half the time (KS-test). For heavy-tailed or skewed level-1 residuals, the distribution of random effects is affected even worse. 
@@ -370,7 +368,7 @@ As a measure of confounding between the levels of a hierarchical model of the fo
 \begin{definition}[Fraction of confounding] 
 Let $\bm{b}$ denote a vector of $q$ random effects and $\widehat{\bm{b}}$ its predictions as defined in \eqref{eq:resid2}. For a full rank matrix $\bm{W} \in \mathbb{R}^{q \times s}$, where $ s \le q$, the fraction of confounding in the $s$-dimensional space spanned by $\bm{W}$ is defined as 
 \begin{equation}\label{eq:fc2}
-\text{FC}(\bm{W}; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right),
+\mathrm{FC}(\bm{W}; \widehat{\bm{b}}) = \frac{1}{q} \tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right),
 %\dfrac{1}{\ell} \displaystyle{\sum_i} \frac{\bm{v_i}\trans \bm{A} \bm{v_i}}
 %		{\bm{v_i}\trans \bm{B} \bm{v_i}}.
 \end{equation}
@@ -383,9 +381,9 @@ is well defined,  the following discussion will clarify this point. %XXX This wa
 Generally, $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while a value of FC = 0 indicates that no confounding is present. 
 
 Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects as proposed by  \cite{HildenMinton:1995wh}. %As noted by a reviewer, t
-There are many ways of defining a fraction of confounding using different symmetric functions of the relative eigenvalues of $\bm{WAW}\trans$ to $\bm{WBW}\trans$. Here, we choose the trace of the ratio to generalize the results in \cite{HildenMinton:1995wh}.%, but other symmetric functions could be investigated. 
+There are many ways of defining a fraction of confounding using different symmetric functions of the relative eigenvalues of $\bm{WAW}\trans$ to $\bm{WBW}\trans$. Here, we chose the trace of the ratio to generalize the results in \cite{HildenMinton:1995wh}. %, but other symmetric functions could be investigated. 
 Another natural choice for a symmetric function is  the ratio of the determinants. This function leads to an optimization problem referred to as the ``determinant ratio'' problem, which is equivalent to the ``ratio trace'' problem we consider here \citep{Fukunaga:1990}.
-The inverse function of the ratio of the traces (called the ``trace ratio'' problem) on the other hand, does not have a  closed form solution to the analog of the optimization problem we discuss below \citep[cf.,][]{Jia:2009ux}. 
+The ratio of the traces (called the ``trace ratio'' problem) on the other hand, does not have a  closed form solution to the analog of the optimization problem we discuss below \citep[cf.,][]{Jia:2009ux}. 
 
 
 %As outlined above, the confounded nature of the predicted random effects renders graphical explorations of these residuals inadequate for the assessment of distributional assumptions. 
@@ -452,8 +450,11 @@ Simultaneous diagonalization will be familiar to many as the standard canonical 
 \paragraph{Selection of the dimension of the subspace}
  spanned by the rotated residuals is central to our proposed method. Ideally, we would select the dimension such that the fraction of confounding is reduced to zero; however, this is not realistic in practice. Alternatively, we propose choosing the dimension that provides a substantial reduction in the fraction of confounding. As our ultimate objective is an assessment of the distribution, we must balance this reduction in the fraction of confounding with the loss in power of a test of the empirical distribution function % (e.g., the Anderson-Darling test for normality) 
  associated with dimension reduction. To guide this choice we suggest plotting the reduction in the fraction of confounding against the reduction in dimension, which is similar to the concept of a scree plot used to select the number of principal components. %\hh{A name for this scree-like plot would be good ... talus is a synonym to scree ... talus plot? - or elbow plot?} 
+ 
  To illustrate the use of this plot we simulate two simple random intercept models with a group-level predictor:   model $M1$ has 40 groups of 30 observations and 10 groups of 5 observations;   model $M2$ also has 50 groups, with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). %\todo[inline]{These two models are very similar. Go to a more extreme in the second model?}
- Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. For neither model the fraction of confounding for a one-dimensional reduction decreases because this {one-dimensional reduction} simply adjusts for the rank deficiency of the covariance matrix, which can be thought of in terms of adjusting for the effective degrees of freedom. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$. Additionally, we see that the elbow in the plot for model $M2$ is less pronounced. This occurs because the groups sizes are less balanced so the difference between the large and small group sizes is reduced. \al{At first it may be mildly surprising that so few dimensions need to be excluded in this example, but both the group size and variability factor in to the fraction of confounding. Consequently, if there are relatively few small groups, more variable groups, or some combination of the two, then the fraction of confounding is reduced most by reducing the impact of these groups. As a reviewer point out, this is quite like the use of dropping the last few PCA dimensions to reduce the impact of outliers.}
+ Figure~\ref{fig:elbow} shows two examples of such plots constructed for the simulated models. For neither model the fraction of confounding for a one-dimensional reduction decreases because this {one-dimensional reduction} simply adjusts for the rank deficiency of the covariance matrix, which can be thought of in terms of adjusting for the effective degrees of freedom. Both figures have an ``elbow'' in the plot corresponding to a reduction in the dimension of the subspace of 11; thus we would choose $s = 39$. Additionally, we see that the elbow in the plot for model $M2$ is less pronounced. This occurs because the groups sizes are less balanced so the difference between the large and small group sizes is reduced. 
+ 
+At first it may be mildly surprising that so few dimensions need to be excluded in this example, but both the group size and variability factor in to the fraction of confounding. Consequently, if there are relatively few small groups, more variable groups, or some combination of the two, then the fraction of confounding is reduced most by reducing the impact of these groups. As a reviewer pointed out, this is quite like the use of dropping the last few PCA dimensions to reduce the impact of outliers.
  
  
  
@@ -697,7 +698,7 @@ We conducted a simulation study to assess the specificity and sensitivity of tes
 \subsection{Design}\label{sec:sim-design}
 %----------------------------------------------------------------------------------
 
-We want to examine situations in which we correctly and incorrectly reject the null hypothesis of normality---that is, power and type I error, respectively. We compute the percentage of Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and Kolmogorov-Smirnov (KS) tests that rejected the null hypothesis of normality.
+%We examined situations in which we correctly and incorrectly reject the null hypothesis of normality---that is, power and type I error, respectively. We compute the percentage of Anderson-Darling (AD), Cram{\'e}r von Mises (CVM), and Kolmogorov-Smirnov (KS) tests that rejected the null hypothesis of normality.
 % \hh{I think we don't need this sentence anymore - it should be clear from the discussion in the beginning} These test statistics each measure the discrepancy between the empirical distribution of the rotated random effects and assumed distribution of the random effects \al{XXX think carefully about this sentence...}, which sheds light on the behavior of Q-Q plots constructed from the rotated residuals. 
 
 
@@ -728,7 +729,7 @@ To investigate the effect that pooling has on the rotated random effects we cons
 \end{tabular}
 %
 
-Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$ (which is 58 and 59 for the random intercept and slope, respectively) as well as $s =$ 55, 50, 45, 40, 35, and 30. 
+Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$ (which is 58 and 59 for the random intercept and slope, respectively) as well as $s =$ 55, 50, 45, 40, 35, and 30.  The percentage of AD, CVM, and KS tests that rejected the null hypothesis of normality were recorded.
 
 We ran the above simulation both in the case where $\bm{D}$ and $\bm{R}$ were known and where $\bm{D}$ and $\bm{R}$ were estimated. The results were quite similar between these two simulation studies, so we present the results from the simulation study for estimated  $\bm{D}$ and $\bm{R}$, as this reflects more closely what is done in practice. Full simulation results are available in the supplement.
 
@@ -859,7 +860,7 @@ We see that the random intercept significantly deviates from the assumption of n
 	  \subfloat[Random slope]{
 		\includegraphics[width=0.35\linewidth]{rotatedQQ-slope.pdf}
 		}	
-	\caption{\label{fig:rotate-radon} Normal Q-Q plots with point-wise 95\% confidence bands of the marginals rotated random effects. The deviations from normality are much less pronounced than before resulting in the failure to reject the null hypothesis of normality.} %\hh{what do the normality tests say?} \al{The tests all say fail to reject.}}
+	\caption{\label{fig:rotate-radon} Normal Q-Q plots with point-wise 95\% confidence bands of the marginals rotated random effects. The deviations from normality are much less pronounced than before, resulting in the failure to reject the null hypothesis of normality in the case of the random slope.} %\hh{what do the normality tests say?} \al{The tests all say fail to reject.}}
 \end{figure}
 
 
@@ -961,11 +962,11 @@ proving that the rotated random effects are standardized, uncorrelated, and homo
 \end{proof}
 
 \subsection{Lineup details}\label{sec:detrended}
-As an alternative to the standard Q-Q plot, a detrended version of Q-Q plots (see figure~\ref{fig:lineup-2}) was shown to participants in a study. In the detrended Q-Q plot, the plot is rotated by 45$^\circ$ to make comparisons between the line of identity and the empirical distribution function a cognitively easier task. However, for in assessing normality of the random effects distribution, the results from both types of plots were very similar. None of the participants identified the observed data as the most different panel from the set, while panel \#$(3^2+3)$ was the one picked by most participants. Table~\ref{tab:lpresults} gives an overview of the results from the study. 
+As an alternative to the standard Q-Q plot, a detrended version of Q-Q plots (see figure~\ref{fig:lineup-2}) was shown to participants in a study. In the detrended Q-Q plot, the plot is rotated by 45$^\circ$ to make comparisons between the line of identity and the empirical distribution function a cognitively easier task. However, for assessing normality of the random effects distribution, the results from both types of plots were very similar. None of the participants identified the observed data as the most different panel from the set, while panel \#$(3^2+3)$ was the one picked by most participants. Table~\ref{tab:lpresults} gives an overview of the results from the study. 
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{qq-lineup-rot.pdf}%test.jpeg}%lineup-rslope.pdf}
-	\caption{\label{fig:lineup-2} Lineup of detrended Q-Q plots for the random slope term in model~\eqref{eq:radon}. This plot shows the exact same data as the standard Q-Q plots of figure~\ref{fig:lineup}. Out of 22 evaluations, 11 participants picked panel \#$(3^2+3)$ as the most different from the set; another 4 participants decided for panel \#$(2 \cdot 3^2)$. None of the participant picked the panel of the observed data.}
+	\caption{\label{fig:lineup-2} Lineup of detrended Q-Q plots for the random slope term in model~\eqref{eq:radon}. This plot shows the same data as the standard Q-Q plots of figure~\ref{fig:lineup}. Out of 22 evaluations, 11 participants picked panel \#$(3^2+3)$ as the most different from the set; another 4 participants chose panel \#$(2 \cdot 3^2)$. None of the participant picked the panel of the observed data.}
 \end{figure}
 
 \begin{table}[ht]
@@ -1005,163 +1006,6 @@ The following supplemental materials can be obtained online:
 %----------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------
 
-%\clearpage
-%
-%%----------------------------------------------------------------------------------
-%\appendix
-%\section{Supplement to ``Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models''}
-%%----------------------------------------------------------------------------------
-%
-%The materials in this document supplement the information presented in ``Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models''. Section~\ref{supp:evals} presents a simulation study evaluating the performance of existing proposals for residual analysis for hierarchical linear models. Section~\ref{supp:simstudy} presents the complete results for all simulation settings considered in the paper. 
-%
-%
-%\subsection{Evaluations of existing proposals}\label{supp:evals}
-%%--------------------------------------------------
-%
-%\subsubsection{Model notation}
-%%--------------------------
-%Recall that the stacked representation of the hierarchical linear model is given by 
-%%
-%\begin{align}\label{eq:hlm}
-%	\underset{(n \times 1)}{\bm{y}} &= \underset{(n_i \times p)}{\bm{X}} \ \underset{(p \times 1)}{\bm{\beta}} + \underset{(n \times q)}{\bm{Z}_i} \ \underset{(q \times 1)}{\bm{b}} + \underset{(n \times 1)}{\bm{\varepsilon}},\\
-%	\bm{\varepsilon} & \overset{\text{iid}}{\sim} \mathcal{N}(\bm{0}, \ \bm{R}), \qquad \bm{b} \overset{\text{iid}}{\sim} \mathcal{N}(\bm{0},\ \bm{D}) \nonumber
-%\end{align}
-%%
-%where $\bm{y}$ is a vector of responses, $\bm{X}$ and $\bm{Z}_i$ are design matrices for the fixed and random effects, respectively, $\bm{\beta}$ is a vector of fixed effects, $\bm{b}$ is a vector of random effects, $\bm{\varepsilon}_i$ is a vector of error terms, and $\bm{R}$ and $\bm{D}$ are positive definite covariance matrices. Further, we assume that $\cov(\bm{\varepsilon},\ \bm{b}) = \bm{0}$. The above assumptions imply that, marginally, $\bm{y} \sim \mathcal{N}(\bm{X\beta},\ \bm{V})$ where $\bm{V} = \bm{ZDZ}\trans$.
-%
-%\subsubsection{Residuals}
-%
-%In this section we consider residuals that are commonly used to check the distributional assumptions in a hierarchical linear model. For more general discussions of residual analysis for hierarchical linear models we refer the reader to \cite{Haslett:2007vv} and \cite{Nobre:2007ej}.
-%
-%\paragraph{Marginal residuals.} 
-%%-----------------------------
-%The marginal distribution of $\bm{y}$ leads to the marginal residuals which are defined as
-%%
-%\begin{equation}\label{eq:marginalresid}
-%\widehat{\bm{\zeta}}  = \bm{y} - \bm{X} \widehat{\bm{\beta}} =  \bm{V P y}
-%\end{equation}
-%%
-%where $ \bm{P} = \bm{V\inv} - \bm{V\inv X} \left( \bm{X\trans V\inv X} \right) \bm{X \trans V\inv}$, which reveal how the observations deviate from the global trend. The use of these residuals for distributional assessment provides an omnibus assessment of goodness-of-fit as the marginal residuals are a linear combination of the other residual quantities; however, this assessment requires the empirical distribution of the marginal residuals to resemble true distribution. Asymptotically, the variance of the marginal residuals is $\var(\widehat{\zeta}) = \bm{V}$ leading to correlated residuals. To obtain asymptotically uncorrelated residuals the marginal residuals can be scaled by the Cholesky root of $\bm{V}$ \citep{Houseman:2004gq}, $\bm{C}$, yielding
-%%
-%\begin{equation}\label{eq:choleskyresid}
-%\bm{z}_{\zeta}  = \bm{C}\inv \widehat{\bm{\zeta}}
-%\end{equation}
-%%
-%
-%
-%\paragraph{Level-1 residuals.}
-%%-----------------------------
-%The distribution of $\bm{y}$ conditional on the random effects, $\bm{b}$, is given by
-%%
-%\begin{equation}\label{eq:marginalmodel}
-%	\bm{y} | \bm{b} \sim \mathcal{N}( \bm{X\beta} + \bm{Zb},\ \bm{R} ),
-%\end{equation}
-%%
-%and leads to the level-1 residuals, commonly referred to as the error terms, which are defined as
-%%
-%\begin{equation}\label{eq:lev1resid}
-%	\widehat{\bm{\varepsilon}} = \bm{y} - \bm{X \widehat{\beta}} + \bm{Z \widehat{b}} = \bm{R P y}
-%\end{equation}
-%%
-%and reveal the deviations of the observations from the conditional model. The variance of the level-1 residuals is given by $\var(\widehat{\bm{\varepsilon}}) = \bm{ R P R }$, so studentized level-1 residuals can be obtained by 
-%%
-%\begin{equation}\label{eq:lev1-std}
-%\bm{z}_{\varepsilon} =  \text{diag} \left(\bm{RPR} \right)^{-1/2} \widehat{\bm{\varepsilon}}
-%\end{equation}
-%%
-%which have been recommended for distributional assessment \citep{Nobre:2007ej}. An alternative approach is recommended by \citet[Section 4.3]{Pinhiero:2000vf}, who suggest use of the Pearson residuals, which are obtained by dividing the predicted residuals by the estimated within-group standard deviation, $\widehat{\sigma}_\varepsilon$. 
-%
-%
-%
-%\paragraph{Level-2 residuals.}
-%%-----------------------------
-%The final type of residual we consider is the the best linear unbiased predictor (BLUP) of the random effects (i.e., predicted random effects), providing insight into the differences between the marginal (global) and conditional models. By definition, the BLUP of $\bm{b}$ is
-%%
-%\begin{equation}\label{eq:lev2resid}
-%\widehat{\bm{b}} = \bm{D Z\trans V\inv} \left( \bm{y} - \bm{X \widehat{\beta}} \right) = \bm{D Z\trans P y}
-%\end{equation}
-%%
-%which has variance $\var(\widehat{\bm{b}}) = \bm{DZ\trans P ZD}$. 
-%%Rewriting $\var(\widehat{\bm{b}})$ as
-%%%
-%%\begin{equation}
-%%\bm{DZ\trans P ZD} = \bm{DZ\trans} \bm{V\inv} \left( \bm{V} - \bm{ X} \left( \bm{X\trans V\inv X} \right) \bm{X \trans} \right) \bm{V\inv} \bm{ZD}
-%%\end{equation}
-%%%
-%%leads to two 
-%For distributional assessment of the BLUPs it makes sense to examine each random effect individually, though \cite{Lange:1989uu} suggest the examination of linear combinations of standardized BLUPs. Rewritting the definition of $\var(\widehat{\bm{b}})$
-%%
-%\begin{equation}
-%\bm{DZ\trans P ZD} = \bm{DZ\trans} \bm{V\inv} \left( \bm{V} - \bm{ X} \left( \bm{X\trans V\inv X} \right) \bm{X \trans} \right) \bm{V\inv} \bm{ZD}
-%\end{equation}
-%%
-%leads to two similar standardizations of the BLUPs. The first utilizes the fact that when the number of groups is large $\bm{ X} \left( \bm{X\trans V\inv X} \right)$ will be small \citep{Goldstein:2003}, so for a large number of groups standardized BLUPs can be calculated by
-%%
-%\begin{equation}\label{eq:lev2-std1}
-%\bm{z}_{b} = \text{diag} \left(\bm{DZ\trans V\inv ZD}\right)^{-1/2} \widehat{\bm{b}}
-%\end{equation}
-%%
-%This formulation is the same used by \cite{Lange:1989uu} (discussed below).
-%%, who suggest creating weighted Q-Q plots \citep{Dempster:1985tr} to assess the distributional assumptions. Note that standardized linear combinations of the BLUPs follow in the usual way. 
-%The second standardization applies for all sample sizes and is given by
-%%
-%\begin{equation}\label{eq:lev2-std2}
-%\bm{z}_{b} = \text{diag} \left(\bm{DZ\trans P ZD}\right)^{-1/2} \widehat{\bm{b}}
-%\end{equation}
-%%
-%
-%
-%\paragraph{Weighted Q-Q plots}
-%%------------------------------
-%
-%As an alternative to Q-Q plots constructed from the BLUPs \cite{Lange:1989uu} propose using weighted Q-Q plots of standardized linear combinations of the BLUPs, $\bm{C\trans}\widehat{\bm{b}}$,
-%%
-%\begin{equation}
-%z_{b} = \text{diag} \left(\bm{C\trans DZ\trans V\inv ZDC}\right)^{-1/2} \bm{C\trans}\widehat{\bm{b}}
-%\end{equation}
-%%
-%The specific form of $\bm{C}$ chosen highlights different departures from distributional assumptions---for example, $\bm{C}$s can be chosen to extract the random slope and the random intercept terms individually. When the random effects may be correlated, \citeauthor{Lange:1989uu} suggest examining a range of additional linear combinations in-between the two marginal random effects either through manual specification of $\bm{C}$ or projection pursuit.
-%After choosing $\bm{C}$ a weighted Q-Q plot is constructed by comparing the weighted empirical cumulative distribution function
-%%
-%\begin{equation}
-%F_m^*(x) = \sum_{i=1}^{m} I(x - z_{b_i} \geq 0) w_i \bigg/ \sum_{i=1}^{m} w_i, 
-%\end{equation}
-%%
-%to $\Phi\inv \left ( F_m^*(z_{b_i}) \right)$. Here, $w_i$ is the $i$th element of $\bm{C\trans DZ\trans V\inv ZDC}$.
-%For balanced group sizes this simplifies to the unweighted Q-Q plot of $\bm{z}_b$.
-%%
-%
-%\paragraph{Simulation-based approaches}
-%%---------------------------------------
-%
-%All of the above approaches to checking the distributional assumptions rely on the use of interrelated residuals, which has been reported to be problematic \citep{HildenMinton:1995wh, Verbeke:1996va}.  
-%One alternative that has been proposed to overcome this problem is the use of the parametric bootstrap to develop point-wise and simultaneous confidence bands for Q-Q plots. We evaluate the potential of this method using bootstrap tests of normality.
-%
-%
-%\subsubsection{Simulation study}\label{supp:simstudy}
-%%--------------------------------------------------
-%
-%To evaluate the above proposals we carried out a simulation study under the same settings as in the paper, with the only difference being that the original $\bm{Z}$ was used for data generation. To evaluate the bootstrap tests of normality, a null distribution of 5000 simulated test statistics for each situation was used.
-%
-%Tables~\ref{tab:eval1}--\ref{tab:evalmarginal} present the results of using standard normality tests to assess the distributional assumptions of the residuals from a hierarchical model. The gray background on the table indicates which simulation settings present estimated type I error, with the other rows presenting estimated power. Tables~\ref{tab:boot1}--\ref{tab:bootmarginal} present the results of the bootstrap tests for normality. Table~\ref{tab:langeryan} presents the results of using a weighted CDF to evaluate the normality of the random effects, in this case the null distribution was obtained using the parametric bootstrap.
-%
-%Based on the simulation results it is clear that none of the residual-based diagnostics for assessing distributional assumptions are appropriate in all situations. The error terms can be targeted either by the use of studentized residuals or a parametric bootstrap; however, the assessment of this assumption is less critical. The random effects, on which predictive inference relies, cannot be targeted by the current methods when the residual variance is larger than the variance component associated with the random effects---that is, situations with higher degrees of shrinkage.  Such situations are often encountered in practice. Additionally, use of the parametric bootstrap---to construct simulation envelopes for Q-Q plots, for example---does not appear to remedy this situation based on the performance of the bootstrap tests. Finally, we have shown \citeauthor{Lange:1989uu}'s weighted Q-Q plots cannot target the random effects distribution when the residual variance is large, as the distribution of the error terms overly influences tests for the random slope, resulting in inflated type I error rates for both random effects.
-%
-%\include{eval_simulation_results}
-%
-%
-%\subsection{Full results from the simulation study}\label{supp:simstudy}
-%%--------------------------------------------------
-%
-%In the paper we described a simulation study and only presented results for the the Anderson-Darling test under one variance structure ($\sigma^2_\varepsilon = 4$ and $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$). In this section we present the results from the full simulation study. Tables~\ref{tab:simb0sB}--\ref{tab:simb030} present the results for the rotated random intercept and Tables~\ref{tab:simb1sB}--\ref{tab:simb130} present the results for the rotated random slope. We use a gray background to highlight the simulation settings under which the tests should fail to reject the null hypothesis of normality.
-%
-%
-%\include{rotation_simulation_results}
-%
-%\subsection{Alternative rotation}\label{supp:simstudy-alt}
-%
-%In this section we present results of the tests of normality if we use an alternative $\bm{W}$.
-%
-%\include{alt_rotation_simulation_results}
+
 
 \end{document}
