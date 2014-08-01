@@ -382,9 +382,10 @@ is well defined,  the following discussion will clarify this point. %XXX This wa
 
 Generally, $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while a value of FC = 0 indicates that no confounding is present. 
 
-Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects as proposed by  \cite{HildenMinton:1995wh}. As noted by a reviewer, there are many ways of defining a fraction of confounding using different symmetric functions of the relative eigenvalues of $\bm{WAW}\trans$ to $\bm{WBW}\trans$. We chose the trace of the ratio to generalize the results in \cite{HildenMinton:1995wh}, but other symmetric functions could be investigated. 
-\al{Another natural choice would be to investigate the ratio of the determinants. however, the ``determinant ratio'' problem is equivalent to the ``ratio trace'' problem we consider here \citep{Fukunaga:1990}.
-As a second example we could consider the ratio of the traces (which is called the ``trace ratio'' problem),} however, there is no closed form solution to the analog of the optimization problem we discuss below \citep[cf.,][]{Jia:2009ux}. 
+Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects as proposed by  \cite{HildenMinton:1995wh}. %As noted by a reviewer, t
+There are many ways of defining a fraction of confounding using different symmetric functions of the relative eigenvalues of $\bm{WAW}\trans$ to $\bm{WBW}\trans$. Here, we choose the trace of the ratio to generalize the results in \cite{HildenMinton:1995wh}.%, but other symmetric functions could be investigated. 
+Another natural choice for a symmetric function is  the ratio of the determinants. This function leads to an optimization problem referred to as the ``determinant ratio'' problem, which is equivalent to the ``ratio trace'' problem we consider here \citep{Fukunaga:1990}.
+The inverse function of the ratio of the traces (called the ``trace ratio'' problem) on the other hand, does not have a  closed form solution to the analog of the optimization problem we discuss below \citep[cf.,][]{Jia:2009ux}. 
 
 
 %As outlined above, the confounded nature of the predicted random effects renders graphical explorations of these residuals inadequate for the assessment of distributional assumptions. 
