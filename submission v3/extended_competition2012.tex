@@ -63,11 +63,6 @@
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator*{\argmin}{arg\, min}
 
-\renewcommand{\textfraction}{0}
-\renewcommand{\bottomfraction}{1}
-\renewcommand{\topfraction}{1}
-\renewcommand{\floatpagefraction}{1}
-
 \pdfminorversion=4 % Instructed by JCGS submission
 
 \begin{document}
@@ -92,13 +87,13 @@ We encounter hierarchical data structures in a wide range of applications. Regul
 \section{Introduction}\label{sec:intro}
 %----------------------------------------------------------------------------------
 There are a wide range of application areas---from the biological and physical sciences to the social sciences---in which we encounter nested  data.
-Whether it is quality control in a manufacturing process that involves the monitoring of a set of components over  time  or students' performances in different schools across the country, analysts have to account for  the correlation between observations in the same group.  Hierarchical (multilevel) linear models allow us to do exactly that---but they also require us to make distributional assumptions on both the error terms and the random effects. These assumptions must hold to ensure the validity of the model and all of its resulting conclusions. 
+Whether it is quality control in a manufacturing process that involves the monitoring of a set of components over  time  or students' performances in different schools across the country, analysts have to account for  the correlation between observations in the same group.  Hierarchical linear models, or multilevel models, allow us to do exactly that---but they also require us to make distributional assumptions on both the error terms and the random effects. These assumptions must hold to ensure the validity of the model and all of its resulting conclusions. 
 Inference for the fixed effects in linear mixed models is fairly robust against model mis-specification \citep{Butler:1992tx, Verbeke:1997tf}. This is different for random effects \citep{Verbeke:1996va, Verbeke:1997tf}. 
 %\hh{XXX why are empirical Bayes estimates relevant? do you need to pull back so much?} \al{XXX The empirical Bayes estimates are relevant because, under normality, the empirical Bayes estimates are the empirical BLUP, and the literature often discuses the EB estimates rather than the EBLUPS}  \hh{- how about: This is different for random effects, which are sensitive to distributional mis-specifications.} 
- \citet{Verbeke:1996va} have showed that the empirical Bayes estimates of the random effects can be severely distorted if the true distribution is not normal; thus, any distributional assumptions must be checked carefully when the random effects are central to the inferential goals.
+ \citet{Verbeke:1996va} have shown that the empirical Bayes estimates of the random effects can be severely distorted if the true distribution is not normal; thus, any distributional assumptions must be checked carefully when the random effects are central to the inferential goals.
 %\hh{for empirical Bayes estimates of random effects.} are sensitive to distributional mis-specifications \al{ \citep{Verbeke:1996va} }  
 %and  therefore have to be checked carefully, especially when they are central to the inferential goals. %such as in the construction of a prediction interval for an unobserved group.
-For example, in small area estimation the areas are often modeled as random effects and their distribution is critical in the calculation of prediction intervals when the  within-group sample sizes are small \citep[see][for a discussion of this issue]{Jiang:2001dx}. 
+For example, in small area estimation the areas are often modeled as random effects and their distribution is critical in the calculation of prediction intervals when the  within-group sample sizes are small \citep[see][for a cogent discussion of this issue]{Jiang:2001dx}. 
 
 %\hh{XXX how big is the effect of mis-specification? - didn't we have a table with some simulations or were we just talking about making one? } \al{XXX We don't have any simulation results for this right now, and I haven't found any studies in the small area estimation literature yet... but I have found a few citations where they state the need for diagnostics. What is seemingly complicated about a simulation here is the relative lack of agreement on how to create prediction intervals.}
 %Another situation where the estimated random effects are of interest is in the analysis of education data. In such a situation, school are typically modeled as random effects, and confidence or prediction intervals are used for comparison to the average school, depending on the question of interest. }
@@ -106,13 +101,17 @@ For example, in small area estimation the areas are often modeled as random effe
 %\hh{XXX Do we really have two approaches? - there are ways to deal with non-normality, but they are expensive. Our approach doesn't provide a solution to non-normality, but it extends the applicability of normal methods by fixing hypersensitivity of standard distributional assessments.  }
 
 Extensions to the standard modeling framework have been suggested to address sensitivity to distributional mis-specifications, such as semiparametric/nonparametric methods \citep{Shen:1999gd, Zhang:2001wo, Ghidey:2004id} or  finite mixtures of normal distributions for the random effects \citep{Verbeke:1996va}. 
-%We refer the reader to \cite{Ghidey:2010de} for a recent review comparing these methods. 
+We refer the reader to \cite{Ghidey:2010de} for a recent review comparing these methods. 
 Semiparametric and nonparametric methods come at a cost: computational complexity is increased, and most of these methods are not widely implemented yet in standard statistical software, thus making them less accessible to the intended audience. 
 
-The situation is not quite as dire as it might seem: it turns out that a lot of tests for normality are overly sensitive in assessing deviations of random effects from normality (see section~\ref{sec:sim-results} and simulation results in the supplement). By addressing the issue of over-sensitivity in evaluating normality, we are able to extend the applicability of normal model methods in a wide range of situations.
+However, the situation is not quite as dire as it might seem: it turns out that a lot of tests for normality are overly sensitive in assessing deviations of random effects from normality (see discussion in section~\ref{sec:sim-results} and simulation results in the supplement). By addressing the issue of over-sensitivity in evaluating normality, we are able to extend the applicability of normal model methods in a wide range of situations.
+
 %The cost of increased robustness  is increased computational complexity. These methods also have not been widely implemented in statistical software, making them less accessible. %Another approach is to check %this assumption using
 %\hh{distributional assumptions with}
  %diagnostic tools. This is the approach on which we focus in this paper.
+
+
+
 %\hh{the next paragraph needs a bit of attention. my first reaction as a reviewer would be to say - ok, it's not graphical, but how do those tests do? It distracts a bit from the main intention of the paper. I'd be in favor to remove the paragraph from here and maybe leave it for the discussion that there are other , non-graphical tests. }
 %
 Several methods to assess the distribution of random effects  have been proposed. Formal tests have been proposed to to detect mixture distributions \citep{Verbeke:1996va} in the random effects and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001dx}.
@@ -123,14 +122,13 @@ Quantile-quantile (Q-Q) plots \citep{Wilk:1968} are an essential tool for  visua
 
 The KS test uses the maximal  difference, which is shown as the maximal vertical extent between the line of identity and the data points in a Q-Q plot, regardless of the range of the sample.  AD and CVM  are both based on the total area between the line of identity and the empirical distribution function. Compared to the KS  test,  the CVM test downplays the effects in the tails of a (normal) distribution, while Anderson-Darling upgrades the tail effect again due to its additional weighting of $1/\left(F(x)(1 - F(x)\right)$ across the range of the sample. 
 \begin{table}
-\caption{\label{tab:tests} Three prominent tests for normality based on the difference between empirical and hypothesized distribution function. An overview of the performance and power of these tests can be found in \citet{stephens:1974}.}
-\centering
 \begin{tabular}{lrl}\hline
 Test && Statistic\\\hline\hline
 Kolmogorov-Smirnov & $D =$ & $ \sup_{1 \le i \le n} \left | F_n(x_i) - F(x_i)\right|$ \\
 Anderson-Darling & $A =$ & $ n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)\right|^2/\left(F(x)(1 - F(x)\right) dF(x)$\\
 Cram\'{e}r-von-Mises & $C =$ & $n \int_{-\infty}^{+\infty} \left | F_n(x) - F(x)\right|^2 dF(x)$ \\\hline
 \end{tabular}
+\caption{\label{tab:tests} Three prominent tests for normality based on the difference between empirical and hypothesized distribution function. An overview of the performance and power of these tests can be found in \citet{stephens:1974}.}
 \end{table}
 %
 We will be making use of these three tests and the Q-Q plots in our assessment of normality of random effects.
@@ -177,13 +175,13 @@ Figure \ref{fig:map} shows a map of counties in Minnesota. The color shading rep
 %
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.4\textwidth]{figures/map.pdf}
+\includegraphics[width=0.5\textwidth]{figures/map.pdf}
 \caption{\label{fig:map} Map of the counties in Minnesota. The color shading represents average radon activity (in log $pCi/L$, i.e. log picoCurie per liter).}
 \end{figure}
 %
 \begin{figure}[hbt]
 \centering
-\includegraphics[width=0.6\linewidth]{figures/radon-twocounties.pdf}
+\includegraphics[width=0.7\linewidth]{figures/radon-twocounties.pdf}
 \caption{\label{fig:tc} Activity of radon levels for Hennepin and Winona counties at basement (basement = TRUE) or higher in the residence. The bigger points indicate the sample means with 95\% confidence intervals  given by the error bars. Radon levels at the basement level are usually higher.}
 \end{figure}
 %
@@ -192,10 +190,10 @@ The within-county sample sizes, $n_i$, are extremely unbalanced, ranging from on
 \begin{figure}[!h]
 	\centering
 	  \subfloat[Predicted error terms]{
-		\includegraphics[width=0.3\linewidth]{raw-lev1-qq.pdf}
+		\includegraphics[width=0.33\linewidth]{raw-lev1-qq.pdf}
 	   }
 	  \subfloat[Random intercepts]{
-		\includegraphics[width=0.3\linewidth]{raw-intercept-qq.pdf}
+		\includegraphics[width=0.33\linewidth]{raw-intercept-qq.pdf}
 		}
 %	\includegraphics[width=0.32\textwidth]{raw-slope-qq.pdf}
 	\caption{\label{fig:qqplots1} Q-Q plots of predicted residuals at different levels %, and random slopes (right) 
@@ -204,7 +202,7 @@ The within-county sample sizes, $n_i$, are extremely unbalanced, ranging from on
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.75\textwidth]{qq-lineup-std.pdf}%test.jpeg}%lineup-rslope.pdf}
+	\includegraphics[width=0.9\textwidth]{qq-lineup-std.pdf}%test.jpeg}%lineup-rslope.pdf}
 	\caption{\label{fig:lineup} Lineup of normal Q-Q plots for the random slope term in model~\eqref{eq:radon}. The 19 null plots are obtained by simulation from the model. Can you identify the observed Q-Q plot?  In a human subject study 15 out of 23 participants identified panel \#$(3^2+3)$ as the least normal, panel \#$(3^2+7)$ shows the actual data, which none of the participants identified as the least normal. }
 \end{figure}
 
@@ -339,7 +337,12 @@ Using this specification, the predicted error terms and random effects are given
 where $\bm{P} = \bm{V}\inv( \bm{I} - \bm{X} (\bm{X}\trans \bm{V}\inv \bm{X})\inv \bm{X}\trans \bm{V}\inv)$ and $\bm{V} = \bm{ZDZ}\trans + \bm{R}$. 
 Equations \eqref{eq:resid1} and \eqref{eq:resid2} reveal that the distributions of the predicted random effects and error terms are interrelated---i.e.,~the distribution of  the predicted random effects depends on the distribution of the error terms and vice versa. As each residual quantity depends on the other, the predicted error terms and random effects are said to be confounded  \citep{HildenMinton:1995wh}.
 Additionally, it is easily seen that both \eqref{eq:resid1} and \eqref{eq:resid2} lead to the analysis of correlated and potentially heteroscedastic disturbances as $\var(\widehat{\bm{\varepsilon}}) = \bm{RPR}$ and $\var(\widehat{\bm{b}}) = \bm{DZ}\trans \bm{PZD}$.
-The use of standardized residuals can correct the latter issue, but does not address the fact that the residuals are interrelated. While problems may be expected at both levels of the model based on \eqref{eq:resid1} and \eqref{eq:resid2}, we have found that the interpretation of Q-Q plots of the standardized predicted error terms, $\bm{z}_{\varepsilon} =  \text{diag} \left(\bm{RPR} \right)^{-1/2} \widehat{\bm{\varepsilon}}$,
+The use of standardized residuals can correct the latter issue, but does not address the fact that the residuals are interrelated. While problems may be expected at both levels of the model based on \eqref{eq:resid1} and \eqref{eq:resid2}, we have found that the interpretation of Q-Q plots of the standardized predicted error terms
+%
+\[
+\bm{z}_{\varepsilon} =  \text{diag} \left(\bm{RPR} \right)^{-1/2} \widehat{\bm{\varepsilon}}
+\]
+%
 is unaffected by this interrelationship in the situations that we have considered (see section 1 of the supplement for simulation results). %XXX Reviewer 2 thinks that this may not hold for small cluster sizes, so I am trying to soften the language just a bit. We didn't exhaust all possibilities in our simulation, but the results we have support this statement
  This is not the case with the standardized random effects.  When the degree of pooling is high---as it is in the above radon example, and often is in practice---interpretation of the predicted random effects cannot be separated from the distribution of the error terms. 
 %Detailed simulation results documenting the utility of  these residuals are available in the supplementary material. \al{XXX With the comment above, this sentence now seems out of place...}
@@ -374,6 +377,7 @@ where $\bm{B}$ is the covariance structure of $\bm b$, $\bm{B} = \var(\widehat{\
 \noindent
 Note that both $\bm{A}$ and $\bm{B}$ are  positive semidefinite matrices. While it is not immediately obvious that FC % $\tr\left( \left(\bm{W\trans B W} \right)\ginv \left(\bm{W\trans A W}\right) \right)$ 
 is well defined,  the following discussion will clarify this point. %XXX This was recommended by reviewer \#2 but it seems forced...
+
 Generally, $\text{FC} \in [0,1]$, where 1 indicates that, due to confounding, the predicted random effects contain no information in addition to that found in the error terms, while a value of FC = 0 indicates that no confounding is present. 
 
 Notice that if $\bm{W}$ is the identity, then \eqref{eq:fc2} measures the fraction of confounding in the original vector of predicted random effects as proposed by  \cite{HildenMinton:1995wh}. %As noted by a reviewer, t
@@ -396,15 +400,23 @@ J_1(s) = \tr\left( \left(\bm{W\trans B W} \right)\inv \left(\bm{W\trans A W}\rig
 \end{equation}
 %
 Mathematically, this problem is solved using the generalized eigenvalue decomposition
-$\bm{Aw}_k = \gamma_k \bm{Bw}_k$, 
+%
+\begin{equation}\label{eq:geigen}
+	\bm{Aw}_k = \gamma_k \bm{Bw}_k
+\end{equation}
+%
 where $\gamma_k$ and $\bm{w}_k$ are the $k$-th smallest eigenvalues and eigenvectors, respectively \citep{Fukunaga:1990}. 
 %thus, $\bm{W}^*$ consists of the eigenvectors associated with the $s$ smallest eigenvalues. 
 Simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ can be used to solve this problem, given that the kernel of $\bm{B}$ is a subspace of the kernel of $\bm{A}$ \citep{deLeeuw:1982to}.
-Equivalent to that, we have to show that the difference $\bm{B} - \bm{A}$ is nonnegative definite (n.n.d.):
-$\bm{A} = \bm{DZ}^\prime \bm{PRPZD}$
+Equivalent to that, we have to show that the difference $\bm{B} - \bm{A}$ is nonnegative definite:
+\[
+	\bm{A} =  \var(\widehat{\bm{b}} | \bm{b} ) = \bm{RPZDZ}^\prime \bm{PR}
+\]
 and
-$\bm{B} = \bm{DZ}^\prime \bm{PRPZD} + \bm{DZ}^\prime\bm{PZDZ}^\prime\bm{PZD}$,
-so $\bm{B}-\bm{A} =   \bm{DZ}^\prime\bm{PZDZ}^\prime\bm{PZD}$ is n.n.d.
+\[
+	\bm{B} = \var(\widehat{\bm{b}}) =  \bm{RPR} =  \bm{RPVPR}  = \bm{RPRPR} + \bm{RPZDZ}^\prime\bm{PR},
+\]
+so $\bm{B}-\bm{A} =  \bm{RPRPR}$ is nonnegative definite.
 
 %
 %\cite{deLeeuw:1982to} shows that simultaneous diagonalization of $\bm{A}$ and $\bm{B}$ solves this generalized eigenvalue problem if the null space of $\bm{B}$ is a subspace of the null space of $\bm{A}$, for which a sufficient condition is that $\bm{B} - \bm{A}$ be nonnegative definite. In our problem 
@@ -456,7 +468,7 @@ At first it may be mildly surprising that so few dimensions need to be excluded 
 	  \subfloat[Model $M2$]{
 		\includegraphics[width=0.4\linewidth]{elbow2.pdf}
 		}	
-	\caption{\label{fig:elbow} Plots of the fraction of confounding for each reduction in the dimension of subspace spanned by the rotated random intercepts from two simulation models. Model $M1$ has 50 groups: 40 groups of size 30, and 10 groups of size 5. Model $M2$ has 50 groups with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). Based on these plots we  choose $s = 39$, a dimension reduction of 11.}
+	\caption{\label{fig:elbow} Plots of the fraction of confounding for each reduction in the dimension of subspace spanned by the rotated random intercepts from two simulation models. Model $M1$ has 50 groups: 40 groups of size 30, and 10 groups of size 5. Model $M2$ has 50 groups with group sizes determined as random draws from either a Poisson(30) distribution (40 groups) or a Poisson(5) distribution (10 groups). Based on these plots we  choose $s = 39$, corresponding to a dimension reduction of 11.}
 \end{figure}
 
 
@@ -492,8 +504,8 @@ Other orthogonal rotations could be used, but the varimax rotation is familiar t
 \end{figure}
 
 \paragraph{Extension to multiple random effects.}
-Up to this point our discussion has ignored that a model may (and often will) contain numerous random effects. In this case, the assumptions made on each random effect should be checked; thus, we propose assessing each random effect separately. To this end we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th marginal random effect. For example, in a model with a random intercept and random slope, if $\bm{Z}$ is organized as a block diagonal matrix---that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum---then $\bm{L}_0 = \bm{I}_{m} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_1 = \bm{I}_{m} \bigotimes ( 0,\ 1)$ produces the random slopes. The methodology presented in this section can be generalized to models with numerous random effects by substituting $\bm{L}_k\trans \widehat{\bm{b}}$ for $\widehat{\bm{b}}$.
-%\citep[page 47]{Gentle:2007} for direct sum reference
+Up to this point our discussion has ignored that a model may (and often will) contain numerous random effects. In this case, the assumptions made on each random effect should be checked; thus, we propose assessing each random effect separately. To this end we must define linear combinations $\bm{L}_k$ such that $\bm{L}_k\trans \widehat{\bm{b}}$ produces the $k$th marginal random effect. For example, in a model with a random intercept and random slope, if $\bm{Z}$ is organized as a block diagonal matrix---that is $\bm{Z} = \bigoplus_{i=1}^{m} \bm{Z}_{i}$ where $\bigoplus$ denotes the direct sum \citep[page 47]{Gentle:2007}---then $\bm{L}_0 = \bm{I}_{m} \bigotimes ( 1,\ 0)$ produces the random intercepts and $\bm{L}_1 = \bm{I}_{m} \bigotimes ( 0,\ 1)$ produces the random slopes. The methodology presented in this section can be generalized to models with numerous random effects by substituting $\bm{L}_k\trans \widehat{\bm{b}}$ for $\widehat{\bm{b}}$.
+
 
 
 %\aside{XXX I have started to restructure this subsection above, but will keep the original text below until I am done.}
@@ -691,30 +703,30 @@ We conducted a simulation study to assess the specificity and sensitivity of tes
 
 
 The design matrices from model \eqref{eq:radon} were used as templates for realistic data generation;  for simplicity of the simulation design, only the 60 counties with full rank $\bm{Z}$ matrices were included. 
-Normal, heavy-tailed, and skewed distributions were used to generate the simulated errors and random effects. We used a rescaled $t$ distribution with 3 degrees of freedom to generate heavy tailed residuals, and a centered and rescaled exponential distribution with a rate parameter of 1 to generate skewed residuals. For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects; thus, nine distributional settings were considered in the simulation study.
+Normal, heavy-tailed, and skewed distributions were used to generate the simulated errors and random effects. We used a rescaled $t$ distribution with 3 degrees of freedom to generate heavy tailed residuals, and a centered and rescaled exponential distribution with a rate parameter of 1 to generate skewed residuals. For simplicity we required the distributions of the random slope and intercept to the be same and assumed independence between the random effects. The nine distributional settings considered in the simulation study are summarized in Table~\ref{tab:simdsns}.
 %
-%\begin{table}[htdp]
-%\centering
-%\caption{\label{tab:simdsns} A summary of the nine distributional settings considered in the simulation study.}
-%\begin{tabular}{llccc}\hline
-%Distributions of & & \multicolumn{3}{c}{Random effects, $F_2$} \\ \cline{3-5}
-%           & & $\mathcal{N}(0, \ \sigma^2_{b})$ & $(\sigma_{b} / \sqrt{3})\, t_3$ & $\sigma_{b} \, \{ \text{Exp}(1) - 1 \}$ \\ \hline
-%Error terms, $F_1$  & $\mathcal{N}(0, \ \sigma^2_{\varepsilon})$       & &&\\
-%             & $(\sigma_{\varepsilon} / \sqrt{3})\, t_3$  &  & $\varepsilon_{ij}^* \overset{iid}{\sim} F_1, \ \ b_{0i}^*, b_{1i}^* \overset{iid}{\sim} F_2$ &  \\
-%             & $\sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$       & && \\ 
-%\hline
-%\end{tabular} 
-%\end{table}
+\begin{table}[htdp]
+\centering
+\caption{\label{tab:simdsns} A summary of the nine distributional settings considered in the simulation study.}
+\begin{tabular}{llccc}\hline
+Distributions of & & \multicolumn{3}{c}{Random effects, $F_2$} \\ \cline{3-5}
+           & & $\mathcal{N}(0, \ \sigma^2_{b})$ & $(\sigma_{b} / \sqrt{3})\, t_3$ & $\sigma_{b} \, \{ \text{Exp}(1) - 1 \}$ \\ \hline
+Error terms, $F_1$  & $\mathcal{N}(0, \ \sigma^2_{\varepsilon})$       & &&\\
+             & $(\sigma_{\varepsilon} / \sqrt{3})\, t_3$  &  & $\varepsilon_{ij}^* \overset{iid}{\sim} F_1, \ \ b_{0i}^*, b_{1i}^* \overset{iid}{\sim} F_2$ &  \\
+             & $\sigma_{\varepsilon} \, \{ \text{Exp}(1) - 1 \}$       & && \\ 
+\hline
+\end{tabular} 
+\end{table}
 %
 The fixed effects coefficients were set to the maximum likelihood estimates.
 
-To investigate the effect that pooling has on the rotated random effects we considered  three variance structures to represent different degrees of confounding for the random effects: $\sigma^2_\varepsilon = 4$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$ (high); $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$ (moderate); $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 4$ (low).
+To investigate the effect that pooling has on the rotated random effects we considered  three variance structures to represent different degrees of confounding for the random effects:\\
 %
-%\begin{tabular}{ll}
-%\textbf{high:} & $\sigma^2_\varepsilon = 4$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$ \\
-%\textbf{moderate:} & $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$ \\
-%\textbf{low:} & $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 4$ \\
-%\end{tabular}
+\begin{tabular}{ll}
+\textbf{high:} & $\sigma^2_\varepsilon = 4$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$ \\
+\textbf{moderate:} & $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 1$ \\
+\textbf{low:} & $\sigma^2_\varepsilon = 1$ and  $\sigma^2_{b_0} = \sigma^2_{b_1} = 4$ \\
+\end{tabular}
 %
 
 Under each simulation setting 1000 data sets were generated for each model and the rotated residuals were obtained using $s = \rank(\bm{B})$ (which is 58 and 59 for the random intercept and slope, respectively) as well as $s =$ 55, 50, 45, 40, 35, and 30.  The percentage of AD, CVM, and KS tests that rejected the null hypothesis of normality were recorded.
@@ -729,7 +741,7 @@ Figure~\ref{fig:fc} shows the average fraction of confounding for the rotated ra
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.75\textwidth]{fc_by_s.pdf}
+	\includegraphics[width=0.9\textwidth]{fc_by_s.pdf}
 	\caption{\label{fig:fc} Change in the fraction of confounding (FC) as the dimension of the rotated random effects vector, $s$, is reduced for the three variance structures considered in the simulation study. %LOESS smoothers estimate the trajectory of FC as $s$ varies.} 
 	}
 \end{figure}
@@ -739,7 +751,7 @@ Table~\ref{tab:results-int} and Figure~\ref{fig:results-slope} display the estim
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.75\textwidth]{ad_slope_results.pdf}
+	\includegraphics[width=0.9\textwidth]{ad_slope_results.pdf}
 	\caption{\label{fig:results-slope} Estimated type I error rate using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by the distribution of the error terms and $s$.}
 \end{figure}
 
@@ -754,7 +766,7 @@ While the estimated power is lower than the gold standard, the fact that the typ
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.75\textwidth]{ad_slope_power.pdf}
+	\includegraphics[width=0.9\textwidth]{ad_slope_power.pdf}
 	\caption{\label{fig:power-slope}Linear smoother of the estimated power using the Anderson-Darling normality test ($\alpha = 0.05$) on the rotated random slopes (left) and varimax rotated random slopes (right) by $s$. The color denotes the distribution of the errors and the line type denotes the distribution of the random slope.}
 \end{figure}
 
@@ -808,6 +820,7 @@ Skewed	&	Normal			& 	19.7	&	21.2	&	21.3	&	22.1	&	22.7	&	21.1	&	22.3	\\
 %Next, we return to the motivating example and use rotated residuals to assess the distribution of the random effects using the rotated random effects. 
 \noindent
 Recall that in Section~\ref{sec:ex} we determined that the error terms were not normally distributed. Consequently, examination of Q-Q plots of the predicted random effects will likely lead to erroneous conclusions due to the high degree of shrinkage. 
+
 In order to construct Q-Q plots of the rotated random effects we first consider the choice of $s$. For model \eqref{eq:radon} the high degree of shrinkage leads to a large fraction of confounding for each random term: 0.72 for the random intercept and 0.70 for the random slope. In choosing $s$ we wish to substantially reduce the fraction of confounding, but restrict attention to $s \geq 30$ so as not to decrease the maximum possible power of a normality test too severely. Figure~\ref{fig:radon-dim} shows the fraction confounding for $s \geq 30$. 
 %
 %\todo[inline]{We could show this in a plot if room isn't an issue. The below are just to show what the plots look like... There is really no elbow because of the sample sizes involved in the radon example, so I don't know if we want to discuss them again here. }
@@ -815,7 +828,7 @@ In order to construct Q-Q plots of the rotated random effects we first consider 
 
 \begin{figure}
 \centering
-	\includegraphics[width=0.65\textwidth]{radon_elbows.pdf}
+	\includegraphics[width=0.9\textwidth]{radon_elbows.pdf}
 	\caption{\label{fig:radon-dim} Plots of the fraction of confounding for each reduction in the dimension of subspace spanned by the rotated random intercept (left) and random slope (right) for the radon example. Filled points represent situations in which the AD test rejects normality of the varimax rotated random effects.}
 \end{figure}
 
@@ -842,10 +855,10 @@ We see that the random intercept significantly deviates from the assumption of n
 \begin{figure}[htb]
 	\centering
 	 \subfloat[Random intercept]{
-		\includegraphics[width=0.3\linewidth]{rotatedQQ-intercept.pdf}
+		\includegraphics[width=0.35\linewidth]{rotatedQQ-intercept.pdf}
 		}
 	  \subfloat[Random slope]{
-		\includegraphics[width=0.3\linewidth]{rotatedQQ-slope.pdf}
+		\includegraphics[width=0.35\linewidth]{rotatedQQ-slope.pdf}
 		}	
 	\caption{\label{fig:rotate-radon} Normal Q-Q plots with point-wise 95\% confidence bands of the marginals rotated random effects. The deviations from normality are much less pronounced than before, resulting in the failure to reject the null hypothesis of normality in the case of the random slope.} %\hh{what do the normality tests say?} \al{The tests all say fail to reject.}}
 \end{figure}
@@ -874,88 +887,116 @@ While we do think that the loss in power is troubling,
  the inflated type I error rates resulting from high levels of confounding is of a much bigger concern. Unlike before,  any detection of a distributional deviation can now be trusted even in situations with high amounts of  confounding between the levels of residuals.
 
   
+%  This indicates that the predicted random effects do contain useful diagnostic information even when models are highly confounded, but not in their ``raw'' state.
+ 
+%It is important to note that the procedure outlined in this paper assumes that the covariance structures in the hierarchical linear model are correctly specified. If this is not the case, then we would expect this model violation to affect assessment of the rotated random effect. Therefore, in practice we recommend an assessment of the covariance structures prior to distributional assessment. It would be of interest to assess the effectiveness of this methodology with robust covariance estimation techniques.
+
+%\todo[inline]{Should I talk about the more alternative objective function that I have recently discovered that might lead to better results but is computationally more complex as there is no closed form solution? I see this as an area of future investigation, but I don't know how much of that is conventional to put in the article.}
+
+%\todo[inline]{Things to return to in the discussion (moved from elsewhere)}
+%\hh{the next paragraph needs a bit of attention. my first reaction as a reviewer would be to say - ok, it's not graphical, but how do those tests do? It distracts a bit from the main intention of the paper. I'd be in favor to remove the paragraph from here and maybe leave it for the discussion that there are other , non-graphical tests. }
+%\al{I see your point. I will work on incorporating this to the discussion.}
+%Several methods to assess the random effects distribution have been proposed. Formal tests have been proposed to to detect mixture distributions \citep{Verbeke:1996va} in the random effects and for overall goodness-of-fit tests for both the error terms and random effects \citep{Jiang:2001up}; however, these methods do \hh{not} lend themselves to graphical inspection and have not been implemented in statistical software.
+
+
+% If a graphical assessment of the random effects distribution is not desired, then there are other available methods for model assessment \cite[c.f., the $\chi^2$ test proposed by][]{Jiang:2001up}, but they do not lend themselves to graphical inspection. While such goodness-of-fit tests can detect distributional deviations, they do not suggest how the assumption as been violated. 
+
+%The rotated random effects can be used with Q-Q plots, which are familiar to analysts. 
+%The use of the rotated random effects results in approximately nominal type I error rates when the dimension, $s$, is properly chosen; however, simulations have revealed that tests using the rotated random effects have low power to detect non-normal alternatives. Despite this fact, the rotated random effects present a method allowing for the predicted random effects to be used in distributional assessment, and when a deviation is detected one has cause to believe this detection, which previously not the case for highly confounded models. Additionally, this method is far less computationally demanding than simulation-based assessments, such as simulation envelopes for Q-Q plots, which are not guaranteed to work in situations with high levels of confounding (see the supplemental materials). Also, orthogonal rotations other than the varimax rotation (such as the quartimax rotation) may provide additional power, and is an area for future investigation. 
+
+
+
+%\todo[inline]{
+%Summarize everything and talk about future directions (if there are any). I have started a list below}
+%\begin{itemize}
+%\item Discuss the relative speed of this procedure to a bootstrap procedure
+%\item Discuss why we are not using the ``upward'' residuals analysis approach discussed in the lit review chapter.
+%\end{itemize}
+
 %----------------------------------------------------------------------------------
 \section{Acknowledgments}
 %----------------------------------------------------------------------------------
 The authors would like to thank the associate editor and reviewers whose comments and suggestions substantially improved the paper.
 
-%%----------------------------------------------------------------------------------
-%\section{Appendix: Additional technical details}
-%%----------------------------------------------------------------------------------
-%
-%\subsection{Simultaneous diagonalization}
-%
-%Below, we outline the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ for reference.
-%%and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\
-%
-%\begin{algorithm}[Simultaneous diagonalization]
-%Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices such that the kernel of B is a subspace of the kernel of $\bm{A}$. The transformation that simultaneously diagonalizes both matrices can be found through the following procedure:
-%\begin{enumerate}
-%\item Find a transformation that whitens $\bm{B}$. Such a transformation is given by $\bm{T_r \Lambda_r}^{-1/2}$, where $\bm{T}_r$ and $\bm{\Lambda}_r$ are the first $r$  eigenvectors and eigenvalues of $\bm{B}$, where $r = \rank(\bm{B})$. 
-%
-%\item Transform $\bm{A}$ and $\bm{B}$ to
-%\begin{align}
-%\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{A T_r \Lambda_r}^{-1/2} &= \bm{A}^* \label{eq:astar} \\
-%\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{B T_r \Lambda_r}^{-1/2} &= \bm{I}
-%\end{align}
-%
-%\item Find an orthonormal transformation that diagonalizes $\bm{A}^*$. Such a transformation is given by the eigenvectors of $\bm{A}^*$, which we denote $\bm{U}$.
-%\end{enumerate}
-%
-%\noindent
-%Based on the above three steps, the transformation that simultaneously diagonalizes $\bm{A}$ and $\bm{B}$ is $\bm{T_r \Lambda_r}^{-1/2} \bm{U}$.\\ 
-%\end{algorithm}
-%
-%
-%\subsection{Rotated random effects are standardized, uncorrelated, and homoscedastic}
-%
-%We present the proof of the claim that the rotated residuals, $\bm{W}^{*\prime} \widehat{\bm{b}}$, are standardized, uncorrelated, and homoscedastic. Following the developments presented in Section~\ref{sec:rotate}, we present this discussion for the random effects assuming that there is only a random intercept. Generalization to the situation with multiple random effects follows as previously discussed.
-%
-%\begin{proof}
-% Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b})$, $\bm{B} = \var(\widehat{\bm{b}})$, $r = \text{rank}(\bm{B})$, and $q = $ the number of elements in $\widehat{\bm{b}}$. Recall that $\bm{A}$ and $\bm{B}$ are symmetric and positive semidefinite. Following from above, $\bm{T}_r$ and $\bm{\Lambda}_r$ follow from the spectral (or eigenvalue) decomposition of $\bm{B} = \bm{T_r \Lambda_r T_r}\trans$, and $\bm{U}$ follows from the spectral decomposition of $\bm{A^*} = \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{A T_r \Lambda_r}^{-1/2} = \bm{U} \bm{\Gamma} \bm{U}\trans$. Then, 
-%\begin{align*}
-%\var(\bm{W}^{*\prime} \widehat{\bm{b}}) &= \var(\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \widehat{\bm{b}})\\
-%&= (\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \var(\widehat{\bm{b}}) (\bm{T_r \Lambda_r}^{-1/2} \bm{U})\\
-%&= (\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{B} (\bm{T_r \Lambda_r}^{-1/2} \bm{U})\\
-%&= \bm{I}
-%\end{align*}
-%proving that the rotated random effects are standardized, uncorrelated, and homoscedastic.
-%\end{proof}
-%
-%\subsection{Lineup details}\label{sec:detrended}
-%As an alternative to the standard Q-Q plot, a detrended version of Q-Q plots (see figure~\ref{fig:lineup-2}) was shown to participants in a study. In the detrended Q-Q plot, the plot is rotated by 45$^\circ$ to make comparisons between the line of identity and the empirical distribution function a cognitively easier task. However, for assessing normality of the random effects distribution, the results from both types of plots were very similar. None of the participants identified the observed data as the most different panel from the set, while panel \#$(3^2+3)$ was the one picked by most participants. Table~\ref{tab:lpresults} gives an overview of the results from the study. 
-%\begin{figure}[htb]
-%	\centering
-%	\includegraphics[width=0.9\textwidth]{qq-lineup-rot.pdf}%test.jpeg}%lineup-rslope.pdf}
-%	\caption{\label{fig:lineup-2} Lineup of detrended Q-Q plots for the random slope term in model~\eqref{eq:radon}. This plot shows the same data as the standard Q-Q plots of figure~\ref{fig:lineup}. Out of 22 evaluations, 11 participants picked panel \#$(3^2+3)$ as the most different from the set; another 4 participants chose panel \#$(2 \cdot 3^2)$. None of the participant picked the panel of the observed data.}
-%\end{figure}
-%
-%\begin{table}[ht]
-%% latex table generated in R 3.1.0 by xtable 1.7-3 package
-%% Wed Jul 30 15:49:14 2014
-%\centering
-%\begin{tabular}{rrrrrrrrrrr}
-%  \hline
-%  & \multicolumn{9}{l}{response} \\
-%Q-Q type & 2 & 3 & 4 & 5 & 6 & 11 & 12 & 15 & 18 & 20 \\ 
-%  \hline
-%  Standard & 0 & 0 & 2 & 1 & 2 & 1 & 15 & 4 & 0 & 2 \\ 
-%  Detrended & 1 & 1 & 1 & 1 & 0 & 0 & 11 & 2 & 4 & 1 \\ 
-%   \hline
-%\end{tabular}
-%\caption{\label{tab:lpresults}Overview of user picks evaluating lineups in figures~\ref{fig:lineup} and \ref{fig:lineup-2} for the panel with the most pronounced difference. Both standard and detrended version of Q-Q plots show similar results with a definite preference for panel \#12.}
-%\end{table}
-%
+%----------------------------------------------------------------------------------
+\section{Appendix: Additional technical details}
+%----------------------------------------------------------------------------------
+
+\subsection{Simultaneous diagonalization}
+
+Below, we outline the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ for reference.
+%and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\
+
+\begin{algorithm}[Simultaneous diagonalization]
+Let $\bm{A}$ and $\bm{B}$ be two positive semidefinite matrices such that the kernel of B is a subspace of the kernel of $\bm{A}$. The transformation that simultaneously diagonalizes both matrices can be found through the following procedure:
+\begin{enumerate}
+\item Find a transformation that whitens $\bm{B}$. Such a transformation is given by $\bm{T_r \Lambda_r}^{-1/2}$, where $\bm{T}_r$ and $\bm{\Lambda}_r$ are the first $r$  eigenvectors and eigenvalues of $\bm{B}$, where $r = \rank(\bm{B})$. 
+
+\item Transform $\bm{A}$ and $\bm{B}$ to
+\begin{align}
+\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{A T_r \Lambda_r}^{-1/2} &= \bm{A}^* \label{eq:astar} \\
+\bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{B T_r \Lambda_r}^{-1/2} &= \bm{I}
+\end{align}
+
+\item Find an orthonormal transformation that diagonalizes $\bm{A}^*$. Such a transformation is given by the eigenvectors of $\bm{A}^*$, which we denote $\bm{U}$.
+\end{enumerate}
+
+\noindent
+Based on the above three steps, the transformation that simultaneously diagonalizes $\bm{A}$ and $\bm{B}$ is $\bm{T_r \Lambda_r}^{-1/2} \bm{U}$.\\ 
+\end{algorithm}
+
+
+\subsection{Rotated random effects are standardized, uncorrelated, and homoscedastic}
+
+We present the proof of the claim that the rotated residuals, $\bm{W}^{*\prime} \widehat{\bm{b}}$, are standardized, uncorrelated, and homoscedastic. Following the developments presented in Section~\ref{sec:rotate}, we present this discussion for the random effects assuming that there is only a random intercept. Generalization to the situation with multiple random effects follows as previously discussed.
+
+\begin{proof}
+ Let $\bm{A} = \var(\widehat{\bm{b}} | \bm{b})$, $\bm{B} = \var(\widehat{\bm{b}})$, $r = \text{rank}(\bm{B})$, and $q = $ the number of elements in $\widehat{\bm{b}}$. Recall that $\bm{A}$ and $\bm{B}$ are symmetric and positive semidefinite. Following from above, $\bm{T}_r$ and $\bm{\Lambda}_r$ follow from the spectral (or eigenvalue) decomposition of $\bm{B} = \bm{T_r \Lambda_r T_r}\trans$, and $\bm{U}$ follows from the spectral decomposition of $\bm{A^*} = \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \bm{A T_r \Lambda_r}^{-1/2} = \bm{U} \bm{\Gamma} \bm{U}\trans$. Then, 
+\begin{align*}
+\var(\bm{W}^{*\prime} \widehat{\bm{b}}) &= \var(\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans \widehat{\bm{b}})\\
+&= (\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \var(\widehat{\bm{b}}) (\bm{T_r \Lambda_r}^{-1/2} \bm{U})\\
+&= (\bm{U}\trans \bm{\Lambda_r}^{-1/2} \bm{T_r}\trans) \bm{B} (\bm{T_r \Lambda_r}^{-1/2} \bm{U})\\
+&= \bm{I}
+\end{align*}
+proving that the rotated random effects are standardized, uncorrelated, and homoscedastic.
+\end{proof}
+
+\subsection{Lineup details}\label{sec:detrended}
+As an alternative to the standard Q-Q plot, a detrended version of Q-Q plots (see figure~\ref{fig:lineup-2}) was shown to participants in a study. In the detrended Q-Q plot, the plot is rotated by 45$^\circ$ to make comparisons between the line of identity and the empirical distribution function a cognitively easier task. However, for assessing normality of the random effects distribution, the results from both types of plots were very similar. None of the participants identified the observed data as the most different panel from the set, while panel \#$(3^2+3)$ was the one picked by most participants. Table~\ref{tab:lpresults} gives an overview of the results from the study. 
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.9\textwidth]{qq-lineup-rot.pdf}%test.jpeg}%lineup-rslope.pdf}
+	\caption{\label{fig:lineup-2} Lineup of detrended Q-Q plots for the random slope term in model~\eqref{eq:radon}. This plot shows the same data as the standard Q-Q plots of figure~\ref{fig:lineup}. Out of 22 evaluations, 11 participants picked panel \#$(3^2+3)$ as the most different from the set; another 4 participants chose panel \#$(2 \cdot 3^2)$. None of the participant picked the panel of the observed data.}
+\end{figure}
+
+\begin{table}[ht]
+% latex table generated in R 3.1.0 by xtable 1.7-3 package
+% Wed Jul 30 15:49:14 2014
+\centering
+\begin{tabular}{rrrrrrrrrrr}
+  \hline
+  & \multicolumn{9}{l}{response} \\
+Q-Q type & 2 & 3 & 4 & 5 & 6 & 11 & 12 & 15 & 18 & 20 \\ 
+  \hline
+  Standard & 0 & 0 & 2 & 1 & 2 & 1 & 15 & 4 & 0 & 2 \\ 
+  Detrended & 1 & 1 & 1 & 1 & 0 & 0 & 11 & 2 & 4 & 1 \\ 
+   \hline
+\end{tabular}
+\caption{\label{tab:lpresults}Overview of user picks evaluating lineups in figures~\ref{fig:lineup} and \ref{fig:lineup-2} for the panel with the most pronounced difference. Both standard and detrended version of Q-Q plots show similar results with a definite preference for panel \#12.}
+\end{table}
+
 %----------------------------------------------------------------------------------
 \section*{Supplementary Materials}
 %----------------------------------------------------------------------------------
-%The following supplemental materials can be obtained online:
+
+The following supplemental materials can be obtained online:
+
 \begin{description}
-\item[Technical details and simulation results:] The supplementary materials include additional technical details and the results of the full simulation study. Additionally, the results of a simulation supporting the small simulation study discussed in Section~\ref{sec:ex} are presented and further show the need for alternative procedures to assess the distribution of the random effects.
+\item[Simulation results:] The supplementary materials include the full simulation study discussed in Section~\ref{sec:simulation}. Additionally, the results of a simulation supporting the small simulation study discussed in Section~\ref{sec:ex} are presented and further show the need for alternative procedures to assess the distribution of the random effects.
 
 \item[\texttt{R} script for figures and simulations:] The \texttt{R} code and data used to generate results discussed in this paper are available in the file \texttt{code\_supplement.zip}. 
 
-\item[\texttt{R} package \texttt{HLMdiag}:] We have included the function to calculate the rotated random effects in the \texttt{R} package \texttt{HLMdiag}, which can be found on the Comprehensive R Archive Network (\url{cran.r-project.org/}) and github (\url{github.com/aloy/HLMdiag}).
+\item[\texttt{R} package \texttt{HLMdiag}:] We have included the function to calculate the rotated random effects in the \texttt{R} package \texttt{HLMdiag}. The stable version of \texttt{HLMdiag} is available from the Comprehensive R Archive Network (CRAN, \url{http://cran.r-project.org/}) and the developmental version is available of github (\url{https://github.com/aloy/HLMdiag}).
 \end{description}
 
 %----------------------------------------------------------------------------------

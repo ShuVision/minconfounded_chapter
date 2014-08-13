@@ -1,0 +1,77 @@
+\documentclass{article}
+
+\usepackage[margin=1in]{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+%\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{ulem}
+
+\newcommand{\red}[1]{{\color{red} #1}}
+
+% title formatting
+%\usepackage[compact,small]{titlesec}
+
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{todonotes}
+\newcommand{\alnote}[1]{\todo[inline,color=green!40]{#1}} %% nice template!!
+\newcommand{\hhnote}[1]{\todo[inline,color=orange!40]{#1}} 
+
+\pdfminorversion=4
+
+\begin{document}
+
+We would like to thank the associate editor for the many helpful comments and suggestions. 
+This is how we addressed each comment:
+
+\subsection*{Nits}
+
+\begin{enumerate}
+\item I still believe that de-trended QQ plots are more useful for detecting deviation from the assumed distribution. These can also be given confidence envelopes as in the standard version. You might try this for your lineup example.
+
+\textbf{Response:} We believe that having a both a lineup with `traditional' QQ plots and de-trended QQ plots is interesting to the reader, and have added the de-trended version in an appendix which is referenced in the main discussion. Additionally, we added a brief discussion of the results obtained from our initial human subject study. 
+
+
+\item Fig 1: Why is the lowest level of radon shown darkest? Suggest reversing this, and also making the range of colors appear to go from near white to darkish blue to heighten the contrast. The visual impression is that `highest' levels are in the north, and there is not much difference among the counties.
+
+\textbf{Response:} We have made the suggested change to figure 1.
+
+
+\item I believe that the thrust of Reviewer 2's comment regarding other functions of the eigenvalues of $WAW^\prime$ relative to $WBW^\prime$ was that functions like the ratio of determinants analogous to Wilks' Lambda would also be natural and useful. Please consider this.
+
+\textbf{Response:} We have added a comment about the ``determinant ratio'' problem in this context.
+
+\item Fig 5 and discussion: It is mildly surprising that so many dimensions are necessary or that so few need to be excluded to reduce confounding. Please comment on this effect, e.g., it seems like the use of dropping the last few PCA dimensions to reduce the impact of outliers.
+
+\textbf{Response:} We have added a comment on this affect, and appreciate the parallel the AE saw to PCA.
+
+
+\item Figs 7, 9: Two levels of legend are difficult to comprehend. Can you use direct labeling of the curves for one of these?
+
+\textbf{Response:} We have directly labeled the variance structure on Figure 7 and the distribution of the error terms on Figure 9 to increase clarity.
+
+\end{enumerate}
+
+
+\subsection*{Specific comments}
+
+\begin{enumerate}
+\item P3 / L51: Anderson-Darling \red{up-regulates} upgrades ...
+
+\textbf{Response:} We have made this change.
+
+\item P8 / L6: In the caption use plot \#$3^2+3=12$ and \#$3^2+7=16$ for consistency with the text `clue'
+
+\textbf{Response:} We have made this change.
+
+\item P12 / L1: closed form solution to \textbf{the} analog ...
+
+\textbf{Response:} We have made this change.
+
+\end{enumerate}
+
+\end{document}

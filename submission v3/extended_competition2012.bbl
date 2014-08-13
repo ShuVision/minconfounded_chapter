@@ -1,4 +1,4 @@
-\begin{thebibliography}{29}
+\begin{thebibliography}{31}
 \newcommand{\enquote}[1]{``#1''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -48,9 +48,18 @@ Gelman, A. and Pardoe, I. (2006), \enquote{Bayesian Measures of Explained
   Variance and Pooling in Multilevel (Hierarchical) Models,}
   \textit{Technometrics}, 48, 241--251.
 
+\bibitem[{Gentle(2007)}]{Gentle:2007}
+Gentle, J.~E. (2007), \textit{Matrix Algebra: Theory, Computations, and
+  Applications in Statistics}, New York: Springer.
+
 \bibitem[{Ghidey et~al.(2004)Ghidey, Lesaffre, and Eilers}]{Ghidey:2004id}
 Ghidey, W., Lesaffre, E., and Eilers, P. (2004), \enquote{Smooth random effects
   distribution in a linear mixed model,} \textit{Biometrics}, 60, 945--953.
+
+\bibitem[{Ghidey et~al.(2010)Ghidey, Lesaffre, and Verbeke}]{Ghidey:2010de}
+Ghidey, W., Lesaffre, E., and Verbeke, G. (2010), \enquote{A comparison of
+  methods for estimating the random effects distribution of a linear mixed
+  model,} \textit{Statistical Methods in Medical Research}, 19, 575--600.
 
 \bibitem[{Hilden-Minton(1995)}]{HildenMinton:1995wh}
 Hilden-Minton, J.~A. (1995), \enquote{Multilevel diagnostics for mixed and
