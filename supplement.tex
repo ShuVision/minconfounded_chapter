@@ -78,14 +78,20 @@
 \maketitle
 %----------------------------------------------------------------------------------
 
-The materials in this document supplement the information presented in ``Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models''. Section~\ref{supp:evals} presents a review of existing proposals for residual analysis for hierarchical linear models and a simulation study evaluating the performance of each. Section~\ref{supp:simstudy} presents the complete results for all simulation settings considered in the paper: Section~\ref{supp:simestimated} presents the results of the simulation study where the covariance matrices, $\bm{D}$ and $\bm{R}$, were estimated and Section~\ref{supp:simfixed} presents the results of the simulation study where the covariance matrices were known.
+The materials in this document supplement the information presented in ``Are you Normal? The Problem of Confounded Residual Structures in Hierarchical Linear Models''. 
+Section~\ref{supp:simdiag} presents additional technical details related to simultaneous diagonalization.
+Section~\ref{supp:proof} presents a proof showing that the rotated residuals, $\bm{W}^{*\prime} \widehat{\bm{b}}$, are standardized, uncorrelated, and homoscedastic.
+Section~\ref{sec:detrended} discusses the use of detrended Q-Q plots in lineups.
+Section~\ref{supp:evals} presents a review of existing proposals for residual analysis for hierarchical linear models and a simulation study evaluating the performance of each.
+Section~\ref{supp:simstudy} presents the complete results for all simulation settings considered in the paper: Section~\ref{supp:simestimated} presents the results of the simulation study where the covariance matrices, $\bm{D}$ and $\bm{R}$, were estimated and Section~\ref{supp:simfixed} presents the results of the simulation study where the covariance matrices were known.
+
 
 
 %----------------------------------------------------------------------------------
-\section{Additional technical details}
-%----------------------------------------------------------------------------------
 
-\subsection{Simultaneous diagonalization}
+\section{Simultaneous diagonalization}\label{supp:simdiag}
+
+%----------------------------------------------------------------------------------
 
 Below, we outline the procedure used to simultaneously diagonalize $\bm{A}$ and $\bm{B}$ for reference.
 %and refer the reader to \cite{McDonald:1979ca} and \cite{deLeeuw:1982to} for additional details on simultaneous diagonalization of two positive semidefinite matrices.\\
@@ -109,7 +115,8 @@ Based on the above three steps, the transformation that simultaneously diagonali
 \end{algorithm}
 
 
-\subsection{Rotated random effects are standardized, uncorrelated, and homoscedastic}
+\section{Rotated random effects are standardized, uncorrelated, and homoscedastic}\label{supp:proof}
+%----------------------------------------------------------------------------------
 
 We present the proof of the claim that the rotated residuals, $\bm{W}^{*\prime} \widehat{\bm{b}}$, are standardized, uncorrelated, and homoscedastic. Following the developments presented in Section~\ref{sec:rotate}, we present this discussion for the random effects assuming that there is only a random intercept. Generalization to the situation with multiple random effects follows as previously discussed.
 
@@ -124,12 +131,13 @@ We present the proof of the claim that the rotated residuals, $\bm{W}^{*\prime} 
 proving that the rotated random effects are standardized, uncorrelated, and homoscedastic.
 \end{proof}
 
-\subsection{Lineup details}\label{sec:detrended}
+\section{Using detrended Q-Q plots}\label{sec:detrended}
+%----------------------------------------------------------------------------------
 As an alternative to the standard Q-Q plot, a detrended version of Q-Q plots (see figure~\ref{fig:lineup-2}) was shown to participants in a study. In the detrended Q-Q plot, the plot is rotated by 45$^\circ$ to make comparisons between the line of identity and the empirical distribution function a cognitively easier task. However, for assessing normality of the random effects distribution, the results from both types of plots were very similar. None of the participants identified the observed data as the most different panel from the set, while panel \#$(3^2+3)$ was the one picked by most participants. Table~\ref{tab:lpresults} gives an overview of the results from the study. 
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.9\textwidth]{qq-lineup-rot.pdf}%test.jpeg}%lineup-rslope.pdf}
-	\caption{\label{fig:lineup-2} Lineup of detrended Q-Q plots for the random slope term in model~\eqref{eq:radon}. This plot shows the same data as the standard Q-Q plots of figure~\ref{fig:lineup}. Out of 22 evaluations, 11 participants picked panel \#$(3^2+3)$ as the most different from the set; another 4 participants chose panel \#$(2 \cdot 3^2)$. None of the participant picked the panel of the observed data.}
+	\caption{\label{fig:lineup-2} Lineup of detrended Q-Q plots for the random slope term in model~(1) from the paper. This plot shows the same data as the standard Q-Q plots in the paper. Out of 22 evaluations, 11 participants picked panel \#$(3^2+3)$ as the most different from the set; another 4 participants chose panel \#$(2 \cdot 3^2)$. None of the participant picked the panel of the observed data.}
 \end{figure}
 
 \begin{table}[ht]
